@@ -6,9 +6,6 @@ import ViewNode from './dom/ViewNode';
 
 declare class SvelteComponent {
     constructor(options: { target?: ViewNode, props?: any });
-    $$: {
-        fragment: ViewNode;
-    }
 }
 
 export function svelteNative(startPage: typeof SvelteComponent, data: any) {
@@ -23,7 +20,7 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any) {
             target: frame,
             props: data || {}
         });
-
+        //dirty way to find page's native view
         frame.firstChild
         console.log("navigating to", frame.firstChild);
         (frame.nativeView as Frame).navigate({ create: () => frame.firstChild.nativeView});
