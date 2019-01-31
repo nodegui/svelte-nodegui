@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "declaration": true,
+      "declarationDir": "./dist",
+      "module": "es2015",
+      "noImplicitAny": false,
+      "outDir": "./dist",
+      "target": "es6",
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": false,
+      "esModuleInterop": false,   
+    },
+    "include": [
+      "src/**/*"
+    ],
+    "exclude": ["node_modules"]
+  }

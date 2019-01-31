@@ -1,0 +1,27 @@
+{
+  "name": "svelte-native",
+  "version": "1.0.0",
+  "description": "Nativescript support for svelte",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -cw"
+  },
+  "author": "David Pershouse",
+  "license": "MIT",
+  "peerDependencies": {
+    "tns-core-modules": "^5.1.2"
+  },
+  "devDependencies": {
+    "rollup": "^1.1.2",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-typescript2": "^0.19.2",
+    "tns-core-modules": "^5.1.2",
+    "typescript": "^3.2.4"
+  }
+}
