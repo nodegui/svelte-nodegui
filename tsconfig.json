@@ -3,7 +3,7 @@
       "declaration": true,
       "declarationDir": "./dist",
       "module": "es2015",
-      "noImplicitAny": false,
+      "noImplicitAny": true,
       "outDir": "./dist",
       "target": "es6",
       "moduleResolution": "node",

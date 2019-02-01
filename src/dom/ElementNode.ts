@@ -1,6 +1,7 @@
 import { getViewClass } from './element-registry'
 import ViewNode from './ViewNode'
 import TextNode from './TextNode';
+import PropertyNode from './PropertyNode';
 
 export default class ElementNode extends ViewNode {
   constructor(tagName:string) {
@@ -20,6 +21,10 @@ export default class ElementNode extends ViewNode {
     if (childNode.nodeType === 3) {
       this.setText((childNode as TextNode).text)
     }
+
+    if (childNode.nodeType === 7) {
+      (childNode as PropertyNode).setOnNode(this);
+    }
   }
 
   insertBefore(childNode: ViewNode, referenceNode: ViewNode) {
@@ -28,6 +33,10 @@ export default class ElementNode extends ViewNode {
     if (childNode.nodeType === 3) {
       this.setText((childNode as TextNode).text)
     }
+
+    if (childNode.nodeType === 7) {
+      (childNode as PropertyNode).setOnNode(this);
+    }
   }
 
   removeChild(childNode: ViewNode) {
@@ -35,6 +44,10 @@ export default class ElementNode extends ViewNode {
 
     if (childNode.nodeType === 3) {
       this.setText('')
+    }
+
+    if (childNode.nodeType === 7) {
+      (childNode as PropertyNode).clearOnNode(this);
     }
   }
 }

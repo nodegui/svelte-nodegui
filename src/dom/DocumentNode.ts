@@ -2,6 +2,7 @@ import CommentNode from './CommentNode'
 import ElementNode from './ElementNode'
 import ViewNode from './ViewNode'
 import TextNode from './TextNode'
+import PropertyNode from './PropertyNode';
 
 export default class DocumentNode extends ViewNode {
   documentElement: ElementNode;
@@ -24,11 +25,11 @@ export default class DocumentNode extends ViewNode {
   }
 
   createElement(tagName:string) {
-    return new ElementNode(tagName)
+    return tagName.includes(".") ? new PropertyNode(tagName)  : new ElementNode(tagName)
   }
 
   createElementNS(namespace:string, tagName:string) {
-    return new ElementNode(tagName)
+    return this.createElement(tagName)
   }
 
   createTextNode(text: string) {
