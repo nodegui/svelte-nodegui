@@ -4,7 +4,14 @@ import * as viewUtil from './utils'
 import * as types from 'tns-core-modules/utils/types'
 import { isAndroid, isIOS } from 'tns-core-modules/platform'
 import { View, EventData } from 'tns-core-modules/ui/core/view/view';
+import DocumentNode from './DocumentNode';
 
+export function* elementIterator(el:ViewNode):Iterable<ViewNode> {
+  yield el;
+  for (let child of el.childNodes) {
+     yield* elementIterator(child)
+  }
+}
 
 
 const XML_ATTRIBUTES = Object.freeze([
@@ -21,7 +28,7 @@ export default class ViewNode {
   childNodes: ViewNode[];
   prevSibling: ViewNode;
   nextSibling: any;
-  _ownerDocument: any;
+  _ownerDocument: DocumentNode;
   _nativeView: View;
   _meta: ComponentMeta;
   
@@ -90,17 +97,17 @@ export default class ViewNode {
   }
 
   /* istanbul ignore next */
-  get ownerDocument() {
+  get ownerDocument():DocumentNode {
     if (this._ownerDocument) {
       return this._ownerDocument
     }
 
     let el:ViewNode = this
-    while ((el = el.parentNode).nodeType !== 9) {
-      // do nothing
+    while (el != null && el.nodeType !== 9) {
+      el = el.parentNode
     }
 
-    return (this._ownerDocument = el)
+    return (this._ownerDocument = el as DocumentNode)
   }
 
   getAttribute(key:string) {
@@ -122,8 +129,6 @@ export default class ViewNode {
     // try to fix case
     let lowerkey = key.toLowerCase();
     for (let realKey in nv) {
-        if (lowerkey == "actionbar")
-          console.log(realKey);
        if (lowerkey == realKey.toLowerCase()) {
          key = realKey;
          break;

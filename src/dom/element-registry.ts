@@ -1,5 +1,6 @@
 import { View } from 'tns-core-modules/ui/core/view'
-import ViewNode from './ViewNode';
+import ViewNode from './ViewNode'
+
 
 type ComponentClassResolver = () => View;
 
@@ -287,6 +288,31 @@ registerElement('Frame', () => require('tns-core-modules/ui/frame').Frame,
     // }
   },
  }
-  //component: builtInComponents.Frame
-//}
 )
+
+registerElement('head', () => null, {
+  insertChild(parentNode, childNode, atIndex) {
+    if (normalizeElementName(childNode.tagName) === 'style') {
+       //find the top frame el
+       let frame:ViewNode = null;
+       for (let el of parentNode.ownerDocument.childNodes) {
+          if (normalizeElementName(el.tagName) == 'frame') {
+             frame = el;
+          }
+       }
+       
+       if (frame) {
+          let css:string = (childNode as any).textContent;
+          //let el = frame.__SvelteNativeElement__;
+          console.log("adding frame css", css );
+          frame.nativeView.addCss((childNode as any).textContent);
+          console.log("frame css is now", frame.nativeView.css);
+       } else {
+         console.log("there was no top frame when style was declared");
+       }
+    }
+  },
+})
+
+registerElement('style', () => null)
+

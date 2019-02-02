@@ -3,16 +3,47 @@ import ViewNode from './ViewNode'
 import TextNode from './TextNode';
 import PropertyNode from './PropertyNode';
 
+interface IStyleProxy {
+  setProperty(propertyName: string, value: string, priority?: string ): void;
+  removeProperty(property: string): void;
+}
+
+function camelize(kebab:string) : string {
+  return kebab.replace(/[\-]+(\w)/g, (m, l) => l.toUpperCase());
+}
+
+export const SvelteNativeElement = '__SvelteNativeElement__';
+
 export default class ElementNode extends ViewNode {
+  style: IStyleProxy;
+  id: string;
+
   constructor(tagName:string) {
     super()
 
     this.nodeType = 1
     this.tagName = tagName
 
+    //there are some special elements that don't exist natively
+    
     const viewClass = getViewClass(tagName) as any
-    this._nativeView = new viewClass()
+    if (viewClass) {
+      this._nativeView = new viewClass()
+      this._nativeView.__SvelteNativeElement__ = this;
+    }
+    
+
     console.log(`created ${this} ${this._nativeView}`)
+
+    this.style = {
+      setProperty: (propertyName: string, value: string, priority?: string ) => {
+         this.setStyle(camelize(propertyName), value);
+      },
+      removeProperty:  (propertyName: string ) => {
+         this.setStyle(camelize(propertyName), null);
+      }
+    }
+
   }
 
   appendChild(childNode: ViewNode) {

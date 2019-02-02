@@ -15,6 +15,8 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any) {
 
     let frame = new ElementNode('frame');
 
+    document.appendChild(frame);
+
     on(launchEvent, ()=>{
         let page = new startPage({
             target: frame,
