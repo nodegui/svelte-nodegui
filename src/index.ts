@@ -3,10 +3,9 @@ import ElementNode from './dom/ElementNode'
 import { Frame } from 'tns-core-modules/ui/frame'
 import { run, on, launchEvent } from 'tns-core-modules/application'
 import ViewNode from './dom/ViewNode';
+import { SvelteComponent } from './global';
 
-declare class SvelteComponent {
-    constructor(options: { target?: ViewNode, props?: any });
-}
+
 
 export function svelteNative(startPage: typeof SvelteComponent, data: any) {
     let document = new DocumentNode();
@@ -30,4 +29,6 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any) {
 
     run({create: () => frame.nativeView});
 }
- 
+
+export { default as AsComponent } from "./components/AsComponent.js"
+export { default as ElementNode } from "./dom/ElementNode"  

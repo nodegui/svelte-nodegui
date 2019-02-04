@@ -5,3 +5,7 @@ declare module "tns-core-modules/ui/core/view/view" {
         __SvelteNativeElement__: ViewNode;
     }
 }
+
+declare class SvelteComponent {
+    constructor(options: { target?: ViewNode, props?: any });
+}

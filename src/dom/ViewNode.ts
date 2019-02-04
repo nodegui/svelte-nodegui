@@ -21,6 +21,8 @@ const XML_ATTRIBUTES = Object.freeze([
   'fontAttributes'
 ])
 
+
+
 export default class ViewNode {
   nodeType: number;
   _tagName: any;
@@ -31,7 +33,7 @@ export default class ViewNode {
   _ownerDocument: DocumentNode;
   _nativeView: View;
   _meta: ComponentMeta;
-  
+  style: any;
   constructor() {
     this.nodeType = null
     this._tagName = null
@@ -43,6 +45,20 @@ export default class ViewNode {
     this._ownerDocument = null
     this._nativeView = null
     this._meta = null
+    var self = this;
+
+    class StyleAttr {
+      get cssText(): string {
+       console.log('got cssText')
+       return self.getAttribute('style');
+      }
+      set cssText(value: string) {
+        console.log('set cssText')
+        self.setAttribute('style', value);
+     }
+   }
+
+    this.style = new StyleAttr();
   }
 
   hasAttribute() {

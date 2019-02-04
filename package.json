@@ -15,7 +15,8 @@
   "author": "David Pershouse",
   "license": "MIT",
   "peerDependencies": {
-    "tns-core-modules": "^5.1.2"
+    "tns-core-modules": "^5.1.2",
+    "svelte": "^3.0.0-alpha27"
   },
   "devDependencies": {
     "rollup": "^1.1.2",
