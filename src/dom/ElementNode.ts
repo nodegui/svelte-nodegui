@@ -6,7 +6,8 @@ import PropertyNode from './PropertyNode';
 interface IStyleProxy {
   setProperty(propertyName: string, value: string, priority?: string ): void;
   removeProperty(property: string): void;
-}
+  cssText: string;
+ }
 
 function camelize(kebab:string) : string {
   return kebab.replace(/[\-]+(\w)/g, (m, l) => l.toUpperCase());
@@ -15,9 +16,9 @@ function camelize(kebab:string) : string {
 export const SvelteNativeElement = '__SvelteNativeElement__';
 
 export default class ElementNode extends ViewNode {
-  style: IStyleProxy;
   id: string;
-
+  style: IStyleProxy;
+  
   constructor(tagName:string) {
     super()
 
@@ -35,12 +36,32 @@ export default class ElementNode extends ViewNode {
 
     console.log(`created ${this} ${this._nativeView}`)
 
+
+    let setStyle = (value: string):void => {
+      this.setAttribute('style', value);
+    }
+
+    let getStyle = ():string => {
+       return this.getAttribute('style');
+    }
+
     this.style = {
       setProperty: (propertyName: string, value: string, priority?: string ) => {
          this.setStyle(camelize(propertyName), value);
       },
+
       removeProperty:  (propertyName: string ) => {
          this.setStyle(camelize(propertyName), null);
+      },
+
+      get cssText(): string {
+        console.log("got css text");
+        return getStyle();
+      },
+      
+      set cssText(value: string) {
+        console.log("set css text");
+         setStyle(value);
       }
     }
 

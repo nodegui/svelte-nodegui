@@ -315,4 +315,6 @@ registerElement('head', () => null, {
 })
 
 registerElement('style', () => null)
-registerElement('fragment', ()=>null)
+registerElement('fragment', ()=>null, {
+  skipAddToDom: true
+})
