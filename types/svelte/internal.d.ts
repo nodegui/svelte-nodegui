@@ -6,5 +6,6 @@ declare module "svelte/internal" {
         $$: ComponentInternals
     }
     
-    export let current_component: ExposedSvelteComponent
+    export let current_component: ExposedSvelteComponent;
+    export function flush(): void;
 }

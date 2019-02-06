@@ -31,5 +31,4 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any) {
     run({create: () => frame.nativeView});
 }
 
-export { default as AsComponent } from "./components/AsComponent"
-export { default as ElementNode } from "./dom/ElementNode"  
+export * from "./svelte-helpers"
