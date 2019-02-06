@@ -16,7 +16,7 @@
   "license": "MIT",
   "peerDependencies": {
     "tns-core-modules": "^5.1.2",
-    "svelte": "^3.0.0-alpha27"
+    "svelte": "^3.0.0.beta.2"
   },
   "devDependencies": {
     "rollup": "^1.1.2",

@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
+        "paths": { "*": ["types/*"] },
       "declaration": true,
       "declarationDir": "./dist",
       "module": "es2015",

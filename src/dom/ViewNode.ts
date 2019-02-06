@@ -3,8 +3,16 @@ import { getViewMeta, normalizeElementName, ComponentMeta } from './element-regi
 import * as viewUtil from './utils'
 import * as types from 'tns-core-modules/utils/types'
 import { isAndroid, isIOS } from 'tns-core-modules/platform'
-import { View, EventData } from 'tns-core-modules/ui/core/view/view';
+import { View } from 'tns-core-modules/ui/core/view/view';
 import DocumentNode from './DocumentNode';
+
+declare module "tns-core-modules/ui/core/view/view" {
+  interface View {
+      __SvelteNativeElement__: ViewNode;
+  }
+}
+
+export type EventListener = (args: any) => void;
 
 export function* elementIterator(el:ViewNode):Iterable<ViewNode> {
   yield el;
@@ -180,13 +188,13 @@ export default class ViewNode {
   }
 
   /* istanbul ignore next */
-  addEventListener(event:string, handler: (args: EventData) => void) {
+  addEventListener(event:string, handler: EventListener) {
     console.log(`add event listener ${this} ${event}`)
     this.nativeView.on(event, handler)
   }
 
   /* istanbul ignore next */
-  removeEventListener(event:string, handler?: (args: EventData) => void) {
+  removeEventListener(event:string, handler?: EventListener) {
     console.log(`remove event listener ${this} ${event}`)
     this.nativeView.off(event, handler)
   }

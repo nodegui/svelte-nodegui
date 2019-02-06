@@ -2,7 +2,7 @@ import { View } from 'tns-core-modules/ui/core/view'
 import ViewNode from './ViewNode'
 
 
-type ComponentClassResolver = () => View;
+export type ComponentClassResolver = () => View;
 
 interface ElementEntry {
   resolver: ComponentClassResolver,
