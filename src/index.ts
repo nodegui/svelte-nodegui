@@ -1,8 +1,7 @@
-import  DocumentNode  from './dom/DocumentNode'
-import ElementNode from './dom/ElementNode'
 import { Frame } from 'tns-core-modules/ui/frame'
 import { run, on, launchEvent } from 'tns-core-modules/application'
-import ViewNode from "./dom/ViewNode";
+import { DocumentNode, ElementNode, ViewNode } from './dom'
+import { registerNativeElements } from './nativescript-elements'
 
 declare global {
     export class SvelteComponent {
@@ -11,14 +10,17 @@ declare global {
 }
 
 export function svelteNative(startPage: typeof SvelteComponent, data: any) {
+    registerNativeElements();
+
+    //expose our fake dom as global document for svelte components
     let document = new DocumentNode();
-    //expose globally for svelte components
     (global as any).document = document;
 
+    //our application main navigation frame
     let frame = new ElementNode('frame');
-
     document.appendChild(frame);
 
+    //wait for launch
     on(launchEvent, ()=>{
         let page = new startPage({
             target: frame,
@@ -31,4 +33,3 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any) {
     run({create: () => frame.nativeView});
 }
 
-export * from "./svelte-helpers"

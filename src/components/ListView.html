@@ -1,0 +1,54 @@
+<script context="module">
+     export const TEMPLATE = {};
+</script>
+
+<script>
+    import { setContext, onMount, onDestroy } from 'svelte';
+    import { ListView } from 'tns-core-modules/ui/list-view';
+    import { getEventHandlers, proxyEvents, forceRender, cleanProps } from '../svelte-helpers'
+  
+    // Proxy
+    let dirtyProps
+    let props;
+    $: props = cleanProps(dirtyProps);
+    let outer_events = getEventHandlers();
+    
+    //Component
+    export let items = [];
+    let listView;
+    let active_items = []
+    let views = []
+
+    onMount(()=> {
+        listView.nativeView.on(ListView.itemLoadingEvent, (args) => {
+            if (args.index >= items.length) {
+                console.log("Got request for item at index that didn't exists", items, args.index, args.view ? args.view.text : null)
+                return;
+            }
+            let item = items[args.index];
+            if (!args.view) {
+                active_items = active_items.concat(item);
+                forceRender();
+                let view_idx = active_items.length - 1;
+
+                let nativeEl = views[view_idx].nativeView;
+                nativeEl.__SvelteViewIndex__ = view_idx;
+                args.view = nativeEl;
+            } else {
+                let view_idx = args.view.__SvelteViewIndex__;
+                active_items[view_idx] = item
+            }
+        });
+    })
+
+
+</script>
+
+<svelte:options bind:props={dirtyProps} />
+<listView {...props} items={items} bind:this={listView} use:proxyEvents={outer_events}>
+    {#each active_items as item, i}
+    <proxyViewContainer bind:this={views[i]}>
+        <slot item={item} />
+    </proxyViewContainer>
+    {/each}
+</listView>
