@@ -2,13 +2,9 @@
   "name": "svelte-native",
   "version": "1.0.0",
   "description": "Nativescript support for svelte",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "files": [
-    "dist"
-  ],
+  "main": "index.js",
   "private": true,
-  "types": "dist/index.d.ts",
+  "types": "index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -cw"
