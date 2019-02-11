@@ -6,6 +6,7 @@ import { registerNativeElements } from './nativescript-elements'
 declare global {
     export class SvelteComponent {
         constructor(options: { target?: ViewNode, props?: any });
+        $set(props: any): void;
     }
 }
 
@@ -19,7 +20,7 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any) {
     //our application main navigation frame
     let frame = new ElementNode('frame');
     document.appendChild(frame);
-
+    
     //wait for launch
     on(launchEvent, ()=>{
         let page = new startPage({

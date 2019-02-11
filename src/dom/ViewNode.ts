@@ -31,11 +31,11 @@ const XML_ATTRIBUTES = Object.freeze([
 
 export default class ViewNode {
   nodeType: number;
-  _tagName: any;
+  _tagName: string;
   parentNode: ViewNode;
   childNodes: ViewNode[];
   prevSibling: ViewNode;
-  nextSibling: any;
+  nextSibling: ViewNode;
   _ownerDocument: DocumentNode;
   _nativeView: View;
   _meta: ComponentMeta;

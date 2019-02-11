@@ -25,14 +25,14 @@ export function insertChild(parentNode: ViewNode, childNode:ViewNode, atIndex = 
     return parentNode.meta.insertChild(parentNode, childNode, atIndex)
   }
 
-  if (childNode.meta.skipAddToDom) {
-    return
-  }
+  if (!parentNode.nativeView || !childNode.nativeView) {
+     return
+  } 
 
   const parentView = parentNode.nativeView
   const childView = childNode.nativeView
 
-  if (parentView instanceof LayoutBase) {
+  /*if (parentView instanceof LayoutBase) {
     if (childView.parent === parentView) {
       let index = parentView.getChildIndex(childView)
       if (index !== -1) {
@@ -50,13 +50,14 @@ export function insertChild(parentNode: ViewNode, childNode:ViewNode, atIndex = 
     } else {
       parentView.content = childView
     }
-  } else if (parentView && (parentView as any)._addChildFromBuilder) {
+  } else */
+  if (parentView && (parentView as any)._addChildFromBuilder) {
     (parentView as any)._addChildFromBuilder(
       childNode._nativeView.constructor.name,
       childView
     )
   } else {
-    // throw new Error("Parent can"t contain children: " + parent.nodeName + ", " + parent);
+     throw new Error("Parent can't contain children: " + parentNode + ", " + childNode);
   }
 }
 
@@ -69,9 +70,9 @@ export function removeChild(parentNode: ViewNode, childNode: ViewNode) {
     return parentNode.meta.removeChild(parentNode, childNode)
   }
 
-  if (childNode.meta.skipAddToDom) {
+  if (!childNode.nativeView || !childNode.nativeView) {
     return
-  }
+  } 
 
   const parentView = parentNode.nativeView
   const childView = childNode.nativeView
@@ -82,7 +83,6 @@ export function removeChild(parentNode: ViewNode, childNode: ViewNode) {
     if (parentView.content === childView) {
       parentView.content = null
     }
-
     if (childNode.nodeType === 8) {
       parentView._removeView(childView)
     }

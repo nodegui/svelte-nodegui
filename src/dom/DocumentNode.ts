@@ -14,7 +14,7 @@ export default class DocumentNode extends ViewNode {
     super()
     this.tagName = "docNode"
     this.nodeType = 9
-    this.documentElement = new ElementNode('document')
+    //this.documentElement = new ElementNode('document')
 
     this.head = new ElementNode('head')
     this.appendChild(this.head);

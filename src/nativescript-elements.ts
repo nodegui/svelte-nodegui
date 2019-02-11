@@ -2,17 +2,7 @@ import { registerElement, normalizeElementName, ViewNode } from './dom'
 export function registerNativeElements() {
     registerElement(
         'ActionBar',
-        () => require('tns-core-modules/ui/action-bar').ActionBar,
-        {
-          removeChild(parent, child) {
-            try {
-              parent.nativeView._removeView(child.nativeView)
-            } catch (e) {
-              // ignore exception - child is likely already removed/replaced
-              // fixes #76
-            }
-          },
-        }
+        () => require('tns-core-modules/ui/action-bar').ActionBar
       )
       
       registerElement(
@@ -79,14 +69,11 @@ export function registerNativeElements() {
         () => require('tns-core-modules/ui/html-view').HtmlView
       )
       registerElement('Image', () => require('tns-core-modules/ui/image').Image)
-      registerElement('img', () => require('tns-core-modules/ui/image').Image)
       registerElement(
         'ListPicker',
         () => require('tns-core-modules/ui/list-picker').ListPicker,
       )
-      registerElement('Page', () => require('tns-core-modules/ui/page').Page, {
-        skipAddToDom: true,
-      })
+      registerElement('Page', () => require('tns-core-modules/ui/page').Page)
       
       registerElement(
         'Placeholder',
@@ -160,44 +147,16 @@ export function registerNativeElements() {
       )
       registerElement('Span', () => require('tns-core-modules/text/span').Span)
       
-      registerElement(
-        'DetachedContainer',
-        () => require('tns-core-modules/ui/proxy-view-container').ProxyViewContainer,
-        {
-          skipAddToDom: true
-        }
-      )
-      registerElement(
-        'DetachedText',
-        () => require('tns-core-modules/ui/placeholder').Placeholder,
-        {
-          skipAddToDom: true
-        }
-      )
-      registerElement(
-        'Comment',
-        () => require('tns-core-modules/ui/placeholder').Placeholder
-      )
-      
-      registerElement(
-        'Document',
-        () => require('tns-core-modules/ui/proxy-view-container').ProxyViewContainer,
-        {
-          skipAddToDom: true
-        }
-      )
-      
-      registerElement('Frame', () => require('tns-core-modules/ui/frame').Frame,
-       {
+    
+      registerElement('Frame', () => require('tns-core-modules/ui/frame').Frame, {
         insertChild(parentNode, childNode, atIndex) {
-          // if (normalizeElementName(childNode.tagName) === 'nativepage') {
-          // parentNode.nativeView.navigate({ create: () => childNode.nativeView })
-          // }
-        },
-       }
-      )
+          //dont bother
+        }
+      })
       
+
       registerElement('head', () => null, {
+
         insertChild(parentNode, childNode, atIndex) {
           if (normalizeElementName(childNode.tagName) === 'style') {
              //find the top frame el
@@ -212,7 +171,7 @@ export function registerNativeElements() {
                 let css:string = (childNode as any).textContent;
                 //let el = frame.__SvelteNativeElement__;
                 console.log("adding frame css", css );
-                frame.nativeView.addCss((childNode as any).textContent);
+                frame.nativeView.addCss(css);
                 console.log("frame css is now", frame.nativeView.css);
              } else {
                console.log("there was no top frame when style was declared");
@@ -222,8 +181,10 @@ export function registerNativeElements() {
       })
       
       registerElement('style', () => null)
-      registerElement('fragment', ()=>null, {
-        skipAddToDom: true
-      })
-      
+      registerElement('fragment', () => null)
+      registerElement(
+        'Comment', () => null
+      //  () => require('tns-core-modules/ui/placeholder').Placeholder
+      )
+        
 }
