@@ -35,7 +35,8 @@ export default class PropertyNode extends ViewNode {
 
     setOnNode(parent: ViewNode) {
         if (parent) {
-            parent.setAttribute(this.propertyName, this.firstChild ? this.firstChild.nativeView : null);
+            const el = this.firstElement();
+            parent.setAttribute(this.propertyName, el ? el.nativeView : null);
         }
     }
 

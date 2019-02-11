@@ -309,4 +309,13 @@ export default class ViewNode {
 
     viewUtil.removeChild(this, childNode)
   }
+
+  firstElement() {
+    for(var child of this.childNodes) {
+      if (child.nodeType == 1) {
+        return child;
+      }
+    }
+    return null;
+  }
 }
