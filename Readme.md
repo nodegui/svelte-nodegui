@@ -7,7 +7,7 @@ WIP proof of concept for wiring svelte 3 up to nativescript. based on the wonder
  - [ ] Expose navigation
  - [ ] Modals
  - [ ] wire up sveltes in,out and animate to Nativescripts native animations
- - [ ] work out an alternative for <ios> and <android> tags
+ - [ ] work out an alternative for `<ios>` and `<android>` tags
 
 
 
