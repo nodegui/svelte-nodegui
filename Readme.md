@@ -27,3 +27,11 @@ import { svelteNative } from 'svelte-native'
 
 svelteNative(App, {msg: "Hi from launcher"});
 ```
+
+## usage
+until this is on npm
+```bash
+$ npm run build
+$ cd dist && npm link
+```
+you can now use `npm link svelte-native` in your projects to install this package
