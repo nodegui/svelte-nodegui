@@ -1,5 +1,7 @@
 WIP proof of concept for wiring svelte 3 up to nativescript. based on the wonderful nativescript-vue.
 
+![todo in svelte-native](https://raw.githubusercontent.com/halfnelson/svelte-native/master/nativescript-svelte-todo.gif)
+
 ## todo
 
  - [x] Port dom from nativescript-vue and add svelte required items
