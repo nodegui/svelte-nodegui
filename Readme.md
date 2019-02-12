@@ -1,5 +1,25 @@
 WIP proof of concept for wiring svelte 3 up to nativescript. based on the wonderful nativescript-vue.
 
+## todo
+
+ - [x] Port dom from nativescript-vue and add svelte required items
+ - [x] Get basic todo app working
+ - [ ] Expose navigation
+ - [ ] Modals
+ - [ ] wire up sveltes in,out and animate to Nativescripts native animations
+
+
+
+## usage
+
+Until this is package is up on npm, you can install it via:
+
+```bash
+$ npm run build
+$ cd dist && npm link
+```
+you can now use `npm link svelte-native` in your projects to install this package
+
 App.html
 ```html
 <page xmlns="tns">
@@ -28,10 +48,5 @@ import { svelteNative } from 'svelte-native'
 svelteNative(App, {msg: "Hi from launcher"});
 ```
 
-## usage
-until this is on npm
-```bash
-$ npm run build
-$ cd dist && npm link
-```
-you can now use `npm link svelte-native` in your projects to install this package
+
+see https://github.com/halfnelson/svelte-native-test-app for an example project
