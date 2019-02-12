@@ -22,11 +22,6 @@ App.html
 Main.ts
 ```js
 import App from './components/App.html';
-import { DocumentNode } from 'svelte-native'
-import { run, on, launchEvent } from 'tns-core-modules/application'
-import { Frame } from 'tns-core-modules/ui/frame'
-import { Page } from 'tns-core-modules/ui/page'
-import { ActionBar } from 'tns-core-modules/ui/action-bar'
 
 import { svelteNative } from 'svelte-native'
 
