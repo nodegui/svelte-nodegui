@@ -26,7 +26,7 @@ export default function componentAsListItem(node: ElementNode, component: () => 
   
         if (!args.view) {
             console.log("creating view for ",args.index, item.name, args.view)
-            let wrapper = new ElementNode('proxyViewContainer');
+            let wrapper = new ElementNode('StackLayout');
             let componentInstance = new (component())({
                 target: wrapper,
                 props: {
