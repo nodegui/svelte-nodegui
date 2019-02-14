@@ -1,0 +1,16 @@
+{
+    "name": "svelte-native",
+    "version": "1.0.0",
+    "description": "Nativescript support for svelte",
+    "main": "index.js",
+    "files": [
+        "dist"
+    ],
+    "types": "index.d.ts",
+    "author": "David Pershouse",
+    "license": "MIT",
+    "peerDependencies": {
+        "tns-core-modules": "^5.1.2",
+        "svelte": "^3.0.0-beta.3"
+    }
+}
