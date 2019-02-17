@@ -1,8 +1,10 @@
-import { getViewClass } from './element-registry'
+import { getViewClass, normalizeElementName } from './element-registry'
 import ViewNode from './ViewNode'
 import TextNode from './TextNode';
 import PropertyNode from './PropertyNode';
 import { KeyframeAnimationInfo, KeyframeAnimation } from 'tns-core-modules/ui/animation/keyframe-animation';
+import { CssAnimationParser } from 'tns-core-modules/ui/styling/css-animation-parser';
+import { Page } from 'tns-core-modules/ui/page/page';
 
 interface IStyleProxy {
   setProperty(propertyName: string, value: string, priority?: string): void;
@@ -20,13 +22,13 @@ export const SvelteNativeElement = '__SvelteNativeElement__';
 export default class ElementNode extends ViewNode {
   id: string;
   style: IStyleProxy;
-
+  _parentPage: ElementNode;
   constructor(tagName: string) {
     super()
 
     this.nodeType = 1
     this.tagName = tagName
-
+    this._parentPage = null;
     //there are some special elements that don't exist natively
 
     const viewClass = getViewClass(tagName) as any
@@ -48,18 +50,68 @@ export default class ElementNode extends ViewNode {
     }
 
 
-    let animations: Map<string, KeyframeAnimation> = new Map();
+    let getParentPage = (): ElementNode => {
+      if (this._parentPage) {
+        return this._parentPage
+      }
 
-    const addAnimation = (animation: String) => {
-      //TODO: find animation by name from "public getKeyframeAnimationWithName(animationName: string): KeyframeAnimationInfo;" on page
-      //then play it on this element's native view using
-      // let animation = KeyframeAnimation.keyframeAnimationFromInfo(animationInfo);
-      //   animation.play(view)
-      // see https://github.com/NativeScript/NativeScript/blob/master/e2e/animation/app/css-animations/from-code/page.ts
+      let el: ViewNode = this
+      while (el != null && el.tagName !== normalizeElementName('page')) {
+        el = el.parentNode
+      }
+
+      return (this._parentPage = el as ElementNode)
     }
 
-    const removeAnimation = (animation: String) => {
-        //find the animation matching the style and call .cancel()
+
+    let animations: Map<string, KeyframeAnimation> = new Map();
+
+    const addAnimation = (animation: string) => {
+      console.log("Adding animation", animation)
+      if (!this.nativeView) {
+        throw Error("Attempt to apply animation to tag without a native view" + this.tagName);
+      }
+
+      let page = getParentPage();
+      if (page == null) {
+        animations.set(animation, null);
+        return;
+      }
+
+      //Parse our "animation" style property into an animation info instance (this won't include the keyframes from the css)
+      let animationInfos = CssAnimationParser.keyframeAnimationsFromCSSDeclarations([{ property: "animation", value: animation }]);
+      if (!animationInfos) {
+        animations.set(animation, null);
+        return;
+      }
+      let animationInfo = animationInfos[0];
+
+      //Fetch an animationInfo instance that includes the keyframes from the css (this won't include the animation properties parsed above)
+      let animationWithKeyframes = (page.nativeView as Page).getKeyframeAnimationWithName(animationInfo.name);
+      if (!animationWithKeyframes) {
+        animations.set(animation, null);
+        return;
+      }
+
+      //combine the keyframes from the css with the animation from the parsed attribute to get a complete animationInfo object
+      let animationInstance = KeyframeAnimation.keyframeAnimationFromInfo(animationInfo);
+      
+      // save and launch the animation
+      animations.set(animation, animationInstance);
+      animationInstance.play(this.nativeView);
+    }
+
+    const removeAnimation = (animation: string) => {
+      console.log("Removing animation", animation)
+      if (animations.has(animation)) {
+        let animationInstance = animations.get(animation);
+        animations.delete(animation);
+        if (animationInstance) {
+          if (animationInstance.isPlaying) {
+            animationInstance.cancel()
+          }
+        }
+      }
     }
 
 
@@ -77,6 +129,7 @@ export default class ElementNode extends ViewNode {
       },
 
       set animation(value: string) {
+        console.log("setting animation", value)
         let new_animations = value.split(',').map(a => a.trim());
         //add new ones
         for (let anim of new_animations) {
@@ -141,6 +194,7 @@ export default class ElementNode extends ViewNode {
       (childNode as PropertyNode).clearOnNode(this);
     }
   }
+
 
 
 }
