@@ -169,10 +169,11 @@ export function registerNativeElements() {
              
              if (frame) {
                 let css:string = (childNode as any).textContent;
-                //let el = frame.__SvelteNativeElement__;
-                console.log("adding frame css", css );
-                frame.nativeView.addCss(css);
-                console.log("frame css is now", frame.nativeView.css);
+                if (css) {
+                  console.log("adding frame css", css );
+                  frame.nativeView.addCss(css);
+                  console.log("frame css is now", frame.nativeView.css);
+                }
              } else {
                console.log("there was no top frame when style was declared");
              }

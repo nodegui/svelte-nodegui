@@ -17,6 +17,12 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any) {
     let document = new DocumentNode();
     (global as any).document = document;
 
+    //expose some other expected globals
+    (global as any).requestAnimationFrame = (action: ()=>{}) => {
+        setTimeout(action, 0);
+    }
+
+
     //our application main navigation frame
     let frame = new ElementNode('frame');
     document.appendChild(frame);
