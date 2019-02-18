@@ -65,6 +65,7 @@ export default class ElementNode extends ViewNode {
 
 
     let animations: Map<string, KeyframeAnimation> = new Map();
+    let oldAnimations: KeyframeAnimation[] = [];
 
     const addAnimation = (animation: string) => {
       console.log("Adding animation", animation)
@@ -76,6 +77,14 @@ export default class ElementNode extends ViewNode {
       if (page == null) {
         animations.set(animation, null);
         return;
+      }
+
+      //quickly cancel any old ones
+      while (oldAnimations.length) {
+        let oldAnimation = oldAnimations.shift();
+        if (oldAnimation.isPlaying) {
+          oldAnimation.cancel();
+        }
       }
 
       //Parse our "animation" style property into an animation info instance (this won't include the keyframes from the css)
@@ -93,6 +102,7 @@ export default class ElementNode extends ViewNode {
         return;
       }
 
+      animationInfo.keyframes = animationWithKeyframes.keyframes;
       //combine the keyframes from the css with the animation from the parsed attribute to get a complete animationInfo object
       let animationInstance = KeyframeAnimation.keyframeAnimationFromInfo(animationInfo);
       
@@ -106,9 +116,11 @@ export default class ElementNode extends ViewNode {
       if (animations.has(animation)) {
         let animationInstance = animations.get(animation);
         animations.delete(animation);
+        
         if (animationInstance) {
           if (animationInstance.isPlaying) {
-            animationInstance.cancel()
+            //we don't want to stop right away since svelte removes the animation before it is finished due to our lag time starting the animation.
+            oldAnimations.push(animationInstance);
           }
         }
       }
@@ -130,7 +142,7 @@ export default class ElementNode extends ViewNode {
 
       set animation(value: string) {
         console.log("setting animation", value)
-        let new_animations = value.split(',').map(a => a.trim());
+        let new_animations = value.trim() == "" ? [] : value.split(',').map(a => a.trim());
         //add new ones
         for (let anim of new_animations) {
           if (!animations.has(anim)) {

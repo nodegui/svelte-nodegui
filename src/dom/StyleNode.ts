@@ -1,24 +1,24 @@
 import ElementNode from './ElementNode'
 import { addTaggedAdditionalCSS, removeTaggedAdditionalCSS } from 'tns-core-modules/ui/styling/style-scope'
+import { topmost, Frame } from 'tns-core-modules/ui/frame'
 
 class StyleSheet {
 
-    _rules: symbol[] = [];
-    _sheetId: Symbol = Symbol('StyleSheet Instance')
+    _rules: string[] = [];
 
     deleteRule(index: number) {
         let removed = this._rules.splice(index, 1);
         for (let r in removed) {
             console.log("removing transition rule", r);
-            removeTaggedAdditionalCSS(r);
+            //TODO: remove it from the _css on stylescope and from _keyframes[name]
         }
     }
 
     insertRule(rule: string, index: number = 0) {
-        const rule_tag = Symbol("Style Rule")
-        console.log("Adding transition rule", rule_tag, rule);
-        addTaggedAdditionalCSS(rule, rule_tag);
-        this._rules.splice(index, 0, rule_tag);
+        console.log("Adding transition rule", rule);
+        let frame = topmost();
+        frame.addCss(rule);
+        this._rules.splice(index, 0, rule);
     }
 
     get cssRules(): any {
@@ -36,7 +36,7 @@ export default class StyleNode extends ElementNode {
     }
 
     get sheet(): StyleSheet {
-        return this.sheet;
+        return this._sheet;
     }
 
 }

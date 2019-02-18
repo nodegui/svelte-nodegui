@@ -10,18 +10,49 @@ declare global {
     }
 }
 
+function installGlobalShims() {
+   
+   //expose our fake dom as global document for svelte components
+   let window = global as any;
+
+   window.window = global;
+   window.document = new DocumentNode();
+
+   window.requestAnimationFrame = (action: ()=>{}) => {
+       setTimeout(action, 33); //about 30 fps
+   }
+
+   window.getComputedStyle = (node: ViewNode) => {
+       return node.nativeView.style;
+   }
+
+   window.performance = {
+       now() {
+           return Date.now();
+       }
+   };
+
+   window.CustomEvent = class {
+       detail: any;
+       eventName: string;
+       type: string;
+       constructor(name: string, detail: any = null) {
+          this.eventName = name; //event name for nativescript
+          this.type = name; // type for svelte
+          this.detail = detail;
+       }
+   }
+
+   
+
+}
+
+
 export function svelteNative(startPage: typeof SvelteComponent, data: any) {
     registerNativeElements();
+    installGlobalShims();
 
-    //expose our fake dom as global document for svelte components
-    let document = new DocumentNode();
-    (global as any).document = document;
-
-    //expose some other expected globals
-    (global as any).requestAnimationFrame = (action: ()=>{}) => {
-        setTimeout(action, 0);
-    }
-
+    const document = (global as any).document as DocumentNode;
 
     //our application main navigation frame
     let frame = new ElementNode('frame');

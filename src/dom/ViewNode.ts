@@ -3,7 +3,7 @@ import { getViewMeta, normalizeElementName, ComponentMeta } from './element-regi
 import * as viewUtil from './utils'
 import * as types from 'tns-core-modules/utils/types'
 import { isAndroid, isIOS } from 'tns-core-modules/platform'
-import { View } from 'tns-core-modules/ui/core/view/view';
+import { View, EventData } from 'tns-core-modules/ui/core/view/view';
 import DocumentNode from './DocumentNode';
 
 declare module "tns-core-modules/ui/core/view/view" {
@@ -317,5 +317,11 @@ export default class ViewNode {
       }
     }
     return null;
+  }
+
+  dispatchEvent(event: EventData) {
+    if (this.nativeView) { 
+       this.nativeView.notify(event);
+    }
   }
 }
