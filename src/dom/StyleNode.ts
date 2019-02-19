@@ -1,5 +1,5 @@
 import ElementNode from './ElementNode'
-import { addTaggedAdditionalCSS, removeTaggedAdditionalCSS } from 'tns-core-modules/ui/styling/style-scope'
+import { StyleScope } from 'tns-core-modules/ui/styling/style-scope'
 import { topmost, Frame } from 'tns-core-modules/ui/frame'
 
 class StyleSheet {
@@ -20,10 +20,11 @@ class StyleSheet {
             // we can almost remove the rules ourselves.
             if (r.startsWith('@keyframes')) {
                 const name = r.split(" ")[1];
-                let frame:any = topmost();
-                if (frame && frame._styleScope) {
-                    delete frame._styleScope._keyframes[name]
-                    frame._styleScope._css = frame._styleScope._css.replace(r,"");
+                let frame:Frame = topmost();
+                if (frame && (frame as any)._styleScope) {
+                    let scope = (frame as any)._styleScope as StyleScope;
+                    delete scope._keyframes[name]
+                    scope._css = scope._css.replace(r,"");
                 }
             }
         }

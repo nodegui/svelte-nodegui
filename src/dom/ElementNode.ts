@@ -1,10 +1,10 @@
-import { getViewClass, normalizeElementName } from './element-registry'
-import ViewNode from './ViewNode'
+
+import ViewNode, { ComponentMeta } from './ViewNode'
 import TextNode from './TextNode';
 import PropertyNode from './PropertyNode';
 import { KeyframeAnimationInfo, KeyframeAnimation } from 'tns-core-modules/ui/animation/keyframe-animation';
 import { CssAnimationParser } from 'tns-core-modules/ui/styling/css-animation-parser';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page, View } from 'tns-core-modules/ui/page/page';
 
 interface IStyleProxy {
   setProperty(propertyName: string, value: string, priority?: string): void;
@@ -18,28 +18,35 @@ function camelize(kebab: string): string {
 }
 
 export const SvelteNativeElement = '__SvelteNativeElement__';
+declare module "tns-core-modules/ui/core/view/view" {
+  interface View {
+      __SvelteNativeElement__: ElementNode;
+  }
+}
+
+const defaultViewMeta = {
+  skipAddToDom: false
+}
+
 
 export default class ElementNode extends ViewNode {
   id: string;
   style: IStyleProxy;
-  _parentPage: ElementNode;
-  constructor(tagName: string) {
+  
+  constructor(tagName: string, viewClass: typeof View = null, meta: ComponentMeta = null) {
     super()
-
+    
     this.nodeType = 1
     this.tagName = tagName
-    this._parentPage = null;
-    //there are some special elements that don't exist natively
 
-    const viewClass = getViewClass(tagName) as any
+    this._meta = Object.assign({}, defaultViewMeta, meta || {});
+    
     if (viewClass) {
-      this._nativeView = new viewClass()
+      this._nativeView = new (viewClass as any)()
       this._nativeView.__SvelteNativeElement__ = this;
     }
 
-
     console.log(`created ${this} ${this._nativeView}`)
-
 
     let setStyleAttribute = (value: string): void => {
       this.setAttribute('style', value);
@@ -49,20 +56,12 @@ export default class ElementNode extends ViewNode {
       return this.getAttribute('style');
     }
 
-
     let getParentPage = (): ElementNode => {
-      if (this._parentPage) {
-        return this._parentPage
+      if (this.nativeView && this.nativeView.page) {
+        return this.nativeView.page.__SvelteNativeElement__;
       }
-
-      let el: ViewNode = this
-      while (el != null && el.tagName !== normalizeElementName('page')) {
-        el = el.parentNode
-      }
-
-      return (this._parentPage = el as ElementNode)
+      return null;
     }
-
 
     let animations: Map<string, KeyframeAnimation> = new Map();
     let oldAnimations: KeyframeAnimation[] = [];

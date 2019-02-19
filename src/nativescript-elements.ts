@@ -1,4 +1,5 @@
-import { registerElement, normalizeElementName, ViewNode } from './dom'
+import { normalizeElementName, StyleNode, registerElement, ViewNode, registerCustomElementNode } from './dom'
+
 export function registerNativeElements() {
     registerElement(
         'ActionBar',
@@ -149,7 +150,7 @@ export function registerNativeElements() {
       
     
       registerElement('Frame', () => require('tns-core-modules/ui/frame').Frame, {
-        insertChild(parentNode, childNode, atIndex) {
+        insertChild() {
           //dont bother
         }
       })
@@ -157,7 +158,7 @@ export function registerNativeElements() {
 
       registerElement('head', () => null, {
 
-        insertChild(parentNode, childNode, atIndex) {
+        insertChild(parentNode:ViewNode, childNode:ViewNode, atIndex: number) {
           if (normalizeElementName(childNode.tagName) === 'style') {
              //find the top frame el
              let frame:ViewNode = null;
@@ -181,7 +182,7 @@ export function registerNativeElements() {
         },
       })
       
-      registerElement('style', () => null)
+      registerCustomElementNode('style', () => new StyleNode('style'))
       registerElement('fragment', () => null)
       registerElement(
         'Comment', () => null

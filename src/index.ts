@@ -1,6 +1,6 @@
 import { Frame } from 'tns-core-modules/ui/frame'
 import { run, on, launchEvent } from 'tns-core-modules/application'
-import { DocumentNode, ElementNode, ViewNode } from './dom'
+import { DocumentNode, ViewNode, createElement } from './dom'
 import { registerNativeElements } from './nativescript-elements'
 
 declare global {
@@ -55,7 +55,7 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any) {
     const document = (global as any).document as DocumentNode;
 
     //our application main navigation frame
-    let frame = new ElementNode('frame');
+    let frame = createElement('frame');
     document.appendChild(frame);
     
     //wait for launch

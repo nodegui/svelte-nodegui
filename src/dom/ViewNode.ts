@@ -1,15 +1,22 @@
 
-import { getViewMeta, normalizeElementName, ComponentMeta } from './element-registry'
 import * as viewUtil from './utils'
 import * as types from 'tns-core-modules/utils/types'
 import { isAndroid, isIOS } from 'tns-core-modules/platform'
 import { View, EventData } from 'tns-core-modules/ui/core/view/view';
 import DocumentNode from './DocumentNode';
 
-declare module "tns-core-modules/ui/core/view/view" {
-  interface View {
-      __SvelteNativeElement__: ViewNode;
-  }
+
+const dashRegExp = /-/g
+export function normalizeElementName(elementName: string) {
+  return `${elementName
+    .replace(dashRegExp, '')
+    .toLowerCase()}`
+}
+
+export interface ComponentMeta {
+  skipAddToDom?: boolean
+  insertChild?: (parent: ViewNode, child: ViewNode, index: number) => void;
+  removeChild?: (parent: ViewNode, child: ViewNode) => void;
 }
 
 export type EventListener = (args: any) => void;
@@ -97,11 +104,7 @@ export default class ViewNode {
   }
 
   get meta() {
-    if (this._meta) {
-      return this._meta
-    }
-
-    return (this._meta = getViewMeta(this.tagName))
+     return this._meta
   }
 
   /* istanbul ignore next */

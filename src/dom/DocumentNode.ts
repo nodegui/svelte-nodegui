@@ -3,8 +3,7 @@ import ElementNode from './ElementNode'
 import ViewNode, { elementIterator } from './ViewNode'
 import TextNode from './TextNode'
 import PropertyNode from './PropertyNode';
-import { normalizeElementName } from './element-registry';
-import StyleNode from './StyleNode';
+import { createElement } from './element-registry';
 
 
 
@@ -18,7 +17,7 @@ export default class DocumentNode extends ViewNode {
     this.nodeType = 9
     //this.documentElement = new ElementNode('document')
 
-    this.head = new ElementNode('head')
+    this.head = createElement('head')
     this.appendChild(this.head);
     /*// make static methods accessible via this
     this.createComment = DocumentNode.createComment
@@ -36,11 +35,7 @@ export default class DocumentNode extends ViewNode {
     if (tagName.includes(".")) {
       return new PropertyNode(tagName) 
     } 
-    if (normalizeElementName(tagName) == 'style') {
-      return new StyleNode(tagName);
-    }
-   
-    return new ElementNode(tagName)
+    return createElement(tagName);
   }
 
   createElementNS(namespace:string, tagName:string) {

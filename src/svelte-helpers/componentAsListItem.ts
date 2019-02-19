@@ -1,4 +1,4 @@
-import { ElementNode } from "../dom";
+import { ElementNode, createElement } from "../dom";
 import { ListView, ItemEventData, ItemsSource } from 'tns-core-modules/ui/list-view';
 
 export default function componentAsListItem(node: ElementNode, component: () => typeof SvelteComponent ) {
@@ -26,7 +26,7 @@ export default function componentAsListItem(node: ElementNode, component: () => 
   
         if (!args.view) {
             console.log("creating view for ",args.index, item.name, args.view)
-            let wrapper = new ElementNode('StackLayout');
+            let wrapper = createElement('StackLayout');
             let componentInstance = new (component())({
                 target: wrapper,
                 props: {
