@@ -2,7 +2,7 @@
 import ViewNode, { ComponentMeta } from './ViewNode'
 import TextNode from './TextNode';
 import PropertyNode from './PropertyNode';
-import { KeyframeAnimationInfo, KeyframeAnimation } from 'tns-core-modules/ui/animation/keyframe-animation';
+import { KeyframeAnimation } from 'tns-core-modules/ui/animation/keyframe-animation';
 import { CssAnimationParser } from 'tns-core-modules/ui/styling/css-animation-parser';
 import { Page, View } from 'tns-core-modules/ui/page/page';
 

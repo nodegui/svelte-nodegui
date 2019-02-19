@@ -182,7 +182,7 @@ export function registerNativeElements() {
         },
       })
       
-      registerCustomElementNode('style', () => new StyleNode('style'))
+      registerCustomElementNode('style', () => new StyleNode())
       registerElement('fragment', () => null)
       registerElement(
         'Comment', () => null

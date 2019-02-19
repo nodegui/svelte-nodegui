@@ -46,7 +46,7 @@ export default class StyleNode extends ElementNode {
 
     _sheet: StyleSheet;
 
-    constructor(text: string) {
+    constructor() {
         super('style')
         this._sheet = new StyleSheet();
     }

@@ -5,9 +5,6 @@ import TextNode from './TextNode'
 import PropertyNode from './PropertyNode';
 import { createElement } from './element-registry';
 
-
-
-
 export default class DocumentNode extends ViewNode {
   documentElement: ElementNode;
   head: ElementNode;
@@ -15,15 +12,10 @@ export default class DocumentNode extends ViewNode {
     super()
     this.tagName = "docNode"
     this.nodeType = 9
-    //this.documentElement = new ElementNode('document')
 
     this.head = createElement('head')
     this.appendChild(this.head);
-    /*// make static methods accessible via this
-    this.createComment = DocumentNode.createComment
-    this.createElement = DocumentNode.createElement
-    this.createElementNS = DocumentNode.createElementNS
-    this.createTextNode = DocumentNode.createTextNode*/
+
     console.log(`created ${this}`)
   }
 
