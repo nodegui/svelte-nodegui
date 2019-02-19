@@ -47,6 +47,17 @@ export default class DocumentNode extends ViewNode {
     return this.createElement(tagName)
   }
 
+  createEvent(type: string) {
+    let e:any = {};
+    e.initCustomEvent = (type:string, ignored1: boolean, ignored2:boolean, detail: any) => {
+      e.type = type;
+      e.detail = detail;
+      e.eventName = type;
+    }
+    return e;
+  }
+
+
   createTextNode(text: string) {
     return new TextNode(text)
   }
