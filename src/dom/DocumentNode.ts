@@ -3,6 +3,8 @@ import ElementNode from './ElementNode'
 import ViewNode, { elementIterator } from './ViewNode'
 import TextNode from './TextNode'
 import PropertyNode from './PropertyNode';
+import { normalizeElementName } from './element-registry';
+import StyleNode from './StyleNode';
 
 
 
@@ -31,12 +33,30 @@ export default class DocumentNode extends ViewNode {
   }
 
   createElement(tagName:string) {
-    return tagName.includes(".") ? new PropertyNode(tagName)  : new ElementNode(tagName)
+    if (tagName.includes(".")) {
+      return new PropertyNode(tagName) 
+    } 
+    if (normalizeElementName(tagName) == 'style') {
+      return new StyleNode(tagName);
+    }
+   
+    return new ElementNode(tagName)
   }
 
   createElementNS(namespace:string, tagName:string) {
     return this.createElement(tagName)
   }
+
+  createEvent(type: string) {
+    let e:any = {};
+    e.initCustomEvent = (type:string, ignored1: boolean, ignored2:boolean, detail: any) => {
+      e.type = type;
+      e.detail = detail;
+      e.eventName = type;
+    }
+    return e;
+  }
+
 
   createTextNode(text: string) {
     return new TextNode(text)
