@@ -321,6 +321,8 @@ export default class ViewNode {
 
   dispatchEvent(event: EventData) {
     if (this.nativeView) { 
+       //nativescript uses the EventName while dom uses Type
+       event.eventName = (event as any).type;
        this.nativeView.notify(event);
     }
   }
