@@ -1,4 +1,3 @@
-import { Frame } from 'tns-core-modules/ui/frame'
 import { run, on, launchEvent } from 'tns-core-modules/application'
 import { ViewNode, NativeElementNode, createElement, initializeDom } from './dom';
 
@@ -10,22 +9,16 @@ declare global {
 }
 
 export function svelteNative(startPage: typeof SvelteComponent, data: any) {
-    const document = initializeDom();
-
-    //our application main navigation frame
-    let frame = createElement('frame') as NativeElementNode;
-    document.appendChild(frame);
+    initializeDom();
+    let host = createElement('fragment');
+    let main = new startPage({ target: host, props: data || {} })
 
     //wait for launch
     on(launchEvent, () => {
-        let page = new startPage({
-            target: frame,
-            props: data || {}
-        });
-        //dirty way to find page's native view
-        (frame.nativeView as Frame).navigate({ create: () => (frame.firstElement() as NativeElementNode).nativeView });
+        console.log("Application Launched");
+        //TODO: return startpage as promise result
     })
 
-    run({ create: () => frame.nativeView });
+    run({ create: () => (host.firstElement() as NativeElementNode).nativeView });
 }
 

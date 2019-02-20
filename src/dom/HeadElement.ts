@@ -1,6 +1,7 @@
 import { ElementNode, ViewNode, normalizeElementName } from "./basicdom";
 import NativeElementNode from "./NativeElementNode";
 import StyleElement from "./StyleElement";
+import { topmost } from "tns-core-modules/ui/frame"
 
 export default class HeadElement extends ElementNode {
 
@@ -10,23 +11,26 @@ export default class HeadElement extends ElementNode {
 
     onInsertedChild(childNode: ViewNode, atIndex: number) {
         if (childNode instanceof StyleElement) {
-            //find the top frame el
-            let frame: NativeElementNode = null;
-            for (let el of this.ownerDocument.childNodes) {
-                if (normalizeElementName(el.tagName) == 'frame') {
-                    frame = el as NativeElementNode;
+
+            let frame = topmost();
+
+            const applyStyleSheet = () => {
+                if (frame) {
+                    let css: string = (childNode as any).textContent;
+                    if (css) {
+                        console.log("adding frame css", css);
+                        frame.addCss(css);
+                        console.log("frame css is now", frame.css);
+                    }
                 }
             }
 
-            if (frame) {
-                let css: string = (childNode as any).textContent;
-                if (css) {
-                    console.log("adding frame css", css);
-                    frame.nativeView.addCss(css);
-                    console.log("frame css is now", frame.nativeView.css);
-                }
+            if (!frame) {
+                console.log("no topframe, waiting for a tick")
+                //the rare occasion we have no top frame, usually a race at app start, we just wait for a tick
+                setTimeout(() => { frame = topmost(); applyStyleSheet() }, 0)
             } else {
-                console.log("there was no top frame when style was declared");
+                applyStyleSheet();
             }
         }
     }

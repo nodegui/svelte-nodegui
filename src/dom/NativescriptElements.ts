@@ -1,6 +1,7 @@
 import { registerCustomElementNode } from './basicdom'
 import NativeElementNode, { ComponentMeta } from './NativeElementNode'
 import { View } from 'tns-core-modules/ui/page/page'
+import FrameElement from './FrameElement';
 
 export function registerElement(elementName: string, resolver: () => typeof View, meta: ComponentMeta = null) {
   registerCustomElementNode(elementName, () => new NativeElementNode(elementName, resolver(), meta));
@@ -155,13 +156,14 @@ export function registerNativeElements() {
   )
   registerElement('Span', () => require('tns-core-modules/text/span').Span)
 
-
-  registerElement('Frame', () => require('tns-core-modules/ui/frame').Frame, {
-    insertChild() {
-      //dont bother
-    }
-  })
-
+  /*
+   registerElement('Frame', () => require('tns-core-modules/ui/frame').Frame, {
+     insertChild() {
+       //dont bother
+     }
+   })
+ */
+  registerCustomElementNode('Frame', () => new FrameElement())
 
 
 
