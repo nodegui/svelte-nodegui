@@ -1,4 +1,4 @@
-import ElementNode from './ElementNode'
+import { ElementNode } from './basicdom'
 import { StyleScope } from 'tns-core-modules/ui/styling/style-scope'
 import { topmost, Frame } from 'tns-core-modules/ui/frame'
 
@@ -20,11 +20,11 @@ class StyleSheet {
             // we can almost remove the rules ourselves.
             if (r.startsWith('@keyframes')) {
                 const name = r.split(" ")[1];
-                let frame:Frame = topmost();
+                let frame: Frame = topmost();
                 if (frame && (frame as any)._styleScope) {
                     let scope = (frame as any)._styleScope as StyleScope;
                     delete scope._keyframes[name]
-                    scope._css = scope._css.replace(r,"");
+                    scope._css = scope._css.replace(r, "");
                 }
             }
         }
@@ -42,7 +42,7 @@ class StyleSheet {
     }
 }
 
-export default class StyleNode extends ElementNode {
+export default class StyleElement extends ElementNode {
 
     _sheet: StyleSheet;
 

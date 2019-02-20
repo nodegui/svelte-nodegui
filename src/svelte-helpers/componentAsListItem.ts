@@ -1,13 +1,12 @@
-import { ElementNode, createElement } from "../dom";
 import { ListView, ItemEventData, ItemsSource } from 'tns-core-modules/ui/list-view';
+import { NativeElementNode, createElement } from "../dom";
 
-export default function componentAsListItem(node: ElementNode, component: () => typeof SvelteComponent ) {
-    if (node.tagName.toLowerCase() != "listview" ) {
+export default function componentAsListItem(node: NativeElementNode, component: () => typeof SvelteComponent) {
+    if (node.tagName.toLowerCase() != "listview") {
         throw new Error("componentAsListItem only valid on listview elements")
     }
-   
-    console.log("component was", component);
-    const listView: ListView =  node.nativeView as ListView;
+
+    const listView: ListView = node.nativeView as ListView;
 
     const updateListItem = (args: ItemEventData) => {
         let item;
@@ -23,10 +22,10 @@ export default function componentAsListItem(node: ElementNode, component: () => 
         } else {
             item = (items as any)[args.index]
         }
-  
+
         if (!args.view) {
-            console.log("creating view for ",args.index, item.name, args.view)
-            let wrapper = createElement('StackLayout');
+            console.log("creating view for ", args.index, item.name)
+            let wrapper = createElement('StackLayout') as NativeElementNode;
             let componentInstance = new (component())({
                 target: wrapper,
                 props: {
@@ -38,10 +37,9 @@ export default function componentAsListItem(node: ElementNode, component: () => 
             (nativeEl as any).__SvelteComponent__ = componentInstance;
             args.view = nativeEl;
         } else {
-            console.log("updating view for ",args.index, item.name, args.view)
-            let componentInstance:SvelteComponent = (args.view as any).__SvelteComponent__
-            console.log("updating view for ",args.index, item.name, args.view, componentInstance)
-            componentInstance.$set({item})
+            let componentInstance: SvelteComponent = (args.view as any).__SvelteComponent__
+            console.log("updating view for ", args.index, item.name, args.view)
+            componentInstance.$set({ item })
         }
     }
 

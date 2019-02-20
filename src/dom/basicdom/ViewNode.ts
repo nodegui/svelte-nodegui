@@ -9,10 +9,10 @@ export function normalizeElementName(elementName: string) {
     .toLowerCase()}`
 }
 
-export function* elementIterator(el:ViewNode):Iterable<ViewNode> {
+export function* elementIterator(el: ViewNode): Iterable<ViewNode> {
   yield el;
   for (let child of el.childNodes) {
-     yield* elementIterator(child)
+    yield* elementIterator(child)
   }
 }
 
@@ -24,7 +24,7 @@ export default class ViewNode {
   prevSibling: ViewNode;
   nextSibling: ViewNode;
   _ownerDocument: DocumentNode;
-  _attributes: {[index: string]: any };
+  _attributes: { [index: string]: any };
 
   constructor() {
     this.nodeType = null
@@ -35,7 +35,7 @@ export default class ViewNode {
     this.nextSibling = null
 
     this._ownerDocument = null
-    this._attributes = {};  
+    this._attributes = {};
   }
 
   hasAttribute(name: string) {
@@ -70,12 +70,12 @@ export default class ViewNode {
   }
 
   /* istanbul ignore next */
-  get ownerDocument():DocumentNode {
+  get ownerDocument(): DocumentNode {
     if (this._ownerDocument) {
       return this._ownerDocument
     }
 
-    let el:ViewNode = this
+    let el: ViewNode = this
     while (el != null && el.nodeType !== 9) {
       el = el.parentNode
     }
@@ -83,17 +83,17 @@ export default class ViewNode {
     return (this._ownerDocument = el as DocumentNode)
   }
 
-  getAttribute(key:string):any {
-     return null;
+  getAttribute(key: string): any {
+    return null;
   }
 
   /* istanbul ignore next */
-  setAttribute(key:string, value:any) {
-     console.error("setting attribute on non native node")
+  setAttribute(key: string, value: any) {
+    console.error("setting attribute on non native node")
   }
 
   /* istanbul ignore next */
-  setText(text:string) {
+  setText(text: string) {
     console.log(`setText ${this} ${text}`)
     if (this.nodeType === 3) {
       this.parentNode.setText(text)
@@ -102,11 +102,11 @@ export default class ViewNode {
     }
   }
 
-  onInsertedChild( childNode: ViewNode, index: number) { }
+  onInsertedChild(childNode: ViewNode, index: number) { }
 
-  onRemovedChild( childNode: ViewNode ) { }
+  onRemovedChild(childNode: ViewNode) { }
 
-  insertBefore(childNode:ViewNode, referenceNode:ViewNode) {
+  insertBefore(childNode: ViewNode, referenceNode: ViewNode) {
     console.log(`insert before ${this} ${childNode} ${referenceNode}`)
     if (!childNode) {
       throw new Error(`Can't insert child.`)
@@ -150,7 +150,7 @@ export default class ViewNode {
     this.onInsertedChild(childNode, index);
   }
 
-  appendChild(childNode:ViewNode) {
+  appendChild(childNode: ViewNode) {
     console.log(`append child ${this} ${childNode}`)
     if (!childNode) {
       throw new Error(`Can't append child.`)
@@ -181,7 +181,7 @@ export default class ViewNode {
     this.onInsertedChild(childNode, this.childNodes.length - 1)
   }
 
-  removeChild(childNode:ViewNode) {
+  removeChild(childNode: ViewNode) {
     console.log(`remove child ${this} ${childNode}`)
     if (!childNode) {
       throw new Error(`Can't remove child.`)
@@ -216,7 +216,7 @@ export default class ViewNode {
   }
 
   firstElement() {
-    for(var child of this.childNodes) {
+    for (var child of this.childNodes) {
       if (child.nodeType == 1) {
         return child;
       }

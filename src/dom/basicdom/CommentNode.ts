@@ -7,6 +7,5 @@ export default class CommentNode extends ElementNode {
 
     this.nodeType = 8
     this.text = text
-    console.log(`created ${this}`)
   }
 }

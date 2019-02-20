@@ -1,10 +1,10 @@
 
-import ViewNode from './ViewNode'
-import * as viewUtil from './utils'
+import ViewNode from './basicdom/ViewNode'
 import { KeyframeAnimation } from 'tns-core-modules/ui/animation/keyframe-animation';
 import { CssAnimationParser } from 'tns-core-modules/ui/styling/css-animation-parser';
-import { Page, View, isAndroid, isIOS, EventData } from 'tns-core-modules/ui/page/page';
-import ElementNode from './ElementNode';
+import { Page, View, isAndroid, isIOS, EventData, ContentView } from 'tns-core-modules/ui/page/page';
+import ElementNode from './basicdom/ElementNode';
+import { LayoutBase } from 'tns-core-modules/ui/layouts/layout-base';
 
 interface IStyleProxy {
   setProperty(propertyName: string, value: string, priority?: string): void;
@@ -19,21 +19,15 @@ function camelize(kebab: string): string {
 
 declare module "tns-core-modules/ui/core/view/view" {
   interface View {
-      __SvelteNativeElement__: NativeElementNode;
+    __SvelteNativeElement__: NativeElementNode;
   }
 }
+
 export interface ComponentMeta {
   skipAddToDom?: boolean
   insertChild?: (parent: ViewNode, child: ViewNode, index: number) => void;
   removeChild?: (parent: ViewNode, child: ViewNode) => void;
 }
-
-const XML_ATTRIBUTES = Object.freeze([
-  'style',
-  'rows',
-  'columns',
-  'fontAttributes'
-])
 
 export type EventListener = (args: any) => void;
 
@@ -45,21 +39,21 @@ export default class NativeElementNode extends ElementNode {
   style: IStyleProxy;
   _nativeView: View;
   _meta: ComponentMeta;
-  
+
   constructor(tagName: string, viewClass: typeof View, meta: ComponentMeta = null) {
     super(tagName)
-    
+
     this.nodeType = 1
     this.tagName = tagName
 
     this._meta = Object.assign({}, defaultViewMeta, meta || {});
-       
+
     this._nativeView = new (viewClass as any)()
     this._nativeView.__SvelteNativeElement__ = this;
-    
+
     console.log(`created ${this} ${this._nativeView}`)
 
-    /* style shims */
+    //TODO these style shims mess up the code, extract to external modules
 
     let setStyleAttribute = (value: string): void => {
       this.setAttribute('style', value);
@@ -117,7 +111,7 @@ export default class NativeElementNode extends ElementNode {
       animationInfo.keyframes = animationWithKeyframes.keyframes;
       //combine the keyframes from the css with the animation from the parsed attribute to get a complete animationInfo object
       let animationInstance = KeyframeAnimation.keyframeAnimationFromInfo(animationInfo);
-      
+
       // save and launch the animation
       animations.set(animation, animationInstance);
       animationInstance.play(this.nativeView);
@@ -128,7 +122,7 @@ export default class NativeElementNode extends ElementNode {
       if (animations.has(animation)) {
         let animationInstance = animations.get(animation);
         animations.delete(animation);
-        
+
         if (animationInstance) {
           if (animationInstance.isPlaying) {
             //we don't want to stop right away since svelte removes the animation before it is finished due to our lag time starting the animation.
@@ -181,7 +175,7 @@ export default class NativeElementNode extends ElementNode {
   }
 
   /* istanbul ignore next */
-  setStyle(property:string, value:string) {
+  setStyle(property: string, value: string) {
     console.log(`setStyle ${this} ${property} ${value}`)
     if (!(value = value.trim()).length) {
       return
@@ -208,56 +202,62 @@ export default class NativeElementNode extends ElementNode {
   }
 
   get meta() {
-     return this._meta
+    return this._meta
   }
 
   /* istanbul ignore next */
-  addEventListener(event:string, handler: EventListener) {
+  addEventListener(event: string, handler: EventListener) {
     console.log(`add event listener ${this} ${event}`)
     this.nativeView.on(event, handler)
   }
 
   /* istanbul ignore next */
-  removeEventListener(event:string, handler?: EventListener) {
+  removeEventListener(event: string, handler?: EventListener) {
     console.log(`remove event listener ${this} ${event}`)
     this.nativeView.off(event, handler)
   }
 
-  getAttribute(key:string) {
+  getAttribute(key: string) {
     return (this.nativeView as any)[key]
   }
 
-  onInsertedChild( childNode: ViewNode, index: number) {
-    viewUtil.insertChild(this, childNode, index)
+  onInsertedChild(childNode: ViewNode, index: number) {
+    insertChild(this, childNode, index)
   }
 
-  onRemovedChild( childNode: ViewNode ) {
-    viewUtil.removeChild(this, childNode)
+  onRemovedChild(childNode: ViewNode) {
+    removeChild(this, childNode)
   }
 
 
   /* istanbul ignore next */
-  setAttribute(key:string, value:any) {
+  setAttribute(key: string, value: any) {
     const nv = this.nativeView as any
 
     if (!nv) return;
 
     // normalize key
     if (isAndroid && key.startsWith('android:')) {
-       key = key.substr(8);
+      key = key.substr(8);
     }
     if (isIOS && key.startsWith('ios:')) {
-       key = key.substr(4);
+      key = key.substr(4);
     }
     // try to fix case
     let lowerkey = key.toLowerCase();
     for (let realKey in nv) {
-       if (lowerkey == realKey.toLowerCase()) {
-         key = realKey;
-         break;
-       }
+      if (lowerkey == realKey.toLowerCase()) {
+        key = realKey;
+        break;
+      }
     }
     console.log(`setAttr ${this} ${key} ${value}`)
+
+    //we might be getting an element from a propertyNode eg page.actionBar, unwrap
+    if (value instanceof NativeElementNode) {
+      value = value.nativeView
+    }
+
     try {
       nv[key] = value
     } catch (e) {
@@ -266,12 +266,76 @@ export default class NativeElementNode extends ElementNode {
     }
   }
 
-  
+
   dispatchEvent(event: EventData) {
-    if (this.nativeView) { 
-       //nativescript uses the EventName while dom uses Type
-       event.eventName = (event as any).type;
-       this.nativeView.notify(event);
+    if (this.nativeView) {
+      //nativescript uses the EventName while dom uses Type
+      event.eventName = (event as any).type;
+      this.nativeView.notify(event);
     }
+  }
+}
+
+//TODO merge these into the class above
+
+function insertChild(parentNode: ViewNode, childNode: ViewNode, atIndex = -1) {
+  if (!parentNode) {
+    return
+  }
+
+  if (!(parentNode instanceof NativeElementNode) || !(childNode instanceof NativeElementNode)) {
+    return
+  }
+
+  if (parentNode.meta && typeof parentNode.meta.insertChild === 'function') {
+    return parentNode.meta.insertChild(parentNode, childNode, atIndex)
+  }
+
+  const parentView = parentNode.nativeView
+  const childView = childNode.nativeView
+
+  if (parentView && (parentView as any)._addChildFromBuilder) {
+    (parentView as any)._addChildFromBuilder(
+      childNode._nativeView.constructor.name,
+      childView
+    )
+  } else {
+    throw new Error("Parent can't contain children: " + parentNode + ", " + childNode);
+  }
+}
+
+function removeChild(parentNode: ViewNode, childNode: ViewNode) {
+  if (!parentNode) {
+    return
+  }
+
+  if (!(parentNode instanceof NativeElementNode) || !(childNode instanceof NativeElementNode)) {
+    return
+  }
+
+  if (parentNode.meta && typeof parentNode.meta.removeChild === 'function') {
+    return parentNode.meta.removeChild(parentNode, childNode)
+  }
+
+  if (!childNode.nativeView || !childNode.nativeView) {
+    return
+  }
+
+  const parentView = parentNode.nativeView
+  const childView = childNode.nativeView
+
+  if (parentView instanceof LayoutBase) {
+    parentView.removeChild(childView)
+  } else if (parentView instanceof ContentView) {
+    if (parentView.content === childView) {
+      parentView.content = null
+    }
+    if (childNode.nodeType === 8) {
+      parentView._removeView(childView)
+    }
+  } else if (parentView instanceof View) {
+    parentView._removeView(childView)
+  } else {
+    // throw new Error("Unknown parent type: " + parent);
   }
 }
