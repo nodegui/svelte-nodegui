@@ -1,4 +1,5 @@
 import { normalizeElementName, StyleNode, registerElement, ViewNode, registerCustomElementNode } from './dom'
+import NativeElementNode from './dom/NativeElementNode';
 
 export function registerNativeElements() {
     registerElement(
@@ -161,10 +162,10 @@ export function registerNativeElements() {
         insertChild(parentNode:ViewNode, childNode:ViewNode, atIndex: number) {
           if (normalizeElementName(childNode.tagName) === 'style') {
              //find the top frame el
-             let frame:ViewNode = null;
+             let frame:NativeElementNode = null;
              for (let el of parentNode.ownerDocument.childNodes) {
                 if (normalizeElementName(el.tagName) == 'frame') {
-                   frame = el;
+                   frame = el as NativeElementNode;
                 }
              }
              
