@@ -1,3 +1,3 @@
-export  class AsComponent extends SvelteComponent {
+export class AsComponent extends SvelteComponent {
     component: typeof SvelteComponent;
 }

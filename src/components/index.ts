@@ -1,3 +1,3 @@
-export  { AsComponent } from "./AsComponent";
+export { AsComponent } from "./AsComponent";
 
 
