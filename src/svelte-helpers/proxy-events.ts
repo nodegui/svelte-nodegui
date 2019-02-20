@@ -3,22 +3,22 @@ interface registeredEvent {
     handler: ((event: any) => void)
 }
 
-export default function proxyEvents(node: any, events: {[index: string]: ((event: any) => void)[]} ) {
-   
-    let registeredEvents:registeredEvent[] = [];
+export default function proxyEvents(node: any, events: { [index: string]: ((event: any) => void)[] }) {
 
-    for(let type of Object.keys(events)) {
+    let registeredEvents: registeredEvent[] = [];
+
+    for (let type of Object.keys(events)) {
         let thisType = type;
         let handler = (ev: any) => {
             (events[thisType] || []).forEach(fn => fn(ev));
-        } 
+        }
         node.addEventListener(type, handler);
-        registeredEvents.push({type, handler});
+        registeredEvents.push({ type, handler });
     }
-    
+
     return {
         destroy() {
-            for(let {type, handler} of registeredEvents) {
+            for (let { type, handler } of registeredEvents) {
                 node.removeEventListener(type, handler);
             }
         }

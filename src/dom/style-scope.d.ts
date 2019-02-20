@@ -1,10 +1,10 @@
 
 declare module "tns-core-modules/ui/styling/style-scope" {
     export class StyleScope {
-         _keyframes: { [index:string]: any }   
-         _css: string
+        _keyframes: { [index: string]: any }
+        _css: string
     }
-    
+
 }
 
 declare module "tns-core-modules/ui/styling/css-animation-parser" {

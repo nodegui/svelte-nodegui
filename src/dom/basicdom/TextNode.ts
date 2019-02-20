@@ -1,16 +1,16 @@
 import ViewNode from './ViewNode'
 
 export default class TextNode extends ViewNode {
-  text: string;
-  constructor(text: string) {
-    super()
+    text: string;
+    constructor(text: string) {
+        super()
 
-    this.nodeType = 3
-    this.text = text
-  }
+        this.nodeType = 3
+        this.text = text
+    }
 
-  setText(text: string) {
-    this.text = text
-    this.parentNode.setText(text)
-  }
+    setText(text: string) {
+        this.text = text
+        this.parentNode.setText(text)
+    }
 }

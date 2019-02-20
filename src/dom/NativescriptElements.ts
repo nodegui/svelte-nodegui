@@ -1,6 +1,5 @@
-import { normalizeElementName, ViewNode, registerCustomElementNode, ElementNode } from './basicdom'
+import { registerCustomElementNode } from './basicdom'
 import NativeElementNode, { ComponentMeta } from './NativeElementNode'
-import StyleNode from './StyleElement'
 import { View } from 'tns-core-modules/ui/page/page'
 
 export function registerElement(elementName: string, resolver: () => typeof View, meta: ComponentMeta = null) {
