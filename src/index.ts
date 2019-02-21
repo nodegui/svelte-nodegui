@@ -1,6 +1,6 @@
-import { Frame } from 'tns-core-modules/ui/frame'
 import { run, on, launchEvent } from 'tns-core-modules/application'
-import { ViewNode, NativeElementNode, createElement, initializeDom } from './dom';
+import { navigate, ViewNode, createElement, initializeDom, FrameElement } from './dom';
+
 
 declare global {
     export class SvelteComponent {
@@ -9,23 +9,32 @@ declare global {
     }
 }
 
-export function svelteNative(startPage: typeof SvelteComponent, data: any) {
-    const document = initializeDom();
+export function svelteNative(startPage: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
+    initializeDom();
 
-    //our application main navigation frame
-    let frame = createElement('frame') as NativeElementNode;
-    document.appendChild(frame);
+    //setup a frame so we always have somewhere to hang our css
+    let rootFrame = createElement('frame') as FrameElement;
+    rootFrame.setAttribute("id", "app-root-frame");
 
-    //wait for launch
-    on(launchEvent, () => {
-        let page = new startPage({
-            target: frame,
-            props: data || {}
-        });
-        //dirty way to find page's native view
-        (frame.nativeView as Frame).navigate({ create: () => (frame.firstElement() as NativeElementNode).nativeView });
+    let pageInstance = navigate({
+        page: startPage,
+        props: data || {},
+        frame: rootFrame
     })
 
-    run({ create: () => frame.nativeView });
+    return new Promise((resolve, reject) => {
+        //wait for launch
+        on(launchEvent, () => {
+            console.log("Application Launched");
+            resolve(pageInstance);
+        })
+
+        try {
+            run({ create: () => rootFrame.nativeView });
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
 
+export { navigate, goBack } from "./dom"

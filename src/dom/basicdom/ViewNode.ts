@@ -84,12 +84,12 @@ export default class ViewNode {
     }
 
     getAttribute(key: string): any {
-        return null;
+        return this._attributes[key]
     }
 
     /* istanbul ignore next */
     setAttribute(key: string, value: any) {
-        console.error("setting attribute on non native node")
+        this._attributes[key] = value;
     }
 
     /* istanbul ignore next */

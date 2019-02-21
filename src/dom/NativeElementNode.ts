@@ -217,8 +217,35 @@ export default class NativeElementNode extends ElementNode {
         this.nativeView.off(event, handler)
     }
 
-    getAttribute(key: string) {
-        return (this.nativeView as any)[key]
+    getAttribute(fullkey: string) {
+        let getTarget = this.nativeView as any;
+
+        let keypath = fullkey.split(".");
+        let resolvedKeys: string[] = [];
+
+        while (keypath.length > 0) {
+            if (!getTarget) return null;
+
+            let key = keypath.shift();
+
+            // try to fix case
+            let lowerkey = key.toLowerCase();
+            for (let realKey in getTarget) {
+                if (lowerkey == realKey.toLowerCase()) {
+                    key = realKey;
+                    break;
+                }
+            }
+            resolvedKeys.push(key)
+
+            if (keypath.length > 0) {
+                getTarget = getTarget[key];
+            } else {
+                return getTarget[key];
+            }
+        }
+
+        return null;
     }
 
     onInsertedChild(childNode: ViewNode, index: number) {
@@ -231,38 +258,50 @@ export default class NativeElementNode extends ElementNode {
 
 
     /* istanbul ignore next */
-    setAttribute(key: string, value: any) {
+    setAttribute(fullkey: string, value: any) {
         const nv = this.nativeView as any
-
-        if (!nv) return;
+        let setTarget = nv;
 
         // normalize key
-        if (isAndroid && key.startsWith('android:')) {
-            key = key.substr(8);
+        if (isAndroid && fullkey.startsWith('android:')) {
+            fullkey = fullkey.substr(8);
         }
-        if (isIOS && key.startsWith('ios:')) {
-            key = key.substr(4);
+        if (isIOS && fullkey.startsWith('ios:')) {
+            fullkey = fullkey.substr(4);
         }
-        // try to fix case
-        let lowerkey = key.toLowerCase();
-        for (let realKey in nv) {
-            if (lowerkey == realKey.toLowerCase()) {
-                key = realKey;
-                break;
-            }
-        }
-        console.log(`setAttr ${this} ${key} ${value}`)
 
         //we might be getting an element from a propertyNode eg page.actionBar, unwrap
         if (value instanceof NativeElementNode) {
             value = value.nativeView
         }
+        let keypath = fullkey.split(".");
+        let resolvedKeys: string[] = [];
 
-        try {
-            nv[key] = value
-        } catch (e) {
-            // ignore but log
-            console.warn(`set attribute threw an error, attr:${key} on ${this._tagName}: ${e.message}`)
+        while (keypath.length > 0) {
+            if (!setTarget) return;
+            let key = keypath.shift();
+
+            // try to fix case
+            let lowerkey = key.toLowerCase();
+            for (let realKey in setTarget) {
+                if (lowerkey == realKey.toLowerCase()) {
+                    key = realKey;
+                    break;
+                }
+            }
+            resolvedKeys.push(key)
+
+            if (keypath.length > 0) {
+                setTarget = setTarget[key];
+            } else {
+                try {
+                    console.log(`setAttr ${this} ${resolvedKeys.join(".")} ${value}`)
+                    setTarget[key] = value
+                } catch (e) {
+                    // ignore but log
+                    console.warn(`set attribute threw an error, attr:${key} on ${this._tagName}: ${e.message}`)
+                }
+            }
         }
     }
 
@@ -294,14 +333,33 @@ function insertChild(parentNode: ViewNode, childNode: ViewNode, atIndex = -1) {
     const parentView = parentNode.nativeView
     const childView = childNode.nativeView
 
-    if (parentView && (parentView as any)._addChildFromBuilder) {
+    //use the builder logic if we aren't being dynamic, to catch config items like <actionbar> that are not likely to be toggled
+    if (atIndex < 0 && (parentView as any)._addChildFromBuilder) {
         (parentView as any)._addChildFromBuilder(
             childNode._nativeView.constructor.name,
             childView
         )
-    } else {
-        throw new Error("Parent can't contain children: " + parentNode + ", " + childNode);
+        return
     }
+
+    if (parentView instanceof LayoutBase) {
+        return (atIndex < 0) ? parentView.addChild(childView) : parentView.insertChild(childView, atIndex);
+    }
+
+    if ((parentView as any)._addChildFromBuilder) {
+        return (parentView as any)._addChildFromBuilder(
+            childNode._nativeView.constructor.name,
+            childView
+        )
+    }
+
+    if (parentView instanceof ContentView) {
+        parentView.content = childView;
+        return;
+    }
+
+    throw new Error("Parent can't contain children: " + parentNode + ", " + childNode);
+
 }
 
 function removeChild(parentNode: ViewNode, childNode: ViewNode) {
