@@ -1,8 +1,8 @@
-import { registerSvelteElements } from './SvelteElements';
-import { registerNativeElements } from './NativescriptElements';
-import SvelteNativeDocument from './SvelteNativeDocument';
-import NativeElementNode from './NativeElementNode';
-
+import { registerSvelteElements } from './SvelteElements'
+import { registerNativeElements } from './NativescriptElements'
+import SvelteNativeDocument from './SvelteNativeDocument'
+import NativeElementNode from './NativeElementNode'
+export { default as FrameElement } from "./FrameElement"
 export { default as SvelteNativeDocument } from './SvelteNativeDocument'
 export { default as NativeElementNode } from './NativeElementNode'
 export { registerCustomElementNode, createElement, ViewNode } from './basicdom'

@@ -30,7 +30,7 @@ function resolveFrame(frameSpec: FrameSpec): Frame {
     return targetFrame;
 }
 
-export function navigate(options: NavigationOptions) {
+export function navigate(options: NavigationOptions): SvelteComponent {
     let { frame, page, props = {}, ...navOptions } = options;
 
     let targetFrame = resolveFrame(frame);
@@ -56,6 +56,8 @@ export function navigate(options: NavigationOptions) {
         ...navOptions,
         create: () => nativePage
     });
+
+    return pageInstance;
 }
 
 export interface BackNavigationOptions {

@@ -1,5 +1,6 @@
 import { run, on, launchEvent } from 'tns-core-modules/application'
-import { ViewNode, NativeElementNode, createElement, initializeDom } from './dom';
+import { navigate, ViewNode, createElement, initializeDom, FrameElement } from './dom';
+
 
 declare global {
     export class SvelteComponent {
@@ -10,17 +11,26 @@ declare global {
 
 export function svelteNative(startPage: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
     initializeDom();
-    let host = createElement('fragment');
-    let main = new startPage({ target: host, props: data || {} })
+
+    //setup a frame so we always have somewhere to hang our css
+    let rootFrame = createElement('frame') as FrameElement;
+    rootFrame.setAttribute("id", "app-root-frame");
+
+    let pageInstance = navigate({
+        page: startPage,
+        props: data || {},
+        frame: rootFrame
+    })
+
     return new Promise((resolve, reject) => {
         //wait for launch
         on(launchEvent, () => {
             console.log("Application Launched");
-            resolve(main);
+            resolve(pageInstance);
         })
 
         try {
-            run({ create: () => (host.firstElement() as NativeElementNode).nativeView });
+            run({ create: () => rootFrame.nativeView });
         } catch (e) {
             reject(e);
         }
