@@ -2,6 +2,7 @@ import { registerCustomElementNode } from './basicdom'
 import NativeElementNode, { ComponentMeta } from './NativeElementNode'
 import { View } from 'tns-core-modules/ui/page/page'
 import FrameElement from './FrameElement';
+import PageElement from './PageElement';
 
 export function registerElement(elementName: string, resolver: () => typeof View, meta: ComponentMeta = null) {
   registerCustomElementNode(elementName, () => new NativeElementNode(elementName, resolver(), meta));
@@ -82,7 +83,6 @@ export function registerNativeElements() {
     'ListPicker',
     () => require('tns-core-modules/ui/list-picker').ListPicker,
   )
-  registerElement('Page', () => require('tns-core-modules/ui/page').Page)
 
   registerElement(
     'Placeholder',
@@ -164,9 +164,5 @@ export function registerNativeElements() {
    })
  */
   registerCustomElementNode('Frame', () => new FrameElement())
-
-
-
-
-
+  registerCustomElementNode('Page', () => new PageElement())
 }

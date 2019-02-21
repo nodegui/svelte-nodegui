@@ -8,17 +8,23 @@ declare global {
     }
 }
 
-export function svelteNative(startPage: typeof SvelteComponent, data: any) {
+export function svelteNative(startPage: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
     initializeDom();
     let host = createElement('fragment');
     let main = new startPage({ target: host, props: data || {} })
+    return new Promise((resolve, reject) => {
+        //wait for launch
+        on(launchEvent, () => {
+            console.log("Application Launched");
+            resolve(main);
+        })
 
-    //wait for launch
-    on(launchEvent, () => {
-        console.log("Application Launched");
-        //TODO: return startpage as promise result
-    })
-
-    run({ create: () => (host.firstElement() as NativeElementNode).nativeView });
+        try {
+            run({ create: () => (host.firstElement() as NativeElementNode).nativeView });
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
 
+export { navigate, goBack } from "./dom"

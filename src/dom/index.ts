@@ -6,6 +6,8 @@ import NativeElementNode from './NativeElementNode';
 export { default as SvelteNativeDocument } from './SvelteNativeDocument'
 export { default as NativeElementNode } from './NativeElementNode'
 export { registerCustomElementNode, createElement, ViewNode } from './basicdom'
+export { navigate, goBack, NavigationOptions, BackNavigationOptions } from './navigation'
+
 
 function installGlobalShims(): SvelteNativeDocument {
 

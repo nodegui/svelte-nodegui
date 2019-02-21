@@ -4,12 +4,19 @@ import TextNode from './TextNode';
 import PropertyNode from './PropertyNode';
 
 export default class ElementNode extends ViewNode {
-    id: string;
+
     constructor(tagName: string) {
         super()
-
         this.nodeType = 1
         this.tagName = tagName
+    }
+
+    get id() {
+        return this.getAttribute('id')
+    }
+
+    set id(value: string) {
+        this.setAttribute('id', value)
     }
 
     appendChild(childNode: ViewNode) {
