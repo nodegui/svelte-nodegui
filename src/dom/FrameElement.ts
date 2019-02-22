@@ -1,6 +1,7 @@
-import { createElement } from "./basicdom";
+import { createElement, ViewNode } from "./basicdom";
 import { Frame } from 'tns-core-modules/ui/frame'
 import NativeElementNode from "./NativeElementNode";
+import PageElement from "./PageElement";
 
 
 export default class FrameElement extends NativeElementNode {
@@ -24,5 +25,15 @@ export default class FrameElement extends NativeElementNode {
 
     set nativeView(view: Frame) {
         super.nativeView = view
+    }
+
+    //In regular native script, Frame elements aren't meant to have children, we instead allow it to have one.. a page.. as a convenience
+    // and set the instance as the default page by navigating to it.
+    onInsertedChild(childNode: ViewNode, index: number) {
+        //only handle page nodes
+        if (!(childNode instanceof PageElement))
+            return;
+
+        this.nativeView.navigate({ create: () => childNode.nativeView })
     }
 }
