@@ -7,9 +7,15 @@ WIP proof of concept for wiring svelte 3 up to nativescript. based on the wonder
  - [x] Port dom from nativescript-vue and add svelte required items
  - [x] Get basic todo app working
  - [x] Expose navigation
- - [ ] Modals
+ - [x] Modals
  - [x] wire up sveltes in,out and animate to Nativescripts native animations
- - [ ] work out an alternative for `<ios>` and `<android>` tags
+ - [x] work out an alternative for `<ios>` and `<android>` tags ( just import isIOS and isAndroid from platform and use an if statement)
+ - [ ] alternative for sveltes css intensive transitions (svelte-native/transition)
+ - [ ] publish on npm
+ - [ ] Port grocery app
+ - [x] At least 1 emoji in readme
+ - [ ] Tests 😳
+ - [ ] Docs
 
 
 
