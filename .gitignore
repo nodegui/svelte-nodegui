@@ -1,5 +1,4 @@
 .rpt2_cache
 node_modules
-dist/*
-!dist/package.json
+dist
 .vscode
