@@ -25,5 +25,10 @@ Object.assign(destinationPackageContent, {
 })
 
 const finalFileContent = JSON.stringify(destinationPackageContent, null, 4)
-fs.writeFileSync(path.resolve(__dirname, "../dist/package.json"), JSON.stringify(destinationPackageContent, null, 4))
+fs.writeFileSync(path.resolve(__dirname, "../dist/package.json"), finalFileContent)
 
+//Copy our readme and license file
+const filesToCopy = ["Readme.md", "LICENSE"]
+for (let file of filesToCopy) {
+    fs.copyFileSync(path.resolve(__dirname, `../${file}`), path.resolve(__dirname, `../dist/${file}`))
+}

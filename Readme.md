@@ -1,33 +1,45 @@
-WIP proof of concept for wiring svelte 3 up to nativescript. based on the wonderful nativescript-vue.
+Allows the use of [Svelte (v3)](https://github.com/sveltejs/svelte) within a [NativeScript](https://github.com/nativescript/nativescript) application.
+(Thanks to nativescript-vue for their dom implementation)
+
+**__This is still alpha software, use at own risk, contributions welcome__**
 
 ![todo in svelte-native](https://raw.githubusercontent.com/halfnelson/svelte-native/master/nativescript-svelte-todo.gif)
 
-## todo
+## Features
 
- - [x] Port dom from nativescript-vue and add svelte required items
- - [x] Get basic todo app working
- - [x] Expose navigation
- - [x] Modals
- - [x] wire up sveltes in,out and animate to Nativescripts native animations
- - [x] work out an alternative for `<ios>` and `<android>` tags ( just import isIOS and isAndroid from platform and use an if statement)
+Svelte-Native includes Svelte specific integrations such as
+
+ * The ability to use svelte components to create native applications on top of NativeScript core
+ * Svelte specific navigation and modals eg `navigate({ page: MySvelteComponent })`
+ * Integration with svelte's transistions eg `<label transition:fade="{duration: 2000}">`
+ * Integration with sveltes scoped styles
+
+## Todo
  - [ ] alternative for sveltes css intensive transitions (svelte-native/transition)
- - [ ] publish on npm
  - [ ] Port grocery app
  - [x] At least 1 emoji in readme
  - [ ] Tests 😳
  - [ ] Docs
 
-
-
-## usage
-
-Until this is package is up on npm, you can install it via:
+## Installation
 
 ```bash
-$ npm run build
-$ cd dist && npm link
+npm install svelte-native
+npm install svelte@beta
+npm install svelte-loader
 ```
-you can now use `npm link svelte-native` in your projects to install this package
+
+Setup svelte loader plugin in the webpack.config.js as per the (svelte-loader)[https://github.com/sveltejs/svelte-loader] documentation. eg:
+
+```js
+{
+    test: /\.(html|svelte)$/,
+    exclude: /node_modules/,
+    use: 'svelte-loader'
+},
+```
+
+## Usage
 
 App.html
 ```html
@@ -56,6 +68,5 @@ import { svelteNative } from 'svelte-native'
 
 svelteNative(App, {msg: "Hi from launcher"});
 ```
-
 
 see https://github.com/halfnelson/svelte-native-test-app for an example project
