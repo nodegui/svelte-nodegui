@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "npx rimraf ./dist",
     "build": "npm run clean && rollup -c && node ./scripts/create-pkg.js",
-    "watch": "rollup -cw"
+    "watch": "rollup -cw",
+    "deploy": "npm run build && cd dist && npm publish"
   },
   "author": "David Pershouse",
   "license": "MIT",
