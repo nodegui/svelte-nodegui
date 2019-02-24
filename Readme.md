@@ -23,25 +23,21 @@ Svelte-Native includes Svelte specific integrations such as
 
 ## Installation
 
+You can get started developing with this using the [latest template app](https://github.com/halfnelson/svelte-native-template)
+
 ```bash
-npm install svelte-native
-npm install svelte@beta
-npm install svelte-loader
+$ degit halfnelson/svelte-native-template myapp
 ```
 
-Setup svelte loader plugin in the webpack.config.js as per the (svelte-loader)[https://github.com/sveltejs/svelte-loader] documentation. eg:
+A fresh svelte-native app will be found in the `myapp` folder
 
-```js
-{
-    test: /\.(html|svelte)$/,
-    exclude: /node_modules/,
-    use: 'svelte-loader'
-},
-```
+Once installed, the build workflow is to use the `tns build` or `tns run` commands as normal. 
+
+**__remember to include `--bundle` on your `tns` commands so the svelte is compiled!__**
 
 ## Usage
 
-App.html
+App.svelte
 ```html
 <page xmlns="tns">
     <actionBar title="Svelte Native"></actionBar>
@@ -62,11 +58,11 @@ App.html
 
 Main.ts
 ```js
-import App from './components/App.html';
+import App from './components/App.svelte';
 
 import { svelteNative } from 'svelte-native'
 
 svelteNative(App, {msg: "Hi from launcher"});
 ```
 
-see https://github.com/halfnelson/svelte-native-test-app for an example project
+
