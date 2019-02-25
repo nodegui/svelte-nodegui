@@ -15,7 +15,7 @@ function createComponent($$slot_default, $$scope) {
     //const get_default_slot_changes = ({ props }) => ({ props: props });
     //const get_default_slot_context = ({ props }) => ({ props: props });
 
-    const get_default_slot_context = ({ props }) => ({ ...props });
+    const get_default_slot_context = ({ props }) => (assign({}, props));
 
     function create_fragment(ctx) {
         const default_slot_1 = ctx.$$slot_default;
