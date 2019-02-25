@@ -9,7 +9,10 @@ let desiredKeys = [
     "description",
     "author",
     "license",
-    "peerDependencies"
+    "peerDependencies",
+    "keywords",
+    "homepage",
+    "repository"
 ]
 
 let destinationPackageContent = {}
