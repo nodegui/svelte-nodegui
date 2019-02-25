@@ -34,10 +34,10 @@ export function asSvelteTransition(node: NativeElementNode, nativeAnimation: (t:
         }
 
         // TODO 
-        // invert the "easing" constant on reverse direction
-        // if starting partway though an animation
-        // convert easing to linear or other depending on how far through the curve it is (guestimate of best match)
-        // then add native animation for duration
+        // convert the easing into a cubicBezier for the animation (https://docs.nativescript.org/api-reference/modules/_ui_enums_.animationcurve#cubicBezier)
+        // use the functions in the bezier.ts file to invert it and slice it etc
+        // eg normalizeCurve(reverseCurve(partialCurveFrom(curve, startTime, endTime)))
+
     }
 
 }
