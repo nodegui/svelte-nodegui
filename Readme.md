@@ -15,7 +15,6 @@ Svelte-Native includes Svelte specific integrations such as
  * Integration with sveltes scoped styles
 
 ## Todo
- - [ ] alternative for sveltes css intensive transitions (svelte-native/transition)
  - [ ] Port grocery app
  - [x] At least 1 emoji in readme
  - [ ] Tests 😳
