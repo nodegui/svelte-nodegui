@@ -17,11 +17,7 @@ function camelize(kebab: string): string {
     return kebab.replace(/[\-]+(\w)/g, (m, l) => l.toUpperCase());
 }
 
-declare module "tns-core-modules/ui/core/view/view" {
-    interface View {
-        __SvelteNativeElement__: NativeElementNode;
-    }
-}
+
 
 export interface ComponentMeta {
     skipAddToDom?: boolean
@@ -48,8 +44,8 @@ export default class NativeElementNode extends ElementNode {
 
         this._meta = Object.assign({}, defaultViewMeta, meta || {});
 
-        this._nativeView = new (viewClass as any)()
-        this._nativeView.__SvelteNativeElement__ = this;
+        this._nativeView = new (viewClass as any)();
+        (this._nativeView as any).__SvelteNativeElement__ = this;
 
         console.log(`created ${this} ${this._nativeView}`)
 
@@ -65,7 +61,7 @@ export default class NativeElementNode extends ElementNode {
 
         let getParentPage = (): NativeElementNode => {
             if (this.nativeView && this.nativeView.page) {
-                return this.nativeView.page.__SvelteNativeElement__;
+                return (this.nativeView.page as any).__SvelteNativeElement__;
             }
             return null;
         }

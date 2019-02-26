@@ -2,10 +2,6 @@ import { ListView, ItemEventData, ItemsSource } from 'tns-core-modules/ui/list-v
 import { NativeElementNode, createElement } from "../dom";
 
 export default function componentAsListItem(node: NativeElementNode, component: () => typeof SvelteComponent) {
-    if (node.tagName.toLowerCase() != "listview") {
-        throw new Error("componentAsListItem only valid on listview elements")
-    }
-
     const listView: ListView = node.nativeView as ListView;
 
     const updateListItem = (args: ItemEventData) => {
@@ -23,7 +19,7 @@ export default function componentAsListItem(node: NativeElementNode, component: 
             item = (items as any)[args.index]
         }
 
-        if (!args.view) {
+        if (!args.view || !(args.view as any).__SvelteComponent__) {
             console.log("creating view for ", args.index, item.name)
             let wrapper = createElement('StackLayout') as NativeElementNode;
             let componentInstance = new (component())({

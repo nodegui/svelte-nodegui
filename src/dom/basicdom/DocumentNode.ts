@@ -22,7 +22,7 @@ export default class DocumentNode extends ViewNode {
 
     createElement(tagName: string): ElementNode {
         if (tagName.indexOf(".") >= 0) {
-            let bits = this.tagName.split(".", 2);
+            let bits = tagName.split(".", 2);
             return this.createPropertyNode(bits[0], bits[1]);
         }
         return createElement(tagName);
