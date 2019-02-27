@@ -15,7 +15,7 @@ Svelte-Native includes Svelte specific integrations such as
  * Integration with sveltes scoped styles
 
 ## Todo
- - [ ] Port grocery app
+ - [x] Port grocery app ✔ [Done](https://github.com/halfnelson/svelte-native-grocery)
  - [x] At least 1 emoji in readme
  - [ ] Tests 😳
  - [ ] Docs
