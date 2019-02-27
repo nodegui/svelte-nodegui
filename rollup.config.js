@@ -10,7 +10,7 @@ let localModules = ["dom", "svelte-helpers", "components", "transitions"]
 
 let plugins = [
   svelte({
-    include: 'src/components/**/*.html',
+    include: 'src/components/**/*.svelte',
   }),
   typescript({
     typescript: require('typescript'),

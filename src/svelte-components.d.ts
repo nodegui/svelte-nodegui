@@ -1,5 +1,5 @@
 
-declare module "*.html" {
+declare module "*.svelte" {
     export default SvelteComponent;
 }
 
