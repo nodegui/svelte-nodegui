@@ -1,4 +1,3 @@
-import { createElement } from "./basicdom";
 import { Page } from 'tns-core-modules/ui/page'
 import NativeElementNode from "./NativeElementNode";
 

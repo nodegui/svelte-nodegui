@@ -1,4 +1,4 @@
-import { ElementNode } from './basicdom'
+import { ElementNode } from '../basicdom'
 import { StyleScope } from 'tns-core-modules/ui/styling/style-scope'
 import { topmost, Frame } from 'tns-core-modules/ui/frame'
 

@@ -1,8 +1,8 @@
 import { topmost, NavigationTransition, Frame, getFrameById, Page, BackstackEntry, ViewBase } from "tns-core-modules/ui/frame/frame";
-import FrameElement from "./FrameElement";
+import FrameElement from "./native/FrameElement";
 import { createElement } from "./basicdom";
-import PageElement from "./PageElement";
-import NativeElementNode from "./NativeElementNode";
+import PageElement from "./native/PageElement";
+import NativeElementNode from "./native/NativeElementNode";
 
 export type FrameSpec = Frame | FrameElement | string
 export type PageSpec = typeof SvelteComponent;

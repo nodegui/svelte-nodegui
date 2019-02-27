@@ -1,11 +1,12 @@
-import { registerSvelteElements } from './SvelteElements'
-import { registerNativeElements } from './NativescriptElements'
-import SvelteNativeDocument from './SvelteNativeDocument'
-import NativeElementNode from './NativeElementNode'
-export { default as FrameElement } from "./FrameElement"
-export { default as SvelteNativeDocument } from './SvelteNativeDocument'
-export { default as NativeElementNode } from './NativeElementNode'
-export { registerCustomElementNode, createElement, ViewNode } from './basicdom'
+import { registerSvelteElements } from './svelte-elements'
+import { registerNativeElements } from './nativescript-elements'
+import SvelteNativeDocument from './svelte/SvelteNativeDocument'
+import NativeElementNode from './native/NativeElementNode'
+
+export { default as FrameElement } from "./native/FrameElement"
+export { default as SvelteNativeDocument } from './svelte/SvelteNativeDocument'
+export { default as NativeElementNode } from './native/NativeElementNode'
+export { registerElement, createElement, ViewNode } from './basicdom'
 export { navigate, goBack, showModal, NavigationOptions, BackNavigationOptions } from './navigation'
 
 

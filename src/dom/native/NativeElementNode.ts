@@ -1,9 +1,9 @@
 
-import ViewNode from './basicdom/ViewNode'
+import ViewNode from '../basicdom/ViewNode'
 import { KeyframeAnimation } from 'tns-core-modules/ui/animation/keyframe-animation';
 import { CssAnimationParser } from 'tns-core-modules/ui/styling/css-animation-parser';
 import { Page, View, isAndroid, isIOS, EventData, ContentView } from 'tns-core-modules/ui/page/page';
-import ElementNode from './basicdom/ElementNode';
+import ElementNode from '../basicdom/ElementNode';
 import { LayoutBase } from 'tns-core-modules/ui/layouts/layout-base';
 
 interface IStyleProxy {

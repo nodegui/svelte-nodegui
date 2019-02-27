@@ -1,42 +1,37 @@
-import { registerCustomElementNode } from './basicdom'
-import NativeElementNode, { ComponentMeta } from './NativeElementNode'
+import { registerElement } from './basicdom'
+import NativeElementNode, { ComponentMeta } from './native/NativeElementNode'
 import { View } from 'tns-core-modules/ui/page/page'
-import FrameElement from './FrameElement';
-import PageElement from './PageElement';
+import FrameElement from './native/FrameElement';
+import PageElement from './native/PageElement';
+import ListViewElement from './native/ListViewElement';
 
-export function registerElement(elementName: string, resolver: () => typeof View, meta: ComponentMeta = null) {
-  registerCustomElementNode(elementName, () => new NativeElementNode(elementName, resolver(), meta));
+export function registerNativeElement(elementName: string, resolver: () => typeof View, meta: ComponentMeta = null) {
+  registerElement(elementName, () => new NativeElementNode(elementName, resolver(), meta));
 }
 
 
 export function registerNativeElements() {
-  registerElement(
+  registerNativeElement(
     'ActionBar',
     () => require('tns-core-modules/ui/action-bar').ActionBar
   )
 
-  registerElement(
+  registerNativeElement(
     'ActionItem',
     () => require('tns-core-modules/ui/action-bar').ActionItem
   )
 
-
-  registerElement(
-    'ListView',
-    () => require('tns-core-modules/ui/list-view').ListView
-  )
-
-  registerElement(
+  registerNativeElement(
     'NavigationButton',
     () => require('tns-core-modules/ui/action-bar').NavigationButton
   )
 
-  registerElement(
+  registerNativeElement(
     'TabView',
     () => require('tns-core-modules/ui/tab-view').TabView
   )
 
-  registerElement(
+  registerNativeElement(
     'TabViewItem',
     () => require('tns-core-modules/ui/tab-view').TabViewItem
   )
@@ -45,54 +40,54 @@ export function registerNativeElements() {
   // NS components which uses the automatic registerElement Vue wrapper
   // as they do not need any special logic
 
-  registerElement('Label', () => require('tns-core-modules/ui/label').Label)
+  registerNativeElement('Label', () => require('tns-core-modules/ui/label').Label)
 
-  registerElement(
+  registerNativeElement(
     'DatePicker',
     () => require('tns-core-modules/ui/date-picker').DatePicker,
   )
 
-  registerElement(
+  registerNativeElement(
     'AbsoluteLayout',
     () => require('tns-core-modules/ui/layouts/absolute-layout').AbsoluteLayout
   )
-  registerElement(
+  registerNativeElement(
     'ActivityIndicator',
     () => require('tns-core-modules/ui/activity-indicator').ActivityIndicator
   )
-  registerElement('Border', () => require('tns-core-modules/ui/border').Border)
-  registerElement('Button', () => require('tns-core-modules/ui/button').Button)
-  registerElement(
+  registerNativeElement('Border', () => require('tns-core-modules/ui/border').Border)
+  registerNativeElement('Button', () => require('tns-core-modules/ui/button').Button)
+  registerNativeElement(
     'ContentView',
     () => require('tns-core-modules/ui/content-view').ContentView
   )
-  registerElement(
+  registerNativeElement(
     'DockLayout',
     () => require('tns-core-modules/ui/layouts/dock-layout').DockLayout
   )
-  registerElement(
+  registerNativeElement(
     'GridLayout',
     () => require('tns-core-modules/ui/layouts/grid-layout').GridLayout
   )
-  registerElement(
+  registerNativeElement(
     'HtmlView',
     () => require('tns-core-modules/ui/html-view').HtmlView
   )
-  registerElement('Image', () => require('tns-core-modules/ui/image').Image)
-  registerElement(
+  registerNativeElement('Image', () => require('tns-core-modules/ui/image').Image)
+  registerNativeElement(
     'ListPicker',
     () => require('tns-core-modules/ui/list-picker').ListPicker,
   )
 
-  registerElement(
+  registerNativeElement(
     'Placeholder',
     () => require('tns-core-modules/ui/placeholder').Placeholder
   )
-  registerElement(
+  registerNativeElement(
     'Progress',
     () => require('tns-core-modules/ui/progress').Progress,
   )
-  registerElement(
+  registerNativeElement(
     'ProxyViewContainer',
     () => require('tns-core-modules/ui/proxy-view-container').ProxyViewContainer
   )
@@ -100,69 +95,63 @@ export function registerNativeElements() {
   //   'Repeater',
   //   () => require('tns-core-modules/ui/repeater').Repeater
   // )
-  registerElement(
+  registerNativeElement(
     'ScrollView',
     () => require('tns-core-modules/ui/scroll-view').ScrollView
   )
-  registerElement(
+  registerNativeElement(
     'SearchBar',
     () => require('tns-core-modules/ui/search-bar').SearchBar,
   )
-  registerElement(
+  registerNativeElement(
     'SegmentedBar',
     () => require('tns-core-modules/ui/segmented-bar').SegmentedBar,
   )
-  registerElement(
+  registerNativeElement(
     'SegmentedBarItem',
     () => require('tns-core-modules/ui/segmented-bar').SegmentedBarItem
   )
-  registerElement('Slider', () => require('tns-core-modules/ui/slider').Slider)
-  registerElement(
+  registerNativeElement('Slider', () => require('tns-core-modules/ui/slider').Slider)
+  registerNativeElement(
     'StackLayout',
     () => require('tns-core-modules/ui/layouts/stack-layout').StackLayout
   )
-  registerElement(
+  registerNativeElement(
     'FlexboxLayout',
     () => require('tns-core-modules/ui/layouts/flexbox-layout').FlexboxLayout
   )
-  registerElement('Switch', () => require('tns-core-modules/ui/switch').Switch)
+  registerNativeElement('Switch', () => require('tns-core-modules/ui/switch').Switch)
 
-  registerElement(
+  registerNativeElement(
     'TextField',
     () => require('tns-core-modules/ui/text-field').TextField,
 
   )
-  registerElement(
+  registerNativeElement(
     'TextView',
     () => require('tns-core-modules/ui/text-view').TextView,
 
   )
-  registerElement(
+  registerNativeElement(
     'TimePicker',
     () => require('tns-core-modules/ui/time-picker').TimePicker,
 
   )
-  registerElement(
+  registerNativeElement(
     'WebView',
     () => require('tns-core-modules/ui/web-view').WebView
   )
-  registerElement(
+  registerNativeElement(
     'WrapLayout',
     () => require('tns-core-modules/ui/layouts/wrap-layout').WrapLayout
   )
-  registerElement(
+  registerNativeElement(
     'FormattedString',
     () => require('tns-core-modules/text/formatted-string').FormattedString
   )
-  registerElement('Span', () => require('tns-core-modules/text/span').Span)
+  registerNativeElement('Span', () => require('tns-core-modules/text/span').Span)
 
-  /*
-   registerElement('Frame', () => require('tns-core-modules/ui/frame').Frame, {
-     insertChild() {
-       //dont bother
-     }
-   })
- */
-  registerCustomElementNode('Frame', () => new FrameElement())
-  registerCustomElementNode('Page', () => new PageElement())
+  registerElement('Frame', () => new FrameElement())
+  registerElement('Page', () => new PageElement())
+  registerElement('ListView', () => new ListViewElement())
 }

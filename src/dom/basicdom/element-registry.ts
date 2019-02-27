@@ -1,10 +1,8 @@
 import { normalizeElementName } from './ViewNode'
 import ElementNode from './ElementNode';
 
-export type NodeResolver = () => ElementNode;
-
 interface ElementEntry {
-    resolver: NodeResolver,
+    resolver: () => ElementNode,
 }
 
 const elementMap: { [index: string]: ElementEntry } = {}
@@ -17,7 +15,7 @@ function registerElementResolver(elementName: string, entry: ElementEntry) {
     elementMap[normalizedName] = entry
 }
 
-export function registerCustomElementNode(elementName: string, resolver: NodeResolver) {
+export function registerElement(elementName: string, resolver: () => ElementNode) {
     registerElementResolver(elementName, { resolver: resolver })
 }
 

@@ -1,5 +1,4 @@
-import { ElementNode, ViewNode, normalizeElementName } from "./basicdom";
-import NativeElementNode from "./NativeElementNode";
+import { ElementNode, ViewNode } from "../basicdom";
 import StyleElement from "./StyleElement";
 import { topmost } from "tns-core-modules/ui/frame"
 

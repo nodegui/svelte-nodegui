@@ -1,4 +1,4 @@
-import { createElement, ViewNode } from "./basicdom";
+import { createElement, ViewNode } from "../basicdom";
 import { Frame } from 'tns-core-modules/ui/frame'
 import NativeElementNode from "./NativeElementNode";
 import PageElement from "./PageElement";

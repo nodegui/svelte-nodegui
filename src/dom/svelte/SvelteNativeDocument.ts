@@ -1,5 +1,5 @@
 
-import { DocumentNode, ElementNode, createElement, TextNode } from './basicdom';
+import { DocumentNode, ElementNode, createElement, TextNode } from '../basicdom';
 
 export default class SvelteNativeDocument extends DocumentNode {
     head: ElementNode;
