@@ -6,8 +6,35 @@ author: Halfnelson
 authorURL: https://twitter.com/halfnelson_au/
 ---
 
-After my experience creating a PWA using preact and shipping with getCapactior, I was looking for a way to write mobile apps that aren't just a big web view. I found Nativescript-Vue, but I didn't want to use Vue. I wanted to use the next generation of web frameworks, namely Svelte. In particular, Svelte's upcoming version 3.
+Svelte is a next gen web framework that compiles your component code into fast, efficient, vanilla javascript DOM manipulations. 
 
-The marriage of Svelte's tiny payloads and speedy DOM updates seem like a perfect fit for mobile development and shortly afterward, Svelte Native was born.
+Nativescript takes the native api surface of iOS and Android and exposes them as vanilla javascript objects.
+
+Svelte Native is a library that exposes NativeScripts view objects as DOM elements which can be manipulated by Svelte components.
+
+### But doesn't NativeScript already offer Vue and Angular support?
+
+It does!, and they are supported by the nativescript developers. However the marriage of Svelte's tiny payload size, low boilerplate component definitions, and hyper efficient DOM updates seem like a great fit for mobile development.
+
+### What does it look like
+
+```html
+<page xmlns="tns" class="page">
+    <actionBar title="Svelte Native App" class="action-bar" />
+    <stackLayout class="p-20">
+        <label text="Tap the button" class="h1 text-center" />
+        <button text="TAP" on:tap="{ counter-- }" class="btn btn-primary btn-active" />
+        <label class="h2 text-center" textWrap="true">{message}</label>
+    </stackLayout>
+</page>
+
+<script>
+    let counter = 42;
+    let message;
+    $: message = (counter <= 0)
+                    ? "Hoorraaay! You unlocked the Svelte-Native clicker achievement!"
+                    : `${counter} taps left`
+</script>
+```
 
 
