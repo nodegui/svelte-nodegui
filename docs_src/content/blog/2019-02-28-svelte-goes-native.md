@@ -37,4 +37,5 @@ It does!, and they are supported by the nativescript developers. However the mar
 </script>
 ```
 
+[Jump onto the guide](/guide) to learn more
 
