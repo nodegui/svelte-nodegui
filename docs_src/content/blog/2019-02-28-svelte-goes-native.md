@@ -12,9 +12,15 @@ Nativescript takes the native api surface of iOS and Android and exposes them as
 
 Svelte Native is a library that exposes NativeScripts view objects as DOM elements which can be manipulated by Svelte components.
 
+![nativescript + svelte = svelte-native](/logos_combined.svg)
+
+
+
 ### But doesn't NativeScript already offer Vue and Angular support?
 
 It does!, and they are supported by the nativescript developers. However the marriage of Svelte's tiny payload size, low boilerplate component definitions, and hyper efficient DOM updates seem like a great fit for mobile development.
+
+
 
 ### What does it look like
 

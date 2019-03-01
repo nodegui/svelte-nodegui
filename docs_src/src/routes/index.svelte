@@ -239,6 +239,3 @@ tns run android --bundle
 		<p><a rel="prefetch" class="cta" href="guide">Learn Svelte Native</a></p>
 	</div>
 </section>
-<footer>
-	Website design thanks to the Svelte project
-</footer>
