@@ -211,7 +211,7 @@
 
 <section class="container grid half">
 	<div class="linkify">
-		<p>Svelte Native is a new approach to building mobile applications using NativeScript. Whereas other JS-Native
+		<p>Svelte Native is a new approach to building mobile applications using NativeScript. Where other JS-Native
 			frameworks like React-Native and
 			Nativescript-Vue do the bulk of their work on the <em>mobile device</em>, Svelte Native shifts that work
 			into a <em>compile step</em>
