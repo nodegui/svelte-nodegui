@@ -51,3 +51,9 @@ $ tns preview --bundle
 You will need to scan the ascii art QR code using the "Playground" app you installed previously.
 
 ![Running App](/media/quick-start-screenshot.png)
+
+## Draw the rest of the owl
+
+You can check out the [Grocery App Example](https://github.com/halfnelson/svelte-native-grocery) for an example of a larger application. 
+
+Jump into the [Guide](/guide) for more docs.
