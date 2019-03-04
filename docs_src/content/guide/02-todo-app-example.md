@@ -144,3 +144,84 @@ When `onButtonTap` callback is fired, the code we added to the script element, w
 
 It isn't pretty, but it works!
 
+### Basic functionality: Complete/Delete Tasks
+
+Nobody likes a todo list that only gets longer. We should add the ability to mark a task as complete, or to remove it if we added it by accident.
+
+At the very top of the script tag, add this import
+```js
+  import { action } from "tns-core-modules/ui/dialogs";
+```
+
+Near the top of the script tag after the `let todos=[]` add another declaration `let dones=[]` so completed tasks have somewhere to go.
+
+
+Then replace our `onItemTap` function with this new one:
+
+```js
+  function onItemTap(args) {
+    action("What do you want to do with this task?", "Cancel", [
+      "Mark completed",
+      "Delete forever"
+    ]).then(result => {
+      console.log(result); // Logs the selected option for debugging.
+      let item = todos[args.index];
+      switch (result) {
+        case "Mark completed":
+          dones = [item, ...dones]; // Places the tapped active task at the top of the completed tasks.
+          todos = todos.filter(t => t != item); // Removes the tapped active  task.
+          break;
+        case "Delete forever":
+          todos = todos.filter(t => t != item); // Removes the tapped active task.
+          break;
+        case "Cancel" || undefined: // Dismisses the dialog
+          break;
+      }
+    });
+  }
+```
+
+#### Breaking it down
+
+Native script comes with a `dialogs` module that allows us to show small modal windows to obtain data from a user. We added an import to this module so that we could use the `action` method we added to the `onItemTap` method. When the user selects "Mark completed" we find the item using the `args.index` we get from the event, and remove the item from the `todos`, then we add the item to our new `dones` array. The delete command just removes the item from the `todos`.
+
+> **NOTE** Notice that we reassign the `dones` and `todos` variables during delete or complete operations. Svelte's reactive variables work at the top level and cannot detect changes in an array. By assigning a new value to `dones` and `todos` we are ensuring that any template that depends on those variables will be updated.
+
+### Basic functionality: The Completed Tab
+
+To get that sense of satisfaction from completing an item on your todo list, it would be good to be able to see the item on the completed tab. In this section we will add a listview to display the items and allow you to delete them or restore them to the todos using an action.
+
+First add the `listView` below to the second tab replacing the `label`
+```html
+<listView class="list-group" items="{dones}" on:itemTap="{onDoneTap}">
+	<Template let:item>
+		<label text="{item.name}" class="list-group-item-heading" textWrap="true" />
+	</Template>
+</listView>
+```
+
+Then add the code for the onDoneTap to the script block:
+
+```js
+function onDoneTap(args) {
+  action("What do you want to do with this task?", "Cancel", [
+    "Mark To Do",
+    "Delete forever"
+  ]).then(result => {
+    console.log(result); // Logs the selected option for debugging.
+    let item = dones[args.index]
+    switch (result) {
+      case "Mark To Do":
+        todos = [item, ...todos]; // Places the tapped active task at the top of the completed tasks.
+        dones = dones.filter(t => t != item); // Removes the tapped active  task.
+        break;
+      case "Delete forever":
+        dones = dones.filter(t => t != item); // Removes the tapped active task.
+        break;
+      case "Cancel" || undefined: // Dismisses the dialog
+        break;
+    }
+  });
+}
+```
+
