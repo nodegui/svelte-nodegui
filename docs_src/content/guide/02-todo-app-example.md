@@ -21,7 +21,7 @@ Sometimes it can be easier to learn something if you have a goal to work towards
   * Active tasks are styled
   * Completed tasks are styled
 
-![TodoApp](/media/nativescript-svelte-todo.gif)
+![TodoApp](/media/todoapp/nativescript-svelte-todo2.gif)
 
 
 ### Prerequisites
@@ -187,6 +187,12 @@ Native script comes with a `dialogs` module that allows us to show small modal w
 
 > **NOTE** Notice that we reassign the `dones` and `todos` variables during delete or complete operations. Svelte's reactive variables work at the top level and cannot detect changes in an array. By assigning a new value to `dones` and `todos` we are ensuring that any template that depends on those variables will be updated.
 
+#### Progress So Far
+
+<img alt="Popup In Action" src="/media/todoapp/todo-mark-compete.png" width=350>
+
+
+
 ### Basic functionality: The Completed Tab
 
 To get that sense of satisfaction from completing an item on your todo list, it would be good to be able to see the item on the completed tab. In this section we will add a listview to display the items and allow you to delete them or restore them to the todos using an action.
@@ -240,10 +246,10 @@ At the bottom of `App.svelte` add the following style tag:
 ```html
 <style>
   button { 
-      font-size: 20; 
+      font-size: 15; 
       font-weight: bold; 
       color: white; 
-      background-color: #53ba82; 
+      background-color: #2847D2; 
       height: 40;
       margin-top: 10; 
       margin-bottom: 10; 
@@ -254,7 +260,7 @@ At the bottom of `App.svelte` add the following style tag:
 
   textField {
       font-size: 20;
-      color: #53ba82;
+      color: #2847D2;
       margin-top: 10;
       margin-bottom: 10;
       margin-right: 5;
@@ -271,6 +277,11 @@ Scoped CSS is applied to the current component only and is handled in each compo
 
 With type selectors, you can select a UI component and apply styling to it. To select a type, use the component name as provided in the code. For example, to select the tab view, use `TabView`.
 
+#### Progress So Far
+
+<img alt="style button" src="/media/todoapp/todo-styled-button.png" width=350>
+
+
 ### Advanced design: Styled tabs
 
 The application is looking better, but we can do something about those tabs.
@@ -278,7 +289,7 @@ The application is looking better, but we can do something about those tabs.
 Add the `selectedTabTextColor` and `tabTextFontSize` property to the `<TabView>`.
 
 ```html
-  <tabView height="100%" androidTabsPosition="bottom" selectedTabTextColor="#53ba82" tabTextFontSize="15" >
+  <tabView height="100%" androidTabsPosition="bottom" selectedTabTextColor="#2847D2" tabTextFontSize="15" >
 ```
 
 Apply the `textTransform` property to the separate tabs. You can use this property only on the `<TabViewItem>` level.
@@ -291,8 +302,70 @@ Apply the `textTransform` property to the separate tabs. You can use this proper
   <tabViewItem title="Completed" textTransform="uppercase">
 ```
 
-#### Thats not CSS!
+#### That is not CSS!
 
 `<TabView>` provides some styling properties out of the box. You can apply a text transform to each tab title (`textTransform`) and change the font size and color globally (`tabTextFontSize`, `tabTextColor`, `selectedTabTextColor`). You can also change the background color of your tabs `tabBackgroundColor`.
 
 > **TIP** Most css properties in NativeScript have a corresponding attribute you can apply directly to the element
+
+#### Progress So Far
+
+<img alt="style button" src="/media/todoapp/todo-styled-tabs.png" width=350>
+
+
+### Advanced design: Styled Lists
+
+The list items are a little bunched up. Lets add some padding to them, and make the active todo items coloured and the completed items crossed out.
+
+Edit the two `<listView>` tags and add the `separatorColor="transparent"` as an attribute:
+
+```html
+<listView class="list-group" items="{todos}" on:itemTap="{onItemTap}" style="height:75%" separatorColor="transparent">
+```
+and 
+```html
+<listView class="list-group" items="{dones}" on:itemTap="{onDoneTap}" separatorColor="transparent">
+```
+
+To the label in the `listView` for the `todos` add `todo-item active` to the class attribute
+```html
+ <label text="{item.name}" class="list-group-item-heading todo-item active" textWrap="true" />
+```
+to the dones label add `todo-item completed`
+```html
+ <label text="{item.name}" class="list-group-item-heading todo-item completed" textWrap="true" />
+```
+
+Add the following CSS rules to the `style` tag
+
+```css
+
+.todo-item {
+  font-size: 20;
+  margin-left: 20;
+  padding-top: 5;
+  padding-bottom: 10;
+}
+
+.todo-item.active {
+  font-weight: bold;
+  color: #2847D2;
+}
+
+.todo-item.completed {
+  color: #d3d3d3;
+  text-decoration: line-through;
+}
+
+```
+
+#### I see what you did there
+
+In NativeScript you aren't restricted to just using element names as CSS selectors. We added some classes to the labels and applied CSS rules to those classes.
+We also applied a `separatorColor` attribute directly to `listView` to remove the lines between the items for a cleaner list.
+
+#### Our Finished Product
+
+<img alt="todos" src="/media/todoapp/todo-styled-list1.png" width=350>
+<img alt="dones" src="/media/todoapp/todo-styled-list2.png" width=350>
+
