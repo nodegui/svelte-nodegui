@@ -225,3 +225,74 @@ function onDoneTap(args) {
 }
 ```
 
+#### What we just did
+
+To display our done items we added the `listView` to the "completed" `tabViewItem` and bound it to the `dones` variable we defined in last step.
+
+We added an event handler to handle taps on the "completed" items. This handler is very similar to the hander added in the last section, except that it works on the `dones` array and not the `todos`.
+
+### Advanced design: Styled input 
+
+The basic functionality of the todo app is complete. But it isn't going to win any beauty contests. To delight our users we will take a few minutes to apply some styling. In this section we will style the text box and button elements.
+
+At the bottom of `App.svelte` add the following style tag:
+
+```html
+<style>
+  button { 
+      font-size: 20; 
+      font-weight: bold; 
+      color: white; 
+      background-color: #53ba82; 
+      height: 40;
+      margin-top: 10; 
+      margin-bottom: 10; 
+      margin-right: 10; 
+      margin-left: 10; 
+      border-radius: 20px; 
+  }
+
+  textField {
+      font-size: 20;
+      color: #53ba82;
+      margin-top: 10;
+      margin-bottom: 10;
+      margin-right: 5;
+      margin-left: 20;
+  }
+</style>
+```
+
+#### A style tag in a native application!?
+
+When you work with NativeScript and Svelte, you can use application-wide CSS, scoped CSS, or inline CSS to style your app. Application-wide CSS is applied first and is handled in `app.css` in the root of your project. This tutorial does not explore application-wide CSS. See also: [Styling](https://docs.nativescript.org/ui/styling).
+
+Scoped CSS is applied to the current component only and is handled in each component's `<style>` block. This tutorial relies almost exclusively on scoped CSS and inline CSS. See also: [Scoped Styles](https://v3.svelte.technology/docs#scoped-styles).
+
+With type selectors, you can select a UI component and apply styling to it. To select a type, use the component name as provided in the code. For example, to select the tab view, use `TabView`.
+
+### Advanced design: Styled tabs
+
+The application is looking better, but we can do something about those tabs.
+
+Add the `selectedTabTextColor` and `tabTextFontSize` property to the `<TabView>`.
+
+```html
+  <tabView height="100%" androidTabsPosition="bottom" selectedTabTextColor="#53ba82" tabTextFontSize="15" >
+```
+
+Apply the `textTransform` property to the separate tabs. You can use this property only on the `<TabViewItem>` level.
+
+```html
+  <tabViewItem title="To Do" textTransform="uppercase" >
+```
+
+```html
+  <tabViewItem title="Completed" textTransform="uppercase">
+```
+
+#### Thats not CSS!
+
+`<TabView>` provides some styling properties out of the box. You can apply a text transform to each tab title (`textTransform`) and change the font size and color globally (`tabTextFontSize`, `tabTextColor`, `selectedTabTextColor`). You can also change the background color of your tabs `tabBackgroundColor`.
+
+> **TIP** Most css properties in NativeScript have a corresponding attribute you can apply directly to the element
