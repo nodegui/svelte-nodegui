@@ -4,6 +4,7 @@ import { navigate, ViewNode, createElement, initializeDom, FrameElement } from '
 
 declare global {
     export class SvelteComponent {
+        $destroy(): void;
         constructor(options: { target?: ViewNode, props?: any });
         $set(props: any): void;
     }
@@ -37,4 +38,4 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any): Prom
     });
 }
 
-export { navigate, goBack, showModal } from "./dom"
+export { navigate, goBack, showModal, closeModal } from "./dom"
