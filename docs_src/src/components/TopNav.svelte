@@ -239,9 +239,10 @@
 		<ul bind:this={ul} class="primary" class:open on:mouseenter="{() => open = true}"
 			on:mouseleave="{() => open = false}">
 			<li class="hide-if-desktop" class:active="{!segment}"><a rel="prefetch" href=".">Home</a></li>
-			<li class:active="{segment === 'guide'}"><a rel="prefetch" href="guide">Guide</a></li>
+			<li class:active="{segment === 'tutorial'}"><a rel="prefetch" href="tutorial">Tutorial</a></li>
+			<li class:active="{segment === 'docs'}"><a rel="prefetch" href="docs">API Docs</a></li>
 			<li class:active="{segment === 'blog'}"><a rel="prefetch" href="blog">Blog</a></li>
-			<li><a href="https://v3.svelte.technology/guide">Svelte</a></li>
+			<li><a href="https://v3.svelte.technology/">Svelte</a></li>
 			<li><a href="https://docs.nativescript.org/start/introduction">NativeScript</a></li>
 
 			<li>

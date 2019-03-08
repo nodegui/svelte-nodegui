@@ -56,4 +56,4 @@ You will need to scan the ascii art QR code using the "Playground" app you insta
 
 You can check out the [Grocery App Example](https://github.com/halfnelson/svelte-native-grocery) for an example of a larger application. 
 
-Jump into the [Guide](/guide) for more docs.
+Jump into the [Docs](/docs) or follow the [Tutorial](/tutorial) to get started.
