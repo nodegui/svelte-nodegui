@@ -15,13 +15,14 @@
     "dependencies": {
         "nativescript-theme-core": "~1.0.4",
         "nativescript-unit-test-runner": "^0.5.1",
-        "svelte": "^3.0.0-beta.8",
+        "svelte": "3.0.0-beta.15",
         "rollup": "1.6.0",
         "svelte-native": "file:../dist",
         "tns-core-modules": "~5.2.0"
     },
     "devDependencies": {
         "@types/chai": "^4.1.7",
+        "@types/mocha": "^5.2.6",
         "chai": "4.2.0",
         "karma": "2.0.2",
         "karma-chai": "0.1.0",

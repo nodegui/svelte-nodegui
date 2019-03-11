@@ -4,7 +4,6 @@ import { createElement, ViewNode } from "svelte-native/dom";
 
 const assert: typeof chai.assert = (<any>global).chai.assert;
 
-
 describe('Template', function () {
 
     it('can be instantiated', function () {
@@ -18,7 +17,7 @@ describe('Template', function () {
         let component_instance;
         before(async function () {
             let svelteSrc = `
-                <Template bind:this={test_subject} let:prop>
+                <Template bind:this={test_subject} extra-prop="test extra prop"  let:prop>
                     <label text="test text {prop ? prop : ''}" />
                 </Template>
                 <script>
@@ -40,6 +39,10 @@ describe('Template', function () {
 
         it('the added template element has a component prop', async function () {
             assert.isFunction((component_target.firstChild as any).component)
+        });
+
+        it('passes down its props to the template element', async function () {
+            assert.equal((component_target.firstChild as any).getAttribute('extra-prop'), 'test extra prop')
         });
     });
 
