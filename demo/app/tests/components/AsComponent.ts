@@ -12,7 +12,7 @@ describe('AsComponent', function () {
         assert.isNotNull(c.component)
     });
 
-    describe('AsComponent Instance', function () {
+    describe('AsComponent.component', function () {
         let component_instance;
 
         before(async function () {
@@ -31,7 +31,7 @@ describe('AsComponent', function () {
             component_instance = harness.test_subject
         })
 
-        it('returns a component that renders its children', async function () {
+        it('renders its children', async function () {
             let new_component = component_instance.component;
             assert.isFunction(new_component)
 
@@ -43,7 +43,7 @@ describe('AsComponent', function () {
             assert.equal((destEl.firstChild as any).nativeView.text, 'test text ')
         })
 
-        it('returns a component that takes props', async function () {
+        it('takes props', async function () {
             let new_component = component_instance.component;
             assert.isFunction(new_component)
 
@@ -55,7 +55,7 @@ describe('AsComponent', function () {
             assert.match((destEl.firstChild as any).nativeView.text, /prop/);
         })
 
-        it('returns a component that can be instantiated twice', async function () {
+        it('instantiated twice', async function () {
             let new_component = component_instance.component;
             assert.isFunction(new_component)
 
@@ -69,21 +69,7 @@ describe('AsComponent', function () {
             assert.match((destEl.childNodes[1] as any).nativeView.text, /prop2/);
         })
 
-        it('returns a component that can be instantiated twice', async function () {
-            let new_component = component_instance.component;
-            assert.isFunction(new_component)
-
-            let destEl = createElement('fragment');
-            let component1 = new new_component({ target: destEl, props: { prop: "prop1" } });
-            let component2 = new new_component({ target: destEl, props: { prop: "prop2" } });
-            assert.isNotEmpty(component1);
-            assert.isNotEmpty(component2);
-            assert.equal(destEl.firstChild.tagName, 'label');
-            assert.match((destEl.firstChild as any).nativeView.text, /prop1/);
-            assert.match((destEl.childNodes[1] as any).nativeView.text, /prop2/);
-        })
-
-        it('changing component props only impacts a single instance', async function () {
+        it('updating props only impacts a single instance', async function () {
             let new_component = component_instance.component;
             assert.isFunction(new_component)
 
