@@ -1,10 +1,10 @@
 {
     "nativescript": {
         "id": "io.github.halfnelson.sveltenativetemplate",
-        "tns-android": {
+        "tns-ios": {
             "version": "5.2.0"
         },
-        "tns-ios": {
+        "tns-android": {
             "version": "5.2.0"
         }
     },

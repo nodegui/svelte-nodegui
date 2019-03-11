@@ -6,14 +6,16 @@ const assert: typeof chai.assert = (<any>global).chai.assert;
 
 
 describe('Template', function () {
-    it('can be create be instantiated', function () {
-        let c = new Template({});
+
+    it('can be instantiated', function () {
+        let dummy = createElement('fragment');
+        let c = new Template({ target: dummy });
         assert.isNotNull(c)
     });
 
     describe('Template Instance', function () {
+        let component_target;
         let component_instance;
-        let component_target: ViewNode;
         before(async function () {
             let svelteSrc = `
                 <Template bind:this={test_subject} let:prop>
@@ -25,19 +27,19 @@ describe('Template', function () {
                 </script>
             `;
             let HarnessComponent = await componentFromString(svelteSrc);
-            let component_target_inner = createElement('fragment');
-            component_target = component_target_inner;
-            let harness = new HarnessComponent({ target: component_target, props: { prop: null } });
-            component_instance = harness.test_subject
-        })
+            component_target = createElement('fragment');
+            let harness = new HarnessComponent({ target: component_target });
+            component_instance = harness.test_subject;
+            return { component_instance, component_target }
+        });
 
-        it('adds a template element to the dom', function () {
-            assert.isNotEmpty(component_instance);
+        it('adds a template element to the dom', async function () {
+            assert.isNotNull(component_instance);
             assert.equal(component_target.firstChild.tagName, 'template')
         });
 
-        it('the added template element has a component prop', function () {
-            assert.isNotEmpty((component_target.firstChild as any).component)
+        it('the added template element has a component prop', async function () {
+            assert.isFunction((component_target.firstChild as any).component)
         });
     });
 
