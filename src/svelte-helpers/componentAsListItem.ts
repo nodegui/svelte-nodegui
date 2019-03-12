@@ -3,6 +3,7 @@ import { NativeElementNode, createElement } from "../dom";
 
 export default function componentAsListItem(node: NativeElementNode, component: () => typeof SvelteComponent) {
     const listView: ListView = node.nativeView as ListView;
+    console.warn("componentAsListItem is deprecated, use the Template component from 'svelte-native/components'")
 
     const updateListItem = (args: ItemEventData) => {
         let item;
