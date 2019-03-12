@@ -1,7 +1,8 @@
 {
-  "name": "TODO",
-  "description": "TODO",
+  "name": "docs_src",
+  "description": "Svelte Native Site",
   "version": "0.0.1",
+  "private": true,
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build --legacy",
@@ -9,6 +10,7 @@
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
+    "deploy": "node ./deploy.js",
     "test": "run-p --race dev cy:run"
   },
   "dependencies": {
@@ -23,6 +25,7 @@
     "npm-run-all": "^4.1.5",
     "sapper": "alpha",
     "svelte": "beta",
+    "shelljs": "^0.8.3",
     "@babel/core": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",

@@ -7,7 +7,7 @@ export { default as FrameElement } from "./native/FrameElement"
 export { default as SvelteNativeDocument } from './svelte/SvelteNativeDocument'
 export { default as NativeElementNode } from './native/NativeElementNode'
 export { registerElement, createElement, ViewNode } from './basicdom'
-export { navigate, goBack, showModal, NavigationOptions, BackNavigationOptions } from './navigation'
+export { navigate, goBack, showModal, closeModal, ShowModalOptions, NavigationOptions, BackNavigationOptions } from './navigation'
 
 
 function installGlobalShims(): SvelteNativeDocument {

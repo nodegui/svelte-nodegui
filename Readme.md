@@ -25,7 +25,7 @@ Svelte-Native includes Svelte specific integrations such as
 You can get started developing with this using the [latest template app](https://github.com/halfnelson/svelte-native-template)
 
 ```bash
-$ degit halfnelson/svelte-native-template myapp
+$ npx degit halfnelson/svelte-native-template myapp
 ```
 
 A fresh svelte-native app will be found in the `myapp` folder

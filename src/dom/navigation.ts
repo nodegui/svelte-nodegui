@@ -1,4 +1,4 @@
-import { topmost, NavigationTransition, Frame, getFrameById, Page, BackstackEntry, ViewBase } from "tns-core-modules/ui/frame/frame";
+import { topmost, NavigationTransition, Frame, getFrameById, Page, BackstackEntry, ViewBase, NavigatedData } from "tns-core-modules/ui/frame/frame";
 import FrameElement from "./native/FrameElement";
 import { createElement } from "./basicdom";
 import PageElement from "./native/PageElement";
@@ -31,7 +31,9 @@ function resolveFrame(frameSpec: FrameSpec): Frame {
     return targetFrame;
 }
 
-function resolveComponentElement(pageSpec: PageSpec, props?: any): { element: NativeElementNode, pageInstance: SvelteComponent } {
+interface ComponentInstanceInfo { element: NativeElementNode, pageInstance: SvelteComponent }
+
+function resolveComponentElement(pageSpec: PageSpec, props?: any): ComponentInstanceInfo {
     let dummy = createElement('fragment');
     let pageInstance = new pageSpec({ target: dummy, props: props });
     let element = dummy.firstElement() as NativeElementNode;
@@ -53,9 +55,18 @@ export function navigate(options: NavigationOptions): SvelteComponent {
     let { element, pageInstance } = resolveComponentElement(page, props);
 
     if (!(element instanceof PageElement))
-        throw new Error("navigage requires a page element or a svelte component with a page element at the root")
+        throw new Error("navigage requires a svelte component with a page element at the root")
 
     let nativePage = element.nativeView;
+
+    const handler = (args: NavigatedData) => {
+        if (args.isBackNavigation) {
+            nativePage.off('navigatedFrom', handler)
+            pageInstance.$destroy()
+        }
+    }
+    nativePage.on('navigatedFrom', handler)
+
     targetFrame.navigate({
         ...navOptions,
         create: () => nativePage
@@ -87,7 +98,6 @@ export function goBack(options: BackNavigationOptions = {}) {
 export interface ShowModalOptions {
     page: PageSpec
     props?: any
-
     android?: { cancelable: boolean }
     ios?: { presentationStyle: any }
     animated?: boolean
@@ -95,14 +105,16 @@ export interface ShowModalOptions {
     stretched: boolean
 }
 
+const modalStack: ComponentInstanceInfo[] = []
+
 export function showModal<T>(modalOptions: ShowModalOptions): Promise<T> {
     let { page, props = {}, ...options } = modalOptions;
 
     //Get this before any potential new frames are created by component below
     let modalLauncher = topmost().currentPage;
 
-    let { element } = resolveComponentElement(page, props);
-    let modalView: ViewBase = element.nativeView;
+    let componentInstanceInfo = resolveComponentElement(page, props);
+    let modalView: ViewBase = componentInstanceInfo.element.nativeView;
 
     return new Promise((resolve, reject) => {
 
@@ -110,9 +122,18 @@ export function showModal<T>(modalOptions: ShowModalOptions): Promise<T> {
         const closeCallback = (result: T) => {
             if (resolved) return;
             resolved = true;
-            resolve(result);
+            try {
+                componentInstanceInfo.pageInstance.$destroy(); //don't let an exception in destroy kill the promise callback
+            } finally {
+                resolve(result);
+            }
         }
-
+        modalStack.push(componentInstanceInfo);
         modalLauncher.showModal(modalView, { ...options, context: {}, closeCallback })
     });
+}
+
+export function closeModal(result: any): void {
+    let modalPageInstanceInfo = modalStack.pop();
+    modalPageInstanceInfo.element.nativeView.closeModal(result);
 }
