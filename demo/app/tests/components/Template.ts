@@ -29,7 +29,6 @@ describe('Template', function () {
             component_target = createElement('fragment');
             let harness = new HarnessComponent({ target: component_target });
             component_instance = harness.test_subject;
-            return { component_instance, component_target }
         });
 
         it('adds a template element to the dom', async function () {
