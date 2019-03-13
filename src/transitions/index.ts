@@ -213,3 +213,6 @@ export function slide(node: NativeElementNode, {
         })
     );
 }
+
+import * as easings from './easing'
+export { easings }

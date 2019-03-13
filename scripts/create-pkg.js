@@ -35,3 +35,8 @@ const filesToCopy = ["Readme.md", "LICENSE"]
 for (let file of filesToCopy) {
     fs.copyFileSync(path.resolve(__dirname, `../${file}`), path.resolve(__dirname, `../dist/${file}`))
 }
+
+const typeDefsToCopy = ["components/AsComponent.d.ts", "components/Template.svelte.d.ts"]
+for (let file of typeDefsToCopy) {
+    fs.copyFileSync(path.resolve(__dirname, `../src/${file}`), path.resolve(__dirname, `../dist/${file}`))
+}

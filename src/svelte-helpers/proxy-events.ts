@@ -4,7 +4,7 @@ interface registeredEvent {
 }
 
 export default function proxyEvents(node: any, events: { [index: string]: ((event: any) => void)[] }) {
-
+    console.warn("proxyEvents is deprecated");
     let registeredEvents: registeredEvent[] = [];
 
     for (let type of Object.keys(events)) {
