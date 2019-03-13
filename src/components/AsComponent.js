@@ -109,11 +109,9 @@ export class AsComponent extends SvelteComponent {
     constructor(options) {
         super();
         init(this, options, instance, create_fragment, safe_not_equal);
-        console.log("returning component", this.$$.ctx.component)
     }
 
     get component() {
-
         return this.$$.ctx.component;
     }
 }
