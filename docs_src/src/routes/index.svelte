@@ -1,7 +1,6 @@
 <script>
 	import Icon from '../components/Icon.svelte';
 	import Logo from '../components/Logo.svelte';
-	import contributors from './_contributors.js';
 
 	let sy = 0;
 </script>
@@ -176,7 +175,7 @@
 
 <svelte:window bind:scrollY={sy} />
 
-<img alt="Svelte logo" class="logo" src="logo.svg" style="transform: translate(0,{sy * 0.2}px)">
+<img alt="Svelte logo" class="logo" src="/logo.svg" style="transform: translate(0,{sy * 0.2}px)">
 
 <section class="hero container">
 	<h1>Svelte Native</h1>
@@ -190,21 +189,21 @@
 			<p>Build boilerplate-free mobile applications using languages you already know — HTML, CSS and JavaScript
 			</p>
 
-			<a href="">learn more</a>
+
 		</li>
 
 		<li class='box bg-flash white'>
 			<h2 style='padding:2.4rem 0 0 0'>No virtual DOM</h2>
 			<p>Svelte compiles your code to tiny, framework-less vanilla JS — your app starts fast and stays fast</p>
 
-			<a href="">learn more</a>
+
 		</li>
 
 		<li class='box bg-second white'>
 			<h2 style='padding:2.4rem 0 0 0'>Truly reactive</h2>
 			<p>No more complex state management libraries — Svelte brings reactivity to JavaScript itself</p>
 
-			<a href="">learn more</a>
+
 		</li>
 	</ul>
 </section>
@@ -233,9 +232,9 @@ npm install
 tns run android --bundle
 		</pre>
 
-		<p class="linkify">See the <a href="">quickstart guide</a> for more
+		<p class="linkify">See the <a href="/docs#quick-start">quickstart guide</a> for more
 			information.</p>
 
-		<p><a rel="prefetch" class="cta" href="guide">Learn Svelte Native</a></p>
+		<p><a rel="prefetch" class="cta" href="/tutorial">Learn Svelte Native</a></p>
 	</div>
 </section>

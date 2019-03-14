@@ -29,7 +29,7 @@ It does!, and they are supported by the nativescript developers. However the mar
     <actionBar title="Svelte Native App" class="action-bar" />
     <stackLayout class="p-20">
         <label text="Tap the button" class="h1 text-center" />
-        <button text="TAP" on:tap="{ counter-- }" class="btn btn-primary btn-active" />
+        <button text="TAP" on:tap="{ () => counter-- }" class="btn btn-primary btn-active" />
         <label class="h2 text-center" textWrap="true">{message}</label>
     </stackLayout>
 </page>
@@ -43,5 +43,5 @@ It does!, and they are supported by the nativescript developers. However the mar
 </script>
 ```
 
-[Jump into the docs](/docs) to learn more
+Jump into the [Docs](/docs) or follow the [Tutorial](/tutorial) to get started.
 
