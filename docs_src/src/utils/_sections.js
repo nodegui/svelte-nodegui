@@ -50,7 +50,7 @@ function extractMeta(line, lang) {
 	}
 }
 
-export default function (docs_path) {
+export default function (docs_path, anchor_base_url) {
 	return fs
 		.readdirSync(docs_path)
 		.filter(file => file[0] !== '.' && path.extname(file) === '.md')
@@ -123,7 +123,7 @@ export default function (docs_path) {
 					return `
 						<h${level}>
 							<span id="${slug}" class="offset-anchor"></span>
-							<a href="guide#${slug}" class="anchor" aria-hidden="true"></a>
+							<a href="${anchor_base_url}#${slug}" class="anchor" aria-hidden="true"></a>
 							${text}
 						</h${level}>`;
 				}

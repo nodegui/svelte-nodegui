@@ -4,7 +4,7 @@ let json;
 
 export function get(req, res) {
 	if (!json || process.env.NODE_ENV !== 'production') {
-		json = JSON.stringify(get_sections("content/tutorial"));
+		json = JSON.stringify(get_sections("content/tutorial", "tutorial"));
 	}
 
 	res.set({

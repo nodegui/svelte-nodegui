@@ -2,12 +2,12 @@
 	import { onMount, afterUpdate } from 'svelte';
 	import GuideContents from './GuideContents.svelte';
 	import Icon from './Icon.svelte';
-
+	import { page } from '@sapper/app';
 
 	export let sections;
 	export let edit_url;
 	let active_section;
-
+	let page_name = $page.path.split('/').pop()
 	let container;
 	let aside;
 	let show_contents = false;
@@ -329,7 +329,7 @@
 	<section data-id={section.slug}>
 		<h2>
 			<span class="offset-anchor" id={section.slug}></span>
-			<a href="#{section.slug}" class="anchor" aria-hidden></a>
+			<a href="{page_name}#{section.slug}" class="anchor" aria-hidden></a>
 
 			{section.metadata.title}
 			<small>
