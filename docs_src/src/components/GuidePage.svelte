@@ -7,7 +7,8 @@
 	export let sections;
 	export let edit_url;
 	let active_section;
-	let page_name = $page.path.split('/').pop()
+	let page_name = ($page.path.endsWith('/') ? $page.path.substr(0, path.length - 1) : $page.path).split('/').pop()
+
 	let container;
 	let aside;
 	let show_contents = false;

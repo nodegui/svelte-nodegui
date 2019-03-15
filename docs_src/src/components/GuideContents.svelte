@@ -7,7 +7,7 @@
 	export let active_section = null;
 	export let show_contents;
 	export let prevent_sidebar_scroll = false;
-	let page_name = $page.path.split('/').pop()
+	let page_name = ($page.path.endsWith('/') ? $page.path.substr(0, path.length - 1) : $page.path).split('/').pop()
 
 	onMount(() => {
 		//	------------------------------------------
