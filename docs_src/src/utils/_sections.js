@@ -1,19 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import * as fleece from 'golden-fleece';
-import process_markdown from './_process_markdown.js';
+import { extract_frontmatter, extract_metadata, langs } from './markdown.js';
 import marked from 'marked';
 
 import PrismJS from 'prismjs';
 import 'prismjs/components/prism-bash';
 
-// map lang to prism-language-attr
-const prismLang = {
-	bash: 'bash',
-	html: 'markup',
-	js: 'javascript',
-	css: 'css',
-};
 
 const escaped = {
 	'"': '&quot;',
@@ -32,24 +24,6 @@ function unescape(str) {
 	return String(str).replace(/&.+?;/g, match => unescaped[match] || match);
 }
 
-function extractMeta(line, lang) {
-	try {
-		if (lang === 'html' && line.startsWith('<!--') && line.endsWith('-->')) {
-			return fleece.evaluate(line.slice(4, -3).trim());
-		}
-
-		if (
-			lang === 'js' ||
-			(lang === 'json' && line.startsWith('/*') && line.endsWith('*/'))
-		) {
-			return fleece.evaluate(line.slice(2, -2).trim());
-		}
-	} catch (err) {
-		// TODO report these errors, don't just squelch them
-		return null;
-	}
-}
-
 export default function (docs_path, anchor_base_url) {
 	return fs
 		.readdirSync(docs_path)
@@ -57,10 +31,20 @@ export default function (docs_path, anchor_base_url) {
 		.map(file => {
 			const markdown = fs.readFileSync(`${docs_path}/${file}`, 'utf-8');
 
-			const { content, metadata } = process_markdown(markdown);
+			//const { content, metadata } = process_markdown(markdown);
+
+			const { content, metadata } = extract_frontmatter(markdown);
 
 			const subsections = [];
 			const renderer = new marked.Renderer();
+
+			let block_open = false;
+
+			renderer.hr = (...args) => {
+				block_open = true;
+
+				return '<div class="side-by-side"><div class="copy">';
+			};
 
 			renderer.code = (source, lang) => {
 				source = source.replace(/^ +/gm, match =>
@@ -68,7 +52,7 @@ export default function (docs_path, anchor_base_url) {
 				);
 
 				const lines = source.split('\n');
-				const meta = extractMeta(lines[0], lang);
+				const meta = extract_metadata(lines[0], lang);
 
 				let prefix = '';
 				let className = 'code-block';
@@ -83,14 +67,20 @@ export default function (docs_path, anchor_base_url) {
 					if (meta.hidden) return '';
 				}
 
-				const plang = prismLang[lang];
+				const plang = langs[lang];
 				const highlighted = PrismJS.highlight(
 					source,
 					PrismJS.languages[plang],
 					lang
 				);
 
-				return `<div class='${className}'>${prefix}<pre class='language-${plang}'><code>${highlighted}</code></pre></div>`;
+				let html = `<div class='${className}'>${prefix}<pre class='language-${plang}'><code>${highlighted}</code></pre></div>`;
+				if (block_open) {
+					block_open = false;
+					return `</div><div class="code">${html}</div></div>`;
+				}
+
+				return html;
 			};
 
 			const seen = new Set();
