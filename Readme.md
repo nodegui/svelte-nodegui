@@ -3,7 +3,10 @@ Allows the use of [Svelte (v3)](https://github.com/sveltejs/svelte) within a [Na
 
 **__This is still alpha software, use at own risk, contributions welcome__**
 
+See https://svelte-native.technology for docs and tutorials
+
 ![todo in svelte-native](https://raw.githubusercontent.com/halfnelson/svelte-native/master/nativescript-svelte-todo.gif)
+
 
 ## Features
 
@@ -15,10 +18,9 @@ Svelte-Native includes Svelte specific integrations such as
  * Integration with sveltes scoped styles
 
 ## Todo
- - [x] Port grocery app ✔ [Done](https://github.com/halfnelson/svelte-native-grocery)
  - [x] At least 1 emoji in readme
- - [ ] Tests 😳
- - [ ] Docs
+ - [ ] More Tests 😳
+ 
 
 ## Installation
 
@@ -38,7 +40,7 @@ Once installed, the build workflow is to use the `tns build` or `tns run` comman
 
 App.svelte
 ```html
-<page xmlns="tns">
+<page>
     <actionBar title="Svelte Native"></actionBar>
     <stackLayout>
         <label text={msg}></label>
