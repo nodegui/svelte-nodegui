@@ -1,5 +1,5 @@
 ---
-title: components
+title: Components
 ---
 
 ### ActivityIndicator
@@ -7,7 +7,7 @@ title: components
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_activity_indicator_.activityindicator">Class Docs</a></div>
 
----
+
 `<activityIndicator>` is a UI component that shows a progress indicator signaling to the user of an operation running in the background.
 
 
@@ -42,7 +42,7 @@ title: components
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_button_.button">Class Docs</a></div>
 
----
+
 
 
 `<button>` is a UI component that displays a button which reacts to a user gesture.
@@ -82,7 +82,7 @@ For more information about the available gestures, see [Gestures in the official
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_date_picker_.datepicker">Class Docs</a></div>
 
----
+
 
 
 `<datePicker>` is a UI component that lets users select a date from a pre-configured range.
@@ -91,12 +91,12 @@ For more information about the available gestures, see [Gestures in the official
 ```html
 <datePicker date="{someDate}" />
 ```
----
 
-`<datePicker>` provides two-way data binding using `v-model`.
+
+`<datePicker>` provides two-way data binding using `bind`.
 
 ```html
-<datePicker v-model="selectedDate" />
+<datePicker bind:date="{selectedDate}" />
 ```
 
 See also: [TimePicker](docs#timepicker).
@@ -135,12 +135,9 @@ See also: [TimePicker](docs#timepicker).
 
 
 
-`<frame>` is a UI component used to display [`<page>`](/en/docs/elements/components/page) elements. Every app needs at least a single `<frame>`  element, usually set as the root element. 
+`<frame>` is a UI component used to display [`<page>`](docs#page) elements. Every app needs at least a single `<frame>`  element, usually set as the root element. Svelte Native creates the root frame for you.
 
 
-
-#### Multiple Frames
----
 If you need to create multiple frames, you can do so by wrapping them in a Layout, for example if you want to have 2 frames side-by-side
 
 ```html
@@ -151,8 +148,9 @@ If you need to create multiple frames, you can do so by wrapping them in a Layou
 ```
 
 
-#### A frame with a default page
----
+
+The first child element of a frame will become its `defaultPage`. This is the page shown before any navigation.
+
 ```html
 <frame>
   <page>
@@ -165,24 +163,16 @@ If you need to create multiple frames, you can do so by wrapping them in a Layou
 ```
 
 
-#### A frame with a default page from an external component
----
+You can use a component as the default page for a frame, as long as it defines `page` as its root element.
+
 ```html
 <frame>
-  <page>
-    <home />
-  </page>
+  <Home />
 </frame>
 ```
 
 ```js
-import Home from './Home'
-
-export default {
-  components: {
-    Home
-  }
-}
+import Home from './Home.svelte'
 ```
 
 #### Native component
@@ -197,11 +187,10 @@ export default {
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_html_view_.htmlview">Class Docs</a></div>
 
 
----
+
 `<htmlView>` is a UI component that lets you show static HTML content.
 
-See also: [WebView](/en/docs/elements/components/web-view).
-
+See also: [WebView](docs#webview).
 
 
 ```html
@@ -233,29 +222,32 @@ See also: [WebView](/en/docs/elements/components/web-view).
 
 
 
-#### Displaying an image relative to the `app` directory
----
+NativeScript aliases `~` to the app directory.
+
 ```html
 <image src="~/logo.png" stretch="none" />
 ```
 
 
-#### Displaying an image from a URL
----
+
+
+Images can be loaded from external urls
+
 ```html
-<image src="https://art.nativescript-vue.org/NativeScript-Vue-White-Green.png" stretch="none" />
+<image src="https://svelte-native.technology/media/todoapp/todo-add-item.png" stretch="none" />
 ```
 
 
-#### Displaying an image from `App_Resources`
----
+
+Images can also be displayed from the App_Resources folder using the `res://` scheme.
+
 ```html
 <image src="res://icon" stretch="none" />
 ```
 
 
-#### Displaying a `base64`-encoded image
----
+NativeScript also supports data uris that are base64 encoded
+
 ```html
 <image src="data:Image/png;base64,iVBORw..." stretch="none" />
 ```
@@ -284,7 +276,7 @@ See also: [WebView](/en/docs/elements/components/web-view).
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_label_.label">Class Docs</a></div>
 
 
----
+
 `<label>` is a UI component that displays read-only text.
 
 > **IMPORTANT**: This `<label>` is **not** the same as the HTML `<label>`.
@@ -298,7 +290,7 @@ See also: [WebView](/en/docs/elements/components/web-view).
 
 
 #### Styling the label
----
+
 If you need to style parts of the text, you can use a combination of a [`FormattedString`](https://docs.nativescript.org/angular/ui/ng-ui-widgets/formatted-string) and [`Span`](https://docs.nativescript.org/api-reference/classes/_text_span_.span) elements.
 
 ```html
@@ -331,7 +323,7 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_list_picker_.listpicker">Class Docs</a></div>
 
----
+
 
 `<listPicker>` is a UI component that lets the user select a value from a pre-configured list.
 
@@ -341,7 +333,7 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 <listPicker items="{listOfItems}" selectedIndex="0"
     on:selectedIndexChange="{selectedIndexChanged}" />
 ```
----
+
 `<listPicker>` provides two-way data binding using `v-model`.
 
 ```html
@@ -374,56 +366,25 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_list_view_.listview">Class Docs</a></div>
 
----
-
-`<listView>` is a UI component that shows items in a vertically scrolling list. To set how the list shows individual items, you can use the `<v-template>` component.
+`<listView>` is a UI component that shows items in a vertically scrolling list. To set how the list shows individual items, you use the `<Template>` component.
 
 ```html
-<listView for="item in listOfItems" on:itemTap="{onItemTap}">
-  <v-template>
+<listView items="{listOfItems}" on:itemTap="{onItemTap}">
+  <Template let:item>
     <!-- Shows the list item label in the default color and style. -->
-    <label text="{item.text}" />
-  </v-template>
+    <label text="{item}" />
+  </Template>
 </listView>
+<script>
+    import { Template } from 'svelte-native/components'
+    let listOfItems = ['one','two','three']
+    function onItemTap(e) { console.log(e.item) }
+</script>
 ```
 
+`<listView>` does not loop through list items as you would expect when using a regular svelte `each` block. Instead `<listView>` only creates the necessary views to display the currently visible items on the screen, and reuses the views that are already off-screen when scrolled. This concept is called _view recycling_ and is commonly used in mobile apps to improve performance. 
 
-
-
-
-#### Using `<listView>` with multiple `<v-template>` blocks
----
-The [`v-template` component](/en/docs/utilities/v-template) is used to define how each list item is shown on the screen. 
-
-If you need to visualize one or more list items differently than the rest, you can enclose them in additional `<v-template>` blocks and use conditions. You can have as many `<v-template>` blocks as needed within one `<listView>`.
-
-When you create conditions for `<v-template>`, you can use any valid JavaScript expression or any of the following helpers:
-
-* `$index`&mdash; the index of the current item
-* `$even`&mdash;`true` if the index of the current item is even
-* `$odd`&mdash;`true` if the index of the current item is odd
-
-```html
-<listView for="item in listOfItems" on:itemTap="{onItemTap}"> 
-  <v-template>
-    <label text="{item.text}" /> 
-  </v-template>
-
-  <v-template if="$odd">
-    <!-- For items with an odd index, shows the label in red. -->
-    <label text="{item.text}" color="red" />
-  </v-template>
-</listView>
-```
-
-#### An important note about `v-for`
----
-`<listView>` does not loop through list items as you would expect when using a [`v-for`](https://vuejs.org/v2/guide/list.html#Mapping-an-Array-to-Elements-with-v-for) loop. Instead `<listView>` only creates the necessary views to display the currently visible items on the screen, and reuses the views that are already off-screen when scrolled. This concept is called _view recycling_ and is commonly used in mobile apps to improve performance. 
-
-This is important because **you can't rely on event listeners attached inside the `v-template`**. Instead, you need to use the `itemTap` event which contains the index of the tapped item and the actual item from the list.
-
-
-> **NOTE:** If a `v-for` is used on a `<listView>` a warning will be printed to the console, and it will be converted to the `for` property.
+You can use the `itemTap` event which contains the index of the tapped item and the actual item from the list.
 
 ```js
 onItemTap(event) {
@@ -432,12 +393,13 @@ onItemTap(event) {
 }
 ```
 
+> **NOTE** Unlike Svelte expressions, The listView component will not update the list items if you assign the same value to lists (eg `items.push('four'); list.items =items`). It **will** update if you assign a new list reference (eg `items = items.concat('four'); list.items = items`)
+
 #### Props
 
 | Name | Type | Description |
 |------|------|-------------|
-| `for` | `String` | Provides the expression for iterating through the items.<br/>For example: <ul><li><code>item in listOfItems</code></li><li><code>(item, index) in listOfItems</code></li><li><code>item in [1, 2, 3, 4, 5]</code></li></ul>
-| `items` | `Array<any>` | An array of items to be shown in the `<listView>`.<br/>**This property is only for advanced use. Use the `for` property instead.**
+| `items` | `Array<any>` | An array of items to be shown in the `<listView>`.
 | `separatorColor` | `Color` | Sets the separator line color. Set to `transparent` to remove it.
 
 #### Events
@@ -446,11 +408,6 @@ onItemTap(event) {
 |------|-------------|
 | `itemTap`| Emitted when an item in the `<listView>` is tapped. To access the tapped item, use `event.item`.
 
-#### Methods
-
-| Name | Description |
-|------|-------------|
-| `refresh()` | (Coming soon) Forces the `<listView>` to reload all its items.
 
 #### Native component
 
@@ -464,8 +421,8 @@ onItemTap(event) {
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_page_.page">Class Docs</a></div>
 
 
----
-`<page>` is a UI component that represents an application screen. NativeScript apps typically consist of one or more `<page>` that wrap content such as an [`<actionBar>`](/en/docs/elements/action-bar/action-bar) and other UI widgets.
+
+`<page>` is a UI component that represents an application screen. NativeScript apps typically consist of one or more `<page>` that wrap content such as an [`<actionBar>`](docs#actionbar) and other UI widgets.
 
 
 
@@ -508,12 +465,11 @@ onItemTap(event) {
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_progress_.progress">Class Docs</a></div>
 
----
+
 
 `<progress>` is a UI component that shows a bar to indicate the progress of a task. 
 
-See also: [ActivityIndicator](/en/docs/elements/components/activity-indicator).
-
+See also: [ActivityIndicator](docs#activityindicator).
 
 
 ```html
@@ -546,7 +502,7 @@ See also: [ActivityIndicator](/en/docs/elements/components/activity-indicator).
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_scroll_view_.scrollview">Class Docs</a></div>
 
----
+
 
 `<scrollView>` is a UI component that shows a scrollable content area. Content can be scrolled vertically or horizontally.
 
@@ -591,7 +547,7 @@ See also: [ActivityIndicator](/en/docs/elements/components/activity-indicator).
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_search_bar_.searchbar">Class Docs</a></div>
 
 
----
+
 `<searchBar>` is a UI component that provides a user interface for entering search queries and submitting requests to the search provider.
 
 
@@ -599,7 +555,7 @@ See also: [ActivityIndicator](/en/docs/elements/components/activity-indicator).
 ```html
 <searchBar hint="Search hint" text="{searchPhrase}" on:textChange="{onTextChanged}" on:submit="{onSubmit}" />
 ```
----
+
 `<searchBar>` provides two-way data binding using `v-model`.
 
 ```html
@@ -636,7 +592,7 @@ See also: [ActivityIndicator](/en/docs/elements/components/activity-indicator).
 
 <div class="nsref"><a title="NativeScript Documentation" href="http://docs.nativescript.org/api-reference/modules/_ui_segmented_bar_.html">Class Docs</a></div>
 
----
+
 
 `<segmentedBar>` is a UI bar component that displays a set of buttons for discrete selection. Can show text or images.
 
@@ -653,12 +609,12 @@ As opposed to `<tabView>`:
   <segmentedBarItem title="Third" />
 </segmentedBar>
 ```
----
+
 ```html
 <segmentedBar items="{listOfItems}" selectedIndex="0"
     on:selectedIndexChange="{onSelectedIndexChange}" />
 ```
----
+
 `<segmentedBar>` provides two-way data binding using `v-model`.
 
 ```html
@@ -693,7 +649,7 @@ As opposed to `<tabView>`:
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_slider_.slider">Class Docs</a></div>
 
 
----
+
 
 `<slider>` is a UI component that provides a slider control for picking values within a specified numeric range.
 
@@ -702,7 +658,7 @@ As opposed to `<tabView>`:
 ```html
 <slider value="80" on:valueChange="{onValueChanged}" />
 ```
----
+
 `<slider>` provides two-way data binding using `v-model`:
 
 ```html
@@ -737,7 +693,7 @@ As opposed to `<tabView>`:
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_switch_.switch">Class Docs</a></div>
 
 
----
+
 `<switch>` is a UI component that lets users toggle between two states.
 
 The default state is `false` or OFF.
@@ -747,7 +703,7 @@ The default state is `false` or OFF.
 ```html
 <switch checked="{true}" />
 ```
----
+
 `<switch>`provides two-way data binding using `v-model`.
 
 ```html
@@ -780,7 +736,7 @@ The default state is `false` or OFF.
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_tab_view_.tabview">Class Docs</a></div>
 
 
----
+
 `<tabView>` is a navigation component that shows content grouped into tabs and lets users switch between tabs.
 
 
@@ -795,20 +751,18 @@ The default state is `false` or OFF.
   </tabViewItem>
 </tabView>
 ```
----
+
 ```js
-methods: {
-  indexChange: function(args) {
-      let newIndex = args.value
-      console.log('Current tab index: ' + newIndex)
-  }
+function indexChange(args) {
+    let newIndex = args.value
+    console.log('Current tab index: ' + newIndex)
 }
 ```
 
 > **NOTE:** Currently, `TabViewItem` expects a single child element. In most cases, you might want to wrap your content in a layout.
 
 
----
+
 #### Adding icons to tabs
 
 ```html
@@ -852,7 +806,7 @@ methods: {
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/modules/_ui_text_field_">Class Docs</a></div>
 
----
+
 
 
 `<textField>` is an input component that creates an editable single-line box.
@@ -864,11 +818,11 @@ methods: {
 ```html
 <textField text="{textFieldValue}" hint="Enter text..." />
 ```
----
-`<textField>` provdes two-way data binding using `v-model`.
+
+`<textField>` provdes two-way data binding using `bind`.
 
 ```html
-<textField v-model="textFieldValue" />
+<textField bind:text="{textFieldValue}" />
 ```
 
 
@@ -907,7 +861,7 @@ methods: {
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_text_view_.textview">Class Docs</a></div>
 
 
----
+
 `<textView>` is a UI component that shows an editable or a read-only multi-line text container. You can use it to let users type large text in your app or to show longer, multi-line text on the screen.
 
 `<textView>` extends [`TextBase`](https://docs.nativescript.org/api-reference/classes/_ui_text_base_.textbase) and [`EditableTextBase`](https://docs.nativescript.org/api-reference/classes/_ui_editor_text_base_.editabletextbase) which provide additional properties and events.
@@ -917,15 +871,15 @@ methods: {
 ```html
 <textView text="Multi\nLine\nText" />
 ```
----
-`<textView>` provides two-way data binding using `v-model`.
+
+`<textView>` provides two-way data binding using `bind`.
 
 ```html
-<textView v-model="textViewValue" />
+<textView bind:text="{textViewValue}" />
 ```
 
 
----
+
 #### Displaying multi-style text
 
 To apply multiple styles to the text in your `<textView>`, you can use `<formattedString>`
@@ -975,7 +929,7 @@ To apply multiple styles to the text in your `<textView>`, you can use `<formatt
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_time_picker_.timepicker">Class Docs</a></div>
 
 
----
+
 `<timePicker>` is a UI component that lets users select time. 
 
 > See also: [DatePicker](/en/docs/elements/components/date-picker).
@@ -985,12 +939,12 @@ To apply multiple styles to the text in your `<textView>`, you can use `<formatt
 ```html
 <timePicker hour="{selectedHour}" minute="{selectedMinute}" />
 ```
----
 
-`<timePicker>` provides two-way data binding using `v-model`.
+
+`<timePicker>` provides two-way data binding using `bind`.
 
 ```html
-<timePicker v-model="selectedTime" />
+<timePicker bind:time="{selectedTime}" />
 ```
 
 
@@ -1025,12 +979,12 @@ To apply multiple styles to the text in your `<textView>`, you can use `<formatt
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_web_view_.webview">Class Docs</a></div>
 
----
+
 
 `<webView>` is a UI component that lets you show web content in your app. You can pull and show content from a URL or a local HTML file, or you can render static HTML content.
 
 
-See also: [HtmlView](/en/docs/elements/components/html-view).
+See also: [HtmlView](docs#htmlview).
 
 
 
