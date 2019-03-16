@@ -17,3 +17,25 @@
 
 <GuidePage edit_url="https://github.com/halfnelson/svelte-native/edit/master/docs_src/content/docs"
 	sections="{sections}" />
+
+<style>
+	:global(.content section div.nsref) {
+		float: right;
+		margin-top: -4.5rem;
+	}
+
+	:global(.content section div.nsref a) {
+		font-size: 1.1rem;
+		opacity: 0.7;
+		border: none;
+	}
+
+	:global(.content section div.nsref a:hover) {
+		font-size: 1.1rem;
+		border: none;
+	}
+
+	:global(.content section div.nsref a::after) {
+		content: ' 🡢';
+	}
+</style>

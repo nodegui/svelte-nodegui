@@ -342,7 +342,7 @@ button[outline] {
 .linkify a:not(.open-in-repl) {
 	position: relative;
 	padding: 0 0 .1rem 0;
-	border-bottom: .1rem solid hsla(15, 100%, 50%, 0.5); /* muted --prime */
+	border-bottom: .1rem solid hsla(219, 100%, 50%, 0.5); /* muted --prime */
 	user-select: none;
 	/* white-space: nowrap; */
 	color: inherit;
@@ -355,7 +355,7 @@ button[outline] {
 
 .linkify a:not(.open-in-repl):hover {
 	padding: 0;
-	border-bottom: .2rem solid hsla(15, 100%, 50%, 1);
+	border-bottom: .2rem solid hsla(219, 100%, 50%, 1);
 }
 
 /* .linkify a:not(.open-in-repl):before {
