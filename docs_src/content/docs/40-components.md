@@ -1,0 +1,1046 @@
+
+### ActivityIndicator
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_activity_indicator_.activityindicator">NativeScript Class Documentation</a>
+
+
+`<activityIndicator>` is a UI component that shows a progress indicator signaling to the user of an operation running in the background.
+
+
+
+```html
+<activityIndicator busy="true" @busyChange="onBusyChanged" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `busy` | `Boolean` | Gets or sets whether the indicator is active. When `true`, the indicator is active.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `busyChange`| Emitted when the `busy` property is changed.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.ProgressBar` (indeterminate = true)](https://developer.android.com/reference/android/widget/ProgressBar.html)	| [`UIActivityIndicatorView`](https://developer.apple.com/documentation/uikit/uiactivityindicatorview)
+
+
+
+### Button
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_button_.button">NativeScript Class Documentation</a>
+
+
+`<button>` is a UI component that displays a button which reacts to a user gesture.
+
+For more information about the available gestures, see [Gestures in the official NativeScript documentation](https://docs.nativescript.org/ui/gestures).
+
+
+
+```html
+<button text="Button" @tap="onButtonTap" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `text` | `String` | Sets the label of the button.
+| `textWrap` | `Boolean` | Gets or sets whether the widget wraps the text of the label. Useful for longer labels. Default value is `false`.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `tap` | Emitted when the button is tapped.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.Button`](https://developer.android.com/reference/android/widget/Button.html) | [`UIButton`](https://developer.apple.com/documentation/uikit/uibutton)
+
+
+
+### DatePicker
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_date_picker_.datepicker">NativeScript Class Documentation</a>
+
+
+`<datePicker>` is a UI component that lets users select a date from a pre-configured range.
+
+> See also: [TimePicker](/en/docs/elements/components/time-picker).
+
+
+
+```html
+<datePicker :date="someDate" />
+```
+
+`<datePicker>` provides two-way data binding using `v-model`.
+
+```html
+<datePicker v-model="selectedDate" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `date` | `Date` | Gets or sets the complete date.
+| `minDate` | `Date` | Gets or sets the earliest possible date to select.
+| `maxDate` | `Date` | Gets or sets the latest possible date to select.
+| `day` | `Number` | Gets or sets the day.
+| `month` | `Number` | Gets or sets the month.
+| `year` | `Number` | Gets or sets the year.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `dateChange` | Emitted when the selected date changes.
+
+#### Native component
+
+| Android |	iOS |
+|---------|-----|
+| [`android.widget.DatePicker`](https://developer.android.com/reference/android/widget/DatePicker.html) | [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker)
+
+
+
+### Frame
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_frame_.frame">NativeScript Class Documentation</a>
+
+
+`<frame>` is a UI component used to display [`<page>`](/en/docs/elements/components/page) elements. Every app needs at least a single `<frame>`  element, usually set as the root element. 
+
+
+
+###### A single root Frame
+
+If you are migrating from nativescript 3.x and want to preserve the old behavior, the following snippet in your entry file will create a root frame and render your default page.
+
+```js
+new Vue({
+  render: h => h('Frame', [ h(HomePageComponent) ])
+})
+```
+
+###### Multiple Frames
+
+If you need to create multiple frames, you can do so by wrapping them in a Layout, for example if you want to have 2 frames side-by-side
+
+```html
+<gridLayout columns="*, *">
+  <frame col="0"/>
+  <frame col="1"/>
+</gridLayout>
+```
+
+###### A frame with a default page
+
+```html
+<frame>
+  <page>
+    <actionBar title="Default Page Title" />
+    <gridLayout>
+      <label text="Default Page Content" />
+    </gridLayout>
+  </page>
+</frame>
+```
+
+###### A frame with a default page from an external component
+
+```html
+<frame>
+  <page>
+    <home />
+  </page>
+</frame>
+```
+
+```js
+import Home from './Home'
+
+export default {
+  components: {
+    Home
+  }
+}
+```
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`org.nativescript.widgets.ContentLayout`](https://github.com/NativeScript/tns-core-modules-widgets/blob/master/android/widgets/src/main/java/org/nativescript/widgets/ContentLayout.java) | [`UINavigationController`](https://developer.apple.com/documentation/uikit/uinavigationcontroller)
+
+
+### HtmlView
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_html_view_.htmlview">NativeScript Class Documentation</a>
+
+
+`<htmlView>` is a UI component that lets you show static HTML content.
+
+See also: [WebView](/en/docs/elements/components/web-view).
+
+
+
+```html
+<htmlView html="<div><h1>HtmlView</h1></div>" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `html` | `String` | The HTML content to be shown.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.TextView`](https://developer.android.com/reference/android/widget/TextView.html) | [`UITextView`](https://developer.apple.com/documentation/uikit/uitextview)
+
+
+### HtmlView
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_html_view_.htmlview">NativeScript Class Documentation</a>
+
+
+`<htmlView>` is a UI component that lets you show static HTML content.
+
+See also: [WebView](/en/docs/elements/components/web-view).
+
+
+
+```html
+<htmlView html="<div><h1>HtmlView</h1></div>" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `html` | `String` | The HTML content to be shown.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.TextView`](https://developer.android.com/reference/android/widget/TextView.html) | [`UITextView`](https://developer.apple.com/documentation/uikit/uitextview)
+
+
+### Image
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_image_.image">NativeScript Class Documentation</a>
+
+
+`<image>` is a UI component that shows an image from an [ImageSource](https://docs.nativescript.org/api-reference/modules/_image_source_) or from a URL.
+
+
+
+###### Displaying an image relative to the `app` directory
+
+```html
+<image src="~/logo.png" stretch="none" />
+```
+
+###### Displaying an image from a URL
+
+```html
+<image src="https://art.nativescript-vue.org/NativeScript-Vue-White-Green.png" stretch="none" />
+```
+
+###### Displaying an image from `App_Resources`
+
+```html
+<image src="res://icon" stretch="none" />
+```
+
+###### Displaying a `base64`-encoded image
+
+```html
+<image src="data:Image/png;base64,iVBORw..." stretch="none" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `src` | `String` or [`ImageSource`](https://docs.nativescript.org/api-reference/modules/_image_source_) | Gets or sets the source of the image as a URL or an image source.
+|`imageSource` | [`ImageSource`](https://docs.nativescript.org/api-reference/modules/_image_source_) | Gets or sets the image source of the image.
+| `tintColor` | `Color` | (Style property) Sets a color to tint template images.
+| `stretch` | `Stretch` | (Style property) Gets or sets the way the image is resized to fill its allocated space.<br/>Valid values: `none`, `aspectFill`, `aspectFit`, or `fill`.<br/>For more information, see [Stretch](https://docs.nativescript.org/api-reference/modules/_ui_enums_.stretch). 
+| `loadMode` | | Gets or sets the loading strategy for the images on the local file system.<br/>Valid values: `sync` or `async`.<br/>Default value: `async`.<br/>For more information, see [loadMode](https://docs.nativescript.org/api-reference/classes/_ui_image_.image#loadmode).
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.ImageView`](https://developer.android.com/reference/android/widget/ImageView.html) | [`UIImageView`](https://developer.apple.com/documentation/uikit/uiimageview)
+
+
+### Label
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_label_.label">NativeScript Class Documentation</a>
+
+
+`<label>` is a UI component that displays read-only text.
+
+**IMPORTANT**: This `<label>` is **not** the same as the HTML `<label>`.
+
+
+
+```html
+<label text="Label" />
+```
+
+
+
+##### Styling the label
+
+If you need to style parts of the text, you can use a combination of a [`FormattedString`](https://docs.nativescript.org/angular/ui/ng-ui-widgets/formatted-string) and [`Span`](https://docs.nativescript.org/api-reference/classes/_text_span_.span) elements.
+
+```html
+<label textWrap="true">
+  <formattedString>
+    <span text="This text has a " />
+    <span text="red " style="color: red" />
+    <span text="piece of text. " />
+    <span text="Also, this bit is italic, " fontStyle="italic" />
+    <span text="and this bit is bold." fontWeight="bold" />
+  </formattedString>
+</label>
+```
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `text` | `String` | Gets or sets the text of the label.
+| `textWrap` | `Boolean` | Gets or sets whether the label wraps text.<br/>Default value: `false`.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.TextView`](https://developer.android.com/reference/android/widget/TextView.html) | [`UILabel`](https://developer.apple.com/documentation/uikit/uilabel)
+
+
+### ListPicker
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_list_picker_.listpicker">NativeScript Class Documentation</a>
+
+
+`<listPicker>` is a UI component that lets the user select a value from a pre-configured list.
+
+
+
+```html
+<listPicker :items="listOfItems" selectedIndex="0"
+    @selectedIndexChange="selectedIndexChanged" />
+```
+
+`<listPicker>` provides two-way data binding using `v-model`.
+
+```html
+<listPicker :items="listOfItems" v-model="selectedItem" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `items` | `Array<string>` | Gets or sets the items displayed as options in the list picker.
+| `selectedIndex` | `Number` | Gets or sets the index of the currently selected item.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `selectedIndexChange`| Emitted when the currently selected option (index) changes.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.NumberPicker`](https://developer.android.com/reference/android/widget/NumberPicker.html) | [`UIPickerView`](https://developer.apple.com/documentation/uikit/uipickerview)
+
+
+### ListView
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_list_view_.listview">NativeScript Class Documentation</a>
+
+
+`<listView>` is a UI component that shows items in a vertically scrolling list. To set how the list shows individual items, you can use the `<v-template>` component.
+
+```html
+<listView for="item in listOfItems" @itemTap="onItemTap">
+  <v-template>
+    <!-- Shows the list item label in the default color and style. -->
+    <label :text="item.text" />
+  </v-template>
+</listView>
+```
+
+
+
+
+
+#### Using `<listView>` with multiple `<v-template>` blocks
+
+The [`v-template` component](/en/docs/utilities/v-template) is used to define how each list item is shown on the screen. 
+
+If you need to visualize one or more list items differently than the rest, you can enclose them in additional `<v-template>` blocks and use conditions. You can have as many `<v-template>` blocks as needed within one `<listView>`.
+
+```html
+<listView for="item in listOfItems" @itemTap="onItemTap"> 
+  <v-template>
+    <label :text="item.text" /> 
+  </v-template>
+
+  <v-template if="$odd">
+    <!-- For items with an odd index, shows the label in red. -->
+    <label :text="item.text" color="red" />
+  </v-template>
+</listView>
+```
+
+When you create conditions for `<v-template>`, you can use any valid JavaScript expression or any of the following helpers:
+
+* `$index`&mdash; the index of the current item
+* `$even`&mdash;`true` if the index of the current item is even
+* `$odd`&mdash;`true` if the index of the current item is odd
+
+#### An important note about `v-for`
+
+`<listView>` does not loop through list items as you would expect when using a [`v-for`](https://vuejs.org/v2/guide/list.html#Mapping-an-Array-to-Elements-with-v-for) loop. Instead `<listView>` only creates the necessary views to display the currently visible items on the screen, and reuses the views that are already off-screen when scrolled. This concept is called _view recycling_ and is commonly used in mobile apps to improve performance. 
+
+This is important because **you can't rely on event listeners attached inside the `v-template`**. Instead, you need to use the `itemTap` event which contains the index of the tapped item and the actual item from the list.
+
+```javascript
+onItemTap(event) {
+  console.log(event.index)
+  console.log(event.item)
+}
+```
+
+**NOTE:** If a `v-for` is used on a `<listView>` a warning will be printed to the console, and it will be converted to the `for` property.
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `for` | `String` | Provides the expression for iterating through the items.<br/>For example: <ul><li><code>item in listOfItems</code></li><li><code>(item, index) in listOfItems</code></li><li><code>item in [1, 2, 3, 4, 5]</code></li></ul>
+| `items` | `Array<any>` | An array of items to be shown in the `<listView>`.<br/>**This property is only for advanced use. Use the `for` property instead.**
+| `separatorColor` | `Color` | Sets the separator line color. Set to `transparent` to remove it.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `itemTap`| Emitted when an item in the `<listView>` is tapped. To access the tapped item, use `event.item`.
+
+#### Methods
+
+| Name | Description |
+|------|-------------|
+| `refresh()` | (Coming soon) Forces the `<listView>` to reload all its items.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.ListView`](https://developer.android.com/reference/android/widget/ListView.html) | [`UITableView`](https://developer.apple.com/documentation/uikit/uitableview)
+
+
+### Page
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_page_.page">NativeScript Class Documentation</a>
+
+
+`<page>` is a UI component that represents an application screen. NativeScript apps typically consist of one or more `<page>` that wrap content such as an [`<actionBar>`](/en/docs/elements/action-bar/action-bar) and other UI widgets.
+
+
+
+```html
+<page>
+  <actionBar title="My App" />
+  <gridLayout>
+    <label text="My Content"/>
+  </gridLayout>
+</page>
+```
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `actionBarHidden` | `Boolean` | Shows or hides the `<actionBar>` for the page.<br/>Default value: `false`.
+| `backgroundSpanUnderStatusBar` | `Boolean` | Gets or sets whether the background of the page spans under the status bar.<br/>Default value: `false`.
+| `androidStatusBarBackground` | `Color` | (Android-only) Gets or sets the color of the status bar on Android devices.
+| `enableSwipeBackNavigation` | `Boolean` | (iOS-only) Gets or sets whether the page can be swiped back on iOS.<br/>Default value: `true`.
+| `statusBarStyle` | `String` | Gets or sets the style of the status bar.<br/>Valid values:<br/>`light`,<br/>`dark`.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `navigatedFrom` | Emitted after the app has navigated away from the current page.
+| `navigatedTo` | Emitted after the app has navigated to the current page.
+| `navigatingFrom` | Emitted before the app has navigated away from the current page.
+| `navigatingTo` | Emitted before the app has navigated to the current page.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`org.nativescript.widgets.GridLayout`](https://github.com/NativeScript/tns-core-modules-widgets/blob/master/android/widgets/src/main/java/org/nativescript/widgets/GridLayout.java) | [`UIViewController`](https://developer.apple.com/documentation/uikit/uiviewcontroller)
+
+
+### Progress
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_progress_.progress">NativeScript Class Documentation</a>
+
+
+`<progress>` is a UI component that shows a bar to indicate the progress of a task. 
+
+See also: [ActivityIndicator](/en/docs/elements/components/activity-indicator).
+
+
+
+```html
+<progress :value="currentProgress" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `value` | `Number` | Gets or sets the current value of the progress bar. Must be within the range of 0 to `maxValue`.
+| `maxValue` | `Number` | Gets or sets the maximum value of the progress bar.<br/>Default value: `100`.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `valueChange` | Emitted when the `value` property changes.
+
+#### Native Component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.ProgressBar` (indeterminate = false)](https://developer.android.com/reference/android/widget/ProgressBar.html) | [`UIProgressView`](https://developer.apple.com/documentation/uikit/uiprogressview)
+
+
+### ScrollView
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_scroll_view_.scrollview">NativeScript Class Documentation</a>
+
+
+`<scrollView>` is a UI component that shows a scrollable content area. Content can be scrolled vertically or horizontally.
+
+
+
+```html
+<scrollView orientation="horizontal">
+  <stackLayout orientation="horizontal">
+    <label text="this" />
+    <label text="text" />
+    <label text="scrolls" />
+    <label text="horizontally" />
+    <label text="if necessary" />
+  </stackLayout>
+</scrollView>
+```
+
+
+
+#### Props
+
+| name | type | description |
+|------|------|-------------|
+| `orientation` | `String` | Gets or sets the direction in which the content can be scrolled: `horizontal` or `vertical`.<br/>Default value: `vertical`.
+| `scrollBarIndicatorVisible` | `Boolean` | Specifies if the scrollbar is visible.<br/>Default value: `true`.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `scroll` | Emitted when a scroll event occurs.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.view`](https://developer.android.com/reference/android/view/View.html) | [`UIScrollView`](https://developer.apple.com/documentation/uikit/uiscrollview)
+
+
+### SearchBar
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_search_bar_.searchbar">NativeScript Class Documentation</a>
+
+
+`<searchBar>` is a UI component that provides a user interface for entering search queries and submitting requests to the search provider.
+
+
+
+```html
+<searchBar hint="Search hint" :text="searchPhrase" @textChange="onTextChanged" @submit="onSubmit" />
+```
+
+`<searchBar>` provides two-way data binding using `v-model`.
+
+```html
+<searchBar v-model="searchQuery" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `hint` | `String` | Gets or sets placeholder text for the input area.
+| `text` | `String` | Gets or sets the value of the search query.
+| `textFieldBackgroundColor` | `Color` | Gets or sets the background color of the input area.
+| `textFieldHintColor` | `Color` | Gets or sets the color of the placeholder text.
+
+#### Events
+
+| name | description |
+|------|-------------|
+| `textChange` | Emitted when the text is changed.
+| `submit` | Emitted when the search input is submitted.
+| `clear` | Emitted when the current search input is cleared through the **X** button in the input area.
+
+#### Native Component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.SearchView`](https://developer.android.com/reference/android/widget/SearchView.html)	| [`UISearchBar`](https://developer.apple.com/documentation/uikit/uisearchbar)
+
+
+### SegmentedBar
+<a class="nsref" title="NativeScript Documentation" href="http://docs.nativescript.org/api-reference/modules/_ui_segmented_bar_.html">NativeScript Class Documentation</a>
+
+
+`<segmentedBar>` is a UI bar component that displays a set of buttons for discrete selection. Can show text or images.
+
+As opposed to `<tabView>`:
+* The position of `<segmentedBar>` is not fixed. 
+* You can place and style it as needed on the page or inside additional app elements such as hamburger menus.
+* You need to handle the content shown after selection separately.
+
+
+```html
+<segmentedBar>
+  <segmentedBarItem title="First" />
+  <segmentedBarItem title="Second" />
+  <segmentedBarItem title="Third" />
+</segmentedBar>
+```
+
+```html
+<segmentedBar :items="listOfItems" selectedIndex="0"
+    @selectedIndexChange="onSelectedIndexChange" />
+```
+
+`<segmentedBar>` provides two-way data binding using `v-model`.
+
+```html
+<segmentedBar :items="listOfItems" v-model="selectedItem" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `items` | `Array<segmentedBarItem>` | An array of items to be displayed in the segmented bar. Represents the button labels or icons of the segmented bar.<br/>The array must be created in advance. 
+| `selectedIndex` | `Number` | Gets or sets the index of the selected item.
+| `selectedBackgroundColor` | `Color` | (Style property) Gets or sets the background color of the selected item. To set the background color of the entire bar, use `backgroundColor`.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `selectedIndexChange`| Emitted when the an item on the segmented bar is tapped.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.TabHost`](https://developer.android.com/reference/android/widget/TabHost.html) | [`UISegmentedControl`](https://developer.apple.com/documentation/uikit/uisegmentedcontrol)
+
+
+### Slider
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_slider_.slider">NativeScript Class Documentation</a>
+
+
+
+`<slider>` is a UI component that provides a slider control for picking values within a specified numeric range.
+
+
+
+```html
+<slider value="80" @valueChange="onValueChanged" />
+```
+
+`<slider>` provides two-way data binding using `v-model`:
+
+```html
+<slider v-model="value" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `value` | `Number` | Gets or sets the currently selected value of the slider.<br/>Default value: `0`.
+| `minValue` | `Number` | Gets or sets the minimum value of the slider.<br/>Default value: `0`.
+| `maxValue` | `Number` | Gets or sets the maximum value of the slider.<br/>Default value: `100`.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `valueChange`| Emitted when the value of the slider changes.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.SeekBar`](https://developer.android.com/reference/android/widget/SeekBar.html) | [`UISlider`](https://developer.apple.com/documentation/uikit/uislider)
+
+
+### Switch
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_switch_.switch">NativeScript Class Documentation</a>
+
+
+`<switch>` is a UI component that lets users toggle between two states.
+
+The default state is `false` or OFF.
+
+
+
+```html
+<switch checked="true" />
+```
+
+`<switch>`provides two-way data binding using `v-model`.
+
+```html
+<switch v-model="itemEnabled" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `checked` | `Boolean` | Gets or sets the value of the switch selection.<br/>Default value: `false`.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `checkedChange`| Emitted when the switch selection changes.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.Switch`](https://developer.android.com/reference/android/widget/Switch.html) | [`UISwitch`](https://developer.apple.com/documentation/uikit/uiswitch)
+
+
+### TabView
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_tab_view_.tabview">NativeScript Class Documentation</a>
+
+
+`<tabView>` is a navigation component that shows content grouped into tabs and lets users switch between tabs.
+
+
+
+```html
+<tabView :selectedIndex="selectedIndex" @selectedIndexChange="indexChange">
+  <tabViewItem title="Tab 1">
+    <label text="Content for Tab 1" />
+  </tabViewItem>
+  <tabViewItem title="Tab 2">
+    <label text="Content for Tab 2" />
+  </tabViewItem>
+</tabView>
+```
+
+```js
+methods: {
+  indexChange: function(args) {
+      let newIndex = args.value
+      console.log('Current tab index: ' + newIndex)
+  }
+}
+```
+
+**NOTE:** Currently, `TabViewItem` expects a single child element. In most cases, you might want to wrap your content in a layout.
+
+
+
+###### Adding icons to tabs
+
+```html
+<tabView :selectedIndex="selectedIndex" iosIconRenderingMode="alwaysOriginal">
+  <tabViewItem title="Tab 1" iconSource="~/images/icon.png">
+    <label text="Content for Tab 1" />
+  </tabViewItem>
+  <tabViewItem title="Tab 2" iconSource="~/images/icon.png">
+    <label text="Content for Tab 2" />
+  </tabViewItem>
+</tabView>
+```
+**NOTE:** You can use images for tab icons instead of icon fonts. For more information about how to control the size of icons, see [Working with image from resource folders](https://docs.nativescript.org/ui/image-resources).
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `selectedIndex` | `Number` | Gets or sets the currently selected tab. Default is `0`.
+| `tabTextColor` | `Color` | (Style property) Gets or sets the text color of the tabs titles.
+| `tabBackgroundColor` | `Color` | (Style property) Gets or sets the background color of the tabs.
+| `selectedTabTextColor` | `Color` | (Style property) Gets or sets the text color of the selected tab title.
+| `androidTabsPosition` | `String` | Sets the position of the TabView in Android platform<br/>Valid values: `top` or `bottom`.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `selectedIndexChange` | Emits an event object containing a `value` property with the index of the tapped `<tabViewItem>`.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.support.v4.view.ViewPager`](https://developer.android.com/reference/android/support/v4/view/ViewPager.html) | [`UITabBarController`](https://developer.apple.com/documentation/uikit/uitabbarcontroller)
+
+
+### TextField
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/modules/_ui_text_field_">NativeScript Class Documentation</a>
+
+
+
+`<textField>` is an input component that creates an editable single-line box.
+
+`<textField>` extends [`TextBase`](https://docs.nativescript.org/api-reference/classes/_ui_text_base_.textbase) and [`EditableTextBase`](https://docs.nativescript.org/api-reference/classes/_ui_editor_text_base_.editabletextbase) which provide additional properties and events.
+
+
+
+```html
+<textField :text="textFieldValue" hint="Enter text..." />
+```
+
+`<textField>` provdes two-way data binding using `v-model`.
+
+```html
+<textField v-model="textFieldValue" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `text` | `String` | Gets or sets the value of the field.
+| `hint` | `String` | Gets or sets the placeholder text.
+| `editable` | `Boolean` | When `true`, indicates that the user can edit the value of the field.
+| `maxLength` | `Number` | Limits input to the spcified number of characters.
+| `secure` | `Boolean` | Hides the entered text when `true`. Use this property to create password input fields.<br/>Default value: `false`.
+| `keyboardType` | `KeyboardType` | Shows a custom keyboard for easier text input.<br/>Valid values: `datetime`, `phone`, `number`, `url`, or `email`.
+| `returnKeyType` | `ReturnKeyType` | Gets or sets the label of the return key.<br/>Valid values: `done`, `next`, `go`, `search`, or `send`.
+| `autocorrect` | `Boolean` | Enables or disables autocorrect.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `textChange` | Emitted when the text changes.
+| `returnPress` | Emitted when the return key is pressed.
+| `focus` | Emitted when the field is in focus.
+| `blur` | Emitted when the field loses focus.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.EditText`](https://developer.android.com/reference/android/widget/EditText.html) | [`UITextField`](https://developer.apple.com/documentation/uikit/uitextfield)
+
+
+### TextView
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_text_view_.textview">NativeScript Class Documentation</a>
+
+
+`<textView>` is a UI component that shows an editable or a read-only multi-line text container. You can use it to let users type large text in your app or to show longer, multi-line text on the screen.
+
+`<textView>` extends [`TextBase`](https://docs.nativescript.org/api-reference/classes/_ui_text_base_.textbase) and [`EditableTextBase`](https://docs.nativescript.org/api-reference/classes/_ui_editor_text_base_.editabletextbase) which provide additional properties and events.
+
+
+
+```html
+<textView text="Multi\nLine\nText" />
+```
+
+`<textView>` provides two-way data binding using `v-model`.
+
+```html
+<textView v-model="textViewValue" />
+```
+
+
+
+##### Displaying multi-style text
+
+To apply multiple styles to the text in your `<textView>`, you can use `<formattedString>`
+
+```html
+<textView editable="false">
+  <formattedString>
+    <span text="You can use text attributes such as " />
+    <span text="bold, " fontWeight="Bold" />
+    <span text="italic " fontStyle="Italic" />
+    <span text="and " />
+    <span text="underline." textDecoration="Underline" />
+  </formattedString>
+</textView>
+```
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `text` | `String` | Gets or sets the value of the component.
+| `hint` | `String` | Gets or sets the placeholder text when the component is editable.
+| `editable` | `Boolean` | When `true`, indicates that the user can edit the contents of the container.
+| `maxLength` | `Number` | Sets the maximum number of characters that can be entered in the container.
+| `keyboardType` | `KeyboardType` | Shows a custom keyboard for easier text input.<br/>Valid values: `datetime`, `phone`, `number`, `url`, or `email`.
+| `returnKeyType` | Gets or sets the label of the return key. Currently supported only on iOS.<br/>Valid values: `done`, `next`, `go`, `search`, or `send`.
+| `autocorrect` | `Boolean` | Enables or disables autocorrect.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `textChange`| Emitted when the text changes.
+| `returnPress`| Emitted when the return key is pressed.
+| `focus`| Emitted when the container is in focus.
+| `blur`| Emitted when the container loses focus.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.EditText`](https://developer.android.com/reference/android/widget/EditText.html) | [`UITextView`](https://developer.apple.com/documentation/uikit/uitextview)
+
+
+### TimePicker
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_time_picker_.timepicker">NativeScript Class Documentation</a>
+
+
+`<timePicker>` is a UI component that lets users select time. 
+
+> See also: [DatePicker](/en/docs/elements/components/date-picker).
+
+
+
+```html
+<timePicker :hour="selectedHour" :minute="selectedMinute" />
+```
+
+`<timePicker>` provides two-way data binding using `v-model`.
+
+```html
+<timePicker v-model="selectedTime" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `hour` | `Number` | Gets or sets the selected hour.
+| `minute` | `Number` | Gets or sets the selected minute.
+| `time` | `Date` | Gets or sets the selected time.
+| `minHour` | `Number` | Gets or sets the minimum selectable hour.
+| `maxHour` | `Number` | Gets or sets the maximum selectable hour.
+| `minMinute` | `Number` | Gets or sets the minimum selectable minute.
+| `maxMinute` | `Number` | Gets or sets the maximum selectable minute.
+| `minuteInterval` | `Number` | Gets or sets the selectable minute interval. For example: 5 or 15 minutes.<br/>Default value: `1`.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `timeChange` | Emitted when the selected time changes.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.widget.TimePicker`](https://developer.android.com/reference/android/widget/TimePicker) | [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker)
+
+
+### WebView
+<a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_web_view_.webview">NativeScript Class Documentation</a>
+
+
+`<webView>` is a UI component that lets you show web content in your app. You can pull and show content from a URL or a local HTML file, or you can render static HTML content.
+
+
+See also: [HtmlView](/en/docs/elements/components/html-view).
+
+
+
+```html
+<webView src="http://nativescript-vue.org/" />
+
+<webView src="~/html/index.html" />
+
+<webView src="<div><h1>Some static HTML</h1></div>" />
+```
+
+
+
+#### Props
+
+| Name | Type | Description |
+|------|------|-------------|
+| `src` | `String` | Gets or sets the displayed web content.<br/>Valid values: an absolute URL, the path to a local HTML file, or static HTML.
+
+#### Events
+
+| Name | Description |
+|------|-------------|
+| `loadStarted`| Emitted when the page has started loading in the `<webView>`.
+| `loadFinished`| Emitted when the page has finished loading in the `<webView>`.
+
+#### Native component
+
+| Android | iOS |
+|---------|-----|
+| [`android.webkit.WebView`](https://developer.android.com/reference/android/webkit/WebView) | [`WKWebView`](https://developer.apple.com/documentation/webkit/wkwebview)
