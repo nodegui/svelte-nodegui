@@ -1,3 +1,6 @@
+---
+title: components
+---
 
 ### ActivityIndicator
 <a class="nsref" title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_activity_indicator_.activityindicator">NativeScript Class Documentation</a>
@@ -8,7 +11,7 @@
 
 
 ```html
-<activityIndicator busy="true" @busyChange="onBusyChanged" />
+<activityIndicator busy="{true}" on:busyChange="{{onBusyChanged}}" />
 ```
 
 
@@ -44,7 +47,7 @@ For more information about the available gestures, see [Gestures in the official
 
 
 ```html
-<button text="Button" @tap="onButtonTap" />
+<button text="Button" on:tap="{onButtonTap}" />
 ```
 
 
@@ -81,7 +84,7 @@ For more information about the available gestures, see [Gestures in the official
 
 
 ```html
-<datePicker :date="someDate" />
+<datePicker date="{someDate}" />
 ```
 
 `<datePicker>` provides two-way data binding using `v-model`.
@@ -316,7 +319,7 @@ See also: [WebView](/en/docs/elements/components/web-view).
 If you need to style parts of the text, you can use a combination of a [`FormattedString`](https://docs.nativescript.org/angular/ui/ng-ui-widgets/formatted-string) and [`Span`](https://docs.nativescript.org/api-reference/classes/_text_span_.span) elements.
 
 ```html
-<label textWrap="true">
+<label textWrap="{true}">
   <formattedString>
     <span text="This text has a " />
     <span text="red " style="color: red" />
@@ -350,14 +353,14 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 
 
 ```html
-<listPicker :items="listOfItems" selectedIndex="0"
-    @selectedIndexChange="selectedIndexChanged" />
+<listPicker items="{listOfItems}" selectedIndex="0"
+    on:selectedIndexChange="{selectedIndexChanged}" />
 ```
 
 `<listPicker>` provides two-way data binding using `v-model`.
 
 ```html
-<listPicker :items="listOfItems" v-model="selectedItem" />
+<listPicker items="{listOfItems}" v-model="selectedItem" />
 ```
 
 
@@ -389,10 +392,10 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 `<listView>` is a UI component that shows items in a vertically scrolling list. To set how the list shows individual items, you can use the `<v-template>` component.
 
 ```html
-<listView for="item in listOfItems" @itemTap="onItemTap">
+<listView for="item in listOfItems" on:itemTap="{onItemTap}">
   <v-template>
     <!-- Shows the list item label in the default color and style. -->
-    <label :text="item.text" />
+    <label text="{item.text}" />
   </v-template>
 </listView>
 ```
@@ -408,14 +411,14 @@ The [`v-template` component](/en/docs/utilities/v-template) is used to define ho
 If you need to visualize one or more list items differently than the rest, you can enclose them in additional `<v-template>` blocks and use conditions. You can have as many `<v-template>` blocks as needed within one `<listView>`.
 
 ```html
-<listView for="item in listOfItems" @itemTap="onItemTap"> 
+<listView for="item in listOfItems" on:itemTap="{onItemTap}"> 
   <v-template>
-    <label :text="item.text" /> 
+    <label text="{item.text}" /> 
   </v-template>
 
   <v-template if="$odd">
     <!-- For items with an odd index, shows the label in red. -->
-    <label :text="item.text" color="red" />
+    <label text="{item.text}" color="red" />
   </v-template>
 </listView>
 ```
@@ -522,7 +525,7 @@ See also: [ActivityIndicator](/en/docs/elements/components/activity-indicator).
 
 
 ```html
-<progress :value="currentProgress" />
+<progress value="{currentProgress}" />
 ```
 
 
@@ -598,7 +601,7 @@ See also: [ActivityIndicator](/en/docs/elements/components/activity-indicator).
 
 
 ```html
-<searchBar hint="Search hint" :text="searchPhrase" @textChange="onTextChanged" @submit="onSubmit" />
+<searchBar hint="Search hint" text="{searchPhrase}" on:textChange="{onTextChanged}" on:submit="{onSubmit}" />
 ```
 
 `<searchBar>` provides two-way data binding using `v-model`.
@@ -654,14 +657,14 @@ As opposed to `<tabView>`:
 ```
 
 ```html
-<segmentedBar :items="listOfItems" selectedIndex="0"
-    @selectedIndexChange="onSelectedIndexChange" />
+<segmentedBar items="{listOfItems}" selectedIndex="0"
+    on:selectedIndexChange="{onSelectedIndexChange}" />
 ```
 
 `<segmentedBar>` provides two-way data binding using `v-model`.
 
 ```html
-<segmentedBar :items="listOfItems" v-model="selectedItem" />
+<segmentedBar items="{listOfItems}" v-model="selectedItem" />
 ```
 
 
@@ -697,7 +700,7 @@ As opposed to `<tabView>`:
 
 
 ```html
-<slider value="80" @valueChange="onValueChanged" />
+<slider value="80" on:valueChange="{onValueChanged}" />
 ```
 
 `<slider>` provides two-way data binding using `v-model`:
@@ -740,7 +743,7 @@ The default state is `false` or OFF.
 
 
 ```html
-<switch checked="true" />
+<switch checked="{true}" />
 ```
 
 `<switch>`provides two-way data binding using `v-model`.
@@ -779,7 +782,7 @@ The default state is `false` or OFF.
 
 
 ```html
-<tabView :selectedIndex="selectedIndex" @selectedIndexChange="indexChange">
+<tabView selectedIndex="{selectedIndex}" on:selectedIndexChange="{indexChange}">
   <tabViewItem title="Tab 1">
     <label text="Content for Tab 1" />
   </tabViewItem>
@@ -805,7 +808,7 @@ methods: {
 ###### Adding icons to tabs
 
 ```html
-<tabView :selectedIndex="selectedIndex" iosIconRenderingMode="alwaysOriginal">
+<tabView selectedIndex="{selectedIndex}" iosIconRenderingMode="alwaysOriginal">
   <tabViewItem title="Tab 1" iconSource="~/images/icon.png">
     <label text="Content for Tab 1" />
   </tabViewItem>
@@ -851,7 +854,7 @@ methods: {
 
 
 ```html
-<textField :text="textFieldValue" hint="Enter text..." />
+<textField text="{textFieldValue}" hint="Enter text..." />
 ```
 
 `<textField>` provdes two-way data binding using `v-model`.
@@ -918,7 +921,7 @@ methods: {
 To apply multiple styles to the text in your `<textView>`, you can use `<formattedString>`
 
 ```html
-<textView editable="false">
+<textView editable="{false}">
   <formattedString>
     <span text="You can use text attributes such as " />
     <span text="bold, " fontWeight="Bold" />
@@ -968,7 +971,7 @@ To apply multiple styles to the text in your `<textView>`, you can use `<formatt
 
 
 ```html
-<timePicker :hour="selectedHour" :minute="selectedMinute" />
+<timePicker hour="{selectedHour}" minute="{selectedMinute}" />
 ```
 
 `<timePicker>` provides two-way data binding using `v-model`.
