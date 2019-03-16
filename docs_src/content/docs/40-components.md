@@ -366,7 +366,7 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_list_view_.listview">Class Docs</a></div>
 
-`<listView>` is a UI component that shows items in a vertically scrolling list. To set how the list shows individual items, you use the `<Template>` component.
+`<listView>` is a UI component that shows items in a vertically scrolling list. To set how the list shows individual items, you use the [`<Template>` component](docs#template-component).
 
 ```html
 <listView items="{listOfItems}" on:itemTap="{onItemTap}">
@@ -932,7 +932,7 @@ To apply multiple styles to the text in your `<textView>`, you can use `<formatt
 
 `<timePicker>` is a UI component that lets users select time. 
 
-> See also: [DatePicker](/en/docs/elements/components/date-picker).
+See also: [DatePicker](docs#datepicker).
 
 
 
