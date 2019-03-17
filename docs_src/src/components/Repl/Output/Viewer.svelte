@@ -21,16 +21,17 @@
 		if (!process.browser) return
 		if (!p) {
 			p = new PreviewService();
-		}
-		await p.init();
 
-		qrUrl = p.qrCodeUrl();
-		new QRCode(qrcode_holder, {
-			text: qrUrl,
-			colorDark: "#000000",
-			colorLight: "#ffffff",
-			correctLevel: QRCode.CorrectLevel.L
-		});
+			await p.init();
+
+			qrUrl = p.qrCodeUrl();
+			new QRCode(qrcode_holder, {
+				text: qrUrl,
+				colorDark: "#000000",
+				colorLight: "#ffffff",
+				correctLevel: QRCode.CorrectLevel.L
+			});
+		}
 
 		inited = true;
 	}

@@ -14,7 +14,8 @@ self.addEventListener('message', async event => {
 				version === 'local' ?
 					'/repl/local?file=compiler.js' :
 					`https://unpkg.com/svelte@${version}/compiler.js`,
-				`https://unpkg.com/rollup@0.68/dist/rollup.browser.js`
+				`https://unpkg.com/rollup@0.68/dist/rollup.browser.js`,
+				`https://bundle.run/svelte-native-preprocessor`
 			);
 			fulfil();
 
@@ -45,6 +46,7 @@ let cached = {
 let currentToken;
 
 const is_svelte_module = id => id === 'svelte' || id.startsWith('svelte/');
+const is_svelte_native_module = id => id === 'svelte-native' || id.startsWith('svelte-native/');
 
 const cache = new Map();
 function fetch_if_uncached(url) {
@@ -73,7 +75,8 @@ async function getBundle(mode, cache, lookup) {
 			external: id => {
 				if (id[0] === '.') return false;
 				if (is_svelte_module(id)) return false;
-				if (id.startsWith('https://')) return false;
+				if (is_svelte_native_module(id)) return false;
+				if (id.startsWith('https://') || id.startsWith('/repl/svelte-native')) return false;
 				return true;
 			},
 			plugins: [{
@@ -81,6 +84,10 @@ async function getBundle(mode, cache, lookup) {
 					// v3 hack
 					if (importee === `svelte`) return `https://unpkg.com/svelte@${version}/index.mjs`;
 					if (importee.startsWith(`svelte/`)) return `https://unpkg.com/svelte@${version}/${importee.slice(7)}.mjs`;
+
+					if (importee === `svelte-native`) return '/repl/svelte-native/index.mjs';
+
+					if (importee.startsWith(`svelte-native/`)) return `/repl/svelte-native/${importee.slice(14)}/index.mjs`;
 
 					if (importer && importer.startsWith(`https://`)) {
 						return new URL(`${importee}.mjs`, importer).href;
@@ -91,22 +98,28 @@ async function getBundle(mode, cache, lookup) {
 					if (importee in lookup) return importee;
 				},
 				load(id) {
-					if (id.startsWith(`https://`)) return fetch_if_uncached(id);
+					if (id.startsWith(`https://`) || id.startsWith('/repl/svelte-native')) return fetch_if_uncached(id);
 					if (id in lookup) return lookup[id].source;
 				},
-				transform(code, id) {
+				async transform(code, id) {
 					if (!/\.svelte$/.test(id)) return null;
 
 					const name = id.replace(/^\.\//, '').replace(/\.svelte$/, '');
 
+
+
+
 					const result = cache[id] && cache[id].code === code
 						? cache[id].result
-						: svelte.compile(code, Object.assign({
-							generate: mode,
-							format: 'esm',
-							name: name,
-							filename: name + '.svelte'
-						}, commonCompilerOptions));
+						: await svelte.preprocess(code, svelteNativePreprocessor())
+							.then(code =>
+								svelte.compile(code.toString(), Object.assign({
+									generate: mode,
+									format: 'esm',
+									name: name,
+									filename: name + '.svelte'
+								}, commonCompilerOptions))
+							);
 
 					new_cache[id] = { code, result };
 
@@ -167,8 +180,8 @@ async function bundle(components) {
 		let uid = 1;
 
 		const dom_result = await dom.bundle.generate({
-			format: 'iife',
-			name: 'SvelteComponent',
+			format: 'cjs',
+			name: 'App',
 			globals: id => {
 				const name = `import_${uid++}`;
 				import_map.set(id, name);

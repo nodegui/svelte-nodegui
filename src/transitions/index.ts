@@ -1,8 +1,8 @@
 import { NativeElementNode } from "../dom";
-import { Animation, AnimationDefinition, CubicBezierAnimationCurve, Pair } from "tns-core-modules/ui/animation/animation";
+import { Animation, AnimationDefinition, CubicBezierAnimationCurve, Pair } from "tns-core-modules/ui/animation";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { ease_in, ease_out, ease, linear, ease_in_out, animation_curve, normalizeCurve, partialCurveFrom, reverseCurve, CubicBezier } from "./bezier"
-import { Color } from "tns-core-modules/color/color";
+import { Color } from "tns-core-modules/color";
 
 enum AnimationDirection { Unknown, In, Out }
 

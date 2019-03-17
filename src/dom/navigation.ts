@@ -1,4 +1,4 @@
-import { topmost, NavigationTransition, Frame, getFrameById, Page, BackstackEntry, ViewBase, NavigatedData } from "tns-core-modules/ui/frame/frame";
+import { topmost, NavigationTransition, Frame, getFrameById, Page, BackstackEntry, ViewBase, NavigatedData } from "tns-core-modules/ui/frame";
 import FrameElement from "./native/FrameElement";
 import { createElement } from "./basicdom";
 import PageElement from "./native/PageElement";

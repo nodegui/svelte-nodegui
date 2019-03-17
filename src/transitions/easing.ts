@@ -1,4 +1,4 @@
-import { CubicBezierAnimationCurve } from "tns-core-modules/ui/animation/animation";
+import { CubicBezierAnimationCurve } from "tns-core-modules/ui/animation";
 //similar set to svelte ported to cubic bezier thanks to https://matthewlein.com/tools/ceaser
 
 export const easeInQuad = new CubicBezierAnimationCurve(0.550, 0.085, 0.680, 0.530)

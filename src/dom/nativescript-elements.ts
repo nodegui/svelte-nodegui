@@ -1,6 +1,6 @@
 import { registerElement } from './basicdom'
 import NativeElementNode, { ComponentMeta } from './native/NativeElementNode'
-import { View } from 'tns-core-modules/ui/page/page'
+import { View } from 'tns-core-modules/ui/page'
 import FrameElement from './native/FrameElement';
 import PageElement from './native/PageElement';
 import ListViewElement from './native/ListViewElement';
