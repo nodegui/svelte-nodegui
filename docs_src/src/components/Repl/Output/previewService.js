@@ -8,15 +8,65 @@ export class PreviewService {
     constructor() {
         this.messagingService = null;
         this.instanceId = null;
-        this.init = this.init.bind(this)
+        this.init = this.init.bind(this);
+        this.previewSdk = null;
     }
 
     qrCodeUrl() {
         return `nsplay://boot?instanceId=${this.instanceId}&pKey=${PubnubKeys.PUBLISH_KEY}&sKey=${PubnubKeys.SUBSCRIBE_KEY}&template=play-ng`
     }
 
-    async init() {
-        let previewSdk = await import('nativescript-preview-sdk');
+    async onBiggerFilesUpload(filesContent, callback) {
+        const uploadResponse = await fetch("/repl/syncfiles", {
+            method: "POST",
+            body: new Blob([pako.gzip(filesContent)]),
+            headers: {
+                "Content-Encoding": "gzip",
+                "Content-Type": "text/plain"
+            }
+        });
+
+        const responseBody = await uploadResponse.json();
+        const location = responseBody && responseBody.location;
+        callback(location, uploadResponse.ok ? null : new Error(`Error uploading files ${uploadResponse.status}:${uploadResponse.statusText}`));
+    }
+
+
+    getInitialFiles(device, mainjs) {
+        let files = [
+            {
+                event: "change",
+                file: "package.json",
+                binary: false,
+                fileContents: `{
+                    "main": "app.js"
+                }`
+            },
+            {
+                event: "change",
+                file: "app.css",
+                fileContents: `
+                    @import '~nativescript-theme-core/css/core.light.css';
+                `
+            },
+            {
+                event: "change",
+                file: "app.js",
+                binary: false,
+                fileContents: mainjs
+            }
+        ];
+
+        return Promise.resolve({
+            files: files,
+            platform: device.platform,
+            hmrMode: 0,
+            deviceId: device.id
+        });
+    }
+
+    async init(mainjs) {
+        this.previewSdk = await import('nativescript-preview-sdk');
 
         let callBacks = {
             onLogSdkMessage: (log) => {
@@ -36,7 +86,7 @@ export class PreviewService {
             onDeviceConnected: (device) => console.log("onDeviceConnected", device),
             onDevicesPresence: (devices) => console.log("onDevicesPresence", devices),
             onSendingChange: (sending) => console.log("onSendingChange", sending),
-            onBiggerFilesUpload: async (filesContent, callback) => console.log("onBiggerFilesUpload", filesContent)
+            onBiggerFilesUpload: (filesContent, callback) => this.onBiggerFilesUpload(filesContent, callback)
         }
 
         let config = {
@@ -46,9 +96,9 @@ export class PreviewService {
             msvEnv: "live",
             showLoadingPage: false,
             callbacks: callBacks,
-            getInitialFiles: (device) => (console.log("get initial files, device"))
+            getInitialFiles: (device) => this.getInitialFiles(device, mainjs)
         }
-        this.messagingService = new previewSdk.default.MessagingService()
+        this.messagingService = new this.previewSdk.default.MessagingService()
         this.instanceId = await this.messagingService.initialize(config)
     }
 }

@@ -11,14 +11,15 @@ self.addEventListener('message', async event => {
 			importScripts(
 				event.data.version === 'local' ?
 					'/repl/local?file=compiler.js' :
-					`https://unpkg.com/svelte@${event.data.version}/compiler.js`
+					`https://unpkg.com/svelte@${event.data.version}/compiler.js`,
+				`https://bundle.run/svelte-native-preprocessor`
 			);
 			fulfil_ready();
 			break;
 
 		case 'compile':
 			await ready;
-			postMessage(compile(event.data));
+			postMessage(await compile(event.data));
 			break;
 
 	}
@@ -29,10 +30,12 @@ const commonCompilerOptions = {
 	css: false
 };
 
-function compile({ id, source, options, entry }) {
+async function compile({ id, source, options, entry }) {
 	try {
+
+		let code = await svelte.preprocess(source, svelteNativePreprocessor())
 		const { js, css, stats, vars } = svelte.compile(
-			source,
+			code.toString(),
 			Object.assign({}, commonCompilerOptions, options)
 		);
 

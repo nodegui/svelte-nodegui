@@ -112,66 +112,25 @@
 </style>
 
 <div class="view-toggle">
-	<button
-		class:active="{view === 'result'}"
-		on:click="{() => view = 'result'}"
-	>Result</button>
+	<button class:active="{view === 'result'}" on:click="{() => view = 'result'}">Result</button>
 
-	<button
-		class:active="{view === 'js'}"
-		on:click="{() => view = 'js'}"
-	>JS output</button>
+	<button class:active="{view === 'js'}" on:click="{() => view = 'js'}">JS output</button>
 
-	<button
-		class:active="{view === 'css'}"
-		on:click="{() => view = 'css'}"
-	>CSS output</button>
+	<button class:active="{view === 'css'}" on:click="{() => view = 'css'}">CSS output</button>
 </div>
 
 <!-- component viewer -->
-<div class="tab-content" class:visible="{view === 'result'}">
-	<Viewer
-		bind:this={viewer}
-		bind:error={runtimeError}
-		on:binding="{e => setPropFromViewer(e.detail.prop, e.detail.value)}"
-	/>
+<div class="tab-content" class:visible="{view === 'result'}" style="overflow-y: auto">
+	<Viewer bind:this={viewer} bind:error={runtimeError}
+		on:binding="{e => setPropFromViewer(e.detail.prop, e.detail.value)}" />
 </div>
 
 <!-- js output -->
 <div class="tab-content" class:visible="{view === 'js'}">
-	{#if embedded}
-		<CodeMirror
-			bind:this={js_editor}
-			mode="js"
-			errorLoc={sourceErrorLoc}
-			readonly
-		/>
-	{:else}
-		<SplitPane type="vertical" pos={67}>
-			<div slot="a">
-				<CodeMirror
-					bind:this={js_editor}
-					mode="js"
-					errorLoc={sourceErrorLoc}
-					readonly
-				/>
-			</div>
-
-			<section slot="b">
-				<h3>Compiler options</h3>
-
-				<CompilerOptions bind:options={compile_options}/>
-			</section>
-		</SplitPane>
-	{/if}
+	<CodeMirror bind:this={js_editor} mode="js" errorLoc={sourceErrorLoc} readonly />
 </div>
 
 <!-- css output -->
 <div class="tab-content" class:visible="{view === 'css'}">
-	<CodeMirror
-		bind:this={css_editor}
-		mode="css"
-		errorLoc={sourceErrorLoc}
-		readonly
-	/>
+	<CodeMirror bind:this={css_editor} mode="css" errorLoc={sourceErrorLoc} readonly />
 </div>

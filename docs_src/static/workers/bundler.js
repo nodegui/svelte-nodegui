@@ -71,7 +71,7 @@ async function getBundle(mode, cache, lookup) {
 
 	try {
 		bundle = await rollup.rollup({
-			input: './App.svelte',
+			input: './app.js',
 			external: id => {
 				if (id[0] === '.') return false;
 				if (is_svelte_module(id)) return false;
@@ -88,6 +88,10 @@ async function getBundle(mode, cache, lookup) {
 					if (importee === `svelte-native`) return '/repl/svelte-native/index.mjs';
 
 					if (importee.startsWith(`svelte-native/`)) return `/repl/svelte-native/${importee.slice(14)}/index.mjs`;
+					if (importer && importer.startsWith(`/repl/svelte-native/`)) {
+						return importer.replace('index.mjs', importee.slice(1)) + '/index.mjs'
+					}
+
 
 					if (importer && importer.startsWith(`https://`)) {
 						return new URL(`${importee}.mjs`, importer).href;
@@ -96,6 +100,8 @@ async function getBundle(mode, cache, lookup) {
 					if (importee.endsWith('.html')) importee = importee.replace(/\.html$/, '.svelte');
 
 					if (importee in lookup) return importee;
+
+					console.error("Unknown id", importee, importer)
 				},
 				load(id) {
 					if (id.startsWith(`https://`) || id.startsWith('/repl/svelte-native')) return fetch_if_uncached(id);
@@ -159,6 +165,18 @@ async function bundle(components) {
 		const path = `./${component.name}.${component.type}`;
 		lookup[path] = component;
 	});
+
+	// svelte native bootstrap
+	lookup['./app.js'] = {
+		name: 'app',
+		type: 'js',
+		source: `
+				import { svelteNative } from "svelte-native";
+				import App from "./App.svelte";
+				svelteNative(App, {});
+			`
+	}
+
 
 	const import_map = new Map();
 	let dom;

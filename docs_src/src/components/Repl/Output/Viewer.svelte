@@ -22,7 +22,7 @@
 		if (!p) {
 			p = new PreviewService();
 
-			await p.init();
+			await p.init($bundle.dom.code);
 
 			qrUrl = p.qrCodeUrl();
 			new QRCode(qrcode_holder, {
