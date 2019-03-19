@@ -92,6 +92,10 @@
 		saving = false;
 	}
 
+	function preview() {
+		repl.launchPreview();
+	}
+
 	async function save() {
 		if (saving) return;
 
@@ -194,11 +198,7 @@ export default app;` });
 <svelte:window on:keydown={handleKeydown} />
 
 <div class="app-controls">
-	<input
-		bind:value={name}
-		on:focus="{e => e.target.select()}"
-		use:enter="{e => e.target.blur()}"
-	>
+	<input bind:value={name} on:focus="{e => e.target.select()}" use:enter="{e => e.target.blur()}">
 
 	<div style="text-align: right; margin-right:.4rem">
 		<button class="icon" on:click="{() => zen_mode = !zen_mode}" title="fullscreen editor">
@@ -207,13 +207,11 @@ export default app;` });
 			{:else}
 				<Icon name="maximize" />
 			{/if}
-		</button>
-
-		<button class="icon" disabled={downloading} on:click={download} title="download zip file">
-			<Icon name="download" />
-		</button>
-
-		{#if $user}
+		</button><!--
+	 --><button class="icon" on:click={preview} title="Preview on Device">
+			<Icon name="play" />
+		</button><!--
+	 -->{#if $user}
 			<button class="icon" disabled="{saving || !$user}" on:click={fork} title="fork">
 				{#if justForked}
 					<Icon name="check" />
@@ -221,7 +219,6 @@ export default app;` });
 					<Icon name="git-branch" />
 				{/if}
 			</button>
-
 			<button class="icon" disabled="{saving || !$user}" on:click={save} title="save">
 				{#if justSaved}
 					<Icon name="check" />
@@ -229,15 +226,13 @@ export default app;` });
 					<Icon name="save" />
 				{/if}
 			</button>
-		{/if}
-
-		{#if gist}
+		{/if}<!--
+	 -->{#if gist}
 			<a class="icon" href={gist.html_url} title="link to gist">
 				<Icon name="link" />
 			</a>
-		{/if}
-
-		{#if $user}
+		{/if}<!--
+	 -->{#if $user}
 			<UserMenu />
 		{:else}
 			<button class="icon" on:click={login}>

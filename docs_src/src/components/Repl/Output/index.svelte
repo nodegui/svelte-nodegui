@@ -44,6 +44,10 @@
 
 			js_editor.update(compiled.js);
 			css_editor.update(compiled.css);
+		},
+
+		launchPreview: () => {
+			viewer.launchPreview();
 		}
 	});
 
@@ -112,7 +116,7 @@
 </style>
 
 <div class="view-toggle">
-	<button class:active="{view === 'result'}" on:click="{() => view = 'result'}">Result</button>
+	<button class:active="{view === 'result'}" on:click="{() => view = 'result'}">Preview</button>
 
 	<button class:active="{view === 'js'}" on:click="{() => view = 'js'}">JS output</button>
 

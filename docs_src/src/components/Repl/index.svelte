@@ -37,6 +37,10 @@
 		output.set($selected);
 	}
 
+	export function launchPreview() {
+		output.launchPreview();
+	}
+
 	export function update(data) {
 		const { name, type } = $selected || {};
 
@@ -117,6 +121,8 @@
 			module_editor.focus();
 		}
 	});
+
+
 
 	function handle_select(component) {
 		selected.set(component);

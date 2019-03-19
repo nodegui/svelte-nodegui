@@ -1,7 +1,11 @@
+import { writable } from 'svelte/store';
+
 const PubnubKeys = {
     PUBLISH_KEY: "pub-c-d7893276-cc78-4d18-8ab0-becba06e43de",
     SUBSCRIBE_KEY: "sub-c-3dad1ebe-aaa3-11e8-8027-363023237e0b"
 }
+
+
 
 export class PreviewService {
 
@@ -10,6 +14,8 @@ export class PreviewService {
         this.instanceId = null;
         this.init = this.init.bind(this);
         this.previewSdk = null;
+        this.connectedDevices = writable([]);
+        this.lastLogMessage = writable(null);
     }
 
     qrCodeUrl() {
@@ -31,8 +37,14 @@ export class PreviewService {
         callback(location, uploadResponse.ok ? null : new Error(`Error uploading files ${uploadResponse.status}:${uploadResponse.statusText}`));
     }
 
+    syncApp(mainjs) {
+        let devices = this.connectedDevices.get();
+
+
+    }
 
     getInitialFiles(device, mainjs) {
+        console.log("Sending initial files!");
         let files = [
             {
                 event: "change",
@@ -74,6 +86,7 @@ export class PreviewService {
             },
             onLogMessage: (log, deviceName, deviceId) => {
                 console.log("onLogMessage", log, deviceName, deviceId);
+                this.lastLogMessage.set({ log, deviceName, deviceId })
             },
             onRestartMessage: () => {
                 console.log("onRestartMessage");
@@ -84,7 +97,7 @@ export class PreviewService {
             onConnectedDevicesChange: (connectedDevices) => console.log("onConnectedDevicesChange", connectedDevices),
             onDeviceConnectedMessage: (deviceConnectedMessage) => console.log("onDeviceConnectedMessage", deviceConnectedMessage),
             onDeviceConnected: (device) => console.log("onDeviceConnected", device),
-            onDevicesPresence: (devices) => console.log("onDevicesPresence", devices),
+            onDevicesPresence: (devices) => this.connectedDevices.set(devices),
             onSendingChange: (sending) => console.log("onSendingChange", sending),
             onBiggerFilesUpload: (filesContent, callback) => this.onBiggerFilesUpload(filesContent, callback)
         }
@@ -98,8 +111,13 @@ export class PreviewService {
             callbacks: callBacks,
             getInitialFiles: (device) => this.getInitialFiles(device, mainjs)
         }
-        this.messagingService = new this.previewSdk.default.MessagingService()
-        this.instanceId = await this.messagingService.initialize(config)
+        try {
+            this.messagingService = new this.previewSdk.default.MessagingService()
+            this.instanceId = await this.messagingService.initialize(config)
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
     }
 }
 
