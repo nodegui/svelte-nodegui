@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
 yarn-error.log
+.env
 /cypress/screenshots/
 /__sapper__/
