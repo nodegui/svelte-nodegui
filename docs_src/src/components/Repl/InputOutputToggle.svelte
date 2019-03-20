@@ -29,3 +29,7 @@
 	<input type="checkbox" bind:checked>
 	<span class:active={checked}>output</span>
 </label>
+
+<script>
+	export let checked;
+</script>

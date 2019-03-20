@@ -9,9 +9,13 @@
 
 	export let error; // TODO should this be exposed as a prop?
 
-
 	let inited = false;
 	let previewService = new PreviewService();
+
+	const dispatch = createEventDispatcher();
+	let syncInProgress = previewService.syncInProgress;
+	$: dispatch('syncstatechange', { state: $syncInProgress });
+
 	let qrcode_holder;
 	let connected_devices = previewService.connectedDevices;
 	let last_log = previewService.lastLogMessage;
@@ -29,7 +33,14 @@
 
 	export function launchPreview() {
 		console.log("Launch Preview!!!!");
-
+		if (!inited) return;
+		if ($connected_devices && $connected_devices.length < 1) {
+			alert("You must connect a device using the QR Code before you can Preview");
+			return;
+		}
+		if ($bundle.dom.code) {
+			previewService.syncApp($bundle.dom.code);
+		}
 	}
 
 	async function init_preview_service() {

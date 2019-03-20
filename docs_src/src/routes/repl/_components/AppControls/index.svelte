@@ -14,6 +14,7 @@
 	export let name;
 	export let zen_mode;
 	export let bundle;
+	export let sync_in_progress;
 
 	let saving = false;
 	let downloading = false;
@@ -208,7 +209,7 @@ export default app;` });
 				<Icon name="maximize" />
 			{/if}
 		</button><!--
-	 --><button class="icon" on:click={preview} title="Preview on Device">
+	 --><button class="icon" on:click={preview} disabled="{sync_in_progress}" title="Preview on Device">
 			<Icon name="play" />
 		</button><!--
 	 -->{#if $user}

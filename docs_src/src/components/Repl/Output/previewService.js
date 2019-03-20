@@ -16,6 +16,7 @@ export class PreviewService {
         this.previewSdk = null;
         this.connectedDevices = writable([]);
         this.lastLogMessage = writable(null);
+        this.syncInProgress = writable(false);
     }
 
     qrCodeUrl() {
@@ -37,10 +38,35 @@ export class PreviewService {
         callback(location, uploadResponse.ok ? null : new Error(`Error uploading files ${uploadResponse.status}:${uploadResponse.statusText}`));
     }
 
+    syncAppForPlatform(mainjs, platform) {
+        return this.messagingService.applyChanges(this.instanceId, {
+            files: [{
+                event: "change",
+                file: "app.js",
+                binary: false,
+                fileContents: mainjs
+            }],
+            platform: platform,
+            hmrMode: 0,
+            deviceId: null
+        }, (e) => {
+            throw new Error("Error uploading files", e);
+        });
+    }
+
     syncApp(mainjs) {
-        let devices = this.connectedDevices.get();
-
-
+        let active = false;
+        this.syncInProgress.update(x => active = x);
+        if (active) {
+            console.warn("Sync ignored, already active");
+            return Promise.resolve();
+        }
+        this.syncInProgress.set(true);
+        let devices = [];
+        this.connectedDevices.update(x => devices = x);
+        let platforms = new Set(devices.map(d => d.platform))
+        let syncs = [...platforms].map(platform => this.syncAppForPlatform(mainjs, platform))
+        return Promise.all(syncs).finally(() => this.syncInProgress.set(false))
     }
 
     getInitialFiles(device, mainjs) {

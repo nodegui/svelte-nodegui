@@ -24,6 +24,7 @@
 	let gist;
 	let name = 'loading...';
 	let zen_mode = false;
+	let sync_in_progress = false;
 
 	$: if (typeof history !== 'undefined') {
 		const params = [];
@@ -37,6 +38,10 @@
 			: 'repl';
 
 		history.replaceState({}, 'x', url);
+	}
+
+	function handle_sync_state_change(e) {
+		sync_in_progress = e.data.state;
 	}
 
 	onMount(() => {
@@ -173,9 +178,9 @@
 </svelte:head>
 
 <div class="repl-outer {zen_mode ? 'zen-mode' : ''}">
-	<AppControls {name} {gist} {repl} bind:zen_mode on:forked={handle_fork} />
+	<AppControls {name} {gist} {repl} {sync_in_progress} bind:zen_mode on:forked={handle_fork} />
 
 	{#if process.browser}
-		<Repl bind:this={repl} {version}/>
+		<Repl bind:this={repl} {version} on:syncstatechange={handle_sync_state_change} />
 	{/if}
 </div>

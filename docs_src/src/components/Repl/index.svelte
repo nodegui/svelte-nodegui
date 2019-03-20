@@ -228,7 +228,7 @@
 			</section>
 
 			<section slot=b style='height: 100%;'>
-				<Output {version} {embedded} />
+				<Output {version} {embedded} on:syncstatechange />
 			</section>
 		</SplitPane>
 	</div>

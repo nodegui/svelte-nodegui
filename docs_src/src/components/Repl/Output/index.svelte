@@ -125,8 +125,7 @@
 
 <!-- component viewer -->
 <div class="tab-content" class:visible="{view === 'result'}" style="overflow-y: auto">
-	<Viewer bind:this={viewer} bind:error={runtimeError}
-		on:binding="{e => setPropFromViewer(e.detail.prop, e.detail.value)}" />
+	<Viewer bind:this={viewer} bind:error={runtimeError} on:syncstatechange />
 </div>
 
 <!-- js output -->
