@@ -31,9 +31,13 @@
 	$: canSave = !!$user && !!gist && !!gist.owner && $user.id == gist.owner.id; // comparing number and string
 
 	function handleKeydown(event) {
-		if (event.which === 83 && (isMac ? event.metaKey : event.ctrlKey)) {
+		if (event.key === "s" && (isMac ? event.metaKey : event.ctrlKey)) {
 			event.preventDefault();
 			save();
+		}
+		if (event.key === "r" && (isMac ? event.metaKey : event.ctrlKey)) {
+			event.preventDefault();
+			preview();
 		}
 	}
 
@@ -209,7 +213,7 @@ export default app;` });
 				<Icon name="maximize" />
 			{/if}
 		</button><!--
-	 --><button class="icon" on:click={preview} disabled="{sync_in_progress}" title="Preview on Device">
+	 --><button class="icon" on:click={preview} disabled="{sync_in_progress}" title="Preview on Device ({isMac ? '⌘' : 'Ctrl'}+R)">
 			<Icon name="play" />
 		</button><!--
 	 -->{#if $user}
@@ -220,7 +224,7 @@ export default app;` });
 					<Icon name="git-branch" />
 				{/if}
 			</button>
-			<button class="icon" disabled="{saving || !$user}" on:click={save} title="save">
+			<button class="icon" disabled="{saving || !$user}" on:click={save} title="save ({isMac ? '⌘' : 'Ctrl'}+S)">
 				{#if justSaved}
 					<Icon name="check" />
 				{:else}

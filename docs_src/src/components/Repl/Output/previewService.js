@@ -15,8 +15,9 @@ export class PreviewService {
         this.init = this.init.bind(this);
         this.previewSdk = null;
         this.connectedDevices = writable([]);
-        this.lastLogMessage = writable(null);
         this.syncInProgress = writable(false);
+        this.lastSizeKb = 0;
+        this.onLog = () => { };
     }
 
     qrCodeUrl() {
@@ -24,9 +25,11 @@ export class PreviewService {
     }
 
     async onBiggerFilesUpload(filesContent, callback) {
+        let bodyBlob = new Blob([pako.gzip(filesContent)])
+        this.lastSizeKb = (bodyBlob.size / 1024);
         const uploadResponse = await fetch("/repl/syncfiles", {
             method: "POST",
-            body: new Blob([pako.gzip(filesContent)]),
+            body: bodyBlob,
             headers: {
                 "Content-Encoding": "gzip",
                 "Content-Type": "text/plain"
@@ -39,28 +42,37 @@ export class PreviewService {
     }
 
     syncAppForPlatform(mainjs, platform) {
-        return this.messagingService.applyChanges(this.instanceId, {
-            files: [{
-                event: "change",
-                file: "app.js",
-                binary: false,
-                fileContents: mainjs
-            }],
-            platform: platform,
-            hmrMode: 0,
-            deviceId: null
-        }, (e) => {
-            throw new Error("Error uploading files", e);
+        return new Promise((resolve, reject) => {
+            this.messagingService.applyChanges(this.instanceId, {
+                files: [{
+                    event: "change",
+                    file: "app.js",
+                    binary: false,
+                    fileContents: mainjs
+                }],
+                platform: platform,
+                hmrMode: 0,
+                deviceId: null
+            }, (e) => {
+                console.log('sync complete');
+                if (e) {
+                    reject(new Error("Error uploading files", e))
+                } else {
+                    resolve();
+                }
+            });
         });
     }
 
     syncApp(mainjs) {
         let active = false;
-        this.syncInProgress.update(x => active = x);
+        this.syncInProgress.update(x => active = x)
         if (active) {
-            console.warn("Sync ignored, already active");
+            console.log("Sync ignored, already active");
             return Promise.resolve();
         }
+        this.lastSizeKb = (mainjs.length / 1024);
+        this.onLog({ log: "Refreshing Preview..." });
         this.syncInProgress.set(true);
         let devices = [];
         this.connectedDevices.update(x => devices = x);
@@ -71,6 +83,8 @@ export class PreviewService {
 
     getInitialFiles(device, mainjs) {
         console.log("Sending initial files!");
+        this.lastSizeKb = (mainjs.length / 1024);
+        this.onLog({ log: `Preparing new device: '${device.name}'` });
         let files = [
             {
                 event: "change",
@@ -103,16 +117,17 @@ export class PreviewService {
         });
     }
 
-    async init(mainjs) {
+    async init(mainjs, onLog) {
+        this.onLog = onLog;
         this.previewSdk = await import('nativescript-preview-sdk');
-
+        this.lastSizeKb = (mainjs.length / 1024);
         let callBacks = {
             onLogSdkMessage: (log) => {
                 console.log("onLogSdkMessage", log);
             },
             onLogMessage: (log, deviceName, deviceId) => {
                 console.log("onLogMessage", log, deviceName, deviceId);
-                this.lastLogMessage.set({ log, deviceName, deviceId })
+                this.onLog({ log, deviceName, deviceId })
             },
             onRestartMessage: () => {
                 console.log("onRestartMessage");
@@ -124,7 +139,7 @@ export class PreviewService {
             onDeviceConnectedMessage: (deviceConnectedMessage) => console.log("onDeviceConnectedMessage", deviceConnectedMessage),
             onDeviceConnected: (device) => console.log("onDeviceConnected", device),
             onDevicesPresence: (devices) => this.connectedDevices.set(devices),
-            onSendingChange: (sending) => console.log("onSendingChange", sending),
+            onSendingChange: (sending) => this.onLog({ log: sending ? `Sending ${Math.round(this.lastSizeKb)}KB ...` : 'Send complete.' }),
             onBiggerFilesUpload: (filesContent, callback) => this.onBiggerFilesUpload(filesContent, callback)
         }
 

@@ -3,6 +3,7 @@
 	import { PreviewService } from './previewService'
 	import Message from '../Message.svelte';
 	import SplitPane from '../SplitPane.svelte';
+	import QRCode from './QRCode.svelte';
 	import Icon from '../../Icon.svelte';
 	//	const dispatch = createEventDispatcher();
 	const { bundle, navigate } = getContext('REPL');
@@ -16,19 +17,12 @@
 	let syncInProgress = previewService.syncInProgress;
 	$: dispatch('syncstatechange', { state: $syncInProgress });
 
-	let qrcode_holder;
+	let qrCodeUrl;
 	let connected_devices = previewService.connectedDevices;
-	let last_log = previewService.lastLogMessage;
 	let log_div;
-	let log_messages = [
-		"[Galaxy Tab S2]  Log message 1",
-		"[Galaxy Tab S2]  Log message 1",
-		"[Galaxy Tab S2]  Log message 1",
-		"[Galaxy Tab S2]  Log message 1",
-		"[Galaxy Tab S2]  Log message 1"
-
-	];
+	let log_messages = ["[Preview] Waiting for Device..."];
 	let log_follow = true;
+	let show_qr = true;
 	let view = "devices";
 
 	export function launchPreview() {
@@ -45,17 +39,8 @@
 
 	async function init_preview_service() {
 		inited = true;
-		console.log("init with ", $bundle.dom.code);
-		await previewService.init($bundle.dom.code);
-
-		let qrUrl = previewService.qrCodeUrl();
-		qrcode_holder.innerHTML = '';
-		new QRCode(qrcode_holder, {
-			text: qrUrl,
-			colorDark: "#000000",
-			colorLight: "#ffffff",
-			correctLevel: QRCode.CorrectLevel.L
-		});
+		await previewService.init($bundle.dom.code, onLog);
+		qrCodeUrl = previewService.qrCodeUrl();
 	}
 
 	function logScroll(e) {
@@ -72,8 +57,8 @@
 		updateLogScroll();
 	}
 
-	$: if ($last_log) {
-		log_messages = log_messages.concat(`[${$last_log.deviceName}] ${$last_log.log}`).slice(Math.max(log_messages.length - 100, 0));
+	function onLog(last_log) {
+		log_messages = log_messages.concat(`[${last_log.deviceName || "Preview"}] ${last_log.log}`).slice(Math.max(log_messages.length - 100, 0));
 	}
 </script>
 
@@ -94,12 +79,6 @@
 		overflow-y: auto;
 	}
 
-	.view-toggle {
-		height: var(--pane-controls-h);
-		border-bottom: 1px solid #eee;
-		white-space: nowrap;
-	}
-
 	button {
 		/* width: 50%;
 		height: 100%; */
@@ -116,31 +95,8 @@
 		color: #333;
 	}
 
-	.tab-content {
-		position: absolute;
-		width: 100%;
-		height: calc(100% - 4.2rem);
-		opacity: 0;
-		pointer-events: none;
-		overflow: auto;
-	}
-
-	.tab-content.visible {
-		/* can't use visibility due to a weird painting bug in Chrome */
-		opacity: 1;
-		pointer-events: all;
-	}
-
-	.no-devices {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100%;
-	}
-
 	.connected-devices {
 		width: 100%;
-		height: 100%;
 		font-size: 1.5rem;
 	}
 
@@ -150,11 +106,27 @@
 
 	.connected-devices .device {
 		padding: 0.5rem 1rem;
-		border-bottom: 1px solid #DDD;
 	}
 
 	#logtab {
+		flex: 1;
 		height: calc(100% - 4.5rem);
+	}
+
+	.pane {
+		display: flex;
+		flex-direction: column;
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+	}
+
+	.pane>.section-content {
+		flex: 1;
+		overflow-y: auto;
+		overflow-x: hidden;
 	}
 
 	.log {
@@ -162,6 +134,52 @@
 		font-size: 1.2rem;
 		display: block;
 		line-height: 1.5;
+		padding: 0 1rem;
+	}
+
+	.preview-info-overlay {
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0, 0, 0, 0.2);
+		z-index: 15;
+	}
+
+	.preview-info-window {
+		position: absolute;
+		top: 2rem;
+		left: 2rem;
+		right: 2rem;
+		bottom: 2rem;
+		padding: 1rem;
+		background-color: white;
+	}
+
+	.preview-info-window .close-btn {
+		position: absolute;
+		right: -0.5rem;
+		top: -0.5rem;
+	}
+
+	.preview-info {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		overflow-y: auto;
+	}
+
+	.preview-info .apps {
+		margin: 3rem 3rem 0 3rem;
+		text-align: center;
+	}
+
+	h3 {
+		font-size: 1.2rem;
+		font-weight: 700;
+		padding: 1rem;
 	}
 </style>
 
@@ -173,34 +191,47 @@
 			<Message kind="info">loading Svelte compiler...</Message>
 	{/if}
 </div>
-	<SplitPane type="vertical" pos={67}>
-		<div slot="a" class="preview-info">
-	
-			<div class="qr-code" bind:this={qrcode_holder}>
-				&nbsp;
+
+	{#if show_qr}
+	<div class="preview-info-overlay">
+		<div class="preview-info-window">
+			<button class="close-btn icon" title="Close" on:click="{() => show_qr = false}">
+				<Icon name="close" /></button>
+		<div class="preview-info">
+			<QRCode url="{qrCodeUrl}"/>
+			<div class="apps">
+				<p>To get started, scan this QRcode with the NativeScript Playground App</p>
+				<a href="https://itunes.apple.com/us/app/nativescript-playground/id1263543946?mt=8&ls=1"><img src="/media/app-store.png"
+					alt="Get if rom the App Store"></a>
+				<a href="https://play.google.com/store/apps/details?id=org.nativescript.play"><img src="/media/google-play.png" alt="Get it from Google Play"></a>
 			</div>
 		</div>
-		<section slot="b">
-			<div class="view-toggle">
-				<button class:active="{view === 'devices'}" on:click="{() => view = 'devices'}">Devices</button>
-				<button class:active="{view === 'log'}" on:click="{() => view = 'log'}">Log</button>
-			</div>
-			
-			<div class="tab-content" class:visible="{view === 'devices'}">
-				<div class="connected-devices">
+		</div>
+	</div>
+
+	{/if}
+
+
+	<SplitPane type="vertical" pos={25}>
+		<div slot="a" class="pane">
+				<h3>Connected Devices</h3>
+				<div class="section-content">
+					<div class="connected-devices">
 					{#each $connected_devices as device}
 						<div class="device"><Icon name="check"/><span class="device-name">{device.name}</span></div>
-					{:else}
-						<div class="no-devices">No connected devices. Scan the QR code to connect a device.</div>
 					{/each}
+					</div>
+					<button class="icon" title="Add Device" on:click="{()=> show_qr = true}">
+						<Icon name="plus"/>	Add Device
+					</button>
 				</div>
-			</div>
-
-				<div class="tab-content" id="logtab" class:visible="{view === 'log'}" bind:this={log_div} on:scroll={logScroll}>
+		</div>
+		<section slot="b" class="pane">
+				<h3>Logs</h3>
+				<div  id="logtab" class="section-content" bind:this={log_div} on:scroll={logScroll}>
 					{#each log_messages as log_message}
 						<span class="log">{log_message}</span>
 					{/each}
 				</div>
-			
 		</section>
 	</SplitPane>

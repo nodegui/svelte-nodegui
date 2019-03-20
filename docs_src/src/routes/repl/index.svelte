@@ -41,7 +41,7 @@
 	}
 
 	function handle_sync_state_change(e) {
-		sync_in_progress = e.data.state;
+		sync_in_progress = e.detail.state;
 	}
 
 	onMount(() => {
