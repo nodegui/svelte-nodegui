@@ -16,7 +16,7 @@
         "nativescript-theme-core": "~1.0.4",
         "nativescript-unit-test-runner": "^0.5.1",
         "rollup": "1.6.0",
-        "svelte": "3.0.0-beta.15",
+        "svelte": "3.0.0-beta.20",
         "svelte-native": "file:../dist",
         "tns-core-modules": "~5.2.0"
     },
