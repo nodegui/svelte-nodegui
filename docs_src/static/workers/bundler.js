@@ -166,14 +166,23 @@ async function bundle(components) {
 		lookup[path] = component;
 	});
 
+
 	// svelte native bootstrap
 	lookup['./app.js'] = {
 		name: 'app',
 		type: 'js',
 		source: `
-				import { svelteNative } from "svelte-native";
-				import App from "./App.svelte";
-				svelteNative(App, {});
+import { navigate, svelteNative, initializeDom } from "svelte-native"
+import App from "./App.svelte"
+
+export function start() {
+    svelteNative(App, {});
+}
+
+export function reload() {
+	initializeDom();
+    navigate({ page: App, clearHistory: true });
+}
 			`
 	}
 

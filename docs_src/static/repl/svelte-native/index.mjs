@@ -1,6 +1,6 @@
 import { on, launchEvent, run } from 'tns-core-modules/application';
 import { initializeDom, createElement, navigate } from './dom';
-export { navigate, goBack, showModal, closeModal } from './dom';
+export { navigate, goBack, showModal, closeModal, initializeDom } from './dom';
 
 function svelteNative(startPage, data) {
     initializeDom();

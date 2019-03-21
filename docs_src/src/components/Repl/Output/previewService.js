@@ -51,7 +51,7 @@ export class PreviewService {
                     fileContents: mainjs
                 }],
                 platform: platform,
-                hmrMode: 0,
+                hmrMode: 1,
                 deviceId: null
             }, (e) => {
                 console.log('sync complete');
@@ -91,15 +91,41 @@ export class PreviewService {
                 file: "package.json",
                 binary: false,
                 fileContents: `{
-                    "main": "app.js"
+                    "main": "main.js"
                 }`
             },
             {
                 event: "change",
                 file: "app.css",
+                binary: false,
                 fileContents: `
                     @import '~nativescript-theme-core/css/core.light.css';
                 `
+            },
+            {
+                event: "change",
+                file: "main.js",
+                binary: false,
+                fileContents: `
+require('tns-core-modules/globals')
+
+
+let app = global.loadModule('./app.js')
+
+global.__onLiveSyncCore = () => {
+    console.log('reloading app');
+    var fs = require("tns-core-modules/file-system");
+    const applicationFiles = fs.knownFolders.currentApp();
+    const appjs = applicationFiles.getFile('app.js').readTextSync();
+    let refreshed_app = Function( "let exports={};" + appjs +";return exports")();
+    console.log(refreshed_app);
+    refreshed_app.reload();
+}
+
+
+app.start();
+
+`
             },
             {
                 event: "change",
@@ -112,7 +138,7 @@ export class PreviewService {
         return Promise.resolve({
             files: files,
             platform: device.platform,
-            hmrMode: 0,
+            hmrMode: 1,
             deviceId: device.id
         });
     }
