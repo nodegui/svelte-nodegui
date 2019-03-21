@@ -26,6 +26,9 @@ function module_defs() {
       output: [{
         file: `dist/${mod}/index.js`,
         format: 'cjs',
+      }, {
+        file: `dist/${mod}/index.mjs`,
+        format: 'esm'
       }],
       external: (id) => [...externalModules, ...localModules.filter(m => m != mod).map(m => `../${m}`)].some(prefix => id.startsWith(prefix)),
       plugins: plugins
@@ -41,7 +44,12 @@ export default [
     output: [{
       file: "dist/index.js",
       format: 'cjs',
-    }],
+    },
+    {
+      file: "dist/index.mjs",
+      format: 'esm',
+    }
+    ],
     external: (id) => [...externalModules, ...localModules.map(m => `./${m}`)].some(prefix => id.startsWith(prefix)),
     plugins: plugins
   },

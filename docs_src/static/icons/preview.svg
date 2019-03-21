@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   style="width:24px;height:24px"
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg16"
+   sodipodi:docname="preview.svg"
+   inkscape:version="0.92.0 r15299">
+  <metadata
+     id="metadata22">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs20" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview18"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     inkscape:zoom="35.333333"
+     inkscape:cx="11.632075"
+     inkscape:cy="12"
+     inkscape:window-x="-8"
+     inkscape:window-y="56"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Device">
+    <rect
+       style="opacity:1;vector-effect:none;fill:#3c5afd;fill-opacity:1;stroke:#ffffff;stroke-width:1.71445167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect25"
+       width="16.505171"
+       height="21.571207"
+       x="4.412509"
+       y="1.2993013" />
+  </g>
+  <g
+     fill="none"
+     stroke="white"
+     stroke-width="2"
+     id="g14">
+    <line
+       x1="5"
+       y1="12"
+       x2="19"
+       y2="12"
+       id="line10" />
+    <polyline
+       points="12 5 19 12 12 19"
+       id="polyline12" />
+  </g>
+</svg>

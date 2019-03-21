@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  webapp:
+    build: ../
+    networks: 
+      nginx:
+        aliases:
+          - sveltenative
+    restart: always
+
+networks: 
+  nginx:
+    external: true
