@@ -10,7 +10,6 @@
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "deploy": "node ./deploy.js",
     "test": "run-p --race dev cy:run"
   },
   "dependencies": {
