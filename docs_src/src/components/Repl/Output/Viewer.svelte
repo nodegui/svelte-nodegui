@@ -57,6 +57,10 @@
 		updateLogScroll();
 	}
 
+	$: if ($connected_devices && $connected_devices.length > 0) {
+		show_qr = false;
+	}
+
 	function onLog(last_log) {
 		log_messages = log_messages.concat(`[${last_log.deviceName || "Preview"}] ${last_log.log}`).slice(Math.max(log_messages.length - 100, 0));
 	}
@@ -181,6 +185,12 @@
 		font-weight: 700;
 		padding: 1rem;
 	}
+
+	.preview-button {
+		color: var(--prime);
+		padding: 1rem;
+		border-bottom: none;
+	}
 </style>
 
 
@@ -223,6 +233,9 @@
 					</div>
 					<button class="icon" title="Add Device" on:click="{()=> show_qr = true}">
 						<Icon name="plus"/>	Add Device
+					</button>
+					<button class="icon preview-button" title="Preview" on:click="{() => launchPreview()}">
+						<Icon name="play" /> Launch Preview
 					</button>
 				</div>
 		</div>
