@@ -38,4 +38,4 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any): Prom
     });
 }
 
-export { navigate, goBack, showModal, closeModal } from "./dom"
+export { navigate, goBack, showModal, closeModal, initializeDom } from "./dom"

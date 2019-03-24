@@ -98,7 +98,7 @@ class ViewNode {
         if (childNode.parentNode && childNode.parentNode !== this) {
             throw new Error(`Can't insert child, because it already has a different parent.`);
         }
-        if (childNode.parentNode === this);
+        if (childNode.parentNode === this) ;
         let index = this.childNodes.indexOf(referenceNode);
         childNode.parentNode = this;
         childNode.nextSibling = referenceNode;
@@ -115,7 +115,7 @@ class ViewNode {
         if (childNode.parentNode && childNode.parentNode !== this) {
             throw new Error(`Can't append child, because it already has a different parent.`);
         }
-        if (childNode.parentNode === this);
+        if (childNode.parentNode === this) ;
         childNode.parentNode = this;
         if (this.lastChild) {
             childNode.prevSibling = this.lastChild;
@@ -252,7 +252,6 @@ class PropertyNode extends ElementNode {
 }
 
 const elementMap = {};
-
 function registerElementResolver(elementName, entry) {
     const normalizedName = normalizeElementName(elementName);
     if (elementMap[normalizedName]) {
