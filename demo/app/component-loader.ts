@@ -25,6 +25,7 @@ async function bundle(lookup) {
                     if (!/\.svelte$/.test(id)) return null;
                     const name = id.replace(/^\.\//, '').replace(/\.svelte$/, '');
                     const result = compile(code, Object.assign({
+                        accessors: true,
                         generate: 'dom',
                         format: 'cjs',
                         name: name,
