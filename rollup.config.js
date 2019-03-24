@@ -6,17 +6,19 @@ import pkg from './package.json'
 
 let externalModules = pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : []
 
-let localModules = ["dom", "svelte-helpers", "components", "transitions"]
+let localModules = ["dom", "components", "transitions"]
 
 let plugins = [
+  resolve({
+    extensions: ['.mjs', '.js']
+  }),
   svelte({
     include: 'src/components/**/*.svelte',
   }),
   typescript({
     typescript: require('typescript'),
     useTsconfigDeclarationDir: true
-  }),
-  resolve(),
+  })
 ]
 
 function module_defs() {
