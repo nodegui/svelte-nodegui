@@ -171,9 +171,10 @@ export default class NativeElementNode extends ElementNode {
     }
 
     /* istanbul ignore next */
-    setStyle(property: string, value: string) {
+    setStyle(property: string, value: string | number) {
         console.log(`setStyle ${this} ${property} ${value}`)
-        if (!(value = value.trim()).length) {
+
+        if (!(value = value.toString().trim()).length) {
             return
         }
 
