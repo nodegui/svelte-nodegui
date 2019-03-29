@@ -15,6 +15,7 @@ describe('Template', function () {
     describe('Template Instance', function () {
         let component_target;
         let component_instance;
+        let harness;
         before(async function () {
             let svelteSrc = `
                 <Template bind:this={test_subject} extra-prop="test extra prop"  let:prop>
@@ -27,7 +28,7 @@ describe('Template', function () {
             `;
             let HarnessComponent = await componentFromString(svelteSrc);
             component_target = createElement('fragment');
-            let harness = new HarnessComponent({ target: component_target });
+            harness = new HarnessComponent({ target: component_target });
             component_instance = harness.test_subject;
         });
 
@@ -43,6 +44,10 @@ describe('Template', function () {
         it('passes down its props to the template element', async function () {
             assert.equal((component_target.firstChild as any).getAttribute('extra-prop'), 'test extra prop')
         });
+
+        after(function () {
+            harness.$destroy();
+        })
     });
 
 })

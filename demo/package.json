@@ -18,7 +18,8 @@
         "rollup": "1.6.0",
         "svelte": "3.0.0-beta.20",
         "svelte-native": "file:../dist",
-        "tns-core-modules": "~5.2.0"
+        "tns-core-modules": "~5.2.0",
+        "buffer": "5.2.1"
     },
     "devDependencies": {
         "@types/chai": "^4.1.7",
