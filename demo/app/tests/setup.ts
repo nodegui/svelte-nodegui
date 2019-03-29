@@ -1,5 +1,5 @@
 import { initializeDom } from 'svelte-native/dom'
-import { Buffer } from 'safe-buffer'
+import { Buffer } from 'buffer'
 (global as any).btoa =
     function (str) { return Buffer.from(str, 'utf-8').toString('base64'); };
 (global as any).window = global;
