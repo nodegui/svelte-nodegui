@@ -8,7 +8,7 @@ describe('NativeElementNode', function () {
     let test_subject: NativeElementNode;
     before(async function () {
         let svelteSrc = `
-            <label bind:this="{test_subject}" textWrap="{true}" style="color: red" class="testlabel">Text Content</label>
+            <label bind:this="{test_subject}" xmlns="tns" textWrap="{true}" style="color: red" class="testlabel" class:boolclass="{true}" >Text Content</label>
             <script>
                 export let test_subject;
             </script>
@@ -36,6 +36,11 @@ describe('NativeElementNode', function () {
     it('sets class property on nativeView', function () {
         assert.isTrue((test_subject.nativeView as any).cssClasses.has("testlabel"));
     })
+
+    it('supports class directive', function () {
+        assert.isTrue((test_subject.nativeView as any).cssClasses.has('boolclass'));
+    })
+
 
     it('sets style properties on native view', function () {
         assert.equal((test_subject.nativeView as any).style.color.name, 'red');
