@@ -5,7 +5,7 @@
             "version": "5.2.0"
         },
         "tns-android": {
-            "version": "5.2.0"
+            "version": "5.3.1"
         }
     },
     "main": "app.js",
@@ -14,11 +14,12 @@
     "repository": "<fill-your-repository-here>",
     "dependencies": {
         "nativescript-theme-core": "~1.0.4",
-        "nativescript-unit-test-runner": "^0.5.1",
+        "nativescript-unit-test-runner": "^0.6.0",
         "rollup": "1.6.0",
-        "svelte": "3.0.0-beta.20",
+        "svelte": "3.0.0-beta.22",
         "svelte-native": "file:../dist",
-        "tns-core-modules": "~5.2.0"
+        "tns-core-modules": "^5.3.1",
+        "buffer": "5.2.1"
     },
     "devDependencies": {
         "@types/chai": "^4.1.7",
