@@ -1,4 +1,5 @@
 import { topmost, Frame, getFrameById } from 'tns-core-modules/ui/frame';
+import { addCss } from 'tns-core-modules/application';
 import { KeyframeAnimation } from 'tns-core-modules/ui/animation/keyframe-animation';
 import { CssAnimationParser } from 'tns-core-modules/ui/styling/css-animation-parser';
 import { isAndroid, isIOS, ContentView, View, Page } from 'tns-core-modules/ui/page';
@@ -172,6 +173,23 @@ class ElementNode extends ViewNode {
     set id(value) {
         this.setAttribute('id', value);
     }
+    get classList() {
+        if (!this._classList) {
+            const getClasses = () => (this.getAttribute('class') || "").split(/\s+/).filter((k) => k != "");
+            this._classList = {
+                add: (...classNames) => {
+                    this.setAttribute('class', [...new Set(getClasses().concat(classNames))].join(" "));
+                },
+                remove: (...classNames) => {
+                    this.setAttribute('class', getClasses().filter((i) => classNames.indexOf(i) == -1));
+                },
+                get length() {
+                    return getClasses().length;
+                }
+            };
+        }
+        return this._classList;
+    }
     appendChild(childNode) {
         super.appendChild(childNode);
         if (childNode.nodeType === 3) {
@@ -218,6 +236,12 @@ class TextNode extends ViewNode {
     setText(text) {
         this.text = text;
         this.parentNode.setText(text);
+    }
+    set data(text) {
+        this.setText(text);
+    }
+    get data() {
+        return this.text;
     }
 }
 
@@ -356,24 +380,9 @@ class HeadElement extends ElementNode {
     }
     onInsertedChild(childNode, atIndex) {
         if (childNode instanceof StyleElement) {
-            let frame = topmost();
-            const applyStyleSheet = () => {
-                if (frame) {
-                    let css = childNode.textContent;
-                    if (css) {
-                        console.log("adding frame css", css);
-                        frame.addCss(css);
-                        console.log("frame css is now", frame.css);
-                    }
-                }
-            };
-            if (!frame) {
-                console.log("no topframe, waiting for a tick");
-                //the rare occasion we have no top frame, usually a race at app start, we just wait for a tick
-                setTimeout(() => { frame = topmost(); applyStyleSheet(); }, 0);
-            }
-            else {
-                applyStyleSheet();
+            let css = childNode.textContent;
+            if (css) {
+                addCss(css);
             }
         }
     }
@@ -519,7 +528,7 @@ class NativeElementNode extends ElementNode {
     /* istanbul ignore next */
     setStyle(property, value) {
         console.log(`setStyle ${this} ${property} ${value}`);
-        if (!(value = value.trim()).length) {
+        if (!(value = value.toString().trim()).length) {
             return;
         }
         if (property.endsWith('Align')) {
