@@ -1,7 +1,7 @@
 import { ListView, ItemEventData, ItemsSource } from 'tns-core-modules/ui/list-view'
 import NativeElementNode from "./NativeElementNode";
 import TemplateElement from '../svelte/TemplateElement';
-import { createElement } from '../basicdom';
+import { createElement, logger as log } from '../basicdom';
 
 
 export default class ListViewElement extends NativeElementNode {
@@ -17,7 +17,7 @@ export default class ListViewElement extends NativeElementNode {
         let items = listView.items;
 
         if (args.index >= items.length) {
-            console.log("Got request for item at index that didn't exists", items, args.index)
+            log.error(`Got request for item at index that didn't exist ${args.index}`)
             return;
         }
 
@@ -28,7 +28,7 @@ export default class ListViewElement extends NativeElementNode {
         }
 
         if (!args.view || !(args.view as any).__SvelteComponent__) {
-            console.log("creating view for ", args.index, item.name)
+            log.debug(`creating view for item at ${args.index}`)
             let wrapper = createElement('StackLayout') as NativeElementNode;
             let componentInstance = new (this.itemTemplateComponent)({
                 target: wrapper,
@@ -42,7 +42,7 @@ export default class ListViewElement extends NativeElementNode {
             args.view = nativeEl;
         } else {
             let componentInstance: SvelteComponent = (args.view as any).__SvelteComponent__
-            console.log("updating view for ", args.index, item.name, args.view)
+            log.debug(`updating view for ${args.index} which is a ${args.view}`)
             componentInstance.$set({ item })
         }
     }

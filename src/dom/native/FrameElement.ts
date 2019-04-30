@@ -1,9 +1,7 @@
-import { createElement, ViewNode } from "../basicdom";
+import { createElement, ViewNode, logger as log } from "../basicdom";
 import { Frame } from 'tns-core-modules/ui/frame'
 import NativeElementNode from "./NativeElementNode";
 import PageElement from "./PageElement";
-
-
 export default class FrameElement extends NativeElementNode {
 
     constructor() {
@@ -12,7 +10,7 @@ export default class FrameElement extends NativeElementNode {
 
     setAttribute(key: string, value: any) {
         if (key.toLowerCase() == "defaultpage") {
-            console.log("loading page", value);
+            log.debug(`loading page ${value}`);
             let dummy = createElement('fragment');
             let page = new (value as any)({ target: dummy, props: {} });
             (this.nativeView as Frame).navigate({ create: () => (dummy.firstElement() as NativeElementNode).nativeView });

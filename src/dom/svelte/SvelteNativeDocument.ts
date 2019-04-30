@@ -1,5 +1,5 @@
 
-import { DocumentNode, ElementNode, createElement, TextNode } from '../basicdom';
+import { DocumentNode, ElementNode, createElement, TextNode, logger as log } from '../basicdom';
 
 export default class SvelteNativeDocument extends DocumentNode {
     head: ElementNode;
@@ -9,12 +9,12 @@ export default class SvelteNativeDocument extends DocumentNode {
         this.head = createElement('head')
         this.appendChild(this.head);
 
-        console.log(`created ${this}`)
+        log.debug(`created ${this}`)
     }
 
     createTextNode(text: string) {
         const el = new TextNode(text)
-        console.log(`created ${el}`)
+        log.debug(`created ${el}`)
         return el;
     }
 

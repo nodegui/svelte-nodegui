@@ -2,6 +2,8 @@ import { registerSvelteElements } from './svelte-elements'
 import { registerNativeElements } from './nativescript-elements'
 import SvelteNativeDocument from './svelte/SvelteNativeDocument'
 import NativeElementNode from './native/NativeElementNode'
+import { write, messageType } from 'tns-core-modules/trace'
+import { logger, LogLevel } from './basicdom'
 
 export { default as FrameElement } from "./native/FrameElement"
 export { default as SvelteNativeDocument } from './svelte/SvelteNativeDocument'
@@ -46,7 +48,23 @@ function installGlobalShims(): SvelteNativeDocument {
     return window.document;
 }
 
+export const DomTraceCategory = 'SvelteNativeDom'
+
+function initializeLogger() {
+    logger.setHandler((message, level) => {
+        let traceLevel = messageType.log
+        switch (level) {
+            case LogLevel.Debug: traceLevel = messageType.log; break;
+            case LogLevel.Info: traceLevel = messageType.info; break;
+            case LogLevel.Warn: traceLevel = messageType.warn; break;
+            case LogLevel.Error: traceLevel = messageType.error; break;
+        }
+        write(message, DomTraceCategory, traceLevel)
+    })
+}
+
 export function initializeDom() {
+    initializeLogger();
     registerSvelteElements();
     registerNativeElements();
     return installGlobalShims();
