@@ -26,15 +26,27 @@ Install svelte, svelte-native, svelte-loader
     $ npm install svelte@beta
     $ npm install svelte-native
     $ npm install svelte-loader
+    $ npm install svelte-native-preprocessor
 ```
 
 Append svelte-loader to end module rules
+```
+// insert the line below after the const UglifyJsPlugin line
+const svelteNativePreprocessor = require("svelte-native-preprocessor");
 
+```
 ```
 {
     test: /\.svelte$/,
     exclude: /node_modules/,
-    use: 'svelte-loader'
+    use: [
+        {
+            loader: 'svelte-loader',
+            options: {
+                preprocess: svelteNativePreprocessor()
+            }
+        }
+    ]
 }
 ```   
 
