@@ -6,7 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [9.3.1] - 2019-04-30
+## [0.3.2] - 2019-05-16
+
+### Fixed
+  - class: directives now work with falsy values
+
+## [0.3.1] - 2019-04-30
 
 ### Added
   - Removed console log spam and added to a NativeScript trace category exported as `DomTraceCategory`

@@ -39,7 +39,7 @@ export default class ElementNode extends ViewNode {
                 },
 
                 remove: (...classNames: string[]) => {
-                    this.setAttribute('class', getClasses().filter((i: string) => classNames.indexOf(i) == -1))
+                    this.setAttribute('class', getClasses().filter((i: string) => classNames.indexOf(i) == -1).join(" "))
                 },
 
                 get length() {
