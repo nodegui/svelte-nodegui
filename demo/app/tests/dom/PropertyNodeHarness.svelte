@@ -2,7 +2,7 @@
 
 <fragment bind:this={test_subject}>
     <fragment.testproperty>
-        <label text="test label 2"/>
+        <label text="test label"/>
     </fragment.testproperty>
 </fragment>
 
