@@ -1,26 +1,14 @@
-import * as chai from 'chai'
-import { createElement, NativeElementNode } from 'svelte-native/dom'
-import { componentFromString } from '~/component-loader';
+import { createElement } from 'svelte-native/dom'
 import { ViewNode } from 'svelte-native/dom';
-const assert: typeof chai.assert = (<any>global).chai.assert;
+import PropertyNodeHarness from './PropertyNodeHarness.svelte'
 
 describe('PropertyNode', function () {
     let test_subject;
     before(async function () {
-        let svelteSrc = `
-            <fragment bind:this={test_subject}>
-                <fragment.testproperty>
-                    <label text="test label"/>
-                </fragment.testproperty>
-            </fragment>
-            <script>
-                export let test_subject;
-            </script>
-        `;
-        let HarnessComponent = await componentFromString(svelteSrc);
+
         let el = createElement('fragment');
-        let harness = new HarnessComponent({ target: el });
-        test_subject = harness.test_subject
+        let harness = new PropertyNodeHarness({ target: el });
+        test_subject = (harness as any).test_subject
         assert.isNotNull(test_subject)
     })
 

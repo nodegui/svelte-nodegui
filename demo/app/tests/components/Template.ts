@@ -1,8 +1,6 @@
 import { Template } from "svelte-native/components"
-import { componentFromString } from '~/component-loader';
-import { createElement, ViewNode, NativeElementNode } from "svelte-native/dom";
-
-const assert: typeof chai.assert = (<any>global).chai.assert;
+import TemplateHarness from './TemplateHarness.svelte'
+import { createElement, NativeElementNode } from "svelte-native/dom";
 
 describe('Template', function () {
 
@@ -18,18 +16,8 @@ describe('Template', function () {
         let harness;
 
         before(async function () {
-            let svelteSrc = `
-                <Template bind:this={test_subject} extra-prop="test extra prop"  let:item>
-                    <label text="test text {item ? item : ''}" />
-                </Template>
-                <script>
-                    import { Template } from 'svelte-native/components'
-                    export let test_subject;
-                </script>
-            `;
-            let HarnessComponent = await componentFromString(svelteSrc);
             component_target = createElement('fragment');
-            harness = new HarnessComponent({ target: component_target });
+            harness = new TemplateHarness({ target: component_target });
             component_instance = harness.test_subject;
         });
 

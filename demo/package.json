@@ -16,8 +16,6 @@
         "buffer": "5.2.1",
         "nativescript-theme-core": "~1.0.6",
         "nativescript-unit-test-runner": "^0.6.2",
-        "rollup": "^1.12.0",
-        "svelte": "^3.4.0",
         "svelte-native": "file:../dist",
         "tns-core-modules": "^5.4.0"
     },
@@ -32,6 +30,7 @@
         "karma-nativescript-launcher": "0.4.0",
         "karma-webpack": "3.0.5",
         "mocha": "6.1.4",
+        "svelte": "^3.4.0",
         "nativescript-dev-typescript": "^0.9.0",
         "nativescript-dev-webpack": "~0.22.0",
         "svelte-loader": "halfnelson/svelte-loader#fix-virtual-purge",
