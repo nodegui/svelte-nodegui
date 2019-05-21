@@ -244,7 +244,7 @@
 			<li class:active="{segment === 'repl'}"><a rel="prefetch" href="repl">REPL</a></li>
 			<li class:active="{segment === 'blog'}"><a rel="prefetch" href="blog">Blog</a></li>
 
-			<li><a href="https://v3.svelte.technology/">Svelte</a></li>
+			<li><a href="https://svelte.dev/">Svelte</a></li>
 			<li><a href="https://docs.nativescript.org/start/introduction">NativeScript</a></li>
 
 			<li>
