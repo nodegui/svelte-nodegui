@@ -34,7 +34,7 @@
         "nativescript-dev-typescript": "^0.9.0",
         "nativescript-dev-webpack": "~0.22.0",
         "svelte-loader": "halfnelson/svelte-loader#fix-virtual-purge",
-        "svelte-native-preprocessor": "^0.1.2"
+        "svelte-native-preprocessor": "^0.1.3"
     },
     "gitHead": "59b6da006346fedb5bb201fcc9cd7d204a69a82f",
     "readme": "NativeScript Application"
