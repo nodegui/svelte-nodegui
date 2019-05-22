@@ -341,7 +341,15 @@ function insertChild(parentNode: ViewNode, childNode: ViewNode, atIndex = -1) {
     }
 
     if (parentView instanceof LayoutBase) {
-        return (atIndex < 0) ? parentView.addChild(childView) : parentView.insertChild(childView, atIndex);
+        if (atIndex >= 0) {
+            //our dom includes "textNode" and "commentNode" which does not appear in the nativeview's children. 
+            //we recalculate the index required for the insert operation buy only including native element nodes in the count
+            let nativeIndex = parentNode.childNodes.filter(e => e instanceof NativeElementNode).indexOf(childNode)
+            parentView.insertChild(childView, nativeIndex);
+        } else {
+            parentView.addChild(childView)
+        }
+        return;
     }
 
     if ((parentView as any)._addChildFromBuilder) {
