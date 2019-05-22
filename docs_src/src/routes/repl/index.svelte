@@ -1,7 +1,7 @@
 <script context="module">
 	export function preload({ query }) {
 		return {
-			version: query.version || 'beta',
+			version: query.version || 'latest',
 			gist_id: query.gist,
 			example: query.example || 'hello-world'
 		};

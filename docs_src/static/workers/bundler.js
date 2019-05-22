@@ -15,7 +15,7 @@ self.addEventListener('message', async event => {
 					'/repl/local?file=compiler.js' :
 					`https://unpkg.com/svelte@${version}/compiler.js`,
 				`https://unpkg.com/rollup@0.68/dist/rollup.browser.js`,
-				`https://bundle.run/svelte-native-preprocessor`
+				`https://bundle.run/svelte-native-preprocessor@0.1.4`
 			);
 			fulfil();
 
@@ -85,10 +85,13 @@ async function getBundle(mode, cache, lookup) {
 					if (importee === `svelte`) return `https://unpkg.com/svelte@${version}/index.mjs`;
 					if (importee.startsWith(`svelte/`)) return `https://unpkg.com/svelte@${version}/${importee.slice(7)}.mjs`;
 
-					if (importee === `svelte-native`) return '/repl/svelte-native/index.mjs';
+					if (importee === `svelte-native`) return 'https://unpkg.com/svelte-native@latest/index.mjs';
+					//if (importee === `svelte-native`) return '/repl/svelte-native/index.mjs';
+					if (importee.startsWith(`svelte-native/`)) return `https://unpkg.com/svelte-native@latest/${importee.slice(14)}/index.mjs`
+					//if (importee.startsWith(`svelte-native/`)) return `/repl/svelte-native/${importee.slice(14)}/index.mjs`;
 
-					if (importee.startsWith(`svelte-native/`)) return `/repl/svelte-native/${importee.slice(14)}/index.mjs`;
-					if (importer && importer.startsWith(`/repl/svelte-native/`)) {
+
+					if (importer && importer.startsWith(`https://unpkg.com/svelte-native`)) {
 						return importer.replace('index.mjs', importee.slice(1)) + '/index.mjs'
 					}
 

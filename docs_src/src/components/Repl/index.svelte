@@ -12,7 +12,7 @@
 	import Output from './Output/index.svelte';
 	import InputOutputToggle from './InputOutputToggle.svelte';
 
-	export let version = 'beta'; // TODO change this to latest when the time comes
+	export let version = 'latest'; // TODO change this to latest when the time comes
 	export let embedded = false;
 	export let orientation = 'columns';
 
