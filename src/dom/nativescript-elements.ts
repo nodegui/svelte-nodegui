@@ -4,6 +4,7 @@ import { View } from 'tns-core-modules/ui/page'
 import FrameElement from './native/FrameElement';
 import PageElement from './native/PageElement';
 import ListViewElement from './native/ListViewElement';
+import TabViewElement from './native/TabViewElement';
 
 export function registerNativeElement(elementName: string, resolver: () => typeof View, meta: ComponentMeta = null) {
   registerElement(elementName, () => new NativeElementNode(elementName, resolver(), meta));
@@ -26,10 +27,6 @@ export function registerNativeElements() {
     () => require('tns-core-modules/ui/action-bar').NavigationButton
   )
 
-  registerNativeElement(
-    'TabView',
-    () => require('tns-core-modules/ui/tab-view').TabView
-  )
 
   registerNativeElement(
     'TabViewItem',
@@ -154,4 +151,5 @@ export function registerNativeElements() {
   registerElement('Frame', () => new FrameElement())
   registerElement('Page', () => new PageElement())
   registerElement('ListView', () => new ListViewElement())
+  registerElement('TabView', () => new TabViewElement())
 }
