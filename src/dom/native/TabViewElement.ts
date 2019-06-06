@@ -11,29 +11,35 @@ export default class TabViewElement extends NativeElementNode {
 
     doUpdate() {
         let items = this.childNodes.filter(x => x instanceof NativeElementNode && x.nativeView instanceof TabViewItem).map(x => (x as any).nativeView as TabViewItem);
-        log.info(`updating tab items. now has ${items.length} items`);
+        log.debug(`updating tab items. now has ${items.length} items`);
         (this.nativeView as TabView).items = items;
-        this.needs_update = false;
-    }
-
-    updateItems() {
-        this.needs_update = true;
-        Promise.resolve().then(() => {
-            if (this.needs_update)
-                this.doUpdate();
-        });
     }
 
     onInsertedChild(childNode: ViewNode, index: number) {
-        //We only want to handle TabViewItem
-        if (!(childNode instanceof NativeElementNode && childNode.nativeView instanceof TabViewItem))
-            return super.onInsertedChild(childNode, index);
-        this.updateItems();
+        try {
+            //We only want to handle TabViewItem and only if it is the last item!
+            if (!(childNode instanceof NativeElementNode && childNode.nativeView instanceof TabViewItem))
+                return super.onInsertedChild(childNode, index);
+
+            this.needs_update = true;
+
+            //resolve after this event loop to catch all added tabviewitems in one update, and to handle the fact that svelte adds the
+            //tabviewitem to tabview while it is still empty which causes problems.
+            Promise.resolve().then(() => {
+                if (this.needs_update) {
+                    this.doUpdate();
+                    this.needs_update = false;
+                }
+            }).catch(e => console.error(e));
+
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     onRemovedChild(childNode: ViewNode) {
         if (!(childNode instanceof NativeElementNode && childNode.nativeView instanceof TabViewItem))
             return super.onRemovedChild(childNode);
-        this.updateItems();
+        console.error("Removing a TabViewItem is not supported atm see:  https://github.com/NativeScript/nativescript-angular/issues/621");
     }
 }
