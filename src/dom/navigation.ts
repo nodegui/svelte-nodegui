@@ -49,13 +49,13 @@ export function navigate(options: NavigationOptions): SvelteComponent {
         throw new Error("navigate requires frame option to be a native Frame, a FrameElement, a frame Id, or null")
     }
     if (!page) {
-        throw new Error("navigage requires page to be set to the svelte component class that implements the page or reference to a page element")
+        throw new Error("navigate requires page to be set to the svelte component class that implements the page or reference to a page element")
     }
 
     let { element, pageInstance } = resolveComponentElement(page, props);
 
     if (!(element instanceof PageElement))
-        throw new Error("navigage requires a svelte component with a page element at the root")
+        throw new Error("navigate requires a svelte component with a page element at the root")
 
     let nativePage = element.nativeView;
 
