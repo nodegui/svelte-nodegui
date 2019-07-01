@@ -32,6 +32,7 @@ export default class ListViewElement extends NativeElementNode {
             let wrapper = createElement('StackLayout') as NativeElementNode;
             let componentInstance = new (this.itemTemplateComponent)({
                 target: wrapper,
+                intro: true,
                 props: {
                     item
                 }

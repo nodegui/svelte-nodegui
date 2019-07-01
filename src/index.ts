@@ -5,7 +5,7 @@ import { navigate, ViewNode, createElement, initializeDom, FrameElement } from '
 declare global {
     export class SvelteComponent {
         $destroy(): void;
-        constructor(options: { target?: ViewNode, props?: any, anchor?: ViewNode });
+        constructor(options: { target?: ViewNode, props?: any, anchor?: ViewNode, intro?: boolean });
         $set(props: any): void;
     }
 }
