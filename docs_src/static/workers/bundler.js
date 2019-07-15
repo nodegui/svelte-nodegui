@@ -83,7 +83,11 @@ async function getBundle(mode, cache, lookup) {
 				resolveId(importee, importer) {
 					// v3 hack
 					if (importee === `svelte`) return `https://unpkg.com/svelte@${version}/index.mjs`;
-					if (importee.startsWith(`svelte/`)) return `https://unpkg.com/svelte@${version}/${importee.slice(7)}.mjs`;
+					if (version < "3.5.0") {
+						if (importee.startsWith(`svelte/`)) return `https://unpkg.com/svelte@${version}/${importee.slice(7)}.mjs`;
+					} else {
+						if (importee.startsWith(`svelte/`)) return `https://unpkg.com/svelte@${version}/${importee.slice(7)}/index.mjs`;
+					}
 
 					if (importee === `svelte-native`) return 'https://unpkg.com/svelte-native@latest/index.mjs';
 					//if (importee === `svelte-native`) return '/repl/svelte-native/index.mjs';
