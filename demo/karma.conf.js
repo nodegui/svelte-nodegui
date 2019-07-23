@@ -11,7 +11,7 @@ module.exports = function (config) {
 
 
     // list of files / patterns to load in the browser
-    files: ['app/tests/**/*.ts'],
+    files: ['app/tests/**/*.*'],
 
 
     // list of files to exclude
@@ -102,5 +102,7 @@ function setWebpack(config, options) {
     options.webpack = require('./webpack.config')(env);
     delete options.webpack.entry;
     delete options.webpack.output.libraryTarget;
+    const invalidPluginsForUnitTesting = ["GenerateBundleStarterPlugin", "GenerateNativeScriptEntryPointsPlugin"];
+    options.webpack.plugins = options.webpack.plugins.filter(p => !invalidPluginsForUnitTesting.includes(p.constructor.name));
   }
 }
