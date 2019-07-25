@@ -28,7 +28,7 @@ Sometimes it can be easier to learn something if you have a goal to work towards
 
 Before you start, please ensure you have at least followed the [Quick Start Guide](docs#quick-start) and can get an application to run on your mobile device or emulator.
 
-This guide assumes a existing familiarity with the Svelte framework. Run through [Svelte's excellent tutorial](https://v3.svelte.technology/tutorial) to get up to speed.
+This guide assumes a existing familiarity with the Svelte framework. Run through [Svelte's excellent tutorial](https://svelte.dev/tutorial/basics) to get up to speed.
 
 ### Basic Design
 
