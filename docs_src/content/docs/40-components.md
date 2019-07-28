@@ -384,12 +384,12 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 
 `<listView>` does not loop through list items as you would expect when using a regular svelte `each` block. Instead `<listView>` only creates the necessary views to display the currently visible items on the screen, and reuses the views that are already off-screen when scrolled. This concept is called _view recycling_ and is commonly used in mobile apps to improve performance. 
 
-You can use the `itemTap` event which contains the index of the tapped item and the actual item from the list.
+You can use the `itemTap` event which provides the index of the tapped item and the actual item from the list.
 
 ```js
 onItemTap(event) {
-  console.log(event.index)
-  console.log(event.item)
+  console.log(event.index) //item index
+  console.log(event.bindingContext) // item instance
 }
 ```
 
