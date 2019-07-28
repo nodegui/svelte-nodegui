@@ -41,7 +41,7 @@ Launch your app with:
 
 ```bash
 $ cd myapp
-$ tns preview --bundle
+$ tns preview
 ```
 
 You will need to scan the ascii art QR code using the "Playground" app you installed previously.
@@ -64,13 +64,13 @@ $  tns doctor
 Once that is happy you can do a full compile and launch of your application with
 
 ```bash
-$ tns run android --bundle
+$ tns run android
 ```
 
 or
 
 ```bash
-$ tns run ios --bundle
+$ tns run ios
 ```
 
 

@@ -229,7 +229,7 @@ npx degit halfnelson/svelte-native-template my-mobile-app
 cd my-mobile-app
 
 npm install
-tns run android --bundle
+tns run android
 		</pre>
 
 		<p class="linkify">See the <a href="/docs#quick-start">quickstart guide</a> for more

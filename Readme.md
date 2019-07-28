@@ -34,8 +34,6 @@ A fresh svelte-native app will be found in the `myapp` folder
 
 Once installed, the build workflow is to use the `tns build` or `tns run` commands as normal. 
 
-**__remember to include `--bundle` on your `tns` commands so the svelte is compiled!__**
-
 ## Usage
 
 App.svelte
