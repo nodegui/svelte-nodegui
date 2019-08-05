@@ -30,7 +30,7 @@
         "karma-nativescript-launcher": "0.4.0",
         "karma-webpack": "3.0.5",
         "mocha": "6.1.4",
-        "svelte": "^3.6.7",
+        "svelte": "3.6.1",
         "nativescript-dev-webpack": "1.0.1",
         "svelte-loader": "halfnelson/svelte-loader#fix-virtual-purge",
         "svelte-native-preprocessor": "^0.1.4",
