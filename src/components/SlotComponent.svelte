@@ -1,1 +1,4 @@
-<slot props={$$props} />
+<slot props={p} />
+<script>
+$: p = $$props
+</script>
