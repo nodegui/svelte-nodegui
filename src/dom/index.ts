@@ -8,6 +8,8 @@ import { logger, LogLevel } from './basicdom'
 export { default as FrameElement } from "./native/FrameElement"
 export { default as SvelteNativeDocument } from './svelte/SvelteNativeDocument'
 export { default as NativeElementNode } from './native/NativeElementNode'
+export { default as TabsElement } from './native/TabsElement'
+export { default as TabStripElement } from './native/TabStripElement'
 export { registerElement, createElement, ViewNode } from './basicdom'
 export { navigate, goBack, showModal, closeModal, ShowModalOptions, NavigationOptions, BackNavigationOptions } from './navigation'
 
