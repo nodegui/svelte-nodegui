@@ -1,6 +1,6 @@
 {
   "name": "svelte-native",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Svelte integration for NativeScript",
   "private": true,
   "repository": {
@@ -21,17 +21,17 @@
   "author": "David Pershouse",
   "license": "MIT",
   "peerDependencies": {
-    "tns-core-modules": "^6.0.1",
-    "svelte": "^3.7.1"
+    "tns-core-modules": "^6.1.0",
+    "svelte": "^3.9.0"
   },
   "devDependencies": {
     "glob": "^7.1.3",
-    "rollup": "^1.17.0",
+    "rollup": "^1.20.3",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.1.0",
-    "rollup-plugin-typescript2": "^0.22.0",
-    "svelte": "^3.7.1",
-    "tns-core-modules": "^6.0.1",
+    "rollup-plugin-typescript2": "^0.24.0",
+    "svelte": "^3.9.0",
+    "tns-core-modules": "^6.1.0",
     "typescript": "^3.5.3",
     "rimraf": "^2.6.3"
   }

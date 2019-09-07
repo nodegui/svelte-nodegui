@@ -2,10 +2,10 @@
     "nativescript": {
         "id": "io.github.halfnelson.sveltenativetemplate",
         "tns-ios": {
-            "version": "6.0.1"
+            "version": "6.0.2"
         },
         "tns-android": {
-            "version": "6.0.0"
+            "version": "6.0.2"
         }
     },
     "main": "app.js",
@@ -14,10 +14,10 @@
     "repository": "<fill-your-repository-here>",
     "dependencies": {
         "buffer": "5.2.1",
-        "nativescript-theme-core": "~1.0.6",
+        "nativescript-theme-core": "~2.0.17",
         "nativescript-unit-test-runner": "0.7.0",
         "svelte-native": "file:../dist",
-        "tns-core-modules": "6.0.1"
+        "tns-core-modules": "6.1.0"
     },
     "devDependencies": {
         "@types/chai": "^4.1.7",
@@ -30,11 +30,11 @@
         "karma-nativescript-launcher": "0.4.0",
         "karma-webpack": "3.0.5",
         "mocha": "6.1.4",
-        "svelte": "^3.7.1",
-        "nativescript-dev-webpack": "1.0.1",
+        "svelte": "^3.9.0",
+        "nativescript-dev-webpack": "^1.2.0",
         "svelte-loader": "halfnelson/svelte-loader#fix-virtual-purge",
         "svelte-native-preprocessor": "^0.1.4",
-        "typescript": "3.4.5"
+        "typescript": "3.6.2"
     },
     "gitHead": "59b6da006346fedb5bb201fcc9cd7d204a69a82f",
     "readme": "NativeScript Application"
