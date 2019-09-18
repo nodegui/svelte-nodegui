@@ -1,4 +1,6 @@
-Allows the use of [Svelte (v3)](https://github.com/sveltejs/svelte) within a [NativeScript](https://github.com/nativescript/nativescript) application.
+# Svelte Native
+
+Create Mobile applications using native widgets via Svelte [Svelte](https://github.com/sveltejs/svelte) and [NativeScript](https://github.com/nativescript/nativescript).
 
 See https://svelte-native.technology for docs and tutorials
 
@@ -19,12 +21,13 @@ Svelte-Native includes Svelte specific integrations such as
 
 While Svelte Native is feature complete, there are some items outstanding to bring it to the level of other Nativescript library integrations
 
- - [ ] Full support for the Progress professional UI components https://github.com/halfnelson/svelte-native/issues/22
- - [ ] Improved documentation around importing Nativescript plugins
- - [ ] A nativescript app template for use with `tns create --template`
- - [ ] An examples page that shows of open source apps made with Svelte Native
- - [x] At least 1 emoji in readme.md
- - [ ] More Tests 😳
+ - [ ] Full support for the Progress professional UI components [#22](https://github.com/halfnelson/svelte-native/issues/22)
+ - [ ] Improved documentation around importing Nativescript plugins [#45](https://github.com/halfnelson/svelte-native/issues/45)
+ - [ ] A Nativescript app template for use with `tns create --template` [#52](https://github.com/halfnelson/svelte-native/issues/52)
+ - [ ] An examples page that shows open source applications made with Svelte Native [#51](https://github.com/halfnelson/svelte-native/issues/51)
+ - [ ] Migrate the site to the latest version of Svelte's [SiteKit](https://github.com/sveltejs/site-kit) [#53](https://github.com/halfnelson/svelte-native/issues/53)
+ - [x] At least 1 emoji in readme.md :+1:
+ - [ ] More Tests 😳 [#54](https://github.com/halfnelson/svelte-native/issues/54)
  
 
 ## Installation
@@ -35,7 +38,7 @@ You can get started developing with this using the [latest template app](https:/
 $ npx degit halfnelson/svelte-native-template myapp
 ```
 
-A fresh svelte-native app will be found in the `myapp` folder
+A fresh Svelte Native app will be found in the `myapp` folder
 
 Once installed, the build workflow is to use the `tns build` or `tns run` commands as normal. 
 
@@ -53,7 +56,6 @@ App.svelte
 
 <script>
   export let msg = 'Hello World!'
-  let ab;
   const toggle = () => {
       msg = "Hi from svelte"
   }
@@ -68,7 +70,10 @@ import { svelteNative } from 'svelte-native'
 
 svelteNative(App, {msg: "Hi from launcher"});
 ```
+
 ## Credits
 
 The DOM implementation is based on the one from Nativescript-Vue. Thanks!
+The API Docs were ported from the Nativescript-Vue Too
+The Site Design is from SvelteJS
 
