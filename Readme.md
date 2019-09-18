@@ -1,12 +1,8 @@
 Allows the use of [Svelte (v3)](https://github.com/sveltejs/svelte) within a [NativeScript](https://github.com/nativescript/nativescript) application.
-(Thanks to nativescript-vue for their dom implementation)
-
-**__This is still alpha software, use at own risk, contributions welcome__**
 
 See https://svelte-native.technology for docs and tutorials
 
 ![todo in svelte-native](https://raw.githubusercontent.com/halfnelson/svelte-native/master/nativescript-svelte-todo.gif)
-
 
 ## Features
 
@@ -16,9 +12,18 @@ Svelte-Native includes Svelte specific integrations such as
  * Svelte specific navigation and modals eg `navigate({ page: MySvelteComponent })`
  * Integration with svelte's transistions eg `<label transition:fade="{duration: 2000}">`
  * Integration with sveltes scoped styles
+ * Complete coverage of the Nativescript core UI modules
+ * Uses unmodified Svelte and Nativescript modules
 
-## Todo
- - [x] At least 1 emoji in readme
+## Work In Progress
+
+While Svelte Native is feature complete, there are some items outstanding to bring it to the level of other Nativescript library integrations
+
+ - [ ] Full support for the Progress professional UI components https://github.com/halfnelson/svelte-native/issues/22
+ - [ ] Improved documentation around importing Nativescript plugins
+ - [ ] A nativescript app template for use with `tns create --template`
+ - [ ] An examples page that shows of open source apps made with Svelte Native
+ - [x] At least 1 emoji in readme.md
  - [ ] More Tests 😳
  
 
@@ -63,5 +68,7 @@ import { svelteNative } from 'svelte-native'
 
 svelteNative(App, {msg: "Hi from launcher"});
 ```
+## Credits
 
+The DOM implementation is based on the one from Nativescript-Vue. Thanks!
 
