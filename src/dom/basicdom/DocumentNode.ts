@@ -36,6 +36,7 @@ export default class DocumentNode extends ViewNode {
         return new TextNode(text)
     }
 
+
     getElementById(id: string) {
         for (let el of elementIterator(this)) {
             if (el.nodeType === 1 && (el as ElementNode).id === id)
@@ -43,5 +44,8 @@ export default class DocumentNode extends ViewNode {
         }
     }
 
+    dispatchEvent(event: any) {
+        //Svelte dev fires these for tool support
+    }
 
 }
