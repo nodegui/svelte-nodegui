@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store';
 
 const PubnubKeys = {
-    PUBLISH_KEY: "pub-c-d7893276-cc78-4d18-8ab0-becba06e43de",
-    SUBSCRIBE_KEY: "sub-c-3dad1ebe-aaa3-11e8-8027-363023237e0b"
+    PUBLISH_KEY: "pub-c-b5343165-e988-4a8d-b415-6166eda14a91",
+    SUBSCRIBE_KEY: "sub-c-459b84a2-dcdf-11e9-9067-a65ad2c362ff"
 }
 
 
