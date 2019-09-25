@@ -47,7 +47,7 @@ Remove the default `.btn` rule from `app.css` and set the contents of App.svelte
 <page class="page">
     <actionBar title="My Tasks" class="action-bar" />
     
-    <tabView height="100%" androidTabsPosition="bottom">
+    <tabView androidTabsPosition="bottom">
 
       <tabViewItem title="To Do" textWrap="true">
         <label>
@@ -88,21 +88,19 @@ We have our basic design, lets allow the user to add some tasks.
 Replace the contents of the first `<tabViewItem>` with:
 
 ```html
-<stackLayout orientation="vertical" width="100%" height="100%">
-    <gridLayout columns="2*,*" rows="*" width="100%" height="25%">
-        <!-- Configures the text field and ensures that pressing Return on the keyboard 
-             produces the same result as tapping the button. -->
-        <textField col="0" row="0" bind:text="{textFieldValue}" hint="Type new task..." editable="true"
-            on:returnPress="{onButtonTap}" />
-        <button col="1" row="0" text="Add task" on:tap="{onButtonTap}" />
-    </gridLayout>
+<gridLayout columns="2*,*" rows="*, 3*">
+    <!-- Configures the text field and ensures that pressing Return on the keyboard 
+        produces the same result as tapping the button. -->
+    <textField col="0" row="0" bind:text="{textFieldValue}" hint="Type new task..." editable="true"
+        on:returnPress="{onButtonTap}" />
+    <button col="1" row="0" text="Add task" on:tap="{onButtonTap}" />
 
-    <listView class="list-group" items="{todos}" on:itemTap="{onItemTap}" style="height:75%">
+    <listView class="list-group" items="{todos}" on:itemTap="{onItemTap}" row="1" colSpan="2">
         <Template let:item>
             <label text="{item.name}" class="list-group-item-heading" textWrap="true" />
         </Template>
     </listView>
-</stackLayout>
+</gridLayout>
 ```
 
 and to the bottom of the file add a script tag:
@@ -235,7 +233,7 @@ function onDoneTap(args) {
 
 To display our done items we added the `listView` to the "completed" `tabViewItem` and bound it to the `dones` variable we defined in last step.
 
-We added an event handler to handle taps on the "completed" items. This handler is very similar to the hander added in the last section, except that it works on the `dones` array and not the `todos`.
+We added an event handler to handle taps on the "completed" items. This handler is very similar to the handler added in the last section, except that it works on the `dones` array and not the `todos`.
 
 ### Advanced design: Styled input 
 
@@ -289,7 +287,7 @@ The application is looking better, but we can do something about those tabs.
 Add the `selectedTabTextColor` and `tabTextFontSize` property to the `<TabView>`.
 
 ```html
-  <tabView height="100%" androidTabsPosition="bottom" selectedTabTextColor="#2847D2" tabTextFontSize="15" >
+  <tabView androidTabsPosition="bottom" selectedTabTextColor="#2847D2" tabTextFontSize="15" >
 ```
 
 Apply the `textTransform` property to the separate tabs. You can use this property only on the `<TabViewItem>` level.
@@ -320,11 +318,11 @@ The list items are a little bunched up. Lets add some padding to them, and make 
 Edit the two `<listView>` tags and add the `separatorColor="transparent"` as an attribute:
 
 ```html
-<listView class="list-group" items="{todos}" on:itemTap="{onItemTap}" style="height:75%" separatorColor="transparent">
+<listView class="list-group" items="{todos}" on:itemTap="{onItemTap}"  separatorColor="transparent">
 ```
 and 
 ```html
-<listView class="list-group" items="{dones}" on:itemTap="{onDoneTap}" separatorColor="transparent">
+<listView class="list-group" items="{dones}" on:itemTap="{onDoneTap}" row="1" colSpan="2" separatorColor="transparent">
 ```
 
 To the label in the `listView` for the `todos` add `todo-item active` to the class attribute

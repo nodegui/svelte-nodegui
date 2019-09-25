@@ -51,7 +51,7 @@ You will need to scan the ascii art QR code using the "Playground" app you insta
 
 ### Advanced Install
 
-To compile your apps for distribution, you will need to use setup your system for local compilation.
+To compile your apps for distribution, you will need to setup your system for local compilation.
 
 Svelte-Native runs on top of an unmodified NativeScript platform. Installation instructions for your operating system can be found in the [Native Script Guide](https://docs.nativescript.org/start/quick-setup)
 

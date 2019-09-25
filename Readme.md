@@ -1,12 +1,10 @@
-Allows the use of [Svelte (v3)](https://github.com/sveltejs/svelte) within a [NativeScript](https://github.com/nativescript/nativescript) application.
-(Thanks to nativescript-vue for their dom implementation)
+# Svelte Native
 
-**__This is still alpha software, use at own risk, contributions welcome__**
+Create Mobile applications using native widgets via Svelte [Svelte](https://github.com/sveltejs/svelte) and [NativeScript](https://github.com/nativescript/nativescript).
 
 See https://svelte-native.technology for docs and tutorials
 
 ![todo in svelte-native](https://raw.githubusercontent.com/halfnelson/svelte-native/master/nativescript-svelte-todo.gif)
-
 
 ## Features
 
@@ -16,10 +14,20 @@ Svelte-Native includes Svelte specific integrations such as
  * Svelte specific navigation and modals eg `navigate({ page: MySvelteComponent })`
  * Integration with svelte's transistions eg `<label transition:fade="{duration: 2000}">`
  * Integration with sveltes scoped styles
+ * Complete coverage of the Nativescript core UI modules
+ * Uses unmodified Svelte and Nativescript modules
 
-## Todo
- - [x] At least 1 emoji in readme
- - [ ] More Tests 😳
+## Work In Progress
+
+While Svelte Native is feature complete, there are some items outstanding to bring it to the level of other Nativescript library integrations
+
+ - [ ] Full support for the Progress professional UI components [#22](https://github.com/halfnelson/svelte-native/issues/22)
+ - [ ] Improved documentation around importing Nativescript plugins [#45](https://github.com/halfnelson/svelte-native/issues/45)
+ - [ ] A Nativescript app template for use with `tns create --template` [#52](https://github.com/halfnelson/svelte-native/issues/52)
+ - [ ] An examples page that shows open source applications made with Svelte Native [#51](https://github.com/halfnelson/svelte-native/issues/51)
+ - [ ] Migrate the site to the latest version of Svelte's [SiteKit](https://github.com/sveltejs/site-kit) [#53](https://github.com/halfnelson/svelte-native/issues/53)
+ - [x] At least 1 emoji in readme.md :+1:
+ - [ ] More Tests 😳 [#54](https://github.com/halfnelson/svelte-native/issues/54)
  
 
 ## Installation
@@ -30,7 +38,7 @@ You can get started developing with this using the [latest template app](https:/
 $ npx degit halfnelson/svelte-native-template myapp
 ```
 
-A fresh svelte-native app will be found in the `myapp` folder
+A fresh Svelte Native app will be found in the `myapp` folder
 
 Once installed, the build workflow is to use the `tns build` or `tns run` commands as normal. 
 
@@ -48,7 +56,6 @@ App.svelte
 
 <script>
   export let msg = 'Hello World!'
-  let ab;
   const toggle = () => {
       msg = "Hi from svelte"
   }
@@ -64,4 +71,9 @@ import { svelteNative } from 'svelte-native'
 svelteNative(App, {msg: "Hi from launcher"});
 ```
 
+## Credits
+
+The DOM implementation is based on the one from Nativescript-Vue. Thanks!
+The API Docs were ported from the Nativescript-Vue Too
+The Site Design is from SvelteJS
 

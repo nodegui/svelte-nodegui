@@ -83,7 +83,7 @@ async function getBundle(mode, cache, lookup) {
 				resolveId(importee, importer) {
 					// v3 hack
 					if (importee === `svelte`) return `https://unpkg.com/svelte@${version}/index.mjs`;
-					if (version < "3.5.0") {
+					if (version.startsWith("3") && Number(version.split(".")[1]) < 5) {
 						if (importee.startsWith(`svelte/`)) return `https://unpkg.com/svelte@${version}/${importee.slice(7)}.mjs`;
 					} else {
 						if (importee.startsWith(`svelte/`)) return `https://unpkg.com/svelte@${version}/${importee.slice(7)}/index.mjs`;
