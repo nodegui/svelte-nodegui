@@ -14,10 +14,10 @@
     "repository": "<fill-your-repository-here>",
     "dependencies": {
         "buffer": "5.2.1",
-        "nativescript-theme-core": "~2.0.17",
+        "nativescript-theme-core": "~2.0.21",
         "nativescript-unit-test-runner": "0.7.0",
         "svelte-native": "file:../dist",
-        "tns-core-modules": "6.1.0"
+        "tns-core-modules": "6.1.1"
     },
     "devDependencies": {
         "@types/chai": "^4.1.7",
