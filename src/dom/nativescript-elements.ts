@@ -5,6 +5,9 @@ import FrameElement from './native/FrameElement';
 import PageElement from './native/PageElement';
 import ListViewElement from './native/ListViewElement';
 import TabViewElement from './native/TabViewElement';
+import BottomNavigationElement from './native/BottomNavigationElement';
+import TabsElement from './native/TabsElement';
+import TabStripElement from './native/TabStripElement';
 
 export function registerNativeElement(elementName: string, resolver: () => typeof View, meta: ComponentMeta = null) {
   registerElement(elementName, () => new NativeElementNode(elementName, resolver(), meta));
@@ -32,7 +35,6 @@ export function registerNativeElements() {
     'TabViewItem',
     () => require('tns-core-modules/ui/tab-view').TabViewItem
   )
-
 
   // NS components which uses the automatic registerElement Vue wrapper
   // as they do not need any special logic
@@ -148,8 +150,16 @@ export function registerNativeElements() {
   )
   registerNativeElement('Span', () => require('tns-core-modules/text/span').Span)
 
+
   registerElement('Frame', () => new FrameElement())
   registerElement('Page', () => new PageElement())
   registerElement('ListView', () => new ListViewElement())
   registerElement('TabView', () => new TabViewElement())
+
+  registerElement('BottomNavigation', () => new BottomNavigationElement())
+  registerElement('Tabs', () => new TabsElement())
+  registerElement('TabStrip', () => new TabStripElement())
+  registerNativeElement('TabStripItem', () => require('tns-core-modules/ui/tab-navigation-base/tab-strip-item').TabStripItem);
+  registerNativeElement('TabContentItem', () => require('tns-core-modules/ui/tab-navigation-base/tab-content-item').TabContentItem);
+
 }
