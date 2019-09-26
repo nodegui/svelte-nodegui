@@ -38,6 +38,7 @@ title: Components
 
 
 
+
 ### Button
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_button_.button">Class Docs</a></div>
@@ -734,6 +735,9 @@ The default state is `false` or OFF.
 ### TabView
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_tab_view_.tabview">Class Docs</a></div>
+
+
+> **NOTE:** TabView should be considered obsolete as of NS 6.1. Please use [`BottomNavigation`](docs#bottom-navigation) or [`Tabs`](docs#tabs)
 
 
 
