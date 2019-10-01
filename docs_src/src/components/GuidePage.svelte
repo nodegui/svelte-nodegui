@@ -2,7 +2,8 @@
 	import { onMount, afterUpdate } from 'svelte';
 	import GuideContents from './GuideContents.svelte';
 	import Icon from './Icon.svelte';
-	import { page } from '@sapper/app';
+	import { stores } from '@sapper/app';
+	const { page, preloading, session } = stores();
 
 	export let sections;
 	export let edit_url;

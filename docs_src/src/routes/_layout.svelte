@@ -1,10 +1,12 @@
 <script>
-	import { page } from '@sapper/app';
+	
+	import { stores } from '@sapper/app';
 	import InlineSvg from '../components/InlineSvg.svelte';
 	import Nav from '../components/TopNav.svelte';
 
 	export let segment;
-	export let path;
+
+	const { page, preloading, session } = stores();
 </script>
 
 <InlineSvg />

@@ -1,7 +1,9 @@
 <script>
-	import { page } from '@sapper/app';
+	
 	import { onMount, afterUpdate } from 'svelte';
 	import Icon from './Icon.svelte';
+	import { stores } from '@sapper/app';
+	const { page, preloading, session } = stores();
 
 	export let sections = [];
 	export let active_section = null;
