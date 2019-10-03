@@ -10,13 +10,13 @@
 </script>
 
 <svelte:head>
-	<title>Svelte Native • A Svelte Mobile Development Experience</title>
+	<title>Blog • Svelte Native</title>
 </svelte:head>
 
 <div class='posts stretch'>
 	{#each posts as post}
 		<article class='post' data-pubdate={post.metadata.dateString}>
-			<a rel='prefetch' href='blog/{post.slug}' title='Read the article »'>
+			<a class="no-underline" rel='prefetch' href='blog/{post.slug}' title='Read the article »'>
 				<h2>{post.metadata.title}</h2>
 				<p>{post.metadata.description}</p>
 			</a>
@@ -29,52 +29,46 @@
 		grid-template-columns: 1fr 1fr;
 		grid-gap: 1em;
 		min-height: calc(100vh - var(--nav-h));
-		padding: var(--top-offset) 0;
+		padding: var(--top-offset) var(--side-nav) 6rem var(--side-nav);
 		max-width: var(--main-width);
 		margin: 0 auto;
 	}
-
 	h2 {
 		display: inline-block;
-		margin: 2rem 0 0.5rem 0;
-		color: var(--second);
-		/* max-width: 18em; */
-		font-size: 2rem;
+		margin: 3.2rem 0 0.4rem 0;
+		color: var(--text);
+		max-width: 18em;
+		font-size: var(--h3);
+		font-weight: 400;
 	}
-
 	.post:first-child {
-		margin: 0 0 2em 0;
-		border-bottom: 1px solid #eee;
+		margin: 0 0 2rem 0;
+		padding: 0 0 4rem 0;
+		border-bottom: var(--border-w) solid #6767785b; /* based on --second */
 	}
-
 	.post:first-child h2 {
 		font-size: 4rem;
-	}
-
-	.post:first-child::before {
-		content: 'Latest post • ' attr(data-pubdate);
 		font-weight: 400;
-		color: #aaa;
+		color: var(--second);
+	}
+	.post:first-child::before,
+	.post:nth-child(2)::before {
+		content: 'Latest post • ' attr(data-pubdate);
+		color: var(--flash);
+		font-size: var(--h6);
+		font-weight: 400;
+		letter-spacing: .05em;
 		text-transform: uppercase;
 	}
-
 	.post:nth-child(2)::before {
 		content: 'Older posts';
-		font-weight: 400;
-		color: #aaa;
-		text-transform: uppercase;
 	}
-
 	.post p {
 		font-size: var(--h5);
 		max-width: 30em;
 		color: var(--second);
 	}
-
-	.post > a {
-		display: block;
-	}
-
+	.post > a { display: block }
 	.posts a:hover,
 	.posts a:hover > h2 {
 		color: var(--flash)
