@@ -34,6 +34,6 @@
 	project="svelte-native"
 	owner="halfnelson"
 	dir="tutorial"
-	path="docs_src/content"
+	path="/docs_src/content"
 />
 </div>

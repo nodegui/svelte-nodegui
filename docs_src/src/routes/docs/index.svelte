@@ -6,17 +6,21 @@
 </script>
 
 <script>
-	import GuidePage from '../../components/GuidePage.svelte'
+	import { Docs } from '@sveltejs/site-kit';
 
 	export let sections;
 </script>
 
 <svelte:head>
-	<title>Learn Svelte Native</title>
+	<title>API Docs • Svelte Native</title>
 </svelte:head>
 
-<GuidePage edit_url="https://github.com/halfnelson/svelte-native/edit/master/docs_src/content/docs"
-	sections="{sections}" />
+<Docs {sections}
+	project="svelte-native"
+	owner="halfnelson"
+	dir="docs"
+	path="/docs_src/content"
+/>
 
 <style>
 	:global(.content section div.nsref) {
