@@ -20,7 +20,7 @@
 
 
 {#if $page.path !== '/repl/embed'}
-	<Nav {segment} {page} logo="logo.svg">
+	<Nav {segment} {page} logo="svelte-native-logo-horizontal-full.svg">
 		<NavItem segment="tutorial">Tutorial</NavItem>
 		<NavItem segment="docs">API</NavItem>
 		<NavItem segment="repl">REPL</NavItem>
@@ -46,6 +46,10 @@
 	Website design thanks to the Svelte project. 
 -->
 <style>
+	:global(html) {
+		--prime:rgb(60, 90, 253) !important; /* TODO remove .theme-default from shared, so we don't need !important */
+	}
+
 	main {
 		position: relative;
 		margin: 0 auto;

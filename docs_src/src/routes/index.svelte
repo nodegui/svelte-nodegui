@@ -1,54 +1,47 @@
 <script>
-	import { Blurb, Hero, Section } from '@sveltejs/site-kit';
-	import Icon from '../components/Icon.svelte';
-	import Logo from '../components/Logo.svelte';
-
-	let sy = 0;
+	import { Blurb, Hero } from '@sveltejs/site-kit';
 </script>
 
 <style>
-	
-	/* darken text for accesibility */
-	:global(.back-light) {
-		--text: hsl(36, 3%, 44%);
+	:global(.hero .logotype) {
+		height: 6rem !important; 
 	}
 
-
+	@media (min-width: 640px) {
+		:global(.hero .logotype) {
+			height: 9rem !important;
+		}
+	}
 </style>
 
 <svelte:head>
 	<title>Svelte Native • The Svelte Mobile Development Experience</title>
 </svelte:head>
 
-<svelte:window bind:scrollY={sy} />
 
 <Hero
 	title="Svelte Native"
 	tagline="The Svelte Mobile Development Experience"
-	outline="logo.svg"
-	logotype="svelte-logotype.svg"
+	outline="svelte-native-logo-outline.svg"
+	logotype="svelte-native-logotype.svg"
 />
 
 <Blurb>
-	<a href="/tutorial" slot="one">
-		<h2>Write less code</h2>
-		<p>Build boilerplate-free mobile applications using languages you already know — HTML, CSS and JavaScript</p>
+	<a href="https://svelte.dev" slot="one">
+		<h2>Powered By Svelte</h2>
+		<p>Svelte Native is an nativescript application framework powered by Svelte - Build mobile apps with Svelte components</p>
 		<span class="learn-more">learn more</span>
 	</a>
 
-
-
-	<a href="https://svelte.dev/blog/virtual-dom-is-pure-overhead" slot="two">
-		<h2>No virtual DOM</h2>
-		<p>Build boilerplate-free mobile applications using languages you already know — HTML, CSS and JavaScript</p>
+	<a href="https://www.nativescript.org/about" slot="two">
+		<h2>Using NativeScript</h2>
+		<p>Build full featured "Native" mobile applications using languages you already know — HTML, CSS and JavaScript</p>
 		<span class="learn-more">learn more</span>
 	</a>
 
-
-	<a href="https://svelte.dev/blog/svelte-3-rethinking-reactivity" slot="three">
-		<h2>Truly reactive</h2>
-		<p>No more complex state management libraries — Svelte brings reactivity to JavaScript itself</p>
-
+	<a href="http://localhost:3000/tutorial" slot="three">
+		<h2>Fully Featured</h2>
+		<p>Use the full power of Svelte including Transitions, Stores, and Reactivity. One of the smoothest development experiences available for mobile</p>
 		<span class="learn-more">learn more</span>
 	</a>
 
