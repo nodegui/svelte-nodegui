@@ -140,7 +140,6 @@
 		overflow: hidden;
 		background-color: var(--back);
 		padding: var(--app-controls-h) 0 0 0;
-		margin: 0 calc(var(--side-nav) * -1);
 		box-sizing: border-box;
 	}
 
@@ -185,7 +184,7 @@
 
 
 <svelte:head>
-	<title>Svelte REPL</title>
+	<title>{name} • REPL • Svelte Native</title>
 </svelte:head>
 
 <div class="repl-outer {zen_mode ? 'zen-mode' : ''}">

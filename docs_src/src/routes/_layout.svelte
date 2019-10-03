@@ -1,18 +1,18 @@
 <script>
 	
 	import { stores } from '@sapper/app';
-	import { Icon, Icons, Nav, NavItem } from '@sveltejs/site-kit';
+	import { Icon, Nav, NavItem } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '../components/PreloadingIndicator.svelte';
 
-/*	import InlineSvg from '../components/InlineSvg.svelte';
-	import Nav from '../components/TopNav.svelte'; */
+	import InlineSvg from '../components/InlineSvg.svelte';
+	//import Nav from '../components/TopNav.svelte'; 
 
 	export let segment;
 
 	const { page, preloading, session } = stores();
 </script>
 
-<Icons/>
+<InlineSvg/>
 
 {#if $preloading}
 	<PreloadingIndicator/>
