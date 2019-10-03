@@ -4,7 +4,7 @@
 
 <style>
 	:global(.hero .logotype) {
-		height: 6rem !important; 
+		height: 6rem !important;
 	}
 
 	@media (min-width: 640px) {
@@ -39,7 +39,7 @@
 		<span class="learn-more">learn more</span>
 	</a>
 
-	<a href="http://localhost:3000/tutorial" slot="three">
+	<a href="tutorial" slot="three">
 		<h2>Fully Featured</h2>
 		<p>Use the full power of Svelte including Transitions, Stores, and Reactivity. One of the smoothest development experiences available for mobile</p>
 		<span class="learn-more">learn more</span>
