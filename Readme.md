@@ -71,6 +71,33 @@ import { svelteNative } from 'svelte-native'
 svelteNative(App, {msg: "Hi from launcher"});
 ```
 
+## Examples
+
+### Svelte Native HackerNews
+
+Simple HackerNews client in Svelte Native.
+
+See https://github.com/halfnelson/svelte-native-hackernews for the repo.
+
+![HackerNews Example Image](https://raw.githubusercontent.com/halfnelson/svelte-native-hackernews/master/nativescript-svelte-hn.gif)
+
+### Svelte Native Grocery
+
+Grocery app example in Svelte Native.
+
+See https://github.com/halfnelson/svelte-native-grocery for the repo.
+
+![Grocery Example Image](https://raw.githubusercontent.com/halfnelson/svelte-native-grocery/master/nativescript-svelte-grocery.gif)
+
+### Svelte Native Realworld
+
+Realworld implementation app in Svelte Native.
+
+See https://github.com/halfnelson/svelte-native-realworld for the repo.
+
+![Realworld Example Image](https://raw.githubusercontent.com/halfnelson/svelte-native-realworld/master/nativescript-svelte-realworld.gif)
+
+
 ## Credits
 
 The DOM implementation is based on the one from Nativescript-Vue. Thanks!
