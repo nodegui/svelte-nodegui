@@ -35,7 +35,7 @@ This guide assumes a existing familiarity with the Svelte framework. Run through
 We will start our from a fresh app template:
 
 ```bash
-$ degit halfnelson/svelte-native-template todoapp
+$ npx degit halfnelson/svelte-native-template todoapp
 $ cd todoapp
 $ npm install
 ```
