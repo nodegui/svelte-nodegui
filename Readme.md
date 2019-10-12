@@ -23,24 +23,23 @@ While Svelte Native is feature complete, there are some items outstanding to bri
 
  - [ ] Full support for the Progress professional UI components [#22](https://github.com/halfnelson/svelte-native/issues/22)
  - [ ] Improved documentation around importing Nativescript plugins [#45](https://github.com/halfnelson/svelte-native/issues/45)
- - [ ] A Nativescript app template for use with `tns create --template` [#52](https://github.com/halfnelson/svelte-native/issues/52)
  - [ ] An examples page that shows open source applications made with Svelte Native [#51](https://github.com/halfnelson/svelte-native/issues/51)
- - [ ] Migrate the site to the latest version of Svelte's [SiteKit](https://github.com/sveltejs/site-kit) [#53](https://github.com/halfnelson/svelte-native/issues/53)
  - [x] At least 1 emoji in readme.md :+1:
  - [ ] More Tests 😳 [#54](https://github.com/halfnelson/svelte-native/issues/54)
  
 
 ## Installation
 
-You can get started developing with this using the [latest template app](https://github.com/halfnelson/svelte-native-template)
+You can get started developing with this using the latest template
 
 ```bash
-$ npx degit halfnelson/svelte-native-template myapp
+$ npm install -g nativescript
+$ tns create myapp --template tns-template-blank-svelte
 ```
 
 A fresh Svelte Native app will be found in the `myapp` folder
 
-Once installed, the build workflow is to use the `tns build` or `tns run` commands as normal. 
+Once installed use the `tns preview`, `tns build` or `tns run` commands as for a normal NativeScript application. 
 
 ## Usage
 
