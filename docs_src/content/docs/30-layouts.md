@@ -26,6 +26,7 @@ The following example creates a simple grid. For more information about creating
   <label text="120,120" left="120" top="120" width="100" height="100" backgroundColor="#4383b8"/>
 </absoluteLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/absolute_layout_grid.svg" />
 
 #### Overlapping elements
@@ -38,6 +39,7 @@ The following example creates a group of overlapping items.
   <label text="30,40" left="30" top="40" width="100" height="100" backgroundColor="#4383b8"/>
 </absoluteLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/absolute_layout_overlap.svg" />
 
 #### Additional children props
@@ -202,6 +204,7 @@ The following example creates four items with enabled line wrapping. When the ro
   <label text="fourth" width="30%" backgroundColor="#286290"/>
 </flexboxLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/flexbox_layout_wrap.svg" />
 
 #### Column flex layout with reverse order and items with a different `alignSelf`
@@ -289,6 +292,7 @@ The following example creates a grid with responsive design, where space is alot
   <Label text="1,1" row="1" col="1" backgroundColor="#4383b8"/>
 </gridLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/grid_layout_star_sizing.svg" />
 
 #### Grid layout with fixed and auto sizing
@@ -303,6 +307,7 @@ The following example create a grid with one auto-sized column and one column wi
   <label text="1,1" row="1" col="1" backgroundColor="#4383b8"/>
 </gridLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/grid_layout_fixed_auto.svg" />
 
 #### Grid layout with mixed sizing and merged cells
@@ -320,6 +325,7 @@ The following example creates a complex grid with responsive design, mixed width
   <label text="2,2" row="2" col="2" backgroundColor="#4383b8"/>
 </gridLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/grid_layout_complex.svg" />
 
 #### Props
@@ -371,6 +377,7 @@ The following example creates a horizontal stack of 3 equally-sized elements. It
   <label text="third" width="70" backgroundColor="#1c486b"/>
 </stackLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/stack_layout_horizontal.svg" />
 
 #### Stack layout with horizontally aligned children
