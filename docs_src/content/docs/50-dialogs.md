@@ -182,7 +182,7 @@ inputType: inputType.password
 #### Example
 
 ```js
-import { inputType } from 'tns-core-modules/ui/dialogs'
+import { prompt, inputType } from 'tns-core-modules/ui/dialogs'
 
 prompt({
   title: "Email Prompt",
@@ -190,7 +190,7 @@ prompt({
   okButtonText: "OK",
   cancelButtonText: "Cancel",
   defaultText: "name@domain.com",
-  inputType: dialogs.inputType.email
+  inputType: inputType.email
 }).then(result => {
   console.log(`Dialog result: ${result.result}, text: ${result.text}`)
 });
