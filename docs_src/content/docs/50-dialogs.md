@@ -17,12 +17,9 @@ import { action } from 'tns-core-modules/ui/dialogs'
 
 action("Your message", "Cancel button text", ["Option1", "Option2"])
   .then(result => {
-    console.log(result);
-  });
+    console.log(result)
+  })
 ```
-
-
-
 
 ### AlertDialog
 
@@ -39,8 +36,8 @@ import { alert } from 'tns-core-modules/ui/dialogs'
 
 alert('Your message')
   .then(() => {
-    console.log("Alert dialog closed.");
-  });
+    console.log("Alert dialog closed.")
+  })
 ```
 
 #### Configure dialog options
@@ -51,12 +48,9 @@ alert({
   message: "Your message",
   okButtonText: "Your OK button text"
 }).then(() => {
-  console.log("Alert dialog closed");
-});
+  console.log("Alert dialog closed")
+})
 ```
-
-
-
 
 ### ConfirmDialog
 
@@ -74,8 +68,8 @@ import { confirm } from 'tns-core-modules/ui/dialogs'
 
 confirm('Your message')
   .then(result => {
-    console.log(result);
-  });
+    console.log(result)
+  })
 ```
 
 #### Configure dialog options
@@ -87,12 +81,9 @@ confirm({
   okButtonText: "Your OK button text",
   cancelButtonText: "Your Cancel text"
 }).then(result => {
-  console.log(result);
-});
+  console.log(result)
+})
 ```
-
-
-
 
 ### LoginDialog
 
@@ -104,13 +95,12 @@ The method is part of the [`dialogs` module](https://docs.nativescript.org/api-r
 
 #### Basic use
 
-
 ```js
 import { login } from 'tns-core-modules/ui/dialogs'
 
 login("Your message", "Username field value", "Password field value").then(result => {
-  console.log(`Dialog result: ${result.result}, user: ${result.userName}, pwd: ${result.password}`);
-});
+  console.log(`Dialog result: ${result.result}, user: ${result.userName}, pwd: ${result.password}`)
+})
 ```
 
 #### Configure dialog options
@@ -124,33 +114,25 @@ login({
   userName: "Username field value",
   password: "Password field value"
 }).then(result => {
-  console.log(`Dialog result: ${result.result}, user: ${result.userName}, pwd: ${result.password}`);
-});
+  console.log(`Dialog result: ${result.result}, user: ${result.userName}, pwd: ${result.password}`)
+})
 ```
-
-
-
 
 ### PromptDialog
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/modules/_ui_dialogs_#prompt">Class Docs</a></div>
 
-
-
 The `prompt()` method shows a dialog with a single-line field for user input.
 
 The method is part of the [`dialogs` module](https://docs.nativescript.org/api-reference/modules/_ui_dialogs_).
 
-
-
 #### Basic use
-
 
 ```js
 prompt('Your message to the user', 'Suggested user input')
-.then(result => {
-  console.log(`Dialog result: ${result.result}, text: ${result.text}`)
-})
+  .then(result => {
+    console.log(`Dialog result: ${result.result}, text: ${result.text}`)
+  })
 ```
 
 #### Configure dialog options
@@ -166,7 +148,7 @@ prompt({
   defaultText: "Suggested user input",
 }).then(result => {
   console.log(`Dialog result: ${result.result}, text: ${result.text}`)
-});
+})
 ```
 
 #### Configure input type
@@ -193,7 +175,6 @@ prompt({
   inputType: inputType.email
 }).then(result => {
   console.log(`Dialog result: ${result.result}, text: ${result.text}`)
-});
+})
 ```
-
 

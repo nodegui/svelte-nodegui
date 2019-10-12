@@ -65,14 +65,14 @@ Without the Property Elements, you need to go a more tedious and error-prone rou
 ```
 
 ```js
-  import { onMount } from 'svelte'
+import { onMount } from 'svelte'
 
-  let drawer
-  let drawerContent
-  let mainContent
+let drawer
+let drawerContent
+let mainContent
 
-  onMount(() => {
-    drawer.nativeView.mainContent = mainContent.nativeView
-    drawer.nativeView.drawerContent = drawerContent.nativeView
-  })
+onMount(() => {
+  drawer.nativeView.mainContent = mainContent.nativeView
+  drawer.nativeView.drawerContent = drawerContent.nativeView
+})
 ```

@@ -4,7 +4,7 @@ title: Layouts
 
 ### AbsoluteLayout
 
-The `<absoluteLayout>` container is the simplest layout container in NativeScript. 
+The `<absoluteLayout>` container is the simplest layout container in NativeScript.
 
 `<absoluteLayout>` has the following behavior:
 
@@ -91,7 +91,7 @@ The following example shows how `stretchLastChild` affects the positioning of ch
 
 #### Dock to every side and the center
 
-The following example creates a `<dockLayout>` of 5 elements. The first four wrap the center element in a frame. 
+The following example creates a `<dockLayout>` of 5 elements. The first four wrap the center element in a frame.
 
 ```html
 <dockLayout stretchLastChild="true" backgroundColor="#3c495e">
@@ -107,7 +107,7 @@ The following example creates a `<dockLayout>` of 5 elements. The first four wra
 #### Dock multiple children to the same side
 
 The following example creates a single line of 4 elements that stretch across the entire height and width of the screen.
- 
+
 ```html
 <dockLayout stretchLastChild="true" backgroundColor="#3c495e">
   <label text="left 1" dock="left" width="40" backgroundColor="#4383b8"/>
@@ -133,7 +133,6 @@ When an element is a direct child of `<DockLayout>`, you can work with the follo
 | `dock` | `String` | Specifies which side to dock the element to.<br/>Valid values: `top`, `right`, `bottom`, or `left`.
 
 ### FlexboxLayout
-
 
 `<FlexboxLayout>` is a layout container that provides a non-exact implementation of the [CSS Flexbox layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox). This layout lets you arrange child components both horizontally and vertically.
 
@@ -222,6 +221,7 @@ The following example shows how to use:
   <label text="fourth" height="70" backgroundColor="#286290"/>
 </flexboxLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/flexbox_layout_column_reverse_space_around_align_self.svg" />
 
 #### Props
@@ -248,10 +248,9 @@ When an element is a direct child of `<FlexboxLayout>`, you can work with the fo
 
 ### GridLayout
 
+`<GridLayout>` is a layout container that lets you arrange its child elements in a table-like manner.
 
-`<GridLayout>` is a layout container that lets you arrange its child elements in a table-like manner. 
-
-The grid consists of rows, columns, and cells. A cell can span one or more rows and one or more columns. It can contain multiple child elements which can span over multiple rows and columns, and even overlap each other. 
+The grid consists of rows, columns, and cells. A cell can span one or more rows and one or more columns. It can contain multiple child elements which can span over multiple rows and columns, and even overlap each other.
 
 By default, `<GridLayout>` has one column and one row. You can add columns and rows by configuring the `columns` and the `rows` properties. In these properties, you need to set the number of columns and rows and their width and height. You set the number of columns by listing their widths, separated by a comma. You set the number of rows by listing their heights, separated by a comma.
 
@@ -260,7 +259,6 @@ You can set a fixed size for column width and row height or you can create them 
 * **An absolute number:** Indicates a fixed size.
 * **auto:** Makes the column as wide as its widest child or makes the row as tall as its tallest child.
 * **\*:** Takes as much space as available after filling all auto and fixed size columns or rows.
-
 
 #### Examples
 
@@ -276,6 +274,7 @@ The following example creates a simple 2-by-2 grid with fixed column widths and 
   <label text="1,1" row="1" col="1" backgroundColor="#4383b8"/>
 </gridLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/grid_layout.svg" />
 
 #### Grid layout with star sizing
@@ -323,14 +322,12 @@ The following example creates a complex grid with responsive design, mixed width
 ```
 <img width=320 src="/media/docs/layouts/grid_layout_complex.svg" />
 
-
 #### Props
 
 | Name | Type | Description |
 |------|------|-------------|
 `columns` | `String` | A string value representing column widths delimited with commas.<br/>Valid values: an absolute number, `auto`, or `*`.<br/>A number indicates an absolute column width. `auto` makes the column as wide as its widest child. `*` makes the column occupy all available horizontal space. The space is proportionally divided over all star-sized columns. You can set values such as `3*` and `5*` to indicate a ratio of 3:5 in sizes.
 `rows` | `String` | A string value representing row heights delimited with commas.<br/>Valid values: an absolute number, `auto`, or `*`.<br/>A number indicates an absolute row height. `auto` makes the row as tall as its tallest child. `*` makes the row occupy all available vertical space. The space is proportionally divided over all star-sized rows. You can set values such as `3*` and `5*` to indicate a ratio of 3:5 in sizes.
-
 
 #### Additional children props
 
@@ -343,9 +340,7 @@ When an element is a direct child of `<GridLayout>`, you can work with the follo
 `rowSpan` | `Number` | Specifies the number of rows which this element spans across.
 `colSpan` | `Number` | Specifies the number of columns which this element spans across.
 
-
 ### StackLayout
-
 
 `<stackLayout>` is a layout container that lets you stack the child elements vertically (default) or horizontally.
 
@@ -362,6 +357,7 @@ The following example creates a vertical stack of 3 equally-sized elements. Item
   <label text="third" height="70" backgroundColor="#1c486b"/>
 </stackLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/stack_layout_vertical.svg" />
 
 #### Horizontal stacking
@@ -393,6 +389,7 @@ The following example creates a diagonal stack of items with responsive sizes. I
          height="70" backgroundColor="#4383b8"/>
 </stackLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/stack_layout_vertical_align_children.svg" />
 
 #### Horizontal stack layout with vertically aligned children
@@ -411,6 +408,7 @@ The following example creates a diagonal stack of items with responsive sizes. I
          width="70" backgroundColor="#4383b8"/>
 </stackLayout>
 ```
+
 <img width=320 src="/media/docs/layouts/stack_layout_horizontal_align_children.svg" />
 
 #### Props
@@ -420,7 +418,6 @@ The following example creates a diagonal stack of items with responsive sizes. I
 `orientation` | `String` | Specifies the stacking direction.<br/>Valid values: `vertical` and `horizontal`.<br/>Default value: `vertical`.
 
 ### WrapLayout
-
 
 `<WrapLayout>` is a layout container that lets you position items in rows or columns, based on the `orientation` property. When the space is filled, the container automatically wraps items onto a new row or column.
 
