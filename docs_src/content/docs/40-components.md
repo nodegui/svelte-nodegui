@@ -24,7 +24,7 @@ title: Components
 |------|-------------|
 | `busyChange`| Emitted when the `busy` property is changed.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -55,7 +55,7 @@ For more information about the available gestures, see [Gestures in the official
 |------|-------------|
 | `tap` | Emitted when the button is tapped.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -96,7 +96,7 @@ See also: [TimePicker](docs#timepicker).
 |------|-------------|
 | `dateChange` | Emitted when the selected date changes.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android |	iOS |
 |---------|-----|
@@ -142,7 +142,7 @@ You can use a component as the default page for a frame, as long as it defines `
 import Home from './Home.svelte'
 ```
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -166,7 +166,7 @@ See also: [WebView](docs#webview).
 |------|------|-------------|
 | `html` | `String` | The HTML content to be shown.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -212,7 +212,7 @@ NativeScript also supports data uris that are base64 encoded
 | `stretch` | `Stretch` | (Style property) Gets or sets the way the image is resized to fill its allocated space.<br/>Valid values: `none`, `aspectFill`, `aspectFit`, or `fill`.<br/>For more information, see [Stretch](https://docs.nativescript.org/api-reference/modules/_ui_enums_.stretch).
 | `loadMode` | | Gets or sets the loading strategy for the images on the local file system.<br/>Valid values: `sync` or `async`.<br/>Default value: `async`.<br/>For more information, see [loadMode](https://docs.nativescript.org/api-reference/classes/_ui_image_.image#loadmode).
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -253,7 +253,7 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 | `text` | `String` | Gets or sets the text of the label.
 | `textWrap` | `Boolean` | Gets or sets whether the label wraps text.<br/>Default value: `false`.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -294,7 +294,7 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 |------|-------------|
 | `selectedIndexChange`| Emitted when the currently selected option (index) changes.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -345,7 +345,7 @@ function onItemTap(event) {
 |------|-------------|
 | `itemTap`| Emitted when an item in the `<listView>` is tapped. To access the index of the tapped item, use `event.index`
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -385,7 +385,7 @@ function onItemTap(event) {
 | `navigatingFrom` | Emitted before the app has navigated away from the current page.
 | `navigatingTo` | Emitted before the app has navigated to the current page.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -416,7 +416,7 @@ See also: [ActivityIndicator](docs#activityindicator).
 |------|-------------|
 | `valueChange` | Emitted when the `value` property changes.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -453,7 +453,7 @@ See also: [ActivityIndicator](docs#activityindicator).
 |------|-------------|
 | `scroll` | Emitted when a scroll event occurs.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -492,7 +492,7 @@ See also: [ActivityIndicator](docs#activityindicator).
 | `submit` | Emitted when the search input is submitted.
 | `clear` | Emitted when the current search input is cleared through the **X** button in the input area.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -556,7 +556,7 @@ As opposed to `<tabView>`:
 |------|-------------|
 | `selectedIndexChange`| Emitted when the an item on the segmented bar is tapped.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -592,7 +592,7 @@ As opposed to `<tabView>`:
 |------|-------------|
 | `valueChange`| Emitted when the value of the slider changes.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -628,7 +628,7 @@ The default state is `false` or OFF.
 |------|-------------|
 | `checkedChange`| Emitted when the switch selection changes.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -696,7 +696,7 @@ function indexChange(event) {
 |------|-------------|
 | `selectedIndexChange` | Emits an event object containing a `value` property with the index of the tapped `<tabViewItem>`.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -742,7 +742,7 @@ function indexChange(event) {
 | `focus` | Emitted when the field is in focus.
 | `blur` | Emitted when the field loses focus.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -803,7 +803,7 @@ To apply multiple styles to the text in your `<textView>`, you can use `<formatt
 | `focus`| Emitted when the container is in focus.
 | `blur`| Emitted when the container loses focus.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -846,7 +846,7 @@ See also: [DatePicker](docs#datepicker).
 |------|-------------|
 | `timeChange` | Emitted when the selected time changes.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -881,7 +881,7 @@ See also: [HtmlView](docs#htmlview).
 | `loadStarted`| Emitted when the page has started loading in the `<webView>`.
 | `loadFinished`| Emitted when the page has finished loading in the `<webView>`.
 
-#### NativeScript Reference
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
