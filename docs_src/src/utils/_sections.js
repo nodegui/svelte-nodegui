@@ -48,7 +48,7 @@ export default function (docs_path, anchor_base_url) {
 
 			renderer.code = (source, lang) => {
 				source = source.replace(/^ +/gm, match =>
-					match.split('    ').join('\t')
+					match.split('  ').join('\t')
 				);
 
 				const lines = source.split('\n');
