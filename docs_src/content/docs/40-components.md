@@ -270,10 +270,10 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
     on:selectedIndexChange="{selectedIndexChanged}" />
 ```
 
-`<listPicker>` provides two-way data binding using `v-model`.
+`<listPicker>` provides two-way data binding for selectedIndex.
 
 ```html
-<listPicker items="{listOfItems}" v-model="selectedItem" />
+<listPicker items="{listOfItems}" bind:selectedIndex={selectedItem}" />
 ```
 
 #### Props
@@ -464,10 +464,10 @@ See also: [ActivityIndicator](docs#activityindicator).
 <searchBar hint="Search hint" text="{searchPhrase}" on:textChange="{onTextChanged}" on:submit="{onSubmit}" />
 ```
 
-`<searchBar>` provides two-way data binding using `v-model`.
+`<searchBar>` provides two-way data binding for `text`.
 
 ```html
-<searchBar v-model="searchQuery" />
+<searchBar bind:text="{searchQuery}" />
 ```
 
 #### Props
@@ -517,10 +517,10 @@ As opposed to `<tabView>`:
     on:selectedIndexChange="{onSelectedIndexChange}" />
 ```
 
-`<segmentedBar>` provides two-way data binding using `v-model`.
+`<segmentedBar>` provides two-way data binding of  `selectedIndex`.
 
 ```html
-<segmentedBar items="{listOfItems}" v-model="selectedItem" />
+<segmentedBar items="{listOfItems}" bind:selectedIndex="{selectedItem}" />
 ```
 
 #### Props
@@ -553,10 +553,10 @@ As opposed to `<tabView>`:
 <slider value="80" on:valueChange="{onValueChanged}" />
 ```
 
-`<slider>` provides two-way data binding using `v-model`:
+`<slider>` provides two-way data binding of `value`:
 
 ```html
-<slider v-model="value" />
+<slider bind:value="{value}" />
 ```
 
 #### Props
@@ -591,10 +591,10 @@ The default state is `false` or OFF.
 <switch checked="{true}" />
 ```
 
-`<switch>`provides two-way data binding using `v-model`.
+`<switch>`provides two-way data binding for `checked`.
 
 ```html
-<switch v-model="itemEnabled" />
+<switch bind:checked="{itemEnabled}" />
 ```
 
 #### Props
