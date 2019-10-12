@@ -4,7 +4,7 @@ title: Introduction
 
 #### What is NativeScript?
 
- [NativeScript](https://www.nativescript.org/) is an open-source framework to develop apps on the Apple iOS and Android platforms. It is open source and can be found on [github](https://github.com/nativescript/nativescript)
+[NativeScript](https://www.nativescript.org/) is an open-source framework to develop apps on the Apple iOS and Android platforms. It is open source and can be found on [github](https://github.com/nativescript/nativescript).
 
 #### What is Svelte?
 

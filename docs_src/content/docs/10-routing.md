@@ -63,6 +63,7 @@ navigate({
 ```
 
 The value for the `frame` option can be one of the following:
+
 * the `id` of the `<frame>` component (for example: `<frame id="main-frame">`)
 * a reference to the `<frame>` (for example: `<frame bind:this="{mainFrame}">`)
 * a NativeScript `Frame` instance.
@@ -110,10 +111,10 @@ To show a page or component modally use the `showModal` function. Specify the pa
 ```html
 <!--{ filename: 'App.svelte'} -->
 <page>
-   <actionBar title="Master" />
-   <stackLayout>
-     <button text="Open Modal" on:tap="{launchModal}" />
-   </stackLayout>
+  <actionBar title="Master" />
+  <stackLayout>
+    <button text="Open Modal" on:tap="{launchModal}" />
+  </stackLayout>
 </page>
 
 <script>
@@ -129,7 +130,7 @@ To show a page or component modally use the `showModal` function. Specify the pa
 <!--{filename: "DetailPage.svelte" }-->
 <frame id="detail-page-frame">
   <page>
-
+    <label text="Detail Page" />
   </page>
 </frame>
 ```
@@ -153,6 +154,7 @@ The `closeModal` function closes the current modal view and optionally returns a
     <label text="{modalResult}" />
   </stackLayout>
 </page>
+
 <script>
   import DetailPage from './DetailPage.svelte'
   import { showModal } from 'svelte-native'
@@ -172,6 +174,7 @@ The `closeModal` function closes the current modal view and optionally returns a
     <button text="Close me" on:tap="{ () => closeModal('hi from modal') }" />
   </page>
 </frame>
+
 <script>
   import { closeModal } from 'svelte-native'
 </script>

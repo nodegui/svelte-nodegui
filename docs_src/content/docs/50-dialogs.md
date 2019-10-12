@@ -15,7 +15,7 @@ The method is part of the [`dialogs` module](https://docs.nativescript.org/api-r
 ```js
 import { action } from 'tns-core-modules/ui/dialogs'
 
-action("Your message", "Cancel button text", ["Option1", "Option2"])
+action('Your message', 'Cancel button text',  ['Option1', 'Option2'])
   .then(result => {
     console.log(result)
   })
@@ -67,8 +67,8 @@ The method is part of the [`dialogs` module](https://docs.nativescript.org/api-r
 import { confirm } from 'tns-core-modules/ui/dialogs'
 
 confirm('Your message')
-  .then(result => {
-    console.log(result)
+  .then(res => {
+    console.log(res)
   })
 ```
 
@@ -80,8 +80,8 @@ confirm({
   message: "Your message",
   okButtonText: "Your OK button text",
   cancelButtonText: "Your Cancel text"
-}).then(result => {
-  console.log(result)
+}).then(res => {
+  console.log(res)
 })
 ```
 
@@ -98,9 +98,10 @@ The method is part of the [`dialogs` module](https://docs.nativescript.org/api-r
 ```js
 import { login } from 'tns-core-modules/ui/dialogs'
 
-login("Your message", "Username field value", "Password field value").then(result => {
-  console.log(`Dialog result: ${result.result}, user: ${result.userName}, pwd: ${result.password}`)
-})
+login("Your message", "Username field value", "Password field value")
+  .then(res => {
+    console.log(`Dialog result: ${res.result}, user: ${res.userName}, pwd: ${res.password}`)
+  })
 ```
 
 #### Configure dialog options
@@ -113,8 +114,8 @@ login({
   cancelButtonText: "Your Cancel button text",
   userName: "Username field value",
   password: "Password field value"
-}).then(result => {
-  console.log(`Dialog result: ${result.result}, user: ${result.userName}, pwd: ${result.password}`)
+}).then(res => {
+  console.log(`Dialog result: ${res.result}, user: ${res.userName}, pwd: ${res.password}`)
 })
 ```
 
@@ -129,25 +130,25 @@ The method is part of the [`dialogs` module](https://docs.nativescript.org/api-r
 #### Basic use
 
 ```js
+import { prompt } from 'tns-core-modules/ui/dialogs'
+
 prompt('Your message to the user', 'Suggested user input')
-  .then(result => {
-    console.log(`Dialog result: ${result.result}, text: ${result.text}`)
+  .then(res => {
+    console.log(`Dialog result: ${res.result}, text: ${res.text}`)
   })
 ```
 
 #### Configure dialog options
 
 ```js
-import { prompt } from 'tns-core-modules/ui/dialogs'
-
 prompt({
   title: "Your dialog title",
   message: "Your message",
   okButtonText: "Your OK button text",
   cancelButtonText: "Your Cancel button text",
   defaultText: "Suggested user input",
-}).then(result => {
-  console.log(`Dialog result: ${result.result}, text: ${result.text}`)
+}).then(res => {
+  console.log(`Dialog result: ${res.result}, text: ${res.text}`)
 })
 ```
 
@@ -173,8 +174,8 @@ prompt({
   cancelButtonText: "Cancel",
   defaultText: "name@domain.com",
   inputType: inputType.email
-}).then(result => {
-  console.log(`Dialog result: ${result.result}, text: ${result.text}`)
+}).then(res => {
+  console.log(`Dialog result: ${res.result}, text: ${res.text}`)
 })
 ```
 
