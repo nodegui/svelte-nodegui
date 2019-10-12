@@ -166,11 +166,11 @@ It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multip
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_tab_navigation_bottom_navigation_.bottomnavigation">Class Docs</a></div>
 
 
-The Tabs component is an cross platform implementation of the [Tabs UI from the Material Design Guidelines](https://material.io/design/components/tabs.html#usage).It is recommended for mid level navigation.
+The Tabs component is an cross platform implementation of the [Tabs UI from the Material Design Guidelines](https://material.io/design/components/tabs.html#usage). It is recommended for mid level navigation.
 
 It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multiple TabStripItems), and multiple [`TabContentItem`](docs#tabcontentitem) children (corresponding to each TabStripItem)
 
-Unline the [`Bottom Navigation`](docs#bottom-navigation) component, The tabs component is made for tabs with a common function and supports transitions and gestures.
+Unlike the [`Bottom Navigation`](docs#bottom-navigation) component, The tabs component is made for tabs with a common function and supports transitions and gestures.
 
 
 ```html
