@@ -13,7 +13,7 @@ title: Components
 
 
 ```html
-<activityIndicator busy="{true}" on:busyChange="{{onBusyChanged}}" />
+<activityIndicator busy="{true}" on:busyChange="{onBusyChanged}" />
 ```
 
 
