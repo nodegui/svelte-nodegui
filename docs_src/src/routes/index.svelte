@@ -28,19 +28,19 @@
 
 <Blurb>
 	<a href="https://svelte.dev" slot="one">
-		<h2>Powered By Svelte</h2>
+		<h2>Powered By<br/> Svelte</h2>
 		<p>Svelte Native is an nativescript application framework powered by Svelte - Build mobile apps with Svelte components</p>
 		<span class="learn-more">learn more</span>
 	</a>
 
 	<a href="https://www.nativescript.org/about" slot="two">
-		<h2>Using NativeScript</h2>
+		<h2>Using<br/> NativeScript</h2>
 		<p>Build full featured "Native" mobile applications using languages you already know — HTML, CSS and JavaScript</p>
 		<span class="learn-more">learn more</span>
 	</a>
 
 	<a href="tutorial" slot="three">
-		<h2>Fully Featured</h2>
+		<h2>Fully<br/>Featured</h2>
 		<p>Use the full power of Svelte including Transitions, Stores, and Reactivity. One of the smoothest development experiences available for mobile</p>
 		<span class="learn-more">learn more</span>
 	</a>
