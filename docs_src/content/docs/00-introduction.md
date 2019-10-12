@@ -18,5 +18,4 @@ Svelte Native is a tool for building mobile applications. It combines NativeScri
 
 [Read the introductory blog post](/blog/svelte-goes-native).
 
-
 ![NativeScript + Svelte = Svelte Native](/logos_combined.svg)
