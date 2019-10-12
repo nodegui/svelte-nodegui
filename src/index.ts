@@ -38,4 +38,9 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any): Prom
     });
 }
 
+// Svelte looks to see if window is undefined in order to determine if it is running on the client or in SSR.
+// window is undefined until initializeDom is called. We will set it to a temporary value here and overwrite it in intializedom.
+(global as any).window = { env: "Svelte Native" }
+
+
 export { navigate, goBack, showModal, closeModal, initializeDom, DomTraceCategory } from "./dom"
