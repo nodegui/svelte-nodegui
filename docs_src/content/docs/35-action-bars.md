@@ -128,7 +128,7 @@ Extends [`<actionItem>`](docs#actionitem).
 
 | Name | Description |
 |------|-------------|
-| `tap`| Emitted when the `<NavigationButton>` is tapped.
+| `tap`| Emitted when the `<navigationButton>` is tapped.
 
 #### Native component
 
