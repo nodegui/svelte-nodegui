@@ -663,7 +663,7 @@ function indexChange(event) {
 }
 ```
 
-> **NOTE:** Currently, `<TabViewItem>` expects a single child element. In most cases, you might want to wrap your content in a _layout_.
+> **NOTE:** Currently, `<tabViewItem>` expects a single child element. In most cases, you might want to wrap your content in a _layout_.
 
 #### Adding icons to tabs
 

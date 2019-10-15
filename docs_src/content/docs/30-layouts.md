@@ -53,9 +53,9 @@ When an element is a direct child of `<absoluteLayout>`, you can work with the f
 
 ### DockLayout
 
-`<DockLayout>` is a layout container that lets you dock child elements to the sides or the center of the layout.
+`<dockLayout>` is a layout container that lets you dock child elements to the sides or the center of the layout.
 
-`<DockLayout>` has the following behavior:
+`<dockLayout>` has the following behavior:
 
 * Uses the `dock` property to dock its children to the `left`, `right`, `top`, `bottom` or center of the layout.<br/>To dock a child element to the center, it must be the **last child** of the container and you must set the `stretchLastChild` property of the parent to `true`.
 * Enforces layout constraints to its children.
@@ -128,7 +128,7 @@ The following example creates a single line of 4 elements that stretch across th
 
 #### Additional children props
 
-When an element is a direct child of `<DockLayout>`, you can work with the following additional properties.
+When an element is a direct child of `<dockLayout>`, you can work with the following additional properties.
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -136,7 +136,7 @@ When an element is a direct child of `<DockLayout>`, you can work with the follo
 
 ### FlexboxLayout
 
-`<FlexboxLayout>` is a layout container that provides a non-exact implementation of the [CSS Flexbox layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox). This layout lets you arrange child components both horizontally and vertically.
+`<flexboxLayout>` is a layout container that provides a non-exact implementation of the [CSS Flexbox layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox). This layout lets you arrange child components both horizontally and vertically.
 
 #### Examples
 
@@ -239,7 +239,7 @@ The following example shows how to use:
 
 #### Additional children props
 
-When an element is a direct child of `<FlexboxLayout>`, you can work with the following additional properties.
+When an element is a direct child of `<flexboxLayout>`, you can work with the following additional properties.
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -251,11 +251,11 @@ When an element is a direct child of `<FlexboxLayout>`, you can work with the fo
 
 ### GridLayout
 
-`<GridLayout>` is a layout container that lets you arrange its child elements in a table-like manner.
+`<gridLayout>` is a layout container that lets you arrange its child elements in a table-like manner.
 
 The grid consists of rows, columns, and cells. A cell can span one or more rows and one or more columns. It can contain multiple child elements which can span over multiple rows and columns, and even overlap each other.
 
-By default, `<GridLayout>` has one column and one row. You can add columns and rows by configuring the `columns` and the `rows` properties. In these properties, you need to set the number of columns and rows and their width and height. You set the number of columns by listing their widths, separated by a comma. You set the number of rows by listing their heights, separated by a comma.
+By default, `<gridLayout>` has one column and one row. You can add columns and rows by configuring the `columns` and the `rows` properties. In these properties, you need to set the number of columns and rows and their width and height. You set the number of columns by listing their widths, separated by a comma. You set the number of rows by listing their heights, separated by a comma.
 
 You can set a fixed size for column width and row height or you can create them in a responsive manner:
 
@@ -337,7 +337,7 @@ The following example creates a complex grid with responsive design, mixed width
 
 #### Additional children props
 
-When an element is a direct child of `<GridLayout>`, you can work with the following additional properties.
+When an element is a direct child of `<gridLayout>`, you can work with the following additional properties.
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -426,7 +426,7 @@ The following example creates a diagonal stack of items with responsive sizes. I
 
 ### WrapLayout
 
-`<WrapLayout>` is a layout container that lets you position items in rows or columns, based on the `orientation` property. When the space is filled, the container automatically wraps items onto a new row or column.
+`<wrapLayout>` is a layout container that lets you position items in rows or columns, based on the `orientation` property. When the space is filled, the container automatically wraps items onto a new row or column.
 
 #### Examples
 
