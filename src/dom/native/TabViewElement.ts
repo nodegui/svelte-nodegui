@@ -1,16 +1,16 @@
 import { ViewNode, logger as log } from "../basicdom";
 import { TabView, TabViewItem } from 'tns-core-modules/ui/tab-view'
-import NativeElementNode from "./NativeElementNode";
+import NativeViewElementNode from "./NativeViewElementNode";
 
-export default class TabViewElement extends NativeElementNode {
+export default class TabViewElement extends NativeViewElementNode<TabView> {
 
     private needs_update = false;
     constructor() {
-        super('TabView', TabView, null);
+        super('TabView', TabView);
     }
 
     doUpdate() {
-        let items = this.childNodes.filter(x => x instanceof NativeElementNode && x.nativeView instanceof TabViewItem).map(x => (x as any).nativeView as TabViewItem);
+        let items = this.childNodes.filter(x => x instanceof NativeViewElementNode && x.nativeView instanceof TabViewItem).map(x => (x as any).nativeView as TabViewItem);
         log.debug(`updating tab items. now has ${items.length} items`);
         (this.nativeView as TabView).items = items;
     }
@@ -18,7 +18,7 @@ export default class TabViewElement extends NativeElementNode {
     onInsertedChild(childNode: ViewNode, index: number) {
         try {
             //We only want to handle TabViewItem and only if it is the last item!
-            if (!(childNode instanceof NativeElementNode && childNode.nativeView instanceof TabViewItem))
+            if (!(childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabViewItem))
                 return super.onInsertedChild(childNode, index);
 
             this.needs_update = true;
@@ -38,7 +38,7 @@ export default class TabViewElement extends NativeElementNode {
     }
 
     onRemovedChild(childNode: ViewNode) {
-        if (!(childNode instanceof NativeElementNode && childNode.nativeView instanceof TabViewItem))
+        if (!(childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabViewItem))
             return super.onRemovedChild(childNode);
         console.error("Removing a TabViewItem is not supported atm see:  https://github.com/NativeScript/nativescript-angular/issues/621");
     }

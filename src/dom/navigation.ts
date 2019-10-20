@@ -1,8 +1,8 @@
-import { topmost, NavigationTransition, Frame, getFrameById, Page, BackstackEntry, ViewBase, NavigatedData } from "tns-core-modules/ui/frame";
+import { topmost, NavigationTransition, Frame, getFrameById, Page, BackstackEntry, ViewBase, NavigatedData, View } from "tns-core-modules/ui/frame";
 import FrameElement from "./native/FrameElement";
 import { createElement, logger as log } from "./basicdom";
 import PageElement from "./native/PageElement";
-import NativeElementNode from "./native/NativeElementNode";
+import NativeViewElementNode from "./native/NativeViewElementNode";
 
 export type FrameSpec = Frame | FrameElement | string
 export type PageSpec = typeof SvelteComponent;
@@ -31,12 +31,12 @@ function resolveFrame(frameSpec: FrameSpec): Frame {
     return targetFrame;
 }
 
-interface ComponentInstanceInfo { element: NativeElementNode, pageInstance: SvelteComponent }
+interface ComponentInstanceInfo { element: NativeViewElementNode<View>, pageInstance: SvelteComponent }
 
 function resolveComponentElement(pageSpec: PageSpec, props?: any): ComponentInstanceInfo {
     let dummy = createElement('fragment');
     let pageInstance = new pageSpec({ target: dummy, props: props });
-    let element = dummy.firstElement() as NativeElementNode;
+    let element = dummy.firstElement() as NativeViewElementNode<View>;
     return { element, pageInstance }
 }
 

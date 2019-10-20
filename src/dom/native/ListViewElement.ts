@@ -1,13 +1,12 @@
 import { ListView, ItemEventData, ItemsSource } from 'tns-core-modules/ui/list-view'
-import NativeElementNode from "./NativeElementNode";
 import TemplateElement from '../svelte/TemplateElement';
 import { createElement, logger as log } from '../basicdom';
+import NativeViewElementNode from './NativeViewElementNode';
+import { View } from 'tns-core-modules/ui/core/view';
 
-
-export default class ListViewElement extends NativeElementNode {
+export default class ListViewElement extends NativeViewElementNode<ListView> {
     constructor() {
-        super('listview', ListView, null);
-
+        super('listview', ListView);
         this.nativeView.on(ListView.itemLoadingEvent, (args) => { this.updateListItem(args as ItemEventData) });
     }
 
@@ -29,7 +28,7 @@ export default class ListViewElement extends NativeElementNode {
 
         if (!args.view || !(args.view as any).__SvelteComponent__) {
             log.debug(`creating view for item at ${args.index}`)
-            let wrapper = createElement('StackLayout') as NativeElementNode;
+            let wrapper = createElement('StackLayout') as NativeViewElementNode<View>;
             let componentInstance = new (this.itemTemplateComponent)({
                 target: wrapper,
                 intro: true,

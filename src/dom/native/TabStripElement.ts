@@ -1,12 +1,12 @@
 import { ViewNode, logger as log } from "../basicdom";
 import { TabStrip } from 'tns-core-modules/ui/tab-navigation-base/tab-strip';
 import { TabStripItem } from 'tns-core-modules/ui/tab-navigation-base/tab-strip-item';
-import NativeElementNode from "./NativeElementNode";
+import NativeViewElementNode from "./NativeViewElementNode";
 
-export default class TabStripElement extends NativeElementNode {
+export default class TabStripElement extends NativeViewElementNode<TabStrip> {
 
     constructor() {
-        super("TabStrip", TabStrip, null);
+        super("TabStrip", TabStrip);
     }
 
     get nativeView(): TabStrip {
@@ -19,7 +19,7 @@ export default class TabStripElement extends NativeElementNode {
 
     onInsertedChild(childNode: ViewNode, index: number) {
         try {
-            if (childNode instanceof NativeElementNode && childNode.nativeView instanceof TabStripItem) {
+            if (childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabStripItem) {
                 log.debug(`adding tab strip item ${childNode.nativeView.title}`);
                 const items = this.nativeView.items || [];
                 //    this.nativeView.items = [];
@@ -32,7 +32,7 @@ export default class TabStripElement extends NativeElementNode {
 
     onRemovedChild(childNode: ViewNode) {
         try {
-            if (childNode instanceof NativeElementNode && childNode.nativeView instanceof TabStripItem) {
+            if (childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabStripItem) {
                 log.debug(`removing tab strip item ${childNode.nativeView.title}`);
                 let items = (this.nativeView.items || []).filter(i => i != childNode.nativeView);
                 //  this.nativeView.items = [];
