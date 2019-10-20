@@ -286,10 +286,10 @@ The following example creates a grid with responsive design, where space is alot
 
 ```html
 <gridLayout columns="*, 2*" rows="2*, 3*" backgroundColor="#3c495e">
-  <Label text="0,0" row="0" col="0" backgroundColor="#4383b8"/>
-  <Label text="0,1" row="0" col="1" backgroundColor="#1c486b"/>
-  <Label text="1,0" row="1" col="0" backgroundColor="#286290"/>
-  <Label text="1,1" row="1" col="1" backgroundColor="#4383b8"/>
+  <label text="0,0" row="0" col="0" backgroundColor="#4383b8"/>
+  <label text="0,1" row="0" col="1" backgroundColor="#1c486b"/>
+  <label text="1,0" row="1" col="0" backgroundColor="#286290"/>
+  <label text="1,1" row="1" col="1" backgroundColor="#4383b8"/>
 </gridLayout>
 ```
 
