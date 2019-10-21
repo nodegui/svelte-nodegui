@@ -14,7 +14,9 @@ export default class FrameElement extends NativeElementNode {
             let dummy = createElement('fragment');
             let page = new (value as any)({ target: dummy, props: {} });
             (this.nativeView as Frame).navigate({ create: () => (dummy.firstElement() as NativeElementNode).nativeView });
+            return;
         }
+        super.setAttribute(key, value);
     }
 
     get nativeView(): Frame {
