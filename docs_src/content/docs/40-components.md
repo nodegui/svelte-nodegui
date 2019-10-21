@@ -355,7 +355,7 @@ function onItemTap(event) {
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_page_.page">Class Docs</a></div>
 
-`<page>` is a UI component that represents an application screen. NativeScript apps typically consist of one or more `<page>` that wrap content such as an [`<actionBar>`](docs#actionbar) and other UI widgets.
+`<page>` is a UI component that represents an application screen. NativeScript apps typically consist of one or more `<page>` components that wrap content such as an [`<actionBar>`](docs#actionbar) and other UI widgets.
 
 ```html
 <page>
