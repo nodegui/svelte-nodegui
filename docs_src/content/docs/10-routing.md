@@ -53,7 +53,7 @@ You can specify the props used to create the Svelte component using the `props` 
 
 #### Specifying a Frame
 
-Each `<frame>` element has its own navigation stack. If you are using multiple frames, you may want to specify in which frame the navigation will occur. For example, having a button in the side bar that changes the page in the main area. You can do this by adding the `frame` option:
+Each `<frame>` element has its own navigation stack. If you are using multiple frames, you may want to specify in which frame the navigation will occur. For example, having a button in the sidebar that changes the page in the main area. You can do this by adding the `frame` option:
 
 ```js
 navigate({

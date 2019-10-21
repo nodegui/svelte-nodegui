@@ -246,7 +246,7 @@ When an element is a direct child of `<flexboxLayout>`, you can work with the fo
 `order` | `Number` | Sets the order in which child element appear in relation to one another.
 `flexGrow` | `Number` | Indicates that the child should grow in size, if necessary. Sets how much the child will grow in proportion to the rest of the child elements in the flex container.
 `flexShrink` | `Number` | Indicates that the child should shrink when the row runs out of space. Sets how much the flex item will shrink in proportion to the rest of the child elements in the flex container. When not specified, its value is set to `1`.
-`alignSelf` | `String` | (Android-only) Overrides the `alignItems` value for the child.<br/>Valid values:<br/>`flex-start` (cross-start margin edge of the item is placed on the cross-start line),<br/>`flex-end` (cross-end margin edge of the item is placed on the cross-end line),<br/>`center` (item is centered on the cross axis),<br/>`baseline` (the item baselines are aligned), and<br/>`stretch` (items is stretched to fill the container but respects `min-width` and `max-width`).<br/>Default value: `stretch`.
+`alignSelf` | `String` | (Android-only) Overrides the `alignItems` value for the child.<br/>Valid values:<br/>`flex-start` (cross-start margin edge of the item is placed on the cross-start line),<br/>`flex-end` (cross-end margin edge of the item is placed on the cross-end line),<br/>`center` (item is centered on the cross axis),<br/>`baseline` (the item baselines are aligned), and<br/>`stretch` (item is stretched to fill the container but respects `min-width` and `max-width`).<br/>Default value: `stretch`.
 `flexWrapBefore` | `Boolean` | When `true`, forces the item to wrap onto a new line. This property is not part of the official Flexbox specification.<br/>Default value: `false`.
 
 ### GridLayout
@@ -343,8 +343,8 @@ When an element is a direct child of `<gridLayout>`, you can work with the follo
 |------|------|-------------|
 `row` | `Number` | Specifies the row for this element. Combined with a `col` property, specifies the cell coordinates of the element.<br/>The first row is indicated by `0`.
 `col` | `Number` | Specifies the column for the element. Combined with a `row` property, specifies the cell coordinates of the element.<br/>The first column is indicated by `0`.
-`rowSpan` | `Number` | Specifies the number of rows which this element spans across.
-`colSpan` | `Number` | Specifies the number of columns which this element spans across.
+`rowSpan` | `Number` | Specifies the number of rows that this element spans across.
+`colSpan` | `Number` | Specifies the number of columns that this element spans across.
 
 ### StackLayout
 
