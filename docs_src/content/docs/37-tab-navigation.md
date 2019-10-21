@@ -11,12 +11,12 @@ The TabStrip component is only valid within [`BottomNavigation`](docs#bottom-nav
 ```html
 <tabStrip>
   <tabStripItem>
-    <label text="Home"></Label>
-    <image src="font://&#xf015;" class="fas t-36"></image>
+    <label text="Home" />
+    <image src="font://&#xf015;" class="fas t-36" />
   </tabStripItem>
   <tabStripItem>
-    <label text="Account"></Label>
-    <image src="font://&#xf007;" class="fas t-36"></image>
+    <label text="Account" />
+    <image src="font://&#xf007;" class="fas t-36" />
   </tabStripItem>
 </tabStrip>
 ```
@@ -43,8 +43,8 @@ Tab strip items define the display of a tab selector within a [`TabStrip`](docs#
 ```html
 <tabStrip>
   <tabStripItem>
-    <label text="Home"></Label>
-    <image src="font://&#xf015;" class="fas t-36"></image>
+    <label text="Home" />
+    <image src="font://&#xf015;" class="fas t-36" />
   </tabStripItem>
   ...
 </tabStrip>
@@ -74,7 +74,7 @@ A `TabContentItem` contains the view to be displayed when the corresponding TabS
 ```html
 <tabContentitem>
   <stackLayout>
-    <label>Hello From This Tab</label>
+    <label text="Hello From This Tab" />
   </stackLayout>
 </tabContentItem>
 ```
@@ -101,33 +101,33 @@ It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multip
   <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
   <tabStrip>
     <tabStripItem>
-      <label text="Home"></label>
-      <image src="font://&#xf015;" class="fas t-36"></image>
+      <label text="Home" />
+      <image src="font://&#xf015;" class="fas t-36" />
     </tabStripItem>
     <tabStripItem class="special">
-      <label text="Account"></label>
-      <image src="font://&#xf007;" class="fas t-36"></image>
+      <label text="Account" />
+      <image src="font://&#xf007;" class="fas t-36" />
     </tabStripItem>
     <tabStripItem class="special">
-      <label text="Search"></label>
-      <image src="font://&#xf00e;" class="fas t-36"></image>
+      <label text="Search" />
+      <image src="font://&#xf00e;" class="fas t-36" />
     </tabStripItem>
   </tabStrip>
 
   <!-- The number of TabContentItem components should corespond to the number of TabStripItem components -->
   <tabContentItem>
     <gridLayout>
-      <label text="Home Page" class="h2 text-center"></label>
+      <label text="Home Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
   <tabContentItem>
     <gridLayout>
-      <label text="Account Page" class="h2 text-center"></label>
+      <label text="Account Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
   <tabContentItem>
     <gridLayout>
-      <label text="Search Page" class="h2 text-center"></label>
+      <label text="Search Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
 
@@ -171,33 +171,33 @@ Unlike the [`Bottom Navigation`](docs#bottom-navigation) component, The tabs com
   <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
   <tabStrip>
     <tabStripItem>
-      <label text="Home"></label>
-      <image src="font://&#xf015;" class="fas t-36"></image>
+      <label text="Home" />
+      <image src="font://&#xf015;" class="fas t-36" />
     </tabStripItem>
     <tabStripItem class="special">
-      <label text="Account"></label>
-      <image src="font://&#xf007;" class="fas t-36"></image>
+      <label text="Account" />
+      <image src="font://&#xf007;" class="fas t-36" />
     </tabStripItem>
     <tabStripItem class="special">
-      <label text="Search"></label>
-      <image src="font://&#xf00e;" class="fas t-36"></image>
+      <label text="Search" />
+      <image src="font://&#xf00e;" class="fas t-36" />
     </tabStripItem>
   </tabStrip>
 
   <!-- The number of TabContentItem components should corespond to the number of TabStripItem components -->
   <tabContentItem>
     <gridLayout>
-      <label text="Home Page" class="h2 text-center"></label>
+      <label text="Home Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
   <tabContentItem>
     <gridLayout>
-      <label text="Account Page" class="h2 text-center"></label>
+      <label text="Account Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
   <tabContentItem>
     <gridLayout>
-      <label text="Search Page" class="h2 text-center"></label>
+      <label text="Search Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
 

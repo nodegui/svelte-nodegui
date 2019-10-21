@@ -6,7 +6,7 @@ title: ActionBars
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_action_bar_.actionbar">Class Docs</a></div>
 
-`<actionBar>` is a UI component that provides a toolbar at the top of the activity window. 
+`<actionBar>` is a UI component that provides a toolbar at the top of the activity window.
 
 This component is the NativeScript abstraction for the Android [app bar](https://developer.android.com/training/appbar/) and the iOS [navigation bar](https://developer.apple.com/design/human-interface-guidelines/ios/bars/navigation-bars/).
 
@@ -128,7 +128,7 @@ Extends [`<actionItem>`](docs#actionitem).
 
 | Name | Description |
 |------|-------------|
-| `tap`| Emitted when the `<NavigationButton>` is tapped.
+| `tap`| Emitted when the `<navigationButton>` is tapped.
 
 #### Native component
 

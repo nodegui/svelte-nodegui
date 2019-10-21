@@ -24,7 +24,7 @@ title: Components
 |------|-------------|
 | `busyChange`| Emitted when the `busy` property is changed.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -55,7 +55,7 @@ For more information about the available gestures, see [Gestures in the official
 |------|-------------|
 | `tap` | Emitted when the button is tapped.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -96,7 +96,7 @@ See also: [TimePicker](docs#timepicker).
 |------|-------------|
 | `dateChange` | Emitted when the selected date changes.
 
-#### Native component
+#### Native Component Reference
 
 | Android |	iOS |
 |---------|-----|
@@ -142,7 +142,7 @@ You can use a component as the default page for a frame, as long as it defines `
 import Home from './Home.svelte'
 ```
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -166,7 +166,7 @@ See also: [WebView](docs#webview).
 |------|------|-------------|
 | `html` | `String` | The HTML content to be shown.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -212,7 +212,7 @@ NativeScript also supports data uris that are base64 encoded
 | `stretch` | `Stretch` | (Style property) Gets or sets the way the image is resized to fill its allocated space.<br/>Valid values: `none`, `aspectFill`, `aspectFit`, or `fill`.<br/>For more information, see [Stretch](https://docs.nativescript.org/api-reference/modules/_ui_enums_.stretch).
 | `loadMode` | | Gets or sets the loading strategy for the images on the local file system.<br/>Valid values: `sync` or `async`.<br/>Default value: `async`.<br/>For more information, see [loadMode](https://docs.nativescript.org/api-reference/classes/_ui_image_.image#loadmode).
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -253,7 +253,7 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 | `text` | `String` | Gets or sets the text of the label.
 | `textWrap` | `Boolean` | Gets or sets whether the label wraps text.<br/>Default value: `false`.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -267,7 +267,12 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 
 ```html
 <listPicker items="{listOfItems}" selectedIndex="0"
-    on:selectedIndexChange="{selectedIndexChanged}" />
+            on:selectedIndexChange="{selectedIndexChanged}" />
+
+<script>
+  let listOfItems = ['one', 'two', 'three']
+  const selectedIndexChanged = (e) => console.log(e.index)
+</script>
 ```
 
 `<listPicker>` provides two-way data binding for selectedIndex.
@@ -289,7 +294,7 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 |------|-------------|
 | `selectedIndexChange`| Emitted when the currently selected option (index) changes.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -308,10 +313,10 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
     <label text="{item}" />
   </Template>
 </listView>
+
 <script>
   import { Template } from 'svelte-native/components'
-  let listOfItems = ['one','two','three']
-  function onItemTap(e) { console.log(e.item) }
+  let listOfItems = ['one', 'two', 'three']
 </script>
 ```
 
@@ -320,12 +325,12 @@ If you need to style parts of the text, you can use a combination of a [`Formatt
 You can use the `itemTap` event which provides the index of the tapped item.
 
 ```js
-onItemTap(event) {
+function onItemTap(event) {
   console.log(event.index) //item index
 }
 ```
 
-> **NOTE** Unlike Svelte expressions, The listView component will not update the list items if you assign the same value to lists (eg `items.push('four'); list.items =items`). It **will** update if you assign a new list reference (eg `items = items.concat('four'); list.items = items`)
+> **IMPORTANT NOTE**: unlike Svelte expressions, The `<listView>` will **not** update the item list if you assign the same value to lists (eg `listOfItems.push('four'); listOfItems = listOfItems`). It **will** update if you assign a _new list reference_ (eg `listOfItems = listOfItems.concat('four')` or `listOfItems = [...listOfItems, 'four']`).
 
 #### Props
 
@@ -340,7 +345,7 @@ onItemTap(event) {
 |------|-------------|
 | `itemTap`| Emitted when an item in the `<listView>` is tapped. To access the index of the tapped item, use `event.index`
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -380,7 +385,7 @@ onItemTap(event) {
 | `navigatingFrom` | Emitted before the app has navigated away from the current page.
 | `navigatingTo` | Emitted before the app has navigated to the current page.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -411,7 +416,7 @@ See also: [ActivityIndicator](docs#activityindicator).
 |------|-------------|
 | `valueChange` | Emitted when the `value` property changes.
 
-#### Native Component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -448,7 +453,7 @@ See also: [ActivityIndicator](docs#activityindicator).
 |------|-------------|
 | `scroll` | Emitted when a scroll event occurs.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -461,7 +466,7 @@ See also: [ActivityIndicator](docs#activityindicator).
 `<searchBar>` is a UI component that provides a user interface for entering search queries and submitting requests to the search provider.
 
 ```html
-<searchBar hint="Search hint" text="{searchPhrase}" on:textChange="{onTextChanged}" on:submit="{onSubmit}" />
+<searchBar hint="Search hint" text="{searchQuery}" on:textChange="{onTextChanged}" on:submit="{onSubmit}" />
 ```
 
 `<searchBar>` provides two-way data binding for `text`.
@@ -487,7 +492,7 @@ See also: [ActivityIndicator](docs#activityindicator).
 | `submit` | Emitted when the search input is submitted.
 | `clear` | Emitted when the current search input is cleared through the **X** button in the input area.
 
-#### Native Component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -514,10 +519,24 @@ As opposed to `<tabView>`:
 
 ```html
 <segmentedBar items="{listOfItems}" selectedIndex="0"
-    on:selectedIndexChange="{onSelectedIndexChange}" />
+              on:selectedIndexChange="{onSelectedIndexChange}" />
 ```
 
-`<segmentedBar>` provides two-way data binding of  `selectedIndex`.
+`<segmentedBar>` can be populated with `{each}` block.
+
+```html
+<segmentedBar>
+  {#each listOfItems as item}
+    <segmentedBarItem title="{item}" />
+  {/each}
+</segmentedBar>
+
+<script>
+  let listOfItems = [ 'First', 'Second', 'Third' ];
+</script>
+```
+
+`<segmentedBar>` provides two-way data binding of `selectedIndex`.
 
 ```html
 <segmentedBar items="{listOfItems}" bind:selectedIndex="{selectedItem}" />
@@ -537,7 +556,7 @@ As opposed to `<tabView>`:
 |------|-------------|
 | `selectedIndexChange`| Emitted when the an item on the segmented bar is tapped.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -573,7 +592,7 @@ As opposed to `<tabView>`:
 |------|-------------|
 | `valueChange`| Emitted when the value of the slider changes.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -588,13 +607,13 @@ As opposed to `<tabView>`:
 The default state is `false` or OFF.
 
 ```html
-<switch checked="{true}" />
+<switch checked="{true}" on:checkedChange={onCheckedChange} />
 ```
 
 `<switch>`provides two-way data binding for `checked`.
 
 ```html
-<switch bind:checked="{itemEnabled}" />
+<switch bind:checked="{switchEnabled}" />
 ```
 
 #### Props
@@ -609,7 +628,7 @@ The default state is `false` or OFF.
 |------|-------------|
 | `checkedChange`| Emitted when the switch selection changes.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -625,23 +644,26 @@ The default state is `false` or OFF.
 
 ```html
 <tabView selectedIndex="{selectedIndex}" on:selectedIndexChange="{indexChange}">
+
   <tabViewItem title="Tab 1">
     <label text="Content for Tab 1" />
   </tabViewItem>
+
   <tabViewItem title="Tab 2">
     <label text="Content for Tab 2" />
   </tabViewItem>
+
 </tabView>
 ```
 
 ```js
-function indexChange(args) {
-  let newIndex = args.value
+function indexChange(event) {
+  let newIndex = event.value
   console.log('Current tab index: ' + newIndex)
 }
 ```
 
-> **NOTE:** Currently, `TabViewItem` expects a single child element. In most cases, you might want to wrap your content in a layout.
+> **NOTE:** Currently, `<tabViewItem>` expects a single child element. In most cases, you might want to wrap your content in a _layout_.
 
 #### Adding icons to tabs
 
@@ -674,7 +696,7 @@ function indexChange(args) {
 |------|-------------|
 | `selectedIndexChange` | Emits an event object containing a `value` property with the index of the tapped `<tabViewItem>`.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -720,7 +742,7 @@ function indexChange(args) {
 | `focus` | Emitted when the field is in focus.
 | `blur` | Emitted when the field loses focus.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -781,7 +803,7 @@ To apply multiple styles to the text in your `<textView>`, you can use `<formatt
 | `focus`| Emitted when the container is in focus.
 | `blur`| Emitted when the container loses focus.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -824,7 +846,7 @@ See also: [DatePicker](docs#datepicker).
 |------|-------------|
 | `timeChange` | Emitted when the selected time changes.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
@@ -859,7 +881,7 @@ See also: [HtmlView](docs#htmlview).
 | `loadStarted`| Emitted when the page has started loading in the `<webView>`.
 | `loadFinished`| Emitted when the page has finished loading in the `<webView>`.
 
-#### Native component
+#### Native Component Reference
 
 | Android | iOS |
 |---------|-----|
