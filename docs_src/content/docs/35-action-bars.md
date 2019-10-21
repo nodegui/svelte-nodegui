@@ -74,7 +74,7 @@ To remove this styling from your app, you can set the `flat` property to `true`.
   <actionItem on:tap="{onTapShare}"
     ios.systemIcon="9" ios.position="left"
     android.systemIcon="ic_menu_share" android.position="actionBar" />
-  <actionItem on:tap="onTapDelete"
+  <actionItem on:tap="{onTapDelete}"
     ios.systemIcon="16" ios.position="right"
     text="delete" android.position="popup" />
 </actionBar>
