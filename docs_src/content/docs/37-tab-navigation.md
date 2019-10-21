@@ -163,7 +163,7 @@ The Tabs component is a cross platform implementation of the [Tabs UI from the M
 
 It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multiple TabStripItems), and multiple [`TabContentItem`](docs#tabcontentitem) children (corresponding to each TabStripItem).
 
-Unlike the [`Bottom Navigation`](docs#bottom-navigation) component, The tabs component is made for tabs with a common function and supports transitions and gestures.
+Unlike the [`Bottom Navigation`](docs#bottom-navigation) component, the tabs component is made for tabs with a common function and supports transitions and gestures.
 
 ```html
 <tabs bind:selectedIndex={selectedTab}>
