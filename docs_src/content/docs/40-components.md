@@ -108,7 +108,7 @@ See also: [TimePicker](docs#timepicker).
 
 `<frame>` is a UI component used to display [`<page>`](docs#page) elements. Every app needs at least a single `<frame>`  element, usually set as the root element. Svelte Native creates the root frame for you.
 
-If you need to create multiple frames, you can do so by wrapping them in a Layout, for example if you want to have 2 frames side-by-side
+If you need to create multiple frames, you can do so by wrapping them in a Layout, for example if you want to have 2 frames side-by-side:
 
 ```html
 <gridLayout columns="*, *">
@@ -184,7 +184,7 @@ NativeScript aliases `~` to the app directory.
 <image src="~/logo.png" stretch="none" />
 ```
 
-Images can be loaded from external urls
+Images can be loaded from external urls.
 
 ```html
 <image src="https://svelte-native.technology/media/todoapp/todo-add-item.png" stretch="none" />
@@ -196,7 +196,7 @@ Images can also be displayed from the App_Resources folder using the `res://` sc
 <image src="res://icon" stretch="none" />
 ```
 
-NativeScript also supports data uris that are base64 encoded
+NativeScript also supports data uris that are base64 encoded.
 
 ```html
 <image src="data:Image/png;base64,iVBORw..." stretch="none" />
@@ -343,7 +343,7 @@ function onItemTap(event) {
 
 | Name | Description |
 |------|-------------|
-| `itemTap`| Emitted when an item in the `<listView>` is tapped. To access the index of the tapped item, use `event.index`
+| `itemTap`| Emitted when an item in the `<listView>` is tapped. To access the index of the tapped item, use `event.index`.
 
 #### Native Component Reference
 
@@ -768,7 +768,7 @@ function indexChange(event) {
 
 #### Displaying multi-style text
 
-To apply multiple styles to the text in your `<textView>`, you can use `<formattedString>`
+To apply multiple styles to the text in your `<textView>`, you can use `<formattedString>`.
 
 ```html
 <textView editable="{false}">
