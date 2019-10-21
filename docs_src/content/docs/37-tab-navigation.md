@@ -91,7 +91,7 @@ None
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_tab_navigation_bottom_navigation_.bottomnavigation">Class Docs</a></div>
 
-The BottomNavigation component is an cross platform implementation of the [Bottom Navigation UI from the Material Design Guidelines](https://material.io/design/components/bottom-navigation.html#usage). Ideal for use when there are 3 to 5 tabs each with their own function.
+The BottomNavigation component is a cross platform implementation of the [Bottom Navigation UI from the Material Design Guidelines](https://material.io/design/components/bottom-navigation.html#usage). Ideal for use when there are 3 to 5 tabs each with their own function.
 
 It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multiple TabStripItems), and multiple [`TabContentItem`](docs#tabcontentitem) children (corresponding to each TabStripItem)
 
@@ -159,7 +159,7 @@ It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multip
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_tab_navigation_bottom_navigation_.bottomnavigation">Class Docs</a></div>
 
-The Tabs component is an cross platform implementation of the [Tabs UI from the Material Design Guidelines](https://material.io/design/components/tabs.html#usage). It is recommended for mid level navigation.
+The Tabs component is a cross platform implementation of the [Tabs UI from the Material Design Guidelines](https://material.io/design/components/tabs.html#usage). It is recommended for mid level navigation.
 
 It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multiple TabStripItems), and multiple [`TabContentItem`](docs#tabcontentitem) children (corresponding to each TabStripItem)
 
