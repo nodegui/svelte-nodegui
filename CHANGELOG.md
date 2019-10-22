@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Renamed SvelteNativeElement to SvelteNativeViewElement and added a parent class SvelteNativeElement which handles nativescript entities not derived from View
   - Removed "meta" legacy onInsert and Remove hook container
 
+### Added
+  - support for `prop:` directive to set the value of the containing node to the nativeView of the current node e.g `<gridLayout prop:mainContent>` for sideDrawer
+
 ## [0.5.1]
   - Fix animations when using latest svelte
 

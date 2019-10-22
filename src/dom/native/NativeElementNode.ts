@@ -1,11 +1,12 @@
 
-import { logger as log } from '../basicdom'
+import { logger as log, ViewNode } from '../basicdom'
 import { isAndroid, isIOS } from 'tns-core-modules/ui/page';
 import ElementNode from '../basicdom/ElementNode';
 
 // Implements an ElementNode that wraps a NativeScript object. It uses the object as the source of truth for its attributes
 export default class NativeElementNode<T> extends ElementNode {
     _nativeElement: T;
+    propAttribute: string = null;
 
     constructor(tagName: string, elementClass: new () => T) {
         super(tagName);
@@ -57,6 +58,23 @@ export default class NativeElementNode<T> extends ElementNode {
         return null;
     }
 
+    onInsertedChild(childNode: ViewNode, index: number) {
+        super.onInsertedChild(childNode, index);
+        // support for the prop: shorthand for setting parent property to native element
+        if (!(childNode instanceof NativeElementNode)) return;
+        let propName = childNode.propAttribute;
+        if (!propName) return;
+        this.setAttribute(propName, childNode);
+    }
+
+    onRemovedChild(childNode: ViewNode) {
+        if (!(childNode instanceof NativeElementNode)) return;
+        let propName = childNode.propAttribute;
+        if (!propName) return;
+        this.setAttribute(propName, null);
+        super.onRemovedChild(childNode)
+    }
+
     setAttribute(fullkey: string, value: any) {
         const nv = this.nativeElement as any
         let setTarget = nv;
@@ -67,6 +85,11 @@ export default class NativeElementNode<T> extends ElementNode {
         }
         if (isIOS && fullkey.startsWith('ios:')) {
             fullkey = fullkey.substr(4);
+        }
+
+        if (fullkey.toLocaleLowerCase().startsWith("prop:")) {
+            this.propAttribute = fullkey.substr(5);
+            return;
         }
 
         //we might be getting an element from a propertyNode eg page.actionBar, unwrap
