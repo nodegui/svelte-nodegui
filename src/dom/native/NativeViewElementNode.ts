@@ -189,6 +189,9 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
             return
         }
 
+        //if we are a property value, then skip adding to parent
+        if (childNode.propAttribute) return;
+
         const parentView = this.nativeView
         const childView = childNode.nativeView
 
@@ -209,7 +212,8 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
             if (index >= 0) {
                 //our dom includes "textNode" and "commentNode" which does not appear in the nativeview's children. 
                 //we recalculate the index required for the insert operation by only including native view element nodes in the count
-                let nativeIndex = this.childNodes.filter(e => e instanceof NativeViewElementNode).indexOf(childNode)
+                //that aren't property setter nodes
+                let nativeIndex = this.childNodes.filter(e => e instanceof NativeViewElementNode && !e.propAttribute).indexOf(childNode)
                 parentView.insertChild(childView, nativeIndex);
             } else {
                 parentView.addChild(childView)
@@ -235,9 +239,13 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
 
     onRemovedChild(childNode: ViewNode) {
         super.onRemovedChild(childNode);
+
         if (!(childNode instanceof NativeViewElementNode)) {
             return
         }
+
+        //childnodes with propAttributes aren't added to native views
+        if (childNode.propAttribute) return;
 
         if (!this.nativeView || !childNode.nativeView) {
             return
