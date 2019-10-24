@@ -74,7 +74,7 @@ To remove this styling from your app, you can set the `flat` property to `true`.
   <actionItem on:tap="{onTapShare}"
     ios.systemIcon="9" ios.position="left"
     android.systemIcon="ic_menu_share" android.position="actionBar" />
-  <actionItem on:tap="onTapDelete"
+  <actionItem on:tap="{onTapDelete}"
     ios.systemIcon="16" ios.position="right"
     text="delete" android.position="popup" />
 </actionBar>
@@ -85,9 +85,9 @@ To remove this styling from your app, you can set the `flat` property to `true`.
 | Name | Type | Description |
 |------|------|-------------|
 | `ios.systemIcon` | `Number` | Gets or sets the icon of the `ActionItem` for iOS. The value must be a number from the [`UIBarButtonSystemItem` enumeration](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIBarButtonItem_Class/#//apple_ref/c/tdef/UIBarButtonSystemItem).
-| `android.systemIcon` | `String` | Gets or sets the icon of the `ActionItem` for Android. The value must be the name of a [drawable resource](http://androiddrawables.com).
+| `android.systemIcon` | `String` | Gets or sets the icon of the `ActionItem` for Android. The value must be the name of a [drawable resource](https://developer.android.com/reference/android/R.drawable).
 | `ios.position` | `String` | Gets or sets the position of the `ActionItem` within the `ActionBar` for iOS.<br/>Valid values: `left` or `right`.<br/>Default value is `left`.
-| `android.position` | `String` | Gets or sets the position of the `ActionItem` within the `ActionBar` for Android.<br/>Valid values:<br/>`actionBar` (places the item in the ActionBar)<br/>`popup` (places the item in the options menu; renders items as text)<br/>`actionBarIfRoom` (places the item in the `ActionBar` if there is enough room for it there; otherwise, placess it in the options menu)<br/>Default value is `actionBar`.
+| `android.position` | `String` | Gets or sets the position of the `ActionItem` within the `ActionBar` for Android.<br/>Valid values:<br/>`actionBar` (places the item in the ActionBar),<br/>`popup` (places the item in the options menu; renders items as text), and<br/>`actionBarIfRoom` (places the item in the `ActionBar` if there is enough room for it there; otherwise, places it in the options menu).<br/>Default value is `actionBar`.
 
 #### Events
 

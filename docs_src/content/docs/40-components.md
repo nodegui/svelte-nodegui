@@ -108,7 +108,7 @@ See also: [TimePicker](docs#timepicker).
 
 `<frame>` is a UI component used to display [`<page>`](docs#page) elements. Every app needs at least a single `<frame>`  element, usually set as the root element. Svelte Native creates the root frame for you.
 
-If you need to create multiple frames, you can do so by wrapping them in a Layout, for example if you want to have 2 frames side-by-side
+If you need to create multiple frames, you can do so by wrapping them in a Layout, for example if you want to have 2 frames side-by-side.
 
 ```html
 <gridLayout columns="*, *">
@@ -184,7 +184,7 @@ NativeScript aliases `~` to the app directory.
 <image src="~/logo.png" stretch="none" />
 ```
 
-Images can be loaded from external urls
+Images can be loaded from external URLs.
 
 ```html
 <image src="https://svelte-native.technology/media/todoapp/todo-add-item.png" stretch="none" />
@@ -196,7 +196,7 @@ Images can also be displayed from the App_Resources folder using the `res://` sc
 <image src="res://icon" stretch="none" />
 ```
 
-NativeScript also supports data uris that are base64 encoded
+NativeScript also supports data URIs that are base64 encoded.
 
 ```html
 <image src="data:Image/png;base64,iVBORw..." stretch="none" />
@@ -343,7 +343,7 @@ function onItemTap(event) {
 
 | Name | Description |
 |------|-------------|
-| `itemTap`| Emitted when an item in the `<listView>` is tapped. To access the index of the tapped item, use `event.index`
+| `itemTap`| Emitted when an item in the `<listView>` is tapped. To access the index of the tapped item, use `event.index`.
 
 #### Native Component Reference
 
@@ -355,7 +355,7 @@ function onItemTap(event) {
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_page_.page">Class Docs</a></div>
 
-`<page>` is a UI component that represents an application screen. NativeScript apps typically consist of one or more `<page>` that wrap content such as an [`<actionBar>`](docs#actionbar) and other UI widgets.
+`<page>` is a UI component that represents an application screen. NativeScript apps typically consist of one or more `<page>` elements that wrap content such as an [`<actionBar>`](docs#actionbar) and other UI widgets.
 
 ```html
 <page>
@@ -502,7 +502,7 @@ See also: [ActivityIndicator](docs#activityindicator).
 
 <div class="nsref"><a title="NativeScript Documentation" href="http://docs.nativescript.org/api-reference/modules/_ui_segmented_bar_.html">Class Docs</a></div>
 
-`<segmentedBar>` is a UI bar component that displays a set of buttons for discrete selection. Can show text or images.
+`<segmentedBar>` is a UI bar component that displays a set of buttons for discrete selection. It can show text or images.
 
 As opposed to `<tabView>`:
 * The position of `<segmentedBar>` is not fixed.
@@ -554,7 +554,7 @@ As opposed to `<tabView>`:
 
 | Name | Description |
 |------|-------------|
-| `selectedIndexChange`| Emitted when the an item on the segmented bar is tapped.
+| `selectedIndexChange`| Emitted when an item on the segmented bar is tapped.
 
 #### Native Component Reference
 
@@ -768,7 +768,7 @@ function indexChange(event) {
 
 #### Displaying multi-style text
 
-To apply multiple styles to the text in your `<textView>`, you can use `<formattedString>`
+To apply multiple styles to the text in your `<textView>`, you can use `<formattedString>`.
 
 ```html
 <textView editable="{false}">

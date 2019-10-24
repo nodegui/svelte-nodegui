@@ -32,7 +32,7 @@ When `Template` is rendered by svelte, it outputs a special DOM element called `
 
 Any extra properties added to the `Template` component are passed down and added to the `template` DOM element.
 
-For concrete example of this pattern see svelte native's [listView element source](https://github.com/halfnelson/svelte-native/blob/master/src/dom/native/ListViewElement.ts#L50)
+For a concrete example of this pattern see svelte native's [listView element source](https://github.com/halfnelson/svelte-native/blob/master/src/dom/native/ListViewElement.ts#L50).
 
 ### Property Element
 
