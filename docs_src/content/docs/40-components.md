@@ -714,7 +714,7 @@ function indexChange(event) {
 <textField text="{textFieldValue}" hint="Enter text..." />
 ```
 
-`<textField>` provdes two-way data binding using `bind`.
+`<textField>` provides two-way data binding using `bind`.
 
 ```html
 <textField bind:text="{textFieldValue}" />
