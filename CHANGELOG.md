@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
   - support for `prop:` directive to set the value of the containing node to the nativeView of the current node e.g `<gridLayout prop:mainContent>` for sideDrawer
+  
+## [0.5.3]
+  - Add support for itemTemplateSelector closes [#86](https://github.com/halfnelson/svelte-native/issues/86)
+
+## [0.5.2]
+  - Fix frame not found by Id [#82](https://github.com/halfnelson/svelte-native/issues/82)
 
 ## [0.5.1]
   - Fix animations when using latest svelte

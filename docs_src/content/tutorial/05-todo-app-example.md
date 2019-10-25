@@ -44,7 +44,7 @@ Remove the default `.btn` rule from `app.css` and set the contents of App.svelte
 <!--{ filename: 'App.svelte' }-->
 <page>
     <actionBar title="My Tasks" />
-    
+
     <tabs tabsPosition="bottom">
         <tabStrip>
             <tabStripItem title="To Do" />
@@ -85,7 +85,7 @@ Replace the contents of the first `<tabContentItem>` with:
 
 ```html
 <gridLayout columns="*,120" rows="70,*">
-    <!-- Configures the text field and ensures that pressing Return on the keyboard 
+    <!-- Configures the text field and ensures that pressing Return on the keyboard
         produces the same result as tapping the button. -->
     <textField col="0" row="0" bind:text="{textFieldValue}" hint="Type new task..." editable="true"
         on:returnPress="{onButtonTap}" />
@@ -103,7 +103,7 @@ and to the bottom of the file add a script tag:
 ```html
 <script>
     import { Template } from 'svelte-native/components'
-    
+
     let todos = []
     let textFieldValue = ""
 
@@ -130,7 +130,7 @@ The `<listView>` contains a `<Template>` which is a Svelte component used to ren
 
 When `onButtonTap` callback is fired, the code we added to the script element, will build a new `todos` array including the added item, and clear the text field. The `onItemTap` callback will just log which list item and index was tapped using `console.log` (which works fine in NativeScript).
 
-> **NOTE** `<ListView>` will look for the first `<Template>` component in its children. The template component acts similar to a slot and will render its content for each item. This is exposed to the content as `item` via the `let:item` on the template element.
+> **NOTE** `<listView>` will look for the first `<Template>` component in its children. The template component acts similar to a slot and will render its content for each item. This is exposed to the content as `item` via the `let:item` on the template element.
 
 #### Progress So Far
 
@@ -158,7 +158,7 @@ Then replace our `onItemTap` function with this new one:
         "Mark completed",
         "Delete forever"
     ]);
-    
+
     console.log(result); // Logs the selected option for debugging.
     let item = todos[args.index]
     switch (result) {

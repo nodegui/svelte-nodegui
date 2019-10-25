@@ -1,8 +1,34 @@
 import { ListView, ItemEventData, ItemsSource } from 'tns-core-modules/ui/list-view'
 import TemplateElement from '../svelte/TemplateElement';
-import { createElement, logger as log } from '../basicdom';
+import { createElement, logger as log, ViewNode } from '../basicdom';
 import NativeViewElementNode from './NativeViewElementNode';
 import { View } from 'tns-core-modules/ui/core/view';
+
+
+class SvelteKeyedTemplate {
+    _key: string;
+    _templateEl: TemplateElement;
+
+    constructor(key: string, templateEl: TemplateElement) {
+        this._key = key;
+        this._templateEl = templateEl;
+    }
+
+    get component() {
+        return this._templateEl.component;
+    }
+
+    get key() {
+        return this._key
+    }
+
+    createView(): View {
+        //don't return anything until we try to render
+        return null;
+    }
+}
+
+
 
 export default class ListViewElement extends NativeViewElementNode<ListView> {
     constructor() {
@@ -27,9 +53,22 @@ export default class ListViewElement extends NativeViewElementNode<ListView> {
         }
 
         if (!args.view || !(args.view as any).__SvelteComponent__) {
-            log.debug(`creating view for item at ${args.index}`)
+            let component;
+            let key: string;
+            if (typeof listView.itemTemplateSelector == "function") {
+                key = listView.itemTemplateSelector(item, args.index, items);
+            } else {
+                key = "default"
+            }
+
+            log.debug(`creating view for item at ${args.index} using template with key ${key}`)
+            if (typeof listView.itemTemplates == "object") {
+                component = listView.itemTemplates.filter(x => x.key == key).map(x => (x as SvelteKeyedTemplate).component)[0]
+            }
+
             let wrapper = createElement('StackLayout') as NativeViewElementNode<View>;
-            let componentInstance = new (this.itemTemplateComponent)({
+            let componentInstance = new component({
+
                 target: wrapper,
                 intro: true,
                 props: {
@@ -47,16 +86,25 @@ export default class ListViewElement extends NativeViewElementNode<ListView> {
         }
     }
 
-    get itemTemplateComponent(): typeof SvelteComponent {
-        const templateNode = this.childNodes.find(x => x instanceof TemplateElement) as TemplateElement
-        return templateNode ? templateNode.component : null;
+    onInsertedChild(childNode: ViewNode, index: number) {
+        super.onInsertedChild(childNode, index);
+        if (childNode instanceof TemplateElement) {
+            let key = childNode.getAttribute('key') || "default"
+            log.debug(`Adding template for key ${key}`);
+            if (!this.nativeView.itemTemplates || typeof this.nativeView.itemTemplates == "string") {
+                this.nativeView.itemTemplates = []
+            }
+            this.nativeView.itemTemplates.push(new SvelteKeyedTemplate(key, childNode))
+        }
     }
 
-    get nativeView(): ListView {
-        return super.nativeView as ListView
-    }
-
-    set nativeView(view: ListView) {
-        super.nativeView = view
+    onRemovedChild(childNode: ViewNode) {
+        super.onRemovedChild(childNode);
+        if (childNode instanceof TemplateElement) {
+            let key = childNode.getAttribute('key') || "default"
+            if (this.nativeView.itemTemplates && typeof this.nativeView.itemTemplates != "string") {
+                this.nativeView.itemTemplates = this.nativeView.itemTemplates.filter(t => t.key != key);
+            }
+        }
     }
 }

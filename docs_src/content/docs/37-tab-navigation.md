@@ -11,12 +11,12 @@ The TabStrip component is only valid within [`BottomNavigation`](docs#bottom-nav
 ```html
 <tabStrip>
   <tabStripItem>
-    <label text="Home"></Label>
-    <image src="font://&#xf015;" class="fas t-36"></image>
+    <label text="Home" />
+    <image src="font://&#xf015;" class="fas t-36" />
   </tabStripItem>
   <tabStripItem>
-    <label text="Account"></Label>
-    <image src="font://&#xf007;" class="fas t-36"></image>
+    <label text="Account" />
+    <image src="font://&#xf007;" class="fas t-36" />
   </tabStripItem>
 </tabStrip>
 ```
@@ -26,7 +26,7 @@ The TabStrip component is only valid within [`BottomNavigation`](docs#bottom-nav
 | Name | Type | Description |
 |------|------|-------------|
 | `iosIconRenderingMode` |  `"automatic", "alwaysOriginal", "alwaysTemplate"` |     Gets or sets the icon rendering mode on iOS.
-| `isIconSizeFixed` |   `Boolean` |     When set to true the icon will have fixed size following the platform-specific design guidelines. Default value: true.
+| `isIconSizeFixed` |   `Boolean` |     When set to true the icon will have fixed size following the platform-specific design guidelines. Default value: `true`.
 
 #### Events
 
@@ -43,8 +43,8 @@ Tab strip items define the display of a tab selector within a [`TabStrip`](docs#
 ```html
 <tabStrip>
   <tabStripItem>
-    <label text="Home"></Label>
-    <image src="font://&#xf015;" class="fas t-36"></image>
+    <label text="Home" />
+    <image src="font://&#xf015;" class="fas t-36" />
   </tabStripItem>
   ...
 </tabStrip>
@@ -55,7 +55,7 @@ Tab strip items define the display of a tab selector within a [`TabStrip`](docs#
 | Name | Type | Description |
 |------|------|-------------|
 | `title` | `string` | Gets or sets the title of the tab strip entry.
-| `iconSource` | `string` | Gets or sets the icon source of the tab strip entry. Supports local image paths (~), resource images (res://) and icon fonts (font://)
+| `iconSource` | `string` | Gets or sets the icon source of the tab strip entry. Supports local image paths (~), resource images (res://) and icon fonts (font://).
 
 #### Events
 
@@ -74,7 +74,7 @@ A `TabContentItem` contains the view to be displayed when the corresponding TabS
 ```html
 <tabContentitem>
   <stackLayout>
-    <label>Hello From This Tab</label>
+    <label text="Hello From This Tab" />
   </stackLayout>
 </tabContentItem>
 ```
@@ -91,9 +91,9 @@ None
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_tab_navigation_bottom_navigation_.bottomnavigation">Class Docs</a></div>
 
-The BottomNavigation component is an cross platform implementation of the [Bottom Navigation UI from the Material Design Guidelines](https://material.io/design/components/bottom-navigation.html#usage). Ideal for use when there are 3 to 5 tabs each with their own function.
+The BottomNavigation component is a cross-platform implementation of the [Bottom Navigation UI from the Material Design Guidelines](https://material.io/design/components/bottom-navigation.html#usage). Ideal for use when there are 3 to 5 tabs each with their own function.
 
-It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multiple TabStripItems), and multiple [`TabContentItem`](docs#tabcontentitem) children (corresponding to each TabStripItem)
+It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multiple TabStripItems), and multiple [`TabContentItem`](docs#tabcontentitem) children (corresponding to each TabStripItem).
 
 ```html
 <bottomNavigation bind:selectedIndex={selectedTab}>
@@ -101,33 +101,33 @@ It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multip
   <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
   <tabStrip>
     <tabStripItem>
-      <label text="Home"></label>
-      <image src="font://&#xf015;" class="fas t-36"></image>
+      <label text="Home" />
+      <image src="font://&#xf015;" class="fas t-36" />
     </tabStripItem>
     <tabStripItem class="special">
-      <label text="Account"></label>
-      <image src="font://&#xf007;" class="fas t-36"></image>
+      <label text="Account" />
+      <image src="font://&#xf007;" class="fas t-36" />
     </tabStripItem>
     <tabStripItem class="special">
-      <label text="Search"></label>
-      <image src="font://&#xf00e;" class="fas t-36"></image>
+      <label text="Search" />
+      <image src="font://&#xf00e;" class="fas t-36" />
     </tabStripItem>
   </tabStrip>
 
   <!-- The number of TabContentItem components should corespond to the number of TabStripItem components -->
   <tabContentItem>
     <gridLayout>
-      <label text="Home Page" class="h2 text-center"></label>
+      <label text="Home Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
   <tabContentItem>
     <gridLayout>
-      <label text="Account Page" class="h2 text-center"></label>
+      <label text="Account Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
   <tabContentItem>
     <gridLayout>
-      <label text="Search Page" class="h2 text-center"></label>
+      <label text="Search Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
 
@@ -147,7 +147,7 @@ It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multip
 | `selectedIndexChanged` | Emitted when the selectedIndex property is changed.
 | `loaded` | Emitted when the view is loaded.
 | `unloaded` | Emitted when the view is unloaded.
-| `layoutChanged` | Emitted when the layout bounds of a view changes due to layout processing.
+| `layoutChanged` | Emitted when the layout bounds of a view change due to layout processing.
 
 #### Native component
 
@@ -159,11 +159,11 @@ It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multip
 
 <div class="nsref"><a title="NativeScript Documentation" href="https://docs.nativescript.org/api-reference/classes/_ui_tab_navigation_bottom_navigation_.bottomnavigation">Class Docs</a></div>
 
-The Tabs component is an cross platform implementation of the [Tabs UI from the Material Design Guidelines](https://material.io/design/components/tabs.html#usage). It is recommended for mid level navigation.
+The Tabs component is a cross-platform implementation of the [Tabs UI from the Material Design Guidelines](https://material.io/design/components/tabs.html#usage). It is recommended for mid level navigation.
 
-It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multiple TabStripItems), and multiple [`TabContentItem`](docs#tabcontentitem) children (corresponding to each TabStripItem)
+It can contain a single [`TabStrip`](docs#tabstrip) child (which contains multiple TabStripItems), and multiple [`TabContentItem`](docs#tabcontentitem) children (corresponding to each TabStripItem).
 
-Unlike the [`Bottom Navigation`](docs#bottom-navigation) component, The tabs component is made for tabs with a common function and supports transitions and gestures.
+Unlike the [`Bottom Navigation`](docs#bottom-navigation) component, the tabs component is made for tabs with a common function and supports transitions and gestures.
 
 ```html
 <tabs bind:selectedIndex={selectedTab}>
@@ -171,33 +171,33 @@ Unlike the [`Bottom Navigation`](docs#bottom-navigation) component, The tabs com
   <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
   <tabStrip>
     <tabStripItem>
-      <label text="Home"></label>
-      <image src="font://&#xf015;" class="fas t-36"></image>
+      <label text="Home" />
+      <image src="font://&#xf015;" class="fas t-36" />
     </tabStripItem>
     <tabStripItem class="special">
-      <label text="Account"></label>
-      <image src="font://&#xf007;" class="fas t-36"></image>
+      <label text="Account" />
+      <image src="font://&#xf007;" class="fas t-36" />
     </tabStripItem>
     <tabStripItem class="special">
-      <label text="Search"></label>
-      <image src="font://&#xf00e;" class="fas t-36"></image>
+      <label text="Search" />
+      <image src="font://&#xf00e;" class="fas t-36" />
     </tabStripItem>
   </tabStrip>
 
   <!-- The number of TabContentItem components should corespond to the number of TabStripItem components -->
   <tabContentItem>
     <gridLayout>
-      <label text="Home Page" class="h2 text-center"></label>
+      <label text="Home Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
   <tabContentItem>
     <gridLayout>
-      <label text="Account Page" class="h2 text-center"></label>
+      <label text="Account Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
   <tabContentItem>
     <gridLayout>
-      <label text="Search Page" class="h2 text-center"></label>
+      <label text="Search Page" class="h2 text-center" />
     </gridLayout>
   </tabContentItem>
 
@@ -209,7 +209,7 @@ Unlike the [`Bottom Navigation`](docs#bottom-navigation) component, The tabs com
 | Name | Type | Description |
 |------|------|-------------|
 | `selectedIndex` | `number` | Gets or sets the selectedIndex of the BottomNavigation.
-| `tabsPosition` | `"top", "bottom"` | Gets or sets the position state of the Tabs. Default value: top
+| `tabsPosition` | `"top", "bottom"` | Gets or sets the position state of the Tabs. Default value: `top`.
 
 #### Events
 
@@ -218,7 +218,7 @@ Unlike the [`Bottom Navigation`](docs#bottom-navigation) component, The tabs com
 | `selectedIndexChanged` | Emitted when the selectedIndex property is changed.
 | `loaded` | Emitted when the view is loaded.
 | `unloaded` | Emitted when the view is unloaded.
-| `layoutChanged` | Emitted when the layout bounds of a view changes due to layout processing.
+| `layoutChanged` | Emitted when the layout bounds of a view change due to layout processing.
 
 #### Native component
 

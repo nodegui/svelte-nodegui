@@ -12,7 +12,7 @@ Svelte-Native works on top of NativeScript. To install NativeScript:
 $ npm install -g nativescript
 ```
 
-Check it worked by running `tns`
+Check it worked by running `tns`:
 
 ![Success](/media/tns-success.png)
 
@@ -25,13 +25,13 @@ Svelte-Native really is native, so it needs a mobile device to run. The build se
 
 #### Create a new Svelte-Native app
 
-The easiest way to get started is to use the [latest template app](https://github.com/halfnelson/svelte-native-template)
+The easiest way to get started is to use the [latest template app](https://github.com/halfnelson/svelte-native-template):
 
 ```bash
 $ degit halfnelson/svelte-native-template myapp
 ```
 
-A fresh svelte-native app will be found in the `myapp` folder
+A fresh svelte-native app will be found in the `myapp` folder.
 
 #### Launch It
 
@@ -42,15 +42,15 @@ $ cd myapp
 $ tns preview
 ```
 
-You will need to scan the ascii art QR code using the "Playground" app you installed previously.
+You will need to scan the QR Code using the "Playground" app you installed previously.
 
 <img src="/media/quick-start-screenshot.png" width=200 alt="Running App" >
 
 ### Advanced Install
 
-To compile your apps for distribution, you will need to setup your system for local compilation.
+To compile your apps for distribution, you will need to set up your system for local compilation.
 
-Svelte-Native runs on top of an unmodified NativeScript platform. Installation instructions for your operating system can be found in the [Native Script Guide](https://docs.nativescript.org/start/quick-setup)
+Svelte-Native runs on top of an unmodified NativeScript platform. Installation instructions for your operating system can be found in the [Native Script Guide](https://docs.nativescript.org/start/quick-setup).
 
 Check you have the NativeScript build environment configured correctly by using the Nativescript doctor command:
 
@@ -69,4 +69,3 @@ or
 ```bash
 $ tns run ios
 ```
-

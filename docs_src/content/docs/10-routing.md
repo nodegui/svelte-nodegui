@@ -2,7 +2,7 @@
 title: Navigation/Routing
 ---
 
-Since Svelte Native is a thin bridge between Svelte and NativeScript. It is best if you familiarize yourself with the core concept of [routing in NativeScript](https://docs.nativescript.org/core-concepts/navigation)
+Since Svelte Native is a thin bridge between Svelte and NativeScript. It is best if you familiarize yourself with the core concept of [routing in NativeScript](https://docs.nativescript.org/core-concepts/navigation).
 
 Routing in Svelte Native is designed to be very similar and the `svelte-native` module exposes the following functions:
 
@@ -53,7 +53,7 @@ You can specify the props used to create the Svelte component using the `props` 
 
 #### Specifying a Frame
 
-Each `<frame>` element has its own navigation stack. If you are using multiple frames, you may want to specify in which frame the navigation will occur. For example, having a button in the side bar that changes the page in the main area. You can do this by adding the `frame` option:
+Each `<frame>` element has its own navigation stack. If you are using multiple frames, you may want to specify in which frame the navigation will occur. For example, having a button in the sidebar that changes the page in the main area. You can do this by adding the `frame` option:
 
 ```js
 navigate({
@@ -63,6 +63,7 @@ navigate({
 ```
 
 The value for the `frame` option can be one of the following:
+
 * the `id` of the `<frame>` component (for example: `<frame id="main-frame">`)
 * a reference to the `<frame>` (for example: `<frame bind:this="{mainFrame}">`)
 * a NativeScript `Frame` instance.
@@ -105,15 +106,15 @@ goBack({ to: options_page_ref })
 
 ### showModal
 
-To show a page or component modally use the `showModal` function. Specify the page to open using the `page` option and props using the `props` option (just like in [navigate](#navigate))
+To show a page or component modally use the `showModal` function. Specify the page to open using the `page` option and props using the `props` option (just like in [navigate](#navigate)).
 
 ```html
 <!--{ filename: 'App.svelte'} -->
 <page>
-   <actionBar title="Master" />
-   <stackLayout>
-     <button text="Open Modal" on:tap="{launchModal}" />
-   </stackLayout>
+  <actionBar title="Master" />
+  <stackLayout>
+    <button text="Open Modal" on:tap="{launchModal}" />
+  </stackLayout>
 </page>
 
 <script>
@@ -129,14 +130,14 @@ To show a page or component modally use the `showModal` function. Specify the pa
 <!--{filename: "DetailPage.svelte" }-->
 <frame id="detail-page-frame">
   <page>
-
+    <label text="Detail Page" />
   </page>
 </frame>
 ```
 
 The other options available correspond directly to those in [ShowModalOptions](https://docs.nativescript.org/api-reference/interfaces/_ui_core_view_base_.showmodaloptions) and are passed through to the underlying NativeScript showModal method.
 
-The `showModal` function returns a promise which resolves to whatever is passed to `closeModal`
+The `showModal` function returns a promise which resolves to whatever is passed to `closeModal`.
 
 > **NOTE** The modal is opened in a new navigation context. If you want to allow navigation within the modal, or show an action bar, you will need to wrap the target page in a `frame` element. If you don't need any navigation within the modal then this won't be necessary.
 
@@ -153,6 +154,7 @@ The `closeModal` function closes the current modal view and optionally returns a
     <label text="{modalResult}" />
   </stackLayout>
 </page>
+
 <script>
   import DetailPage from './DetailPage.svelte'
   import { showModal } from 'svelte-native'
@@ -172,6 +174,7 @@ The `closeModal` function closes the current modal view and optionally returns a
     <button text="Close me" on:tap="{ () => closeModal('hi from modal') }" />
   </page>
 </frame>
+
 <script>
   import { closeModal } from 'svelte-native'
 </script>

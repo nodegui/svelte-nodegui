@@ -31,13 +31,13 @@ Svelte-Native really is native, so it needs a mobile device to run. The build se
 
 ## Create a new Svelte-Native app
 
-The easiest way to get started is to use the [latest template app](https://github.com/halfnelson/svelte-native-template)
+The easiest way to get started is to use the [latest template app](https://github.com/halfnelson/svelte-native-template):
 
 ```bash
 $ npx degit halfnelson/svelte-native-template myapp
 ```
 
-A fresh svelte-native app will be found in the `myapp` folder
+A fresh svelte-native app will be found in the `myapp` folder.
 
 ## Launch It
 
