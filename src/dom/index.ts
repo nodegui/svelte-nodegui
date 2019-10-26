@@ -6,12 +6,20 @@ import { write, messageType } from 'tns-core-modules/trace'
 import { logger, LogLevel } from './basicdom'
 import { View } from 'tns-core-modules/ui/core/view'
 
-export { default as FrameElement } from "./native/FrameElement"
+export { default as HeadElement } from './svelte/HeadElement'
+export { default as TemplateElement } from './svelte/TemplateElement'
 export { default as SvelteNativeDocument } from './svelte/SvelteNativeDocument'
+export { default as StyleElement } from './svelte/StyleElement'
+
 export { default as NativeElementNode } from './native/NativeElementNode'
 export { default as NativeViewElementNode } from './native/NativeViewElementNode'
+export { default as FrameElement } from "./native/FrameElement"
 export { default as TabsElement } from './native/TabsElement'
 export { default as TabStripElement } from './native/TabStripElement'
+export { default as PageElement } from './native/PageElement'
+export { default as ListViewElement, SvelteKeyedTemplate } from './native/ListViewElement'
+export { default as BottomNavigationElement } from './native/BottomNavigationElement'
+
 export { registerElement, createElement, ViewNode, ElementNode, logger, LogLevel } from './basicdom'
 export { navigate, goBack, showModal, closeModal, ShowModalOptions, NavigationOptions, BackNavigationOptions } from './navigation'
 
