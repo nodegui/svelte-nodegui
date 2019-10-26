@@ -26,7 +26,9 @@ export class SvelteKeyedTemplate {
         //create a proxy element to eventually contain our item (once we have one to render)
         //TODO is StackLayout the best choice here? maybe https://github.com/NativeScript/NativeScript/blob/master/nativescript-core/ui/proxy-view-container/proxy-view-container.ts
         log.debug(`creating view for key ${this.key}`)
-        let wrapper = createElement('ProxyViewContainer') as NativeViewElementNode<View>;
+        let wrapper = createElement('StackLayout') as NativeViewElementNode<View>;
+        wrapper.setStyle("padding", 0)
+        wrapper.setStyle("margin", 0)
         let nativeEl = wrapper.nativeView;
         (nativeEl as any).__SvelteComponentBuilder__ = (props: any) => {
             let instance = new this.component({
