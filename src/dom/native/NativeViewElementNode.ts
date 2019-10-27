@@ -23,8 +23,8 @@ export type EventListener = (args: any) => void;
 export default class NativeViewElementNode<T extends View> extends NativeElementNode<T> {
     style: IStyleProxy;
 
-    constructor(tagName: string, viewClass: new () => T, propConfig: NativeElementPropConfig = {}) {
-        super(tagName, viewClass, propConfig)
+    constructor(tagName: string, viewClass: new () => T, setsParentProp: string = null, propConfig: NativeElementPropConfig = {}) {
+        super(tagName, viewClass, setsParentProp, propConfig)
 
         let setStyleAttribute = (value: string): void => {
             this.setAttribute('style', value);

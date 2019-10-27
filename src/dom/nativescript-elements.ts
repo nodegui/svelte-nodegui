@@ -6,28 +6,26 @@ import ListViewElement from './native/ListViewElement';
 import TabViewElement from './native/TabViewElement';
 import BottomNavigationElement from './native/BottomNavigationElement';
 import TabsElement from './native/TabsElement';
-import TabStripElement from './native/TabStripElement';
 import NativeViewElementNode from './native/NativeViewElementNode';
+import { NativeElementPropConfig, NativeElementPropType } from './native/NativeElementNode';
+import ActionBarElement from './native/ActionBarElement';
 
-export function registerNativeViewElement<T extends View>(elementName: string, resolver: () => new () => T) {
-  registerElement(elementName, () => new NativeViewElementNode(elementName, resolver()));
+export function registerNativeViewElement<T extends View>(elementName: string, resolver: () => new () => T, parentProp: string = null, propConfig: NativeElementPropConfig = {}) {
+  registerElement(elementName, () => new NativeViewElementNode(elementName, resolver(), parentProp, propConfig));
 }
 
 
 export function registerNativeElements() {
   registerNativeViewElement(
-    'ActionBar',
-    () => require('tns-core-modules/ui/action-bar').ActionBar
-  )
-
-  registerNativeViewElement(
     'ActionItem',
-    () => require('tns-core-modules/ui/action-bar').ActionItem
+    () => require('tns-core-modules/ui/action-bar').ActionItem,
+    'actionItems'
   )
 
   registerNativeViewElement(
     'NavigationButton',
-    () => require('tns-core-modules/ui/action-bar').NavigationButton
+    () => require('tns-core-modules/ui/action-bar').NavigationButton,
+    'navigationButton'
   )
 
 
@@ -105,10 +103,13 @@ export function registerNativeElements() {
   registerNativeViewElement(
     'SegmentedBar',
     () => require('tns-core-modules/ui/segmented-bar').SegmentedBar,
+    null,
+    { "items": NativeElementPropType.Array }
   )
   registerNativeViewElement(
     'SegmentedBarItem',
-    () => require('tns-core-modules/ui/segmented-bar').SegmentedBarItem
+    () => require('tns-core-modules/ui/segmented-bar').SegmentedBarItem,
+    "items"
   )
   registerNativeViewElement('Slider', () => require('tns-core-modules/ui/slider').Slider)
   registerNativeViewElement(
@@ -150,7 +151,7 @@ export function registerNativeElements() {
   )
   registerNativeViewElement('Span', () => require('tns-core-modules/text/span').Span)
 
-
+  registerElement('ActionBar', () => new ActionBarElement())
   registerElement('Frame', () => new FrameElement())
   registerElement('Page', () => new PageElement())
   registerElement('ListView', () => new ListViewElement())
@@ -158,8 +159,8 @@ export function registerNativeElements() {
 
   registerElement('BottomNavigation', () => new BottomNavigationElement())
   registerElement('Tabs', () => new TabsElement())
-  registerElement('TabStrip', () => new TabStripElement())
-  registerNativeViewElement('TabStripItem', () => require('tns-core-modules/ui/tab-navigation-base/tab-strip-item').TabStripItem);
+  registerNativeViewElement('TabStrip', () => require('tns-core-modules/ui/tab-navigation-base/tab-strip').TabStrip, "tabStrip", { "items": NativeElementPropType.Array });
+  registerNativeViewElement('TabStripItem', () => require('tns-core-modules/ui/tab-navigation-base/tab-strip-item').TabStripItem, "items");
   registerNativeViewElement('TabContentItem', () => require('tns-core-modules/ui/tab-navigation-base/tab-content-item').TabContentItem);
 
 }

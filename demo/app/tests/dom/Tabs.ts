@@ -1,6 +1,7 @@
-import { createElement, TabsElement, TabStripElement } from 'svelte-native/dom'
+import { createElement, TabsElement, NativeViewElementNode } from 'svelte-native/dom'
 import { tick } from 'svelte';
 import TabsHarness from './TabsHarness.svelte'
+import { TabStrip } from 'tns-core-modules/ui/tab-navigation-base/tab-strip'
 
 
 describe('Tabs', function () {
@@ -41,7 +42,7 @@ describe('Tabs', function () {
 });
 
 describe('TabStrip', function () {
-    let test_subject: TabStripElement;
+    let test_subject: NativeViewElementNode<TabStrip>;
     let harness: TabsHarness;
     before(async function () {
         let el = createElement('fragment');

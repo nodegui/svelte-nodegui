@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
   - support for `prop:` directive to set the value of the containing node to the nativeView of the current node e.g `<gridLayout prop:mainContent>` for sideDrawer
   - Added a parameter to NativeElementNode that configures the prop: behaviour and defines the correct casing of any property
+  - Added a parameter `setsParentProp` to NativeElementNode that specifies a property on the perent node to set to constructed element when inserted.
 
 ### Changes
   - Refactored property name normalization to cache based on object prototype so we aren't walking all defined properties every time we get or set.

@@ -72,9 +72,10 @@ export default class NativeElementNode<T> extends ElementNode {
     propConfig: NativeElementPropConfig;
     _normalizedKeys: Map<string, string>;
 
-    constructor(tagName: string, elementClass: new () => T, propConfig: NativeElementPropConfig = {}) {
+    constructor(tagName: string, elementClass: new () => T, setsParentProp: string = null, propConfig: NativeElementPropConfig = {}) {
         super(tagName);
         this.propConfig = propConfig
+        this.propAttribute = setsParentProp
         this._nativeElement = new elementClass();
         this._normalizedKeys = getNormalizedKeysForObject(this._nativeElement, Object.keys(this.propConfig));
 

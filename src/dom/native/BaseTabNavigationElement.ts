@@ -10,21 +10,8 @@ export default class BaseTabNavigationElement extends NativeViewElementNode<TabN
         super(tagName, viewClass);
     }
 
-    get nativeView(): TabNavigationBase {
-        return super.nativeView as TabNavigationBase
-    }
-
-    set nativeView(view: TabNavigationBase) {
-        super.nativeView = view
-    }
-
     onInsertedChild(childNode: ViewNode, index: number) {
         try {
-            if (childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabStrip) {
-                log.debug(`adding tab strip to nav`);
-                this.nativeView.tabStrip = childNode.nativeView;
-            }
-
             if (childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabContentItem) {
                 log.debug(`adding tab content to nav`);
                 let item = childNode.nativeView;
@@ -34,29 +21,27 @@ export default class BaseTabNavigationElement extends NativeViewElementNode<TabN
                     this.nativeView.items = []
                     this.nativeView.items = items;
                 });
+                return;
             }
         } catch (e) {
             console.error(e);
         }
-
+        super.onInsertedChild(childNode, index);
     }
 
     onRemovedChild(childNode: ViewNode) {
         try {
-            if (childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabStrip) {
-                log.debug(`removing tab strip from nav`);
-                this.nativeView.tabStrip = null;
-            }
-
             if (childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabContentItem) {
                 log.debug(`removing content item from nav`);
                 let items = (this.nativeView.items || []).filter(i => i != childNode.nativeView);
                 this.nativeView.items = [];
                 this.nativeView.items = items;
+                return;
             }
         } catch (e) {
             console.error(e);
         }
+        super.onRemovedChild(childNode);
     }
 
 }
