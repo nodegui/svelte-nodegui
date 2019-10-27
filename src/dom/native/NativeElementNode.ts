@@ -3,7 +3,6 @@ import { logger as log, ViewNode } from '../basicdom'
 import { isAndroid, isIOS } from 'tns-core-modules/ui/page';
 import ElementNode from '../basicdom/ElementNode';
 import { ObservableArray } from 'tns-core-modules/data/observable-array/observable-array';
-import { NativeViewElementNode } from '..';
 
 export enum NativeElementPropType {
     Value,

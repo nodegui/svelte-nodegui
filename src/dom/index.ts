@@ -11,7 +11,7 @@ export { default as TemplateElement } from './svelte/TemplateElement'
 export { default as SvelteNativeDocument } from './svelte/SvelteNativeDocument'
 export { default as StyleElement } from './svelte/StyleElement'
 
-export { default as NativeElementNode } from './native/NativeElementNode'
+export { default as NativeElementNode, NativeElementPropConfig, NativeElementPropType } from './native/NativeElementNode'
 export { default as NativeViewElementNode } from './native/NativeViewElementNode'
 export { default as FrameElement } from "./native/FrameElement"
 export { default as TabsElement } from './native/TabsElement'
