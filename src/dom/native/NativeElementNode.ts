@@ -37,7 +37,7 @@ const _normalizedKeys: Map<any, Map<string, string>> = new Map();
 function getNormalizedKeysForObject(obj: any, knownPropNames: string[]): Map<string, string> {
     let proto = Object.getPrototypeOf(obj);
     let m = _normalizedKeys.get(proto);
-    if (m) return;
+    if (m) return m;
 
     //calculate our prop names
     let props = new Map<string, string>();
@@ -134,10 +134,10 @@ export default class NativeElementNode<T> extends ElementNode {
         propName = this._normalizedKeys.get(propName) || propName
         switch (this.propConfig[propName]) {
             case NativeElementPropType.Array:
-                setOnArrayProp(this.nativeElement, childNode, propName)
+                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName)
                 return;
             case NativeElementPropType.ObservableArray:
-                setOnArrayProp(this.nativeElement, childNode, propName, (v) => new ObservableArray(v))
+                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, (v) => new ObservableArray(v))
                 return;
             default:
                 this.setAttribute(propName, childNode);
