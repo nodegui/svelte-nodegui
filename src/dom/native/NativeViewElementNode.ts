@@ -4,7 +4,7 @@ import { KeyframeAnimation } from 'tns-core-modules/ui/animation/keyframe-animat
 import { CssAnimationParser } from 'tns-core-modules/ui/styling/css-animation-parser';
 import { Page, View, EventData, ContentView } from 'tns-core-modules/ui/page';
 import { LayoutBase } from 'tns-core-modules/ui/layouts/layout-base';
-import NativeElementNode from './NativeElementNode';
+import NativeElementNode, { NativeElementPropConfig } from './NativeElementNode';
 
 interface IStyleProxy {
     setProperty(propertyName: string, value: string, priority?: string): void;
@@ -23,8 +23,8 @@ export type EventListener = (args: any) => void;
 export default class NativeViewElementNode<T extends View> extends NativeElementNode<T> {
     style: IStyleProxy;
 
-    constructor(tagName: string, viewClass: new () => T) {
-        super(tagName, viewClass)
+    constructor(tagName: string, viewClass: new () => T, propConfig: NativeElementPropConfig = {}) {
+        super(tagName, viewClass, propConfig)
 
         let setStyleAttribute = (value: string): void => {
             this.setAttribute('style', value);
