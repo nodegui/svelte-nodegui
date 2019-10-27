@@ -3,13 +3,26 @@ import { logger as log, ViewNode } from '../basicdom'
 import { isAndroid, isIOS } from 'tns-core-modules/ui/page';
 import ElementNode from '../basicdom/ElementNode';
 
+export enum NativeElementPropType {
+    Value,
+    Array,
+    ObservableArray
+}
+
+export interface NativeElementPropConfig {
+    [key: string]: NativeElementPropType
+}
+
+
 // Implements an ElementNode that wraps a NativeScript object. It uses the object as the source of truth for its attributes
 export default class NativeElementNode<T> extends ElementNode {
     _nativeElement: T;
     propAttribute: string = null;
+    propConfig: NativeElementPropConfig;
 
-    constructor(tagName: string, elementClass: new () => T) {
+    constructor(tagName: string, elementClass: new () => T, propConfig: NativeElementPropConfig = {}) {
         super(tagName);
+        this.propConfig = propConfig
         this._nativeElement = new elementClass();
         (this._nativeElement as any).__SvelteNativeElement__ = this;
         log.debug(`created ${this} ${this._nativeElement}`)
@@ -40,6 +53,14 @@ export default class NativeElementNode<T> extends ElementNode {
 
             // try to fix case
             let lowerkey = key.toLowerCase();
+            if (resolvedKeys.length == 0) {
+                for (let realKey in this.propConfig) {
+                    if (lowerkey == realKey.toLowerCase()) {
+                        key = realKey;
+                        break;
+                    }
+                }
+            }
             for (let realKey in getTarget) {
                 if (lowerkey == realKey.toLowerCase()) {
                     key = realKey;
