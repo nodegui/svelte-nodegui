@@ -1,5 +1,5 @@
 
-import { logger as log, ViewNode } from '../basicdom'
+import { logger as log, ViewNode, registerElement } from '../basicdom'
 import { isAndroid, isIOS } from 'tns-core-modules/ui/page';
 import ElementNode from '../basicdom/ElementNode';
 import { ObservableArray } from 'tns-core-modules/data/observable-array/observable-array';
@@ -13,6 +13,9 @@ export enum NativeElementPropType {
 export interface NativeElementPropConfig {
     [key: string]: NativeElementPropType
 }
+
+
+
 
 
 function setOnArrayProp(parent: any, value: any, propName: string, build: (value: any) => any = null) {
@@ -218,3 +221,6 @@ export default class NativeElementNode<T> extends ElementNode {
 }
 
 
+export function registerNativeConfigElement<T>(elementName: string, resolver: () => new () => T, parentProp: string = null, propConfig: NativeElementPropConfig = {}) {
+    registerElement(elementName, () => new NativeElementNode(elementName, resolver(), parentProp, propConfig));
+}

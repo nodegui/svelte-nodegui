@@ -1,18 +1,14 @@
 import { registerElement } from './basicdom'
-import { View } from 'tns-core-modules/ui/page'
 import FrameElement from './native/FrameElement';
 import PageElement from './native/PageElement';
 import ListViewElement from './native/ListViewElement';
 import TabViewElement from './native/TabViewElement';
 import BottomNavigationElement from './native/BottomNavigationElement';
 import TabsElement from './native/TabsElement';
-import NativeViewElementNode from './native/NativeViewElementNode';
-import { NativeElementPropConfig, NativeElementPropType } from './native/NativeElementNode';
+import { registerNativeViewElement } from './native/NativeViewElementNode';
+import { NativeElementPropType } from './native/NativeElementNode';
 import ActionBarElement from './native/ActionBarElement';
 
-export function registerNativeViewElement<T extends View>(elementName: string, resolver: () => new () => T, parentProp: string = null, propConfig: NativeElementPropConfig = {}) {
-  registerElement(elementName, () => new NativeViewElementNode(elementName, resolver(), parentProp, propConfig));
-}
 
 
 export function registerNativeElements() {

@@ -1,5 +1,5 @@
 import ViewNode from '../basicdom/ViewNode'
-import { logger as log } from '../basicdom'
+import { logger as log, registerElement } from '../basicdom'
 import { KeyframeAnimation } from 'tns-core-modules/ui/animation/keyframe-animation';
 import { CssAnimationParser } from 'tns-core-modules/ui/styling/css-animation-parser';
 import { Page, View, EventData, ContentView } from 'tns-core-modules/ui/page';
@@ -16,6 +16,11 @@ interface IStyleProxy {
 function camelize(kebab: string): string {
     return kebab.replace(/[\-]+(\w)/g, (m, l) => l.toUpperCase());
 }
+
+export function registerNativeViewElement<T extends View>(elementName: string, resolver: () => new () => T, parentProp: string = null, propConfig: NativeElementPropConfig = {}) {
+    registerElement(elementName, () => new NativeViewElementNode(elementName, resolver(), parentProp, propConfig));
+}
+
 
 export type EventListener = (args: any) => void;
 
