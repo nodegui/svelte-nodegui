@@ -14,9 +14,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - support for `prop:` directive to set the value of the containing node to the nativeView of the current node e.g `<gridLayout prop:mainContent>` for sideDrawer
   - Added a parameter to NativeElementNode that configures the prop: behaviour and defines the correct casing of any property
   - Added a parameter `setsParentProp` to NativeElementNode that specifies a property on the perent node to set to constructed element when inserted.
+  - Added registerNativeViewElement and registerNativeConfigElement exports. These help change:
+```
+  registerElement('myTag', () => new NativeViewElementNode('myTag', require('some-tns-plugin/mytag').MyTag))
+```
+into
+```
+  registerNativeViewElement('myTag', () => require('some-tns-plugin/mytag').MyTag )
+```
+  - Added `svelteNativeNoFrame` which allows you to launch your app without an implicit root frame. Great for when you are using RadSidebar
+
 
 ### Changes
   - Refactored property name normalization to cache based on object prototype so we aren't walking all defined properties every time we get or set.
+  - Use the new 'scoped styles' boolean parameter when calling addCss if we don't detect any :global() styles. This should improve perf.
+  
   
 ## [0.5.3]
   - Add support for itemTemplateSelector closes [#86](https://github.com/halfnelson/svelte-native/issues/86)
