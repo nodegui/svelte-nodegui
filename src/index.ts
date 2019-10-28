@@ -1,5 +1,6 @@
 import { run, on, launchEvent } from 'tns-core-modules/application'
-import { navigate, ViewNode, createElement, initializeDom, FrameElement } from './dom';
+import { navigate, ViewNode, createElement, initializeDom, FrameElement, NativeElementNode } from './dom';
+import { View } from 'tns-core-modules/ui/core/view';
 
 
 declare global {
@@ -8,6 +9,35 @@ declare global {
         constructor(options: { target?: ViewNode, props?: any, anchor?: ViewNode, intro?: boolean });
         $set(props: any): void;
     }
+}
+
+export function svelteNativeNoFrame(rootElement: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
+    initializeDom();
+    return new Promise((resolve, reject) => {
+
+        let elementInstance: SvelteComponent;
+
+        const buildElement = () => {
+            let frag = createElement('fragment');
+            elementInstance = new rootElement({
+                target: frag,
+                props: data || {}
+            })
+            return (frag.firstChild as NativeElementNode<View>).nativeElement;
+        }
+
+        //wait for launch before returning
+        on(launchEvent, () => {
+            console.log("Application Launched");
+            resolve(elementInstance);
+        })
+
+        try {
+            run({ create: buildElement });
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
 
 export function svelteNative(startPage: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
