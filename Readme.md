@@ -21,7 +21,7 @@ Svelte-Native includes Svelte specific integrations such as
 
 While Svelte Native is feature complete, there are some items outstanding to bring it to the level of other Nativescript library integrations
 
- - [ ] Full support for the Progress professional UI components [#22](https://github.com/halfnelson/svelte-native/issues/22)
+ - [x] Full support for the Progress professional UI components [#22](https://github.com/halfnelson/svelte-native/issues/22)
  - [ ] Improved documentation around importing Nativescript plugins [#45](https://github.com/halfnelson/svelte-native/issues/45)
  - [ ] An examples page that shows open source applications made with Svelte Native [#51](https://github.com/halfnelson/svelte-native/issues/51)
  - [x] At least 1 emoji in readme.md :+1:
