@@ -1,8 +1,11 @@
-import { NativeElementNode } from "../dom";
 import { Animation, AnimationDefinition, CubicBezierAnimationCurve, Pair } from "tns-core-modules/ui/animation";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { ease_in, ease_out, ease, linear, ease_in_out, animation_curve, normalizeCurve, partialCurveFrom, reverseCurve, CubicBezier } from "./bezier"
 import { Color } from "tns-core-modules/color";
+import * as easings from './easing'
+import { NativeViewElementNode } from "../dom";
+import { View } from "tns-core-modules/ui/core/view/view";
+
 
 enum AnimationDirection { Unknown, In, Out }
 
@@ -16,7 +19,7 @@ export interface NativeAnimationDefinition {
 }
 
 
-export function asSvelteTransition(node: NativeElementNode, delay: number = 0, duration: number = 300, curve: string | CubicBezierAnimationCurve = AnimationCurve.linear, nativeAnimationProps: (t: number) => NativeAnimationDefinition) {
+export function asSvelteTransition(node: NativeViewElementNode<View>, delay: number = 0, duration: number = 300, curve: string | CubicBezierAnimationCurve = AnimationCurve.linear, nativeAnimationProps: (t: number) => NativeAnimationDefinition) {
 
     let svelteAnim: any = {
         delay: delay,
@@ -154,7 +157,7 @@ export function asSvelteTransition(node: NativeElementNode, delay: number = 0, d
 
 /* ported from svelte transitions */
 
-export function fade(node: NativeElementNode, {
+export function fade(node: NativeViewElementNode<View>, {
     delay = 0,
     duration = 400
 }) {
@@ -166,7 +169,7 @@ export function fade(node: NativeElementNode, {
     );
 }
 
-export function fly(node: NativeElementNode, {
+export function fly(node: NativeViewElementNode<View>, {
     delay = 0,
     duration = 400,
     easing = AnimationCurve.easeOut,
@@ -188,7 +191,7 @@ export function fly(node: NativeElementNode, {
     );
 }
 
-export function slide(node: NativeElementNode, {
+export function slide(node: NativeViewElementNode<View>, {
     delay = 0,
     duration = 400,
     easing = AnimationCurve.easeOut
@@ -214,5 +217,5 @@ export function slide(node: NativeElementNode, {
     );
 }
 
-import * as easings from './easing'
+
 export { easings }

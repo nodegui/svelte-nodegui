@@ -1,16 +1,26 @@
 import { registerSvelteElements } from './svelte-elements'
 import { registerNativeElements } from './nativescript-elements'
 import SvelteNativeDocument from './svelte/SvelteNativeDocument'
-import NativeElementNode from './native/NativeElementNode'
+import NativeViewElementNode from './native/NativeViewElementNode'
 import { write, messageType } from 'tns-core-modules/trace'
 import { logger, LogLevel } from './basicdom'
+import { View } from 'tns-core-modules/ui/core/view'
 
-export { default as FrameElement } from "./native/FrameElement"
+export { default as HeadElement } from './svelte/HeadElement'
+export { default as TemplateElement } from './svelte/TemplateElement'
 export { default as SvelteNativeDocument } from './svelte/SvelteNativeDocument'
-export { default as NativeElementNode } from './native/NativeElementNode'
+export { default as StyleElement } from './svelte/StyleElement'
+
+export { default as NativeElementNode, NativeElementPropConfig, NativeElementPropType, registerNativeConfigElement } from './native/NativeElementNode'
+export { default as NativeViewElementNode, registerNativeViewElement } from './native/NativeViewElementNode'
+export { default as ActionBarElement } from './native/ActionBarElement'
+export { default as FrameElement } from "./native/FrameElement"
 export { default as TabsElement } from './native/TabsElement'
-export { default as TabStripElement } from './native/TabStripElement'
-export { registerElement, createElement, ViewNode } from './basicdom'
+export { default as PageElement } from './native/PageElement'
+export { default as ListViewElement, SvelteKeyedTemplate } from './native/ListViewElement'
+export { default as BottomNavigationElement } from './native/BottomNavigationElement'
+
+export { registerElement, createElement, ViewNode, ElementNode, logger, LogLevel } from './basicdom'
 export { navigate, goBack, showModal, closeModal, ShowModalOptions, NavigationOptions, BackNavigationOptions } from './navigation'
 
 
@@ -26,7 +36,7 @@ function installGlobalShims(): SvelteNativeDocument {
         setTimeout(action, 33); //about 30 fps
     }
 
-    window.getComputedStyle = (node: NativeElementNode) => {
+    window.getComputedStyle = (node: NativeViewElementNode<View>) => {
         return node.nativeView.style;
     }
 
