@@ -334,10 +334,10 @@ function onItemTap(event) {
 
 Multiple templates can be used for different layouts of list items, which is similar to [NativeScript Multiple Templates Selector Function](https://docs.nativescript.org/ui/components/list-view#multiple-templates-selector-function). `itemTemplateSelector` is used to select template using `key` which is returned based on your logic.
 
-> **Note:** Use _multiple templates_ approach instead of `{#if}` block, because the _view recycling_ concept does not work as intended since `<listView>` cannot reuse the same template view if off-screen items require different type of template.
+> **Note:** Use _multiple templates_ approach instead of `{#if}` block, because the _view recycling_ concept does not work as intended since `<listView>` cannot reuse the same template view if off-screen items require different type of template. [See this article](https://medium.com/@alexander.vakrilov/faster-nativescript-listview-with-multiple-item-templates-8f903a32e48f)
 
 ```html
-<listView bind:this="{test_subject}" items={items} itemTemplateSelector={selectTemplate}>
+<listView items={items} itemTemplateSelector={selectTemplate}>
   <Template let:item key="odd">
       <label text="Odd {item}" />
   </Template>
@@ -345,16 +345,14 @@ Multiple templates can be used for different layouts of list items, which is sim
       <label text="Even {item}" />
   </Template>
 </listView>
-```
-```js
+
 <script>
-import { Template } from 'svelte-native/components'
-export let test_subject;
-let items = ["item 0", "item 1"]
-function selectTemplate(item, index, items) {
-   // Your logic here
-   return  (index % 2 == 0) ? "even" : "odd";
-}
+  import { Template } from 'svelte-native/components'
+  let items = ["item 0", "item 1"]
+  function selectTemplate(item, index, items) {
+    // Your logic here
+    return  (index % 2 == 0) ? "even" : "odd";
+  }
 </script>
 ```
 
@@ -366,6 +364,7 @@ function selectTemplate(item, index, items) {
 |------|------|-------------|
 | `items` | `Array<any>` | An array of items to be shown in the `<listView>`.
 | `separatorColor` | `Color` | Sets the separator line color. Set to `transparent` to remove it.
+| `itemTemplateSelector` | `(item,index,items) => string` | (optional) returns the key to the template to use for the provided item.
 
 #### Events
 

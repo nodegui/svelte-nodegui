@@ -36,7 +36,9 @@ For a concrete example of this pattern see svelte native's [listView element sou
 
 ### Property Element
 
-Some NativeScript controls have properties that expect NativeScript views as values. To make this possible using markup, Svelte Native introduces the property element. This element works like the ones in the NativeScript core documentation and set some property of their parent view with the value of the first child of the property element. The tag name is the name of the parent element followed by the property name. For example `<page.actionbar>` would set the `actionbar` property of the parent `page` element.
+Some NativeScript controls have properties that expect NativeScript views as values. To make this possible using markup, Svelte Native introduce two helpers, the property element and the `prop` directive.
+
+This property element works like the ones in the NativeScript core documentation and set some property of their parent view with the value of the first child of the property element. The tag name is the name of the parent element followed by the property name. For example `<page.actionbar>` would set the `actionbar` property of the parent `page` element.
 
 #### An Example
 
@@ -75,4 +77,63 @@ onMount(() => {
   drawer.nativeView.mainContent = mainContent.nativeView
   drawer.nativeView.drawerContent = drawerContent.nativeView
 })
+```
+
+### Property Directive
+
+The Property Element is useful but can be a little verbose. Svelte native also introduces a custom svelte directive called `prop`. The prop directive will take the native view of the component it is on an assign it to a property of the parent element. 
+
+For example our side drawer example from Property Element
+```html
+<radSideDrawer>
+  <radSideDrawer.drawerContent>
+    <stackLayout />
+  </radSideDrawer.drawerContent>
+  <radSideDrawer.mainContent>
+    <stackLayout />
+  </radSideDrawer.mainContent>
+</radSideDrawer>
+```
+
+can be written using the prop element as
+
+```html
+<radSideDrawer>
+  <stackLayout prop:drawerContent />
+  <stackLayout prop:mainContent/>
+</radSideDrawer>
+```
+
+### Implicit Property Directives
+
+Many advanced controls (including those in the nativescript-ui packages) use elements to provide configuration. These configuration properties need to be assigned to a parent property but often only have one valid parent property to which they can be assigned, so the `prop:` or Property Element becomes boilerplate
+
+Take this example from `nativescript-ui-dataform`:
+
+```html
+ <radDataForm source={ticket} metadata={ticketMetadata}>
+    <entityProperty prop:properties  name="price" index="4" readOnly="true">
+        <propertyEditor prop:editor type="Decimal" />
+    </entityProperty>
+    <entityProperty prop:properties name="numberOfTickets" displayName="Number of Tickets" index="5">
+        <propertyEditor prop:editor type="Stepper">
+            <propertyEditorParams prop:params minimum="0" maximum="100" step="2" />
+        </propertyEditor>
+    </entityProperty>
+</radDataForm>
+```
+
+on a large form, the `prop:properties` `prop:editor` and `prop:params` can get repetitive. Svelte Native lets you register a configuration element with a default property name for the `prop:` directive. When this is set, the `prop:` directive is not needed at all:
+
+```html
+<radDataForm source={ticket} metadata={ticketMetadata}>
+    <entityProperty name="price" index="4" readOnly="true">
+        <propertyEditor type="Decimal" />
+    </entityProperty>
+    <entityProperty name="numberOfTickets" displayName="Number of Tickets" index="5">
+        <propertyEditor type="Stepper">
+            <propertyEditorParams minimum="0" maximum="100" step="2" />
+        </propertyEditor>
+    </entityProperty>
+</radDataForm>
 ```
