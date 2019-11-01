@@ -72,7 +72,7 @@ A `TabContentItem` contains the view to be displayed when the corresponding TabS
 > **NOTE:** Currently, `TabContentItem` expects a single child element. In most cases, you might want to wrap your content in a layout.
 
 ```html
-<tabContentitem>
+<tabContentItem>
   <stackLayout>
     <label text="Hello From This Tab" />
   </stackLayout>
