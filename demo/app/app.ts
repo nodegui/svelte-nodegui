@@ -1,14 +1,11 @@
-/*
-In NativeScript, the app.ts file is the entry point to your application.
-You can use this file to perform app-level initialization, but the primary
-purpose of the file is to pass control to the app’s first module.
-*/
+import { svelteNativeNoFrame } from "svelte-native";
+import RadSideDrawerElement from "svelte-native-nativescript-ui/sidedrawer"
 
-import { svelteNative, DomTraceCategory } from "svelte-native";
-import * as trace from "tns-core-modules/trace"
+RadSideDrawerElement.register();
+
+//import * as trace from "tns-core-modules/trace"
+//trace.enable();
+//trace.addCategories(DomTraceCategory);
+
 import App from "./App.svelte";
-trace.enable();
-trace.addCategories(DomTraceCategory);
-svelteNative(App, {});
-
-
+svelteNativeNoFrame(App, {});

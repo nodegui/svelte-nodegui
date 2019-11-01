@@ -1,10 +1,13 @@
-import { createElement, NativeViewElementNode } from 'svelte-native/dom'
+import { createElement, NativeViewElementNode, initializeDom } from 'svelte-native/dom'
 import { ListView } from 'tns-core-modules/ui/list-view'
 
 import ListViewMultiTemplate from './ListViewMultiTemplate.svelte'
+before(() => { initializeDom(); });
 
 describe('ListViewNode', function () {
     let test_subject: NativeViewElementNode<ListView>
+    
+
     before(async function () {
         let el = createElement('fragment');
         let harness = new ListViewMultiTemplate({ target: el });

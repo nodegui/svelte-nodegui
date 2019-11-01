@@ -7,13 +7,22 @@
         "noEmitHelpers": true,
         "noEmitOnError": true,
         "skipLibCheck": true,
+        "moduleResolution": "node",
         "lib": [
-            "es6"
+            "es6",
+        ],
+        "types": [
+            "./node_modules/svelte/",
+            "mocha",
+            "karma-chai"
         ],
         "baseUrl": ".",
         "paths": {
             "~/*": [
                 "app/*"
+            ],
+            "*": [
+                "./node_modules/*"
             ]
         }
     },

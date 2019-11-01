@@ -96,7 +96,7 @@ module.exports = env => {
             hashSalt
         },
         resolve: {
-            extensions: [".ts", ".mjs", ".js", ".scss", ".css"],
+            extensions: [".ts", ".mjs", ".js",  ".scss", ".css"],
             // Resolve {N} system modules from tns-core-modules
             modules: [
                 resolve(__dirname, "node_modules/tns-core-modules"),
@@ -184,7 +184,7 @@ module.exports = env => {
                         },
                     ].filter(loader => !!loader)
                 },
-
+                
                 {
                     test: /\.(ts|css|scss|html|xml)$/,
                     use: "nativescript-dev-webpack/hmr/hot-loader"
@@ -204,11 +204,11 @@ module.exports = env => {
                         "sass-loader"
                     ]
                 },
+
                 {
                     test: /\.mjs$/,
                     type: 'javascript/auto',
                 },
-
                 {
                     test: /\.ts$/,
                     use: {
@@ -233,7 +233,7 @@ module.exports = env => {
                         {
                             loader: 'svelte-loader',
                             options: {
-                                preprocess: svelteNativePreprocessor()
+                                preprocess: svelteNativePreprocessor(),
                             }
                         }
                     ]

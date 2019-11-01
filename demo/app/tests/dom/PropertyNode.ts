@@ -1,11 +1,11 @@
-import { createElement } from 'svelte-native/dom'
+import { createElement, initializeDom } from 'svelte-native/dom'
 import { ViewNode } from 'svelte-native/dom';
 import PropertyNodeHarness from './PropertyNodeHarness.svelte'
 
 describe('PropertyNode', function () {
     let test_subject;
+    before(() => { initializeDom(); });
     before(async function () {
-
         let el = createElement('fragment');
         let harness = new PropertyNodeHarness({ target: el });
         test_subject = (harness as any).test_subject
