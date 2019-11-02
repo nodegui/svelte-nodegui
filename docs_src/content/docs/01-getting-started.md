@@ -80,11 +80,12 @@ Register the element using `registerNativeViewElement(tagName, ()=> NativeConstr
 
 eg for [Nativescript Mapbox Plugin](https://market.nativescript.org/plugins/nativescript-mapbox)
 
-```sh
-tns plugin add nativescript-mapbox
+```bash
+$ tns plugin add nativescript-mapbox
 ```
 
 in app.ts before app startup
+
 ```js
 import { registerNativeViewElement } from 'svelte/dom'
 

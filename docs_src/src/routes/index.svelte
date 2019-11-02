@@ -1,11 +1,39 @@
 <script>
 	import { Blurb, Hero } from '@sveltejs/site-kit';
+	import Example from '../components/Example.svelte'
 </script>
 
 <style>
 	:global(.hero .logotype) {
 		height: 6rem !important;
 	}
+
+	.examples {
+		background: var(--second);
+		color: white;
+		overflow: hidden;
+	}
+
+	.examples h2 {
+		color: white;
+		margin-bottom: 30px;
+	}
+
+	.examples a {
+		color: white;
+	}
+	.examples .github-link {
+		display: inline-block;
+		text-align: right;
+		background-color: var(--prime);
+		padding: 0.2em 0.5em;
+		border-radius: var(--border-r);
+		color: white;
+		position: relative;
+		border-bottom: none;
+		margin-bottom: 1em;
+	}
+
 
 	@media (min-width: 640px) {
 		:global(.hero .logotype) {
@@ -72,5 +100,37 @@ tns run android
 		<p class="cta"><a rel="prefetch" href="tutorial">Learn Svelte Native</a></p>
 	</div>
 </Blurb>
+<div class="examples">
+	
+
+	<Example imageUrl="https://raw.githubusercontent.com/halfnelson/svelte-native-grocery/master/nativescript-svelte-grocery.gif">
+		<h2>Svelte Native Grocery</h2>
+		<p>
+			Grocery app example. Manage and sync grocery items.
+		
+		</p>
+			<a href="https://github.com/halfnelson/svelte-native-grocery" class="github-link">Repository</a>
+	</Example>
+
+	<Example imageUrl="https://raw.githubusercontent.com/halfnelson/svelte-native-hackernews/master/nativescript-svelte-hn.gif">
+		<h2>Svelte Native Realworld</h2>
+		<p>
+		A <a href="https://github.com/gothinkster/realworld">Realworld</a> implementation app in Svelte Native.
+		
+		</p>
+			<a href="https://github.com/halfnelson/svelte-native-hackernews" class="github-link">Repository</a>
+	</Example>
+
+	<Example imageUrl="https://raw.githubusercontent.com/halfnelson/svelte-native-realworld/master/nativescript-svelte-realworld.gif">
+		<h2>Svelte Native Hacker News Reader</h2>
+		<p>
+			Simple HackerNews client in Svelte Native.
+			
+		</p>
+		<a href="https://github.com/halfnelson/svelte-native-hackernews"class="github-link">Repository</a>
+	</Example>
+
+
+</div>
 
 
