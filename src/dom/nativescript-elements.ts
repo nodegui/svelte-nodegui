@@ -8,6 +8,7 @@ import TabsElement from './native/TabsElement';
 import { registerNativeViewElement } from './native/NativeViewElementNode';
 import { NativeElementPropType } from './native/NativeElementNode';
 import ActionBarElement from './native/ActionBarElement';
+import TabStripElement from './native/TabStripElement';
 
 
 
@@ -155,8 +156,7 @@ export function registerNativeElements() {
 
   registerElement('BottomNavigation', () => new BottomNavigationElement())
   registerElement('Tabs', () => new TabsElement())
-  registerNativeViewElement('TabStrip', () => require('tns-core-modules/ui/tab-navigation-base/tab-strip').TabStrip, "tabStrip", { "items": NativeElementPropType.Array });
-  registerNativeViewElement('TabStripItem', () => require('tns-core-modules/ui/tab-navigation-base/tab-strip-item').TabStripItem, "items");
+  registerElement('TabStrip', () => new TabStripElement());
+  registerNativeViewElement('TabStripItem', () => require('tns-core-modules/ui/tab-navigation-base/tab-strip-item').TabStripItem);
   registerNativeViewElement('TabContentItem', () => require('tns-core-modules/ui/tab-navigation-base/tab-content-item').TabContentItem);
-
 }

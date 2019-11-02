@@ -14,10 +14,6 @@ export interface NativeElementPropConfig {
     [key: string]: NativeElementPropType
 }
 
-
-
-
-
 function setOnArrayProp(parent: any, value: any, propName: string, build: (value: any) => any = null) {
     let current = parent[propName];
     if (!current || !current.push) {

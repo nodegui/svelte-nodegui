@@ -6,6 +6,7 @@
             <scrollView row="1" >
                 <stackLayout>
                     <label text="ListView" class:current={$current_page == ListViewPage} padding="10" on:tap="{() => gotoPage(ListViewPage)}" />
+                     <label text="Tabs" class:current={$current_page == TabsPage} padding="10" on:tap="{() => gotoPage(TabsPage)}" />
                 </stackLayout>
             </scrollView>
         </gridLayout>
@@ -19,6 +20,7 @@
     import { onMount } from 'svelte'
     import * as nav from './Nav'
     import ListViewPage from './pages/ListViewPage.svelte'
+    import TabsPage from './pages/TabsPage.svelte'
 
     function gotoPage(page) {
         drawer.closeDrawer();

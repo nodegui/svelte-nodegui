@@ -1,5 +1,5 @@
 <page>
-    <Header title="RadListView" />
+    <Header title="ListView" />
     <listView items={items} bind:this={listView}
             itemTemplateSelector="{selectTemplate}"
             on:itemTap="{onItemTap}">
