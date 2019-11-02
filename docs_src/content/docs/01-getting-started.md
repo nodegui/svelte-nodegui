@@ -69,3 +69,28 @@ or
 ```bash
 $ tns run ios
 ```
+
+
+### Using Nativescript Plugins
+
+Since Svelte Native uses unmodified NativeScript, it is possible to use NativeScript plugins, such as those found on the [marketplace](https://market.nativescript.org/).
+
+Follow the instructions for the component and if there isn't instructions for svelte, look for the Nativescript Vue instructions involving `registerElement`. 
+Register the element using `registerNativeViewElement(tagName, ()=> NativeConstructor)`
+
+eg for [Nativescript Mapbox Plugin](https://market.nativescript.org/plugins/nativescript-mapbox)
+
+```sh
+tns plugin add nativescript-mapbox
+```
+
+in app.ts before app startup
+```js
+import { registerNativeViewElement } from 'svelte/dom'
+
+registerNativeViewElement("mapBox", () => require("nativescript-mapbox").MapboxView);
+```
+
+You can now use the `<mapBox>` tag in your application following the plugin's documentation.
+
+> **NOTE** For examples of how to register more complex components, check out the code in [svelte-native-nativescript-ui](https://github.com/halfnelson/svelte-native-nativescript-ui) which supports the Nativescript Professional UI components
