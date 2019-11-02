@@ -51,12 +51,12 @@ Remove the default `.btn` rule from `app.css` and set the contents of App.svelte
             <tabStripItem title="Completed" />
         </tabStrip>
 
-        <tabContentitem>
+        <tabContentItem>
             <label textWrap="true">This tab will list active tasks and will let users add new tasks.</label>
-        </tabContentitem>
-        <tabContentitem>
+        </tabContentItem>
+        <tabContentItem>
             <label textWrap="true">This tab will list completed tasks for tracking.</label>
-        </tabContentitem>
+        </tabContentItem>
     </tabs>
 </page>
 ```
