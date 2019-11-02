@@ -1,4 +1,4 @@
-import { createElement, NativeElementNode, NativeViewElementNode } from 'svelte-native/dom'
+import { createElement, NativeElementNode, NativeViewElementNode, initializeDom } from 'svelte-native/dom'
 import NativeElementHarness from './NativeElementHarness.svelte'
 import MountParent from './MountParent.svelte'
 import MountChild from './MountChild.svelte'
@@ -7,6 +7,9 @@ import { Label } from 'tns-core-modules/ui/label'
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout'
 
 describe('NativeElementNode', function () {
+    
+    before(() => { initializeDom(); });
+
     let test_subject: NativeViewElementNode<Label>;
     before(async function () {
         let el = createElement('fragment');

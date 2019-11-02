@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="__PACKAGE__"
-	android:versionCode="1"
+	android:versionCode="10000"
 	android:versionName="1.0">
 
 	<supports-screens
@@ -9,10 +9,6 @@
 		android:normalScreens="true"
 		android:largeScreens="true"
 		android:xlargeScreens="true"/>
-
-	<uses-sdk
-		android:minSdkVersion="17"
-		android:targetSdkVersion="__APILEVEL__"/>
 
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
