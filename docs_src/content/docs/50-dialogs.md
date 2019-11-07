@@ -154,12 +154,15 @@ prompt({
 
 #### Configure input type
 
-You can also configure the input type using `inputType`. You can choose between plain text (`text`), email-enabled input (`email`), and password-like hidden input (`password`).
+You can also configure the input type using `inputType`. You can choose between plain text (`text`), email-enabled input (`email`), and password-like hidden input (`password`), number input for numeric keyboard (`number` or `decimal`) and phone number (`phone`).
 
 ```js
 inputType: inputType.text
 inputType: inputType.email
 inputType: inputType.password
+inputType: inputType.number
+inputType: inputType.decimal
+inputType: inputType.phone
 ```
 
 #### Example
