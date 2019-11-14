@@ -87,7 +87,7 @@ $ tns plugin add nativescript-mapbox
 in app.ts before app startup
 
 ```js
-import { registerNativeViewElement } from 'svelte/dom'
+import { registerNativeViewElement } from 'svelte-native/dom'
 
 registerNativeViewElement("mapBox", () => require("nativescript-mapbox").MapboxView);
 ```
