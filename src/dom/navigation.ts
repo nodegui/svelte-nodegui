@@ -1,4 +1,4 @@
-import { topmost, NavigationTransition, Frame, getFrameById, Page, BackstackEntry, ViewBase, NavigatedData, View } from "tns-core-modules/ui/frame";
+import { topmost, NavigationTransition, Frame, Page, BackstackEntry, ViewBase, NavigatedData, View } from "tns-core-modules/ui/frame";
 import FrameElement from "./native/FrameElement";
 import { createElement, logger as log } from "./basicdom";
 import PageElement from "./native/PageElement";
@@ -25,7 +25,7 @@ function resolveFrame(frameSpec: FrameSpec): Frame {
     if (frameSpec instanceof FrameElement) targetFrame = frameSpec.nativeView as Frame;
     if (frameSpec instanceof Frame) targetFrame = frameSpec;
     if (typeof frameSpec == "string") {
-        targetFrame = getFrameById(frameSpec)
+        targetFrame = Frame.getFrameById(frameSpec)
         if (!targetFrame) log.error(`Navigate could not find frame with id ${frameSpec}`)
     }
     return targetFrame;

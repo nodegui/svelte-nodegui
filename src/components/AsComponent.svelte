@@ -5,7 +5,7 @@
     let slots = $$props.$$slots;
     let scope = $$props.$$scope;
 
-    export let component = class extends SlotComponent {
+    export const component = class extends SlotComponent {
         constructor(options) {
             //force instances of this component to use our slot content and scope.
             let new_options = Object.assign({}, options);
