@@ -112,7 +112,7 @@ tns run android
 			<a href="https://github.com/halfnelson/svelte-native-grocery" class="github-link">Repository</a>
 	</Example>
 
-	<Example imageUrl="https://raw.githubusercontent.com/halfnelson/svelte-native-hackernews/master/nativescript-svelte-hn.gif">
+	<Example imageUrl="https://raw.githubusercontent.com/halfnelson/svelte-native-realworld/master/nativescript-svelte-realworld.gif">
 		<h2>Svelte Native Realworld</h2>
 		<p>
 		A <a href="https://github.com/gothinkster/realworld">Realworld</a> implementation app in Svelte Native.
@@ -121,7 +121,7 @@ tns run android
 			<a href="https://github.com/halfnelson/svelte-native-hackernews" class="github-link">Repository</a>
 	</Example>
 
-	<Example imageUrl="https://raw.githubusercontent.com/halfnelson/svelte-native-realworld/master/nativescript-svelte-realworld.gif">
+	<Example imageUrl="https://raw.githubusercontent.com/halfnelson/svelte-native-hackernews/master/nativescript-svelte-hn.gif">
 		<h2>Svelte Native Hacker News Reader</h2>
 		<p>
 			Simple HackerNews client in Svelte Native.
