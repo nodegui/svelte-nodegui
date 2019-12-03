@@ -6,7 +6,7 @@ import { View } from 'tns-core-modules/ui/core/view';
 declare global {
     export class SvelteComponent {
         $destroy(): void;
-        constructor(options: { target?: ViewNode, props?: any, anchor?: ViewNode, intro?: boolean });
+        constructor(options: { target?: ViewNode | Element , props?: any, anchor?: ViewNode | Element, intro?: boolean });
         $set(props: any): void;
     }
 }
@@ -43,15 +43,8 @@ export function svelteNativeNoFrame(rootElement: typeof SvelteComponent, data: a
 export function svelteNative(startPage: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
     initializeDom();
 
-    //setup a frame so we always have somewhere to hang our css
-    let rootFrame = createElement('frame') as FrameElement;
-    rootFrame.setAttribute("id", "app-root-frame");
-
-    let pageInstance = navigate({
-        page: startPage,
-        props: data || {},
-        frame: rootFrame
-    })
+    let rootFrame: FrameElement; 
+    let pageInstance: SvelteComponent;
 
     return new Promise((resolve, reject) => {
         //wait for launch
@@ -61,7 +54,18 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any): Prom
         })
 
         try {
-            run({ create: () => rootFrame.nativeView });
+            run({ create: () => {
+                rootFrame = createElement('frame') as FrameElement;
+                rootFrame.setAttribute("id", "app-root-frame");
+
+                pageInstance = navigate({
+                    page: startPage,
+                    props: data || {},
+                    frame: rootFrame
+                })
+
+                return rootFrame.nativeView;
+            }});
         } catch (e) {
             reject(e);
         }
