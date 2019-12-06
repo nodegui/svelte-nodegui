@@ -118,7 +118,7 @@ tns run android
 		A <a href="https://github.com/gothinkster/realworld">Realworld</a> implementation app in Svelte Native.
 		
 		</p>
-			<a href="https://github.com/halfnelson/svelte-native-hackernews" class="github-link">Repository</a>
+			<a href="https://github.com/gothinkster/realworld" class="github-link">Repository</a>
 	</Example>
 
 	<Example imageUrl="https://raw.githubusercontent.com/halfnelson/svelte-native-hackernews/master/nativescript-svelte-hn.gif">
