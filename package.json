@@ -21,8 +21,8 @@
   "author": "David Pershouse",
   "license": "MIT",
   "peerDependencies": {
-    "tns-core-modules": "^6.2.1",
-    "svelte": "^3.14.1"
+    "tns-core-modules": "~6.2.3",
+    "svelte": "~3.16.4"
   },
   "devDependencies": {
     "glob": "^7.1.6",
@@ -30,8 +30,8 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.1.0",
     "rollup-plugin-typescript2": "^0.25.2",
-    "svelte": "^3.14.1",
-    "tns-core-modules": "^6.2.1",
+    "svelte": "~3.16.4",
+    "tns-core-modules": "~6.2.3",
     "typescript": "^3.7.2",
     "rimraf": "^2.6.3"
   }
