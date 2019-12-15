@@ -28,6 +28,6 @@ export default class FrameElement extends NativeViewElementNode<Frame> {
         if (!(childNode instanceof PageElement))
             return;
 
-        this.nativeView.navigate({ create: () => childNode.nativeView })
+        this.nativeView.navigate({ create: () => childNode.nativeView, clearHistory: true })
     }
 }

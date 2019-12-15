@@ -4,8 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.2]
+  - Detect nativescripts own requestAnimationFrame polyfill and don't try to overwrite
+  
+
+## [0.7.1]
+  - Fix Tabs component rendering on iOS
+  - Fix Tabs component on start page crashes app on iOS
+
+## [0.7.0]
+  - Support for Nativescript 6.2
+  - Clear history when frame direct child change causes a navigation, closes [#96](https://github.com/halfnelson/svelte-native/issues/96)
+
 ## [0.6.1]
-  - Restored custom TabStrip element implementation to work around (problem with tabstripitem view creation)[https://github.com/NativeScript/NativeScript/issues/7608]
+  - Restored custom TabStrip element implementation to work around [problem with tabstripitem view creation](https://github.com/NativeScript/NativeScript/issues/7608)
 
 ## [0.6.0]
 

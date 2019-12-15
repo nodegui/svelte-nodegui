@@ -6,6 +6,8 @@ import NativeViewElementNode from "./NativeViewElementNode";
 
 export default class BaseTabNavigationElement extends NativeViewElementNode<TabNavigationBase> {
 
+    pendingInserts: TabContentItem[] = []
+
     constructor(tagName: string, viewClass: new () => TabNavigationBase) {
         super(tagName, viewClass);
     }
@@ -14,11 +16,13 @@ export default class BaseTabNavigationElement extends NativeViewElementNode<TabN
         try {
             if (childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabContentItem) {
                 log.debug(`adding tab content to nav`);
-                let item = childNode.nativeView;
+                this.pendingInserts.push(childNode.nativeView)
                 //wait for next turn so that any content for our tab is attached to the dom
                 Promise.resolve().then(() => {
-                    let items = (this.nativeView.items || []).concat([item]);
-                    this.nativeView.items = []
+                    if (this.pendingInserts.length == 0) return;
+                    let items = (this.nativeView.items || []).concat(this.pendingInserts);
+                    this.pendingInserts = [];
+                    this.nativeView.items = [];
                     this.nativeView.items = items;
                 });
                 return;
