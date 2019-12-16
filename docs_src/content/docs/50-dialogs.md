@@ -167,7 +167,7 @@ inputType: inputType.phone
 
 You can control the capitalization type for prompt dialog. This will control the shift behavior on the input keyboard.
 
-```
+```js
 capitalizationType: capitalizationType.none
 capitalizationType: capitalizationType.all
 capitalizationType: capitalizationType.sentences
