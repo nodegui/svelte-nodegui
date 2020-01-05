@@ -33,8 +33,8 @@ function installGlobalShims(): SvelteNativeDocument {
     window.document = new SvelteNativeDocument();
 
     if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = (action: () => {}) => {
-            setTimeout(action, 33); //about 30 fps
+        window.requestAnimationFrame = (action: (now: DOMHighResTimeStamp) => {}) => {
+            setTimeout(() => action(window.performance.now()), 33); //about 30 fps
         }
     }
 
