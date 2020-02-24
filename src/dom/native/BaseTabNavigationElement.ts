@@ -1,7 +1,7 @@
 import { ViewNode, logger as log } from "../basicdom";
-import { TabNavigationBase } from 'tns-core-modules/ui/tab-navigation-base/tab-navigation-base'
-import { TabStrip } from 'tns-core-modules/ui/tab-navigation-base/tab-strip';
-import { TabContentItem } from 'tns-core-modules/ui/tab-navigation-base/tab-content-item';
+import { TabNavigationBase } from '@nativescript/core/ui/tab-navigation-base/tab-navigation-base'
+import { TabStrip } from '@nativescript/core/ui/tab-navigation-base/tab-strip';
+import { TabContentItem } from '@nativescript/core/ui/tab-navigation-base/tab-content-item';
 import NativeViewElementNode from "./NativeViewElementNode";
 
 export default class BaseTabNavigationElement extends NativeViewElementNode<TabNavigationBase> {

@@ -1,6 +1,6 @@
 {
-  "name": "svelte-native",
-  "version": "0.7.3",
+  "name": "svelte-native-akylas",
+  "version": "0.7.4-alpha.6",
   "description": "Svelte integration for NativeScript",
   "private": true,
   "repository": {
@@ -21,8 +21,8 @@
   "author": "David Pershouse",
   "license": "MIT",
   "peerDependencies": {
-    "tns-core-modules": "~6.2.3",
-    "svelte": "~3.16.4"
+    "@nativescript/core": "^6.4.0",
+    "svelte": "~3.18.2"
   },
   "devDependencies": {
     "glob": "^7.1.6",
@@ -30,8 +30,8 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.1.0",
     "rollup-plugin-typescript2": "^0.25.2",
-    "svelte": "~3.16.4",
-    "tns-core-modules": "~6.2.3",
+    "svelte": "~3.18.1",
+    "@nativescript/core": "~6.4.0",
     "typescript": "^3.7.2",
     "rimraf": "^2.6.3"
   }

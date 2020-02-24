@@ -17,7 +17,7 @@
     "nativescript-unit-test-runner": "^0.7.0",
     "svelte-native": "file:../dist",
     "svelte-native-nativescript-ui": "0.6.1",
-    "tns-core-modules": "~6.2.3"
+    "@nativescript/core": "~6.2.3"
   },
   "devDependencies": {
     "@types/chai": "^4.2.4",

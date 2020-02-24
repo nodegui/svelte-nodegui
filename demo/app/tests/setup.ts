@@ -1,5 +1,5 @@
 import { DomTraceCategory, initializeDom, createElement } from "svelte-native/dom";
-import * as trace from "tns-core-modules/trace"
+import * as trace from "@nativescript/core/trace"
 //uncomment to enable verbose debug trace
 //trace.enable();
 //trace.addCategories(DomTraceCategory);

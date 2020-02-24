@@ -1,9 +1,9 @@
 import ViewNode from '../basicdom/ViewNode'
 import { logger as log, registerElement } from '../basicdom'
-import { KeyframeAnimation } from 'tns-core-modules/ui/animation/keyframe-animation';
-import { CssAnimationParser } from 'tns-core-modules/ui/styling/css-animation-parser';
-import { Page, View, EventData, ContentView } from 'tns-core-modules/ui/page';
-import { LayoutBase } from 'tns-core-modules/ui/layouts/layout-base';
+import { KeyframeAnimation } from '@nativescript/core/ui/animation/keyframe-animation';
+import { CssAnimationParser } from '@nativescript/core/ui/styling/css-animation-parser';
+import { Page, View, EventData, ContentView } from '@nativescript/core/ui/page';
+import { LayoutBase } from '@nativescript/core/ui/layouts/layout-base';
 import NativeElementNode, { NativeElementPropConfig } from './NativeElementNode';
 
 interface IStyleProxy {
@@ -50,7 +50,7 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
         let oldAnimations: KeyframeAnimation[] = [];
 
         const addAnimation = (animation: string) => {
-            log.debug(`Adding animation ${animation}`)
+                log.debug(`Adding animation ${animation}`)
             if (!this.nativeView) {
                 throw Error("Attempt to apply animation to tag without a native view" + this.tagName);
             }
@@ -94,7 +94,7 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
         }
 
         const removeAnimation = (animation: string) => {
-            log.debug(`Removing animation ${animation}`)
+                log.debug(`Removing animation ${animation}`)
             if (animations.has(animation)) {
                 let animationInstance = animations.get(animation);
                 animations.delete(animation);
@@ -122,7 +122,7 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
             },
 
             set animation(value: string) {
-                log.debug(`setting animation ${value}`)
+                    log.debug(`setting animation ${value}`)
                 let new_animations = value.trim() == "" ? [] : value.split(',').map(a => a.trim());
                 //add new ones
                 for (let anim of new_animations) {
@@ -139,12 +139,12 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
             },
 
             get cssText(): string {
-                log.debug("got css text");
+                    log.debug("got css text");
                 return getStyleAttribute();
             },
 
             set cssText(value: string) {
-                log.debug("set css text");
+                    log.debug("set css text");
                 setStyleAttribute(value);
             }
         }
@@ -152,7 +152,7 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
 
     /* istanbul ignore next */
     setStyle(property: string, value: string | number) {
-        log.debug(`setStyle ${this} ${property} ${value}`)
+            log.debug(`setStyle ${this} ${property} ${value}`)
 
         if (!(value = value.toString().trim()).length) {
             return
@@ -176,13 +176,13 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
 
     /* istanbul ignore next */
     addEventListener(event: string, handler: EventListener) {
-        log.debug(`add event listener ${this} ${event}`)
+            log.debug(`add event listener ${this} ${event}`)
         this.nativeView.on(event, handler)
     }
 
     /* istanbul ignore next */
     removeEventListener(event: string, handler?: EventListener) {
-        log.debug(`remove event listener ${this} ${event}`)
+            log.debug(`remove event listener ${this} ${event}`)
         this.nativeView.off(event, handler)
     }
 
@@ -271,9 +271,9 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
         } else if (parentView instanceof View) {
             parentView._removeView(childView)
         } else {
-            log.warn("Unknown parent view type: " + parentView)
+                log.warn("Unknown parent view type: " + parentView)
+            }
         }
-    }
 
     dispatchEvent(event: EventData) {
         if (this.nativeView) {

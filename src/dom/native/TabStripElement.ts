@@ -1,6 +1,6 @@
 import { ViewNode, logger as log } from "../basicdom";
-import { TabStrip } from 'tns-core-modules/ui/tab-navigation-base/tab-strip';
-import { TabStripItem } from 'tns-core-modules/ui/tab-navigation-base/tab-strip-item';
+import { TabStrip } from '@nativescript/core/ui/tab-navigation-base/tab-strip';
+import { TabStripItem } from '@nativescript/core/ui/tab-navigation-base/tab-strip-item';
 import NativeViewElementNode from "./NativeViewElementNode";
 
 export default class TabStripElement extends NativeViewElementNode<TabStrip> {
@@ -10,7 +10,7 @@ export default class TabStripElement extends NativeViewElementNode<TabStrip> {
     }
 
     onInsertedChild(childNode: ViewNode, index: number) {
-        // As of tns-core-modules 6.1.2 setting a new array here doesn't set the parent property of any new tabstripitems
+        // As of @nativescript/core 6.1.2 setting a new array here doesn't set the parent property of any new tabstripitems
         // and causes a crash. a workaround suggested https://github.com/NativeScript/NativeScript/issues/7608
         // is to set items to [] before setting it to the new array.
         try {

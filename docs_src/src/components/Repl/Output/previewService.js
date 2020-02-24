@@ -107,14 +107,14 @@ export class PreviewService {
                 file: "main.js",
                 binary: false,
                 fileContents: `
-require('tns-core-modules/globals')
+require('@nativescript/core/globals')
 
 
 let app = global.loadModule('./app.js')
 
 global.__onLiveSyncCore = () => {
     console.log('reloading app');
-    var fs = require("tns-core-modules/file-system");
+    var fs = require("@nativescript/core/file-system");
     const applicationFiles = fs.knownFolders.currentApp();
     const appjs = applicationFiles.getFile('app.js').readTextSync();
     let refreshed_app = Function( "let exports={};" + appjs +";return exports")();

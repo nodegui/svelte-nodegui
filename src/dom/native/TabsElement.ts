@@ -1,5 +1,5 @@
 import BaseTabNavigationElement from "./BaseTabNavigationElement";
-import { Tabs } from "tns-core-modules/ui/tabs"
+import { Tabs } from "@nativescript/core/ui/tabs"
 
 export default class TabsElement extends BaseTabNavigationElement {
     constructor() {

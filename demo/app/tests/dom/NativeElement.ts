@@ -2,9 +2,9 @@ import { createElement, NativeElementNode, NativeViewElementNode, initializeDom 
 import NativeElementHarness from './NativeElementHarness.svelte'
 import MountParent from './MountParent.svelte'
 import MountChild from './MountChild.svelte'
-import { LayoutBase } from 'tns-core-modules/ui/layouts/layout-base'
-import { Label } from 'tns-core-modules/ui/label'
-import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout'
+import { LayoutBase } from '@nativescript/core/ui/layouts/layout-base'
+import { Label } from '@nativescript/core/ui/label'
+import { StackLayout } from '@nativescript/core/ui/layouts/stack-layout'
 
 describe('NativeElementNode', function () {
     

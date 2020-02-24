@@ -1,5 +1,5 @@
 import { ViewNode, logger as log } from "../basicdom";
-import { TabView, TabViewItem } from 'tns-core-modules/ui/tab-view'
+import { TabView, TabViewItem } from '@nativescript/core/ui/tab-view'
 import NativeViewElementNode from "./NativeViewElementNode";
 
 export default class TabViewElement extends NativeViewElementNode<TabView> {

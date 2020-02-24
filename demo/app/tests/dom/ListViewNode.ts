@@ -1,5 +1,5 @@
 import { createElement, NativeViewElementNode, initializeDom } from 'svelte-native/dom'
-import { ListView } from 'tns-core-modules/ui/list-view'
+import { ListView } from '@nativescript/core/ui/list-view'
 
 import ListViewMultiTemplate from './ListViewMultiTemplate.svelte'
 before(() => { initializeDom(); });

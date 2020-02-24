@@ -1,5 +1,5 @@
 import { createElement, ViewNode, logger as log } from "../basicdom";
-import { Frame, View } from 'tns-core-modules/ui/frame'
+import { Frame, View } from '@nativescript/core/ui/frame'
 import PageElement from "./PageElement";
 import NativeViewElementNode from "./NativeViewElementNode";
 
