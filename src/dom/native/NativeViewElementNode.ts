@@ -50,7 +50,7 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
         let oldAnimations: KeyframeAnimation[] = [];
 
         const addAnimation = (animation: string) => {
-                log.debug(`Adding animation ${animation}`)
+            log.debug(`Adding animation ${animation}`)
             if (!this.nativeView) {
                 throw Error("Attempt to apply animation to tag without a native view" + this.tagName);
             }
@@ -283,4 +283,3 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
         }
     }
 }
-
