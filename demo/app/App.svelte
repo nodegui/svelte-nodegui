@@ -7,6 +7,7 @@
                 <stackLayout>
                     <label text="ListView" class:current={$current_page == ListViewPage} padding="10" on:tap="{() => gotoPage(ListViewPage)}" />
                      <label text="Tabs" class:current={$current_page == TabsPage} padding="10" on:tap="{() => gotoPage(TabsPage)}" />
+                      <label text="Text Nodes" class:current={$current_page == TextNodePage} padding="10" on:tap="{() => gotoPage(TextNodePage)}" />
                 </stackLayout>
             </scrollView>
         </gridLayout>
@@ -21,6 +22,7 @@
     import * as nav from './Nav'
     import ListViewPage from './pages/ListViewPage.svelte'
     import TabsPage from './pages/TabsPage.svelte'
+    import TextNodePage from './pages/TextNodePage.svelte'
 
     function gotoPage(page) {
         drawer.closeDrawer();

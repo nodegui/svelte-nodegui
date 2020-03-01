@@ -11,7 +11,7 @@ export default class TextNode extends ViewNode {
 
     setText(text: string) {
         this.text = text
-        this.parentNode.setText(text)
+        this.parentNode.updateText()
     }
 
     set data(text: string) {
