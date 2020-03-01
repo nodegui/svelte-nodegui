@@ -1,6 +1,7 @@
 
 import DocumentNode from './DocumentNode';
 import { logger as log } from './Logger';
+import TextNode from './TextNode';
 
 const dashRegExp = /-/g
 export function normalizeElementName(elementName: string) {
@@ -95,11 +96,11 @@ export default class ViewNode {
     /* istanbul ignore next */
     setText(text: string) {
         log.debug(`setText ${this} ${text}`)
-        if (this.nodeType === 3) {
-            this.parentNode.setText(text)
-        } else {
-            this.setAttribute('text', text)
-        }
+        this.setAttribute('text', text)
+    }
+
+    updateText() {
+        this.setText(this.childNodes.filter(x => x.nodeType === 3).map(x => (x as TextNode).text).join(''));
     }
 
     onInsertedChild(childNode: ViewNode, index: number) { }

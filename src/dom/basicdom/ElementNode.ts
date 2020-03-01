@@ -54,7 +54,7 @@ export default class ElementNode extends ViewNode {
         super.appendChild(childNode)
 
         if (childNode.nodeType === 3) {
-            this.setText((childNode as TextNode).text)
+            this.updateText();
         }
 
         if (childNode.nodeType === 7) {
@@ -66,7 +66,7 @@ export default class ElementNode extends ViewNode {
         super.insertBefore(childNode, referenceNode)
 
         if (childNode.nodeType === 3) {
-            this.setText((childNode as TextNode).text)
+            this.updateText();
         }
 
         if (childNode.nodeType === 7) {
@@ -78,7 +78,7 @@ export default class ElementNode extends ViewNode {
         super.removeChild(childNode)
 
         if (childNode.nodeType === 3) {
-            this.setText('')
+            this.updateText();
         }
 
         if (childNode.nodeType === 7) {
