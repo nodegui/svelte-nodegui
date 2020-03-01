@@ -9,7 +9,7 @@
 </page>
 
 <script>
-	import { alert } from 'tns-core-modules/ui/dialogs'
+	import { alert } from '@nativescript/core/ui/dialogs'
 
 	let counter = 42;
 	let message;

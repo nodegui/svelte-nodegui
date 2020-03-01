@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [0.7.4]
+  - Fix bug in segmented bar (re)creation closes [#118](https://github.com/halfnelson/svelte-native/issues/118) and [#119](https://github.com/halfnelson/svelte-native/issues/119)
+  - Correctly handle multiple child text nodes
+  - Added ability to override nativescript tags with your own. Closes [#105](https://github.com/halfnelson/svelte-native/issues/105) 
+  - Swap to @nativescript/core from tns-core-modules. Closes [#103](https://github.com/halfnelson/svelte-native/issues/103) 
+  - Upgrade to nativescript 6.4
+  - Upgrade to svelte 3.19.*
+  
+
 ## [0.7.3]
   - provide timestamp to requestAnimationFrame shim,fixes transition problems with svelte 3.16+
 

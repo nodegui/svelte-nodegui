@@ -1,10 +1,10 @@
-import { Animation, AnimationDefinition, CubicBezierAnimationCurve, Pair } from "tns-core-modules/ui/animation";
-import { AnimationCurve } from "tns-core-modules/ui/enums";
+import { Animation, AnimationDefinition, CubicBezierAnimationCurve, Pair } from "@nativescript/core/ui/animation";
+import { AnimationCurve } from "@nativescript/core/ui/enums";
 import { ease_in, ease_out, ease, linear, ease_in_out, animation_curve, normalizeCurve, partialCurveFrom, reverseCurve, CubicBezier } from "./bezier"
-import { Color } from "tns-core-modules/color";
+import { Color } from "@nativescript/core/color";
 import * as easings from './easing'
 import { NativeViewElementNode } from "../dom";
-import { View } from "tns-core-modules/ui/core/view/view";
+import { View } from "@nativescript/core/ui/core/view/view";
 
 
 enum AnimationDirection { Unknown, In, Out }

@@ -1,7 +1,7 @@
 import { createElement, TabsElement, NativeViewElementNode, initializeDom } from 'svelte-native/dom'
 import { tick } from 'svelte';
 import TabsHarness from './TabsHarness.svelte'
-import { TabStrip } from 'tns-core-modules/ui/tab-navigation-base/tab-strip'
+import { TabStrip } from '@nativescript/core/ui/tab-navigation-base/tab-strip'
 
 
 describe('Tabs', function () {

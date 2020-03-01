@@ -3,7 +3,7 @@ import RadSideDrawerElement from "svelte-native-nativescript-ui/sidedrawer"
 
 RadSideDrawerElement.register();
 
-//import * as trace from "tns-core-modules/trace"
+//import * as trace from "@nativescript/core/trace"
 //trace.enable();
 //trace.addCategories(DomTraceCategory);
 

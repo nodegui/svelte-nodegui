@@ -1,6 +1,6 @@
 import { ElementNode, logger as log } from '../basicdom'
-import { StyleScope } from 'tns-core-modules/ui/styling/style-scope'
-import { topmost, Frame } from 'tns-core-modules/ui/frame'
+import { StyleScope } from '@nativescript/core/ui/styling/style-scope'
+import { topmost, Frame } from '@nativescript/core/ui/frame'
 
 class StyleSheet {
 

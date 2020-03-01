@@ -1,6 +1,6 @@
 import { ElementNode, ViewNode } from "../basicdom";
 import StyleElement from "./StyleElement";
-import { addCss } from "tns-core-modules/application"
+import { addCss } from "@nativescript/core/application"
 
 export default class HeadElement extends ElementNode {
 

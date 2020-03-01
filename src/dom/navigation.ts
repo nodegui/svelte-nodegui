@@ -1,4 +1,4 @@
-import { topmost, NavigationTransition, Frame, Page, BackstackEntry, ViewBase, NavigatedData, View } from "tns-core-modules/ui/frame";
+import { topmost, NavigationTransition, Frame, Page, BackstackEntry, ViewBase, NavigatedData, View } from "@nativescript/core/ui/frame";
 import FrameElement from "./native/FrameElement";
 import { createElement, logger as log } from "./basicdom";
 import PageElement from "./native/PageElement";

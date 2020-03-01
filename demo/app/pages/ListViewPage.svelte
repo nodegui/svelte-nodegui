@@ -47,7 +47,7 @@
     import Header from '../Header.svelte'
     import { onMount } from 'svelte'
     import { Template } from 'svelte-native/components'
-    import { ObservableArray } from 'tns-core-modules/data/observable-array'
+    import { ObservableArray } from '@nativescript/core/data/observable-array'
 
     let images = [
         "font://\uf567",

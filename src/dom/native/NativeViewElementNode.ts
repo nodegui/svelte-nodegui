@@ -1,9 +1,9 @@
 import ViewNode from '../basicdom/ViewNode'
-import { logger as log, registerElement, RegisterElementOptions } from '../basicdom'
-import { KeyframeAnimation } from 'tns-core-modules/ui/animation/keyframe-animation';
-import { CssAnimationParser } from 'tns-core-modules/ui/styling/css-animation-parser';
-import { Page, View, EventData, ContentView } from 'tns-core-modules/ui/page';
-import { LayoutBase } from 'tns-core-modules/ui/layouts/layout-base';
+import { logger as log, registerElement } from '../basicdom'
+import { KeyframeAnimation } from '@nativescript/core/ui/animation/keyframe-animation';
+import { CssAnimationParser } from '@nativescript/core/ui/styling/css-animation-parser';
+import { Page, View, EventData, ContentView } from '@nativescript/core/ui/page';
+import { LayoutBase } from '@nativescript/core/ui/layouts/layout-base';
 import NativeElementNode, { NativeElementPropConfig } from './NativeElementNode';
 
 interface IStyleProxy {
@@ -271,9 +271,9 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
         } else if (parentView instanceof View) {
             parentView._removeView(childView)
         } else {
-            log.warn("Unknown parent view type: " + parentView)
+                log.warn("Unknown parent view type: " + parentView)
+            }
         }
-    }
 
     dispatchEvent(event: EventData) {
         if (this.nativeView) {
@@ -283,4 +283,3 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
         }
     }
 }
-

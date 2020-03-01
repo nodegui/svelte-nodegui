@@ -1,6 +1,6 @@
-import { run, on, launchEvent } from 'tns-core-modules/application'
+import { run, on, launchEvent } from '@nativescript/core/application'
 import { navigate, ViewNode, createElement, initializeDom, FrameElement, NativeElementNode } from './dom';
-import { View } from 'tns-core-modules/ui/core/view';
+import { View } from '@nativescript/core/ui/core/view';
 
 
 declare global {

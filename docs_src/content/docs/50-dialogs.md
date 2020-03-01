@@ -13,7 +13,7 @@ The method is part of the [`dialogs` module](https://docs.nativescript.org/api-r
 #### Basic use
 
 ```js
-import { action } from 'tns-core-modules/ui/dialogs'
+import { action } from '@nativescript/core/ui/dialogs'
 
 action('Your message', 'Cancel button text',  ['Option1', 'Option2'])
   .then(result => {
@@ -32,7 +32,7 @@ The method is part of the [`dialogs` module](https://docs.nativescript.org/api-r
 #### Basic use
 
 ```js
-import { alert } from 'tns-core-modules/ui/dialogs'
+import { alert } from '@nativescript/core/ui/dialogs'
 
 alert('Your message')
   .then(() => {
@@ -64,7 +64,7 @@ The method is part of the [`dialogs` module](https://docs.nativescript.org/api-r
 
 ```js
 
-import { confirm } from 'tns-core-modules/ui/dialogs'
+import { confirm } from '@nativescript/core/ui/dialogs'
 
 confirm('Your message')
   .then(res => {
@@ -96,7 +96,7 @@ The method is part of the [`dialogs` module](https://docs.nativescript.org/api-r
 #### Basic use
 
 ```js
-import { login } from 'tns-core-modules/ui/dialogs'
+import { login } from '@nativescript/core/ui/dialogs'
 
 login("Your message", "Username field value", "Password field value")
   .then(res => {
@@ -130,7 +130,7 @@ The method is part of the [`dialogs` module](https://docs.nativescript.org/api-r
 #### Basic use
 
 ```js
-import { prompt } from 'tns-core-modules/ui/dialogs'
+import { prompt } from '@nativescript/core/ui/dialogs'
 
 prompt('Your message to the user', 'Suggested user input')
   .then(res => {
@@ -177,7 +177,7 @@ capitalizationType: capitalizationType.words
 #### Example
 
 ```js
-import { prompt, inputType } from 'tns-core-modules/ui/dialogs'
+import { prompt, inputType } from '@nativescript/core/ui/dialogs'
 
 prompt({
   title: "Email Prompt",

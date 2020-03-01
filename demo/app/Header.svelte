@@ -9,6 +9,6 @@
 
 <script>
     import { toggleDrawer } from './Nav.ts'
-    import { isAndroid } from "tns-core-modules/platform"
+    import { isAndroid } from "@nativescript/core/platform"
     export let title = ""
 </script>
