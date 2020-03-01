@@ -15,7 +15,7 @@ export default class BaseTabNavigationElement extends NativeViewElementNode<TabN
     onInsertedChild(childNode: ViewNode, index: number) {
         try {
             if (childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabContentItem) {
-                log.debug(`adding tab content to nav`);
+                log.debug(() => `adding tab content to nav`);
                 this.pendingInserts.push(childNode.nativeView)
                 //wait for next turn so that any content for our tab is attached to the dom
                 Promise.resolve().then(() => {
@@ -36,7 +36,7 @@ export default class BaseTabNavigationElement extends NativeViewElementNode<TabN
     onRemovedChild(childNode: ViewNode) {
         try {
             if (childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabContentItem) {
-                log.debug(`removing content item from nav`);
+                log.debug(() => `removing content item from nav`);
                 let items = (this.nativeView.items || []).filter(i => i != childNode.nativeView);
                 this.nativeView.items = [];
                 this.nativeView.items = items;

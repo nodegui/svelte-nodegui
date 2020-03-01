@@ -95,7 +95,7 @@ export default class ViewNode {
 
     /* istanbul ignore next */
     setText(text: string) {
-        log.debug(`setText ${this} ${text}`)
+        log.debug(() => `setText ${this} ${text}`)
         this.setAttribute('text', text)
     }
 
@@ -108,7 +108,7 @@ export default class ViewNode {
     onRemovedChild(childNode: ViewNode) { }
 
     insertBefore(childNode: ViewNode, referenceNode: ViewNode) {
-        log.debug(`insert before ${this} ${childNode} ${referenceNode}`)
+        log.debug(() => `insert before ${this} ${childNode} ${referenceNode}`)
         if (!childNode) {
             throw new Error(`Can't insert child.`)
         }
@@ -152,7 +152,7 @@ export default class ViewNode {
     }
 
     appendChild(childNode: ViewNode) {
-        log.debug(`append child ${this} ${childNode}`)
+        log.debug(() => `append child ${this} ${childNode}`)
         if (!childNode) {
             throw new Error(`Can't append child.`)
         }
@@ -183,7 +183,7 @@ export default class ViewNode {
     }
 
     removeChild(childNode: ViewNode) {
-        log.debug(`remove child ${this} ${childNode}`)
+        log.debug(() => `remove child ${this} ${childNode}`)
         if (!childNode) {
             throw new Error(`Can't remove child.`)
         }

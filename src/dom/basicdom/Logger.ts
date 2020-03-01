@@ -7,33 +7,35 @@ export enum LogLevel {
 
 type LoggerCallback = (message: string, level: LogLevel) => void
 
-const nullLogger = () => { };
-
 class Logger {
     onLog: LoggerCallback
 
     constructor() {
-        this.onLog = () => nullLogger;
+        this.onLog = null;
     }
 
     setHandler(logger: LoggerCallback): void {
-        this.onLog = logger || nullLogger
+        this.onLog = logger
     }
 
-    debug(message: string): void {
-        this.onLog(message, LogLevel.Debug);
+    log(message: () => string, level: LogLevel) {
+        if (this.onLog) this.onLog(message(), level);
     }
 
-    info(message: string): void {
-        this.onLog(message, LogLevel.Info);
+    debug(message: () => string): void {
+        this.log(message, LogLevel.Debug);
     }
 
-    warn(message: string): void {
-        this.onLog(message, LogLevel.Warn);
+    info(message: () => string): void {
+        this.log(message, LogLevel.Info);
     }
 
-    error(message: string): void {
-        this.onLog(message, LogLevel.Error);
+    warn(message: () => string): void {
+        this.log(message, LogLevel.Warn);
+    }
+
+    error(message: () => string): void {
+        this.log(message, LogLevel.Error);
     }
 }
 

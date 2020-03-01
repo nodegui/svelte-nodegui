@@ -11,7 +11,7 @@ export default class TabViewElement extends NativeViewElementNode<TabView> {
 
     doUpdate() {
         let items = this.childNodes.filter(x => x instanceof NativeViewElementNode && x.nativeView instanceof TabViewItem).map(x => (x as any).nativeView as TabViewItem);
-        log.debug(`updating tab items. now has ${items.length} items`);
+        log.debug(() => `updating tab items. now has ${items.length} items`);
         (this.nativeView as TabView).items = items;
     }
 

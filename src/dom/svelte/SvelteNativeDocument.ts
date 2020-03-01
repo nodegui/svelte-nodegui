@@ -9,12 +9,12 @@ export default class SvelteNativeDocument extends DocumentNode {
         this.head = createElement('head')
         this.appendChild(this.head);
 
-        log.debug(`created ${this}`)
+        log.debug(() => `created ${this}`)
     }
 
     createTextNode(text: string) {
         const el = new TextNode(text)
-        log.debug(`created ${el}`)
+        log.debug(() => `created ${el}`)
         return el;
     }
 
