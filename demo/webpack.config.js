@@ -3,6 +3,7 @@ const { join, relative, resolve, sep } = require("path");
 const webpack = require("webpack");
 const nsWebpack = require("nativescript-dev-webpack");
 const nativescriptTarget = require("nativescript-dev-webpack/nativescript-target");
+const { getNoEmitOnErrorFromTSConfig } = require("nativescript-dev-webpack/utils/tsconfig-utils");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -10,22 +11,26 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { NativeScriptWorkerPlugin } = require("nativescript-worker-loader/NativeScriptWorkerPlugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const hashSalt = Date.now().toString();
-const svelteNativePreprocessor = require("svelte-native-preprocessor");
 
 module.exports = env => {
     // Add your custom Activities, Services and other Android app components here.
-    const appComponents = [
-        "@nativescript/core/ui/frame",
-        "@nativescript/core/ui/frame/activity",
-    ];
+    const appComponents = env.appComponents || [];
+    appComponents.push(...[
+        "tns-core-modules/ui/frame",
+        "tns-core-modules/ui/frame/activity",
+    ]);
 
-    const platform = env && (env.android && "android" || env.ios && "ios");
+    const platform = env && (env.android && "android" || env.ios && "ios" || env.platform);
     if (!platform) {
         throw new Error("You need to provide a target platform!");
     }
 
     const platforms = ["ios", "android"];
     const projectRoot = __dirname;
+
+    if (env.platform) {
+        platforms.push(env.platform);
+    }
 
     // Default destination inside platforms/<platform>/...
     const dist = resolve(projectRoot, nsWebpack.getAppPath(platform, projectRoot));
@@ -46,22 +51,37 @@ module.exports = env => {
         hmr, // --env.hmr,
         unitTesting, // --env.unitTesting,
         verbose, // --env.verbose
+        snapshotInDocker, // --env.snapshotInDocker
+        skipSnapshotTools, // --env.skipSnapshotTools
+        compileSnapshot // --env.compileSnapshot
     } = env;
+
+    const useLibs = compileSnapshot;
     const isAnySourceMapEnabled = !!sourceMap || !!hiddenSourceMap;
-    const externals = nsWebpack.getConvertedExternals((env.externals || []).filter(x => x != 'svelte' && x != 'svelte-native'));
+    const externals = nsWebpack.getConvertedExternals(env.externals);
 
     const appFullPath = resolve(projectRoot, appPath);
+    const hasRootLevelScopedModules = nsWebpack.hasRootLevelScopedModules({ projectDir: projectRoot });
+    let coreModulesPackageName = "tns-core-modules";
+    const alias = env.alias || {};
+    alias['~'] = appFullPath;
+
+    if (hasRootLevelScopedModules) {
+        coreModulesPackageName = "@nativescript/core";
+        alias["tns-core-modules"] = coreModulesPackageName;
+    }
     const appResourcesFullPath = resolve(projectRoot, appResourcesPath);
 
     const entryModule = nsWebpack.getEntryModule(appFullPath, platform);
     const entryPath = `.${sep}${entryModule}.ts`;
-    const entries = { bundle: entryPath };
+    const entries = env.entries || {};
+    entries.bundle = entryPath;
 
     const tsConfigPath = resolve(projectRoot, "tsconfig.tns.json");
 
-    const areCoreModulesExternal = Array.isArray(env.externals) && env.externals.some(e => e.indexOf("@nativescript/core") > -1);
+    const areCoreModulesExternal = Array.isArray(env.externals) && env.externals.some(e => e.indexOf("tns-core-modules") > -1);
     if (platform === "ios" && !areCoreModulesExternal) {
-        entries["tns_modules/@nativescript/core/inspector_modules"] = "inspector_modules";
+        entries["tns_modules/tns-core-modules/inspector_modules"] = "inspector_modules";
     };
 
     let sourceMapFilename = nsWebpack.getSourceMapFilename(hiddenSourceMap, __dirname, dist);
@@ -71,6 +91,8 @@ module.exports = env => {
         itemsToClean.push(`${join(projectRoot, "platforms", "android", "app", "src", "main", "assets", "snapshots")}`);
         itemsToClean.push(`${join(projectRoot, "platforms", "android", "app", "build", "configurations", "nativescript-android-snapshot")}`);
     }
+
+    const noEmitOnErrorFromTSConfig = getNoEmitOnErrorFromTSConfig(tsConfigPath);
 
     nsWebpack.processAppComponents(appComponents, platform);
     const config = {
@@ -96,17 +118,15 @@ module.exports = env => {
             hashSalt
         },
         resolve: {
-            extensions: [".ts", ".mjs", ".js",  ".scss", ".css"],
-            // Resolve {N} system modules from @nativescript/core
+            extensions: [".ts", ".js", ".scss", ".css"],
+            // Resolve {N} system modules from tns-core-modules
             modules: [
-                resolve(__dirname, "node_modules/@nativescript/core"),
+                resolve(__dirname, `node_modules/${coreModulesPackageName}`),
                 resolve(__dirname, "node_modules"),
-                "node_modules/@nativescript/core",
+                `node_modules/${coreModulesPackageName}`,
                 "node_modules",
             ],
-            alias: {
-                '~': appFullPath
-            },
+            alias,
             // resolve symlinks to symlinked modules
             symlinks: true
         },
@@ -125,6 +145,7 @@ module.exports = env => {
         devtool: hiddenSourceMap ? "hidden-source-map" : (sourceMap ? "inline-source-map" : "none"),
         optimization: {
             runtimeChunk: "single",
+            noEmitOnErrors: noEmitOnErrorFromTSConfig,
             splitChunks: {
                 cacheGroups: {
                     vendor: {
@@ -184,7 +205,7 @@ module.exports = env => {
                         },
                     ].filter(loader => !!loader)
                 },
-                
+
                 {
                     test: /\.(ts|css|scss|html|xml)$/,
                     use: "nativescript-dev-webpack/hmr/hot-loader"
@@ -194,21 +215,17 @@ module.exports = env => {
 
                 {
                     test: /\.css$/,
-                    use: { loader: "css-loader", options: { url: false } }
+                    use: "nativescript-dev-webpack/css2json-loader"
                 },
 
                 {
                     test: /\.scss$/,
                     use: [
-                        { loader: "css-loader", options: { url: false } },
+                        "nativescript-dev-webpack/css2json-loader",
                         "sass-loader"
                     ]
                 },
 
-                {
-                    test: /\.mjs$/,
-                    type: 'javascript/auto',
-                },
                 {
                     test: /\.ts$/,
                     use: {
@@ -226,18 +243,6 @@ module.exports = env => {
                         },
                     }
                 },
-                {
-                    test: /\.svelte$/,
-                    exclude: /node_modules/,
-                    use: [
-                        {
-                            loader: 'svelte-loader',
-                            options: {
-                                preprocess: svelteNativePreprocessor(),
-                            }
-                        }
-                    ]
-                }
             ]
         },
         plugins: [
@@ -270,6 +275,7 @@ module.exports = env => {
                 tsconfig: tsConfigPath,
                 async: false,
                 useTypescriptIncrementalApi: true,
+                checkSyntacticErrors: true,
                 memoryLimit: 4096
             })
         ],
@@ -290,10 +296,13 @@ module.exports = env => {
         config.plugins.push(new nsWebpack.NativeScriptSnapshotPlugin({
             chunk: "vendor",
             requireModules: [
-                "@nativescript/core/bundle-entry-points",
+                "tns-core-modules/bundle-entry-points",
             ],
             projectRoot,
             webpackConfig: config,
+            snapshotInDocker,
+            skipSnapshotTools,
+            useLibs
         }));
     }
 
