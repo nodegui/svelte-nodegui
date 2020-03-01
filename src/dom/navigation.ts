@@ -26,7 +26,7 @@ function resolveFrame(frameSpec: FrameSpec): Frame {
     if (frameSpec instanceof Frame) targetFrame = frameSpec;
     if (typeof frameSpec == "string") {
         targetFrame = Frame.getFrameById(frameSpec)
-        if (!targetFrame) log.error(`Navigate could not find frame with id ${frameSpec}`)
+        if (!targetFrame) log.error(() => `Navigate could not find frame with id ${frameSpec}`)
     }
     return targetFrame;
 }

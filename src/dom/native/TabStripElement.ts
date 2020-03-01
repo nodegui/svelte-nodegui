@@ -15,7 +15,7 @@ export default class TabStripElement extends NativeViewElementNode<TabStrip> {
         // is to set items to [] before setting it to the new array.
         try {
             if (childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabStripItem) {
-                log.debug(`adding tab strip item ${childNode.nativeView.title}`);
+                log.debug(() => `adding tab strip item ${childNode.nativeView.title}`);
                 const items = this.nativeView.items || [];
                 this.nativeView.items = [];
                 this.nativeView.items = items.concat([childNode.nativeView]);
@@ -30,7 +30,7 @@ export default class TabStripElement extends NativeViewElementNode<TabStrip> {
     onRemovedChild(childNode: ViewNode) {
         try {
             if (childNode instanceof NativeViewElementNode && childNode.nativeView instanceof TabStripItem) {
-                log.debug(`removing tab strip item ${childNode.nativeView.title}`);
+                log.debug(() => `removing tab strip item ${childNode.nativeView.title}`);
                 let items = (this.nativeView.items || []).filter(i => i != childNode.nativeView);
                 this.nativeView.items = [];
                 this.nativeView.items = items;

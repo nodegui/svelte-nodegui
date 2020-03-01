@@ -25,7 +25,7 @@ export class SvelteKeyedTemplate {
     createView(): View {
         //create a proxy element to eventually contain our item (once we have one to render)
         //TODO is StackLayout the best choice here? 
-        log.debug(`creating view for key ${this.key}`)
+        log.debug(() => `creating view for key ${this.key}`)
         let wrapper = createElement('StackLayout') as NativeViewElementNode<View>;
         wrapper.setStyle("padding", 0)
         wrapper.setStyle("margin", 0)
@@ -55,7 +55,7 @@ export default class ListViewElement extends NativeViewElementNode<ListView> {
         let items = listView.items;
 
         if (args.index >= items.length) {
-            log.error(`Got request for item at index that didn't exist ${args.index}`)
+            log.error(() => `Got request for item at index that didn't exist ${args.index}`)
             return;
         }
 
@@ -69,20 +69,20 @@ export default class ListViewElement extends NativeViewElementNode<ListView> {
             let component;
 
             if (args.view && (args.view as any).__SvelteComponentBuilder__) {
-                log.debug(`instantiating component in keyed view item at ${args.index}`);
+                log.debug(() => `instantiating component in keyed view item at ${args.index}`);
                 //now we have an item, we can create and mount this component
                 (args.view as any).__SvelteComponentBuilder__({ item });
                 (args.view as any).__SvelteComponentBuilder__ = null; //free the memory
                 return;
             }
 
-            log.debug(`creating default view for item at ${args.index}`)
+            log.debug(() => `creating default view for item at ${args.index}`)
             if (typeof listView.itemTemplates == "object") {
                 component = listView.itemTemplates.filter(x => x.key == "default").map(x => (x as SvelteKeyedTemplate).component)[0]
             }
 
             if (!component) {
-                log.error(`Couldn't determine component to use for item at ${args.index}`);
+                log.error(() => `Couldn't determine component to use for item at ${args.index}`);
                 return;
             }
             let wrapper = createElement('ProxyViewContainer') as NativeViewElementNode<View>;
@@ -98,7 +98,7 @@ export default class ListViewElement extends NativeViewElementNode<ListView> {
             args.view = nativeEl;
         } else {
             let componentInstance: SvelteComponent = (args.view as any).__SvelteComponent__
-            log.debug(`updating view for ${args.index} which is a ${args.view}`)
+            log.debug(() => `updating view for ${args.index} which is a ${args.view}`)
             componentInstance.$set({ item })
         }
     }
@@ -107,7 +107,7 @@ export default class ListViewElement extends NativeViewElementNode<ListView> {
         super.onInsertedChild(childNode, index);
         if (childNode instanceof TemplateElement) {
             let key = childNode.getAttribute('key') || "default"
-            log.debug(`Adding template for key ${key}`);
+            log.debug(() => `Adding template for key ${key}`);
             if (!this.nativeView.itemTemplates || typeof this.nativeView.itemTemplates == "string") {
                 this.nativeView.itemTemplates = []
             }
