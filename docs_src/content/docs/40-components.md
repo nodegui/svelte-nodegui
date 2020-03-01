@@ -146,7 +146,7 @@ import Home from './Home.svelte'
 
 | Android | iOS |
 |---------|-----|
-| [`org.nativescript.widgets.ContentLayout`](https://github.com/NativeScript/@nativescript/core-widgets/blob/master/android/widgets/src/main/java/org/nativescript/widgets/ContentLayout.java) | [`UINavigationController`](https://developer.apple.com/documentation/uikit/uinavigationcontroller)
+| [`org.nativescript.widgets.ContentLayout`](https://github.com/NativeScript/tns-core-modules-widgets/blob/master/android/widgets/src/main/java/org/nativescript/widgets/ContentLayout.java) | [`UINavigationController`](https://developer.apple.com/documentation/uikit/uinavigationcontroller)
 
 ### HtmlView
 
@@ -416,7 +416,7 @@ Multiple templates can be used for different layouts of list items, which is sim
 
 | Android | iOS |
 |---------|-----|
-| [`org.nativescript.widgets.GridLayout`](https://github.com/NativeScript/@nativescript/core-widgets/blob/master/android/widgets/src/main/java/org/nativescript/widgets/GridLayout.java) | [`UIViewController`](https://developer.apple.com/documentation/uikit/uiviewcontroller)
+| [`org.nativescript.widgets.GridLayout`](https://github.com/NativeScript/tns-core-modules-widgets/blob/master/android/widgets/src/main/java/org/nativescript/widgets/GridLayout.java) | [`UIViewController`](https://developer.apple.com/documentation/uikit/uiviewcontroller)
 
 ### Progress
 
