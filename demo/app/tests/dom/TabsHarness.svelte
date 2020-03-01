@@ -9,7 +9,7 @@
             <label text="extra tab content"></label>
         </tabContentItem>
     {/if}
-    <tabStrip bind:this={tab_strip_subject}>
+    <tabStrip bind:this="{tab_strip_subject}">
         <tabStripItem title="tab button 1"></tabStripItem>
         {#if show_extra_tab}
             <tabStripItem title="extra tab button"></tabStripItem>

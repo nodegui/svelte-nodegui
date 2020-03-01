@@ -99,7 +99,7 @@ function setWebpack(config, options) {
     const env = {};
     env[config.platform] = true;
     env.sourceMap = config.debugBrk;
-    options.webpack = require('./webpack.config')(env);
+    options.webpack = require('./svelte-native.webpack.config')(env);
     delete options.webpack.entry;
     delete options.webpack.output.libraryTarget;
     const invalidPluginsForUnitTesting = ["GenerateBundleStarterPlugin", "GenerateNativeScriptEntryPointsPlugin"];
