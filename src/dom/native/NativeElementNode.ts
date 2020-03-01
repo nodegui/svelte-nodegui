@@ -19,7 +19,11 @@ function setOnArrayProp(parent: any, value: any, propName: string, build: (value
     if (!current || !current.push) {
         parent[propName] = build ? build(value) : [value];
     } else {
-        current.push(value)
+        if (current instanceof ObservableArray) {
+            current.push(value)
+        } else {
+            parent[propName] = [...current, value];
+        }
     }
 }
 
