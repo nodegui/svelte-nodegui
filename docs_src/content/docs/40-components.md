@@ -545,8 +545,8 @@ As opposed to `<tabView>`:
 ```
 
 ```html
-<segmentedBar items="{listOfItems}" selectedIndex="0"
-              on:selectedIndexChange="{onSelectedIndexChange}" />
+<segmentedBar selectedIndex="0"
+              on:selectedIndexChange="{onSelectedIndexChange}" >
 ```
 
 `<segmentedBar>` can be populated with `{each}` block.
@@ -566,7 +566,7 @@ As opposed to `<tabView>`:
 `<segmentedBar>` provides two-way data binding of `selectedIndex`.
 
 ```html
-<segmentedBar items="{listOfItems}" bind:selectedIndex="{selectedItem}" />
+<segmentedBar bind:selectedIndex="{selectedItem}" >
 ```
 
 #### Props
