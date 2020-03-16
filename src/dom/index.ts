@@ -5,6 +5,7 @@ import NativeViewElementNode from './native/NativeViewElementNode'
 import { write, messageType } from '@nativescript/core/trace'
 import { logger, LogLevel } from './basicdom'
 import { View } from '@nativescript/core/ui/core/view'
+import { Observable, EventData } from '@nativescript/core/data/observable/observable'
 
 export { default as HeadElement } from './svelte/HeadElement'
 export { default as TemplateElement } from './svelte/TemplateElement'
@@ -76,9 +77,21 @@ function initializeLogger() {
         write(message, DomTraceCategory, traceLevel)
     })
 }
+// Fix event bubbling by ensuring observables fire with a type property for svelte's bubble method to use.
+function monkeyPatchObservable() {
+    var oldNotify = Observable.prototype.notify;
+    Observable.prototype.notify = function <T extends EventData>(data: T & { type: string}) {
+        //svelte listens for event.type while nativescript sets event.eventName
+        //copy event name to event type if not already set.
+        data.type = data.type || data.eventName;
+        //call original notify method
+        oldNotify.apply(this, [data]);
+    }
+}
 
 export function initializeDom() {
     initializeLogger();
+    monkeyPatchObservable();
     registerSvelteElements();
     registerNativeElements();
     return installGlobalShims();
