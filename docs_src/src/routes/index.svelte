@@ -56,33 +56,31 @@
 
 <Blurb>
 	<a href="https://svelte.dev" slot="one">
-		<h2>Powered By<br/> Svelte</h2>
-		<p>Svelte Native is an nativescript application framework powered by Svelte - Build mobile apps with Svelte components</p>
+		<h2>Powered by Svelte</h2>
+		<p>Svelte Native is a mobile application framework powered by Svelte — build mobile apps using the friendly web framework you alredy know</p>
 		<span class="learn-more">learn more</span>
 	</a>
 
 	<a href="https://www.nativescript.org/about" slot="two">
-		<h2>Using<br/> NativeScript</h2>
-		<p>Build full featured "Native" mobile applications using languages you already know — HTML, CSS and JavaScript</p>
+		<h2>Using NativeScript</h2>
+		<p>Build cross-platform, native iOS and Android apps without web views. Get truly native UI and performance while sharing skills and code with the web</p>
 		<span class="learn-more">learn more</span>
 	</a>
 
 	<a href="tutorial" slot="three">
-		<h2>Fully<br/>Featured</h2>
+		<h2>Fully featured</h2>
 		<p>Use the full power of Svelte including Transitions, Stores, and Reactivity. One of the smoothest development experiences available for mobile</p>
 		<span class="learn-more">learn more</span>
 	</a>
 
 	<div class="description" slot="what">
-		<p>Svelte Native is a new approach to building mobile applications using NativeScript. Where other JS-Native
-			frameworks like React-Native and
-			Nativescript-Vue do the bulk of their work on the <em>mobile device</em>, Svelte Native shifts that work
-			into a <em>compile step</em>
-			that happens when you build your app.</p>
+		<p>Svelte Native is a new approach to building mobile applications using NativeScript. Where other JavaScript
+			mobile develipment frameworks like React Native and NativeScript-Vue do the bulk of their work on
+			the <em>mobile device</em>, Svelte Native shifts that work into a <em>compile step</em> that happens
+			when you build your app.</p>
 
 		<p>Instead of using techniques like virtual DOM diffing, Svelte writes code that surgically updates the native
-			view widgets when
-			the state of your app changes.</p>
+			view widgets when the state of your app changes.</p>
 	</div>
 
 	<div style="grid-area: start; display: flex; flex-direction: column; min-width: 0" slot="how">
