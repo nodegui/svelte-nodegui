@@ -1,0 +1,21 @@
+{
+  "name": "repl-workers",
+  "version": "1.0.0",
+  "description": "Workers",
+  "private": true,
+  "scripts": {
+    "build": "rollup -c",
+    "postbuild": "shx cp ./dist/bundler.js ../docs_src/static/workers/bundler.js"
+  },
+  "devDependencies": {
+    "acorn": "^7.1.1",
+    "estree-walker": "^2.0.1",
+    "rollup": "^2.7.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.3.0",
+    "shx": "^0.3.2",
+    "svelte-native-preprocessor": "^0.1.8"
+  }
+}

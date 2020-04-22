@@ -24,7 +24,7 @@
 		version; // workaround
 
 		return {
-			imports: $bundle.imports,
+			imports: [],
 			components: $components
 		};
 	}
@@ -67,6 +67,16 @@
 	let module_editor;
 	let output;
 
+	let workers;
+
+	var uid = 1;
+
+	function doBundle(components) {
+		if (!workers) return;
+		workers.bundler.postMessage({ uid,  type: 'bundle', components: components });
+		uid += 1;
+	}
+
 	setContext('REPL', {
 		components,
 		selected,
@@ -101,8 +111,7 @@
 			// recompile selected component
 			output.update($selected);
 
-			// regenerate bundle (TODO do this in a separate worker?)
-			workers.bundler.postMessage({ type: 'bundle', components: $components });
+			doBundle($components)
 
 			dispatch('change', {
 				components: $components
@@ -130,8 +139,7 @@
 		output.set($selected);
 	}
 
-	let workers;
-
+	
 	let input;
 	let sourceErrorLoc;
 	let runtimeErrorLoc; // TODO refactor this stuff — runtimeErrorLoc is unused
@@ -146,6 +154,10 @@
 
 		workers.bundler.postMessage({ type: 'init', version });
 		workers.bundler.onmessage = event => {
+			if (event.data.type === 'status') {
+					console.log(event.data.message);
+					return;
+			}
 			bundle.set(event.data);
 		};
 
@@ -154,6 +166,7 @@
 		};
 	});
 
+
 	$: if ($bundle && $bundle.error && $selected) {
 		sourceErrorLoc = $bundle.error.filename === `${$selected.name}.${$selected.type}`
 			? $bundle.error.start
@@ -161,7 +174,7 @@
 	}
 
 	$: if (workers && $components) {
-		workers.bundler.postMessage({ type: 'bundle', components: $components });
+		doBundle($components)
 	}
 
 </script>
