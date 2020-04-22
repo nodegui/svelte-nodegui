@@ -15,7 +15,7 @@ self.addEventListener('message', async event => {
 					'/repl/local?file=compiler.js' :
 					`https://unpkg.com/svelte@${version}/compiler.js`,
 				`https://unpkg.com/rollup@0.68/dist/rollup.browser.js`,
-				`https://bundle.run/svelte-native-preprocessor@0.1.4`
+				`https://unpkg.com/svelte-native-preprocessor@0.1.8/dist/index.js`
 			);
 			fulfil();
 
