@@ -57,7 +57,7 @@
 <Blurb>
 	<a href="https://svelte.dev" slot="one">
 		<h2>Powered by Svelte</h2>
-		<p>Svelte Native is a mobile application framework powered by Svelte — build mobile apps using the friendly web framework you alredy know</p>
+		<p>Svelte Native is a mobile application framework powered by Svelte — build mobile apps using the friendly web framework you already know</p>
 		<span class="learn-more">learn more</span>
 	</a>
 
