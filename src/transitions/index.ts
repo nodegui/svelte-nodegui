@@ -207,11 +207,11 @@ export function slide(node: NativeViewElementNode<View>, {
         t => ({
             scale: {
                 x: scaleX,
-                y: (1 - t) * scaleY
+                y: t * scaleY
             },
             translate: {
                 x: translateX,
-                y: translateY - t * 0.05 * height
+                y: translateY - t * 0.5 * height
             }
         })
     );
