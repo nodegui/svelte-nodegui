@@ -32,12 +32,16 @@ function installGlobalShims(): SvelteNativeDocument {
     window.window = global;
     window.document = new SvelteNativeDocument();
 
-    if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = (action: (now: DOMHighResTimeStamp) => {}) => {
+    // As of NS 6.3, the NS provided requestAnimationFrame breaks svelte by invoking the callback immediately 
+    // instead of next event loop, We force ours instead.
+    Object.defineProperty(global, 'requestAnimationFrame', {
+        value: (action: (now: DOMHighResTimeStamp) => {}) => {
             setTimeout(() => action(window.performance.now()), 33); //about 30 fps
-        }
-    }
-
+        },
+        configurable: true,
+        writable: true,
+    })
+    
     window.getComputedStyle = (node: NativeViewElementNode<View>) => {
         return node.nativeView.style;
     }

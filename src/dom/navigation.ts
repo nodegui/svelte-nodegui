@@ -1,4 +1,4 @@
-import { topmost, NavigationTransition, Frame, Page, BackstackEntry, ViewBase, NavigatedData, View } from "@nativescript/core/ui/frame";
+import { NavigationTransition, Frame, Page, BackstackEntry, ViewBase, NavigatedData, View } from "@nativescript/core/ui/frame";
 import FrameElement from "./native/FrameElement";
 import { createElement, logger as log } from "./basicdom";
 import PageElement from "./native/PageElement";
@@ -21,7 +21,7 @@ export interface NavigationOptions {
 
 function resolveFrame(frameSpec: FrameSpec): Frame {
     let targetFrame: Frame;
-    if (!frameSpec) targetFrame = topmost();
+    if (!frameSpec) targetFrame = Frame.topmost();
     if (frameSpec instanceof FrameElement) targetFrame = frameSpec.nativeView as Frame;
     if (frameSpec instanceof Frame) targetFrame = frameSpec;
     if (typeof frameSpec == "string") {
@@ -111,7 +111,7 @@ export function showModal<T>(modalOptions: ShowModalOptions): Promise<T> {
     let { page, props = {}, ...options } = modalOptions;
 
     //Get this before any potential new frames are created by component below
-    let modalLauncher = topmost().currentPage;
+    let modalLauncher = Frame.topmost().currentPage;
 
     let componentInstanceInfo = resolveComponentElement(page, props);
     let modalView: ViewBase = componentInstanceInfo.element.nativeView;
