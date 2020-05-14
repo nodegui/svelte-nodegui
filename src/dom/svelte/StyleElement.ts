@@ -1,6 +1,6 @@
 import { ElementNode, logger as log } from '../basicdom'
 import { StyleScope } from '@nativescript/core/ui/styling/style-scope'
-import { topmost, Frame } from '@nativescript/core/ui/frame'
+import { Frame } from '@nativescript/core/ui/frame'
 
 class StyleSheet {
 
@@ -20,7 +20,7 @@ class StyleSheet {
             // we can almost remove the rules ourselves.
             if (r.startsWith('@keyframes')) {
                 const name = r.split(" ")[1];
-                let frame: Frame = topmost();
+                let frame: Frame = Frame.topmost();
                 if (frame && (frame as any)._styleScope) {
                     let scope = (frame as any)._styleScope as StyleScope;
                     delete scope._keyframes[name]
@@ -32,7 +32,7 @@ class StyleSheet {
 
     insertRule(rule: string, index: number = 0) {
         log.debug(() => `Adding transition rule ${rule}`);
-        let frame = topmost();
+        let frame = Frame.topmost();
         frame.addCss(rule);
         this._rules.splice(index, 0, rule);
     }
