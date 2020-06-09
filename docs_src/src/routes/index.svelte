@@ -61,7 +61,7 @@
 		<span class="learn-more">learn more</span>
 	</a>
 
-	<a href="https://www.nativescript.org/about" slot="two">
+	<a href="https://www.nativescript.org" slot="two">
 		<h2>Using NativeScript</h2>
 		<p>Build cross-platform, native iOS and Android apps without web views. Get truly native UI and performance while sharing skills and code with the web</p>
 		<span class="learn-more">learn more</span>
