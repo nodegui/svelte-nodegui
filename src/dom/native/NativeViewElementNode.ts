@@ -2,7 +2,7 @@ import ViewNode from '../basicdom/ViewNode'
 import { logger as log, registerElement, RegisterElementOptions } from '../basicdom'
 import { KeyframeAnimation } from '@nativescript/core/ui/animation/keyframe-animation';
 import { CssAnimationParser } from '@nativescript/core/ui/styling/css-animation-parser';
-import { Page, View, EventData, ContentView } from '@nativescript/core/ui/page';
+import { Page, View, EventData, ContentView } from '@nativescript/core';
 import { LayoutBase } from '@nativescript/core/ui/layouts/layout-base';
 import NativeElementNode, { NativeElementPropConfig } from './NativeElementNode';
 

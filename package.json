@@ -21,7 +21,7 @@
   "author": "David Pershouse",
   "license": "MIT",
   "peerDependencies": {
-    "@nativescript/core": "^6.4.2",
+    "@nativescript/core": "rc-esm",
     "svelte": "~3.19.1"
   },
   "devDependencies": {
@@ -31,7 +31,8 @@
     "rollup-plugin-svelte": "^5.1.0",
     "rollup-plugin-typescript2": "^0.25.2",
     "svelte": "~3.19.1",
-    "@nativescript/core": "~6.4.2",
+    "@nativescript/core": "rc-esm",
+    "@nativescript/types": "rc",
     "typescript": "^3.7.2",
     "rimraf": "^2.6.3"
   }

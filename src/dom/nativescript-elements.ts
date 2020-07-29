@@ -49,7 +49,6 @@ export function registerNativeElements() {
     'ActivityIndicator',
     () => require('@nativescript/core/ui/activity-indicator').ActivityIndicator
   )
-  registerNativeViewElement('Border', () => require('@nativescript/core/ui/border').Border)
   registerNativeViewElement('Button', () => require('@nativescript/core/ui/button').Button)
   registerNativeViewElement(
     'ContentView',

@@ -2,7 +2,7 @@ import { registerSvelteElements } from './svelte-elements'
 import { registerNativeElements } from './nativescript-elements'
 import SvelteNativeDocument from './svelte/SvelteNativeDocument'
 import NativeViewElementNode from './native/NativeViewElementNode'
-import { write, messageType } from '@nativescript/core/trace'
+import { Trace } from '@nativescript/core'
 import { logger, LogLevel } from './basicdom'
 import { View } from '@nativescript/core/ui/core/view'
 
@@ -70,14 +70,14 @@ export const DomTraceCategory = 'SvelteNativeDom'
 
 function initializeLogger() {
     logger.setHandler((message, level) => {
-        let traceLevel = messageType.log
+        let traceLevel = Trace.messageType.log
         switch (level) {
-            case LogLevel.Debug: traceLevel = messageType.log; break;
-            case LogLevel.Info: traceLevel = messageType.info; break;
-            case LogLevel.Warn: traceLevel = messageType.warn; break;
-            case LogLevel.Error: traceLevel = messageType.error; break;
+            case LogLevel.Debug: traceLevel = Trace.messageType.log; break;
+            case LogLevel.Info: traceLevel = Trace.messageType.info; break;
+            case LogLevel.Warn: traceLevel = Trace.messageType.warn; break;
+            case LogLevel.Error: traceLevel = Trace.messageType.error; break;
         }
-        write(message, DomTraceCategory, traceLevel)
+        Trace.write(message, DomTraceCategory, traceLevel)
     })
 }
 
