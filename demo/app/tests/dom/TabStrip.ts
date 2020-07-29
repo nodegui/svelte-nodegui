@@ -1,5 +1,5 @@
 import { NativeViewElementNode, createElement, initializeDom } from "svelte-native/dom";
-import { TabStrip } from "@nativescript/core/ui/tab-navigation-base/tab-strip/tab-strip";
+import { TabStrip } from "@nativescript/core/ui";
 import { tick } from "svelte";
 import TabsHarness from './TabsHarness.svelte'
 

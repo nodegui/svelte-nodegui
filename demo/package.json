@@ -5,7 +5,7 @@
       "version": "6.4.2"
     },
     "tns-android": {
-      "version": "6.4.1"
+      "version": "6.5.3"
     }
   },
   "description": "NativeScript Application",
@@ -17,7 +17,7 @@
     "nativescript-unit-test-runner": "^0.7.0",
     "svelte-native": "file:../dist",
     "svelte-native-nativescript-ui": "0.6.1",
-    "@nativescript/core": "~6.4.2"
+    "@nativescript/core": "rc-esm"
   },
   "devDependencies": {
     "@types/chai": "^4.2.4",
@@ -30,11 +30,11 @@
     "karma-nativescript-launcher": "^0.4.0",
     "karma-webpack": "4.0.2",
     "mocha": "6.2.0",
-    "nativescript-dev-webpack": "^1.5.1",
-    "svelte": "~3.19.1",
+    "nativescript-dev-webpack": "~1.5.1",
+    "svelte": "~3.24.0",
     "svelte-loader": "halfnelson/svelte-loader#fix-virtual-purge",
-    "svelte-native-preprocessor": "~0.1.6",
-    "typescript": "3.7.2"
+    "svelte-native-preprocessor": "~0.2.0",
+    "typescript": "3.9.7"
   },
   "readme": "NativeScript Application"
 }

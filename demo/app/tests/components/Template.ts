@@ -1,7 +1,7 @@
 import { Template } from "svelte-native/components"
 import TemplateHarness from './TemplateHarness.svelte'
 import { createElement, initializeDom } from "svelte-native/dom";
-import { Label } from "@nativescript/core/ui/label/label";
+import { Label } from "@nativescript/core/ui";
 import { NativeViewElementNode } from "svelte-native/dom";
 
 before(() => { initializeDom(); });

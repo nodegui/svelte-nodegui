@@ -1,7 +1,7 @@
 import { createElement, NativeViewElementNode, initializeDom } from 'svelte-native/dom'
 import PropDirectiveHarness from './PropDirectiveHarness.svelte'
-import { Label } from '@nativescript/core/ui/label/label';
-import { StackLayout } from '@nativescript/core/ui/layouts/stack-layout/stack-layout';
+import { Label } from '@nativescript/core/ui';
+import { StackLayout } from '@nativescript/core/ui';
 
 describe('PropDirective', function () {
     let test_subject: NativeViewElementNode<StackLayout>
