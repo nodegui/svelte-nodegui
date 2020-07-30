@@ -99,7 +99,7 @@ export class PreviewService {
                 file: "app.css",
                 binary: false,
                 fileContents: `
-                    @import '~nativescript-theme-core/css/core.light.css';
+                    @import '~@nativescript/theme/css/core.light.css';
                 `
             },
             {

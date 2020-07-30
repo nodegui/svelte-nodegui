@@ -27,10 +27,7 @@ function module_defs() {
       input: `src/${mod}/index.ts`,
       output: [{
         file: `dist/${mod}/index.js`,
-        format: 'cjs',
-      }, {
-        file: `dist/${mod}/index.mjs`,
-        format: 'esm'
+        format: 'esm',
       }],
       external: (id) => [...externalModules, ...localModules.filter(m => m != mod).map(m => `../${m}`)].some(prefix => id.startsWith(prefix)),
       plugins: plugins
@@ -45,10 +42,6 @@ export default [
     input: 'src/index.ts',
     output: [{
       file: "dist/index.js",
-      format: 'cjs',
-    },
-    {
-      file: "dist/index.mjs",
       format: 'esm',
     }
     ],

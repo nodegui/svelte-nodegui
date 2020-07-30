@@ -13,7 +13,7 @@ describe('NativeElementNode', function () {
     let test_subject: NativeViewElementNode<Label>;
     before(async function () {
         let el = createElement('fragment');
-        let harness = new NativeElementHarness({ target: el });
+        let harness = new NativeElementHarness({ target: el  as any});
         test_subject = (harness as any).test_subject
         assert.isNotNull(test_subject)
     })
@@ -46,7 +46,7 @@ describe('NativeElementNode mounting', function () {
     let mount_parent: { $destroy: any, stack: NativeViewElementNode<StackLayout>, first: NativeViewElementNode<Label>, last: NativeViewElementNode<Label> } = null;
     beforeEach(async function () {
         let el = createElement('fragment');
-        let harness = new MountParent({ target: el });
+        let harness = new MountParent({ target: el as any });
         mount_parent = (harness as any);
     })
 
@@ -62,7 +62,7 @@ describe('NativeElementNode mounting', function () {
     }
 
     it('can mount child element at the end', function () {
-        let mount_child: { $destroy: any, childA: NativeViewElementNode<Label>, childB: NativeViewElementNode<Label> } = new MountChild({ target: mount_parent.stack }) as any;
+        let mount_child: { $destroy: any, childA: NativeViewElementNode<Label>, childB: NativeViewElementNode<Label> } = new MountChild({ target: mount_parent.stack as any }) as any;
         try {
             assertChildrenMatch(mount_parent.stack.nativeView, [
                 mount_parent.first.nativeView,
@@ -77,7 +77,7 @@ describe('NativeElementNode mounting', function () {
     })
 
     it('can mount child element before an anchor', function () {
-        let mount_child: { $destroy: any, childA: NativeViewElementNode<Label>, childB: NativeViewElementNode<Label> } = new MountChild({ target: mount_parent.stack, anchor: mount_parent.last }) as any;
+        let mount_child: { $destroy: any, childA: NativeViewElementNode<Label>, childB: NativeViewElementNode<Label> } = new MountChild({ target: mount_parent.stack as any, anchor: mount_parent.last as any }) as any;
         try {
             assertChildrenMatch(mount_parent.stack.nativeView, [
                 mount_parent.first.nativeView,
@@ -92,7 +92,7 @@ describe('NativeElementNode mounting', function () {
     })
 
     it('can mount child element at the start', function () {
-        let mount_child: { $destroy: any, childA: NativeViewElementNode<Label>, childB: NativeViewElementNode<Label> } = new MountChild({ target: mount_parent.stack, anchor: mount_parent.first }) as any;
+        let mount_child: { $destroy: any, childA: NativeViewElementNode<Label>, childB: NativeViewElementNode<Label> } = new MountChild({ target: mount_parent.stack as any, anchor: mount_parent.first as any }) as any;
         try {
             assertChildrenMatch(mount_parent.stack.nativeView, [
                 mount_child.childA.nativeView,

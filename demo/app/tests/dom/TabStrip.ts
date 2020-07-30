@@ -9,7 +9,7 @@ describe('TabStrip', function () {
     before(async function () {
         initializeDom();
         let el = createElement('fragment');
-        harness = new TabsHarness({ target: el });
+        harness = new TabsHarness({ target: el as any });
         test_subject = (harness as any).tab_strip_subject;
         assert.isDefined(test_subject);
     })
