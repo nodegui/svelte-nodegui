@@ -51,7 +51,15 @@ function getNormalizedKeysForObject(obj: any, knownPropNames: string[]): Map<str
 
     //infer the rest from the passed object (including updating any incorrect known prop names if found)
     for (let p in obj) {
-        props.set(p.toLowerCase(), p)
+        if (!p.startsWith('_') && !p.startsWith('css:') && p.indexOf('-') === -1) {
+            props.set(p.toLowerCase(), p)
+        }
+    }
+    // in esm we need to also check styles properties (to get recursive props)
+    for (let p in (obj.style)) {
+        if (!p.startsWith('_') && !p.startsWith('css:') && p.indexOf('-') === -1) {
+            props.set(p.toLowerCase(), p)
+        }
     }
 
     return props;
