@@ -4,7 +4,7 @@ import SvelteNativeDocument from './svelte/SvelteNativeDocument'
 import NativeViewElementNode from './native/NativeViewElementNode'
 import { write, messageType } from '@nativescript/core/trace'
 import { logger, LogLevel } from './basicdom'
-import { View } from '@nativescript/core/ui/core/view'
+import { View, traceEnabled } from '@nativescript/core/ui/core/view'
 
 export { default as HeadElement } from './svelte/HeadElement'
 export { default as TemplateElement } from './svelte/TemplateElement'
@@ -70,6 +70,7 @@ export const DomTraceCategory = 'SvelteNativeDom'
 
 function initializeLogger() {
     logger.setHandler((message, level) => {
+        
         let traceLevel = messageType.log
         switch (level) {
             case LogLevel.Debug: traceLevel = messageType.log; break;
@@ -77,7 +78,9 @@ function initializeLogger() {
             case LogLevel.Warn: traceLevel = messageType.warn; break;
             case LogLevel.Error: traceLevel = messageType.error; break;
         }
-        write(message, DomTraceCategory, traceLevel)
+        if (traceEnabled() || traceLevel == messageType.error) {
+            write(message(), DomTraceCategory, traceLevel)
+        }
     })
 }
 

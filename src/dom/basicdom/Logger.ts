@@ -5,7 +5,7 @@ export enum LogLevel {
     Error
 }
 
-type LoggerCallback = (message: string, level: LogLevel) => void
+type LoggerCallback = (message: () => string, level: LogLevel) => void
 
 class Logger {
     onLog: LoggerCallback
@@ -19,7 +19,7 @@ class Logger {
     }
 
     log(message: () => string, level: LogLevel) {
-        if (this.onLog) this.onLog(message(), level);
+        if (this.onLog) this.onLog(message, level);
     }
 
     debug(message: () => string): void {
