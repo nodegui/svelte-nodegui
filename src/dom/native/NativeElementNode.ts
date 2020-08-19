@@ -14,15 +14,23 @@ export interface NativeElementPropConfig {
     [key: string]: NativeElementPropType
 }
 
-function setOnArrayProp(parent: any, value: any, propName: string, build: (value: any) => any = null) {
+function setOnArrayProp(parent: any, value: any, propName: string, index: number, build: (value: any) => any = null) {
     let current = parent[propName];
     if (!current || !current.push) {
         parent[propName] = build ? build(value) : [value];
     } else {
         if (current instanceof ObservableArray) {
-            current.push(value)
+            if (index > -1) {
+                current.splice(index, 0, value)
+            } else {
+                current.push(value);
+            }
         } else {
-            parent[propName] = [...current, value];
+            if (index > -1) {
+                parent[propName] = current.splice(index, 0, value).slice();
+            } else {
+                parent[propName] = [...current, value];
+            }
         }
     }
 }
@@ -30,9 +38,10 @@ function setOnArrayProp(parent: any, value: any, propName: string, build: (value
 function removeFromArrayProp(parent: any, value: any, propName: string) {
     let current = parent[propName];
     if (!current || !current.splice) {
-        let idx = current.indexOf(value);
-        if (idx >= 0) current.splice(idx, 1);
+        return;
     }
+    let idx = current.indexOf(value);
+    if (idx >= 0) current.splice(idx, 1);
 }
 
 const _normalizedKeys: Map<any, Map<string, string>> = new Map();
@@ -138,10 +147,10 @@ export default class NativeElementNode<T> extends ElementNode {
         propName = this._normalizedKeys.get(propName) || propName
         switch (this.propConfig[propName]) {
             case NativeElementPropType.Array:
-                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName)
+                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, index)
                 return;
             case NativeElementPropType.ObservableArray:
-                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, (v) => new ObservableArray(v))
+                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, index, (v) => new ObservableArray(v))
                 return;
             default:
                 this.setAttribute(propName, childNode);
@@ -158,7 +167,7 @@ export default class NativeElementNode<T> extends ElementNode {
         switch (this.propConfig[propName]) {
             case NativeElementPropType.Array:
             case NativeElementPropType.ObservableArray:
-                removeFromArrayProp(this.nativeElement, childNode, propName)
+                removeFromArrayProp(this.nativeElement, childNode.nativeElement, propName)
                 return;
             default:
                 this.setAttribute(propName, null);
