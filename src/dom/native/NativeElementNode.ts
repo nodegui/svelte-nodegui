@@ -27,7 +27,9 @@ function setOnArrayProp(parent: any, value: any, propName: string, index: number
             }
         } else {
             if (index > -1) {
-                parent[propName] = current.splice(index, 0, value).slice();
+                const newArr = current.slice();
+                newArr.splice(index, 0, value);
+                parent[propName] = newArr
             } else {
                 parent[propName] = [...current, value];
             }
@@ -40,8 +42,18 @@ function removeFromArrayProp(parent: any, value: any, propName: string) {
     if (!current || !current.splice) {
         return;
     }
+    
     let idx = current.indexOf(value);
-    if (idx >= 0) current.splice(idx, 1);
+    if (idx < 0) return;
+        
+
+    if (current instanceof ObservableArray) {
+        current.splice(idx, 1);
+    } else {
+        const newArr = current.slice()
+        newArr.splice(idx, 1);
+        parent[propName] = newArr
+    }
 }
 
 const _normalizedKeys: Map<any, Map<string, string>> = new Map();
