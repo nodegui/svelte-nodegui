@@ -79,7 +79,11 @@ export default class NativeElementNode<T> extends ElementNode {
         super(tagName);
         this.propConfig = propConfig
         this.propAttribute = setsParentProp
-        this._nativeElement = new elementClass();
+        try {
+            this._nativeElement = new elementClass();
+        } catch(err) {
+            throw new Error(`[NativeElementNode] failed to created native element for tag ${tagName}`);
+        }
         this._normalizedKeys = getNormalizedKeysForObject(this._nativeElement, Object.keys(this.propConfig));
 
         (this._nativeElement as any).__SvelteNativeElement__ = this;
