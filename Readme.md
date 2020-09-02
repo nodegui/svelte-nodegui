@@ -1,6 +1,6 @@
 # Svelte Native
 
-Create Mobile applications using native widgets via Svelte [Svelte](https://github.com/sveltejs/svelte) and [NativeScript](https://github.com/nativescript/nativescript).
+Create Mobile applications using native widgets via [Svelte](https://github.com/sveltejs/svelte) and [NativeScript](https://github.com/nativescript/nativescript).
 
 See https://svelte-native.technology for docs and tutorials
 
