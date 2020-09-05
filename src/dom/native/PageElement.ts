@@ -1,4 +1,4 @@
-import { Page } from '@nativescript/core/ui/page'
+import { Page } from '@nativescript/core'
 import NativeViewElementNode from './NativeViewElementNode';
 
 

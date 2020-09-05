@@ -10,6 +10,7 @@ of writing your own CSS rules. For a full list of class names in the theme
 refer to http://docs.nativescript.org/ui/theme. 
 The imported CSS rules must precede all other types of rules.
 */
-@import '~nativescript-theme-core/css/core.css';
+@import '~@nativescript/theme/css/core.css';
+@import '~@nativescript/theme/css/default.css';
 @import './font-awesome.css';
 

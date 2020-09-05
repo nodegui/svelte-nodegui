@@ -7,7 +7,7 @@ describe('PropertyNode', function () {
     before(() => { initializeDom(); });
     before(async function () {
         let el = createElement('fragment');
-        let harness = new PropertyNodeHarness({ target: el });
+        let harness = new PropertyNodeHarness({ target: el as any });
         test_subject = (harness as any).test_subject
         assert.isNotNull(test_subject)
     })

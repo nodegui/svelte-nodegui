@@ -1,4 +1,4 @@
-import { ActionBar } from '@nativescript/core/ui/action-bar'
+import { ActionBar } from '@nativescript/core'
 import NativeViewElementNode from './NativeViewElementNode';
 import { ViewNode } from '../basicdom';
 import NativeElementNode from './NativeElementNode';

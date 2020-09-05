@@ -9,7 +9,7 @@ describe('Tabs', function () {
     before(async function () {
         initializeDom()
         let el = createElement('fragment');
-        harness = new TabsHarness({ target: el });
+        harness = new TabsHarness({ target: el  as any});
         test_subject = (harness as any).test_subject
         assert.isDefined(test_subject);
     })

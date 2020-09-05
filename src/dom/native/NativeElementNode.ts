@@ -1,8 +1,6 @@
-
 import { logger as log, ViewNode, registerElement } from '../basicdom'
-import { isAndroid, isIOS } from '@nativescript/core/ui/page';
+import { isAndroid, isIOS, ObservableArray } from '@nativescript/core';
 import ElementNode from '../basicdom/ElementNode';
-import { ObservableArray } from '@nativescript/core/data/observable-array/observable-array';
 
 export enum NativeElementPropType {
     Value,
@@ -70,9 +68,22 @@ function getNormalizedKeysForObject(obj: any, knownPropNames: string[]): Map<str
     //include known props
     knownPropNames.forEach(p => props.set(p.toLowerCase(), p));
 
+    // some are defined with get/set which for whatever reason, in nativescript wont show up in either getOwnPropertyNames, getOwnObjectDescriptors
+    // etc, on both the object itself or its prototype. Looks like they have the same problem themselves and use the 'knownFunctions' key
+    // as a work around.
+    obj?.constructor?.knownFunctions?.forEach?.((p: string) => props.set(p.toLowerCase(), p));
+    
     //infer the rest from the passed object (including updating any incorrect known prop names if found)
     for (let p in obj) {
-        props.set(p.toLowerCase(), p)
+        if (!p.startsWith('_') && !p.startsWith('css:') && p.indexOf('-') === -1) {
+            props.set(p.toLowerCase(), p)
+        }
+    }
+    // in esm we need to also check styles properties (to get recursive props)
+    for (let p in (obj.style)) {
+        if (!p.startsWith('_') && !p.startsWith('css:') && p.indexOf('-') === -1) {
+            props.set(p.toLowerCase(), p)
+        }
     }
 
     return props;
@@ -103,7 +114,7 @@ export default class NativeElementNode<T> extends ElementNode {
         try {
             this._nativeElement = new elementClass();
         } catch(err) {
-            throw new Error(`[NativeElementNode] failed to created native element for tag ${tagName}`);
+            throw new Error(`[NativeElementNode] failed to created native element for tag ${tagName}: ${err}`);
         }
         this._normalizedKeys = getNormalizedKeysForObject(this._nativeElement, Object.keys(this.propConfig));
 

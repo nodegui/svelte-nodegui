@@ -1,4 +1,4 @@
-import { NavigationTransition, Frame, Page, BackstackEntry, ViewBase, NavigatedData, View } from "@nativescript/core/ui/frame";
+import { ViewBase, View, NavigatedData, NavigationTransition, Frame, BackstackEntry } from "@nativescript/core";
 import FrameElement from "./native/FrameElement";
 import { createElement, logger as log } from "./basicdom";
 import PageElement from "./native/PageElement";

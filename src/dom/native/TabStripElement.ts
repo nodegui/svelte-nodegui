@@ -1,6 +1,6 @@
 import { ViewNode, logger as log } from "../basicdom";
-import { TabStrip } from '@nativescript/core/ui/tab-navigation-base/tab-strip';
-import { TabStripItem } from '@nativescript/core/ui/tab-navigation-base/tab-strip-item';
+import { TabStrip, TabStripItem } from '@nativescript/core';
+
 import NativeViewElementNode from "./NativeViewElementNode";
 
 export default class TabStripElement extends NativeViewElementNode<TabStrip> {

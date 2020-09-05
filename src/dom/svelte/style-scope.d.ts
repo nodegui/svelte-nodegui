@@ -8,7 +8,7 @@ declare module "@nativescript/core/ui/styling/style-scope" {
 }
 
 declare module "@nativescript/core/ui/styling/css-animation-parser" {
-    import { KeyframeDeclaration, KeyframeAnimationInfo } from "@nativescript/core/ui/animation/keyframe-animation";
+    import { KeyframeDeclaration, KeyframeAnimationInfo } from "@nativescript/core";
 
     export class CssAnimationParser {
         public static keyframeAnimationsFromCSSDeclarations(declarations: Array<KeyframeDeclaration>): Array<KeyframeAnimationInfo>

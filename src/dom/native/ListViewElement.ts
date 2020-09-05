@@ -1,9 +1,7 @@
-import { ListView, ItemEventData, ItemsSource } from '@nativescript/core/ui/list-view'
+import { ListView, ItemEventData, ItemsSource, View } from '@nativescript/core'
 import TemplateElement from '../svelte/TemplateElement';
 import { createElement, logger as log, ViewNode } from '../basicdom';
 import NativeViewElementNode from './NativeViewElementNode';
-import { View } from '@nativescript/core/ui/core/view';
-
 
 export class SvelteKeyedTemplate {
     _key: string;

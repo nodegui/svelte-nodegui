@@ -1,7 +1,7 @@
 import { createElement, NativeViewElementNode, initializeDom } from 'svelte-native/dom'
 import PropDirectiveHarness from './PropDirectiveHarness.svelte'
-import { Label } from '@nativescript/core/ui/label/label';
-import { StackLayout } from '@nativescript/core/ui/layouts/stack-layout/stack-layout';
+import { Label } from '@nativescript/core/ui';
+import { StackLayout } from '@nativescript/core/ui';
 
 describe('PropDirective', function () {
     let test_subject: NativeViewElementNode<StackLayout>
@@ -9,7 +9,7 @@ describe('PropDirective', function () {
     before(() => { initializeDom(); });
     before(async function () {
         let el = createElement('fragment');
-        harness = new PropDirectiveHarness({ target: el });
+        harness = new PropDirectiveHarness({ target: el  as any});
         test_subject = (harness as any).test_subject
         assert.isNotNull(test_subject)
     })
