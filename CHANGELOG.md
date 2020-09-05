@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.2]
+  - Test harness is working again
+  - Fixed regression for tabstrip item removal
+  - Resolved more property names
+
 ## [0.9.1]
   - Nativescript 7 support
   - Resolve [Object object] in listview when using itemTemplateSelector
