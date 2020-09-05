@@ -8,7 +8,7 @@
     "nativescript-ui-sidedrawer": "^9.0.3",
     "nativescript-unit-test-runner": "^0.7.0",
     "svelte-native": "file:../dist",
-    "svelte-native-nativescript-ui": "file:../../svelte-native-nativescript-ui/dist",
+    "svelte-native-nativescript-ui": "0.9.0",
     "@nativescript/webpack": "3.0.0"
   },
   "devDependencies": {
@@ -22,7 +22,7 @@
     "karma-mocha": "2.0.1",
     "karma-nativescript-launcher": "0.4.0",
     "karma-webpack": "3.0.5",
-    "mocha": "8.0.1",
+    "mocha": "^8.1.3",
     "svelte": "~3.24.0",
     "svelte-loader": "halfnelson/svelte-loader#fix-virtual-purge",
     "svelte-native-preprocessor": "~0.2.0",
