@@ -1,13 +1,12 @@
-import { NativeViewElementNode, createElement, initializeDom } from "svelte-native/dom";
+import { NativeViewElementNode, createElement } from "svelte-native/dom";
 import { TabStrip } from "@nativescript/core/ui";
-import { tick } from "svelte";
 import TabsHarness from './TabsHarness.svelte'
+import { tick } from "svelte";
 
-describe('TabStrip', function () {
+describe('TabStrip', async function () {
     let test_subject: NativeViewElementNode<TabStrip>;
     let harness: TabsHarness;
     before(async function () {
-        initializeDom();
         let el = createElement('fragment');
         harness = new TabsHarness({ target: el as any });
         test_subject = (harness as any).tab_strip_subject;

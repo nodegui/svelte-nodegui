@@ -59,6 +59,7 @@ const _normalizedKeys: Map<any, Map<string, string>> = new Map();
 function getNormalizedKeysForObject(obj: any, knownPropNames: string[]): Map<string, string> {
     let proto = Object.getPrototypeOf(obj);
     let m = _normalizedKeys.get(proto);
+    
     if (m) return m;
 
     //calculate our prop names
@@ -74,13 +75,8 @@ function getNormalizedKeysForObject(obj: any, knownPropNames: string[]): Map<str
     obj?.constructor?.knownFunctions?.forEach?.((p: string) => props.set(p.toLowerCase(), p));
     
     //infer the rest from the passed object (including updating any incorrect known prop names if found)
-    for (let p in obj) {
-        if (!p.startsWith('_') && !p.startsWith('css:') && p.indexOf('-') === -1) {
-            props.set(p.toLowerCase(), p)
-        }
-    }
-    // in esm we need to also check styles properties (to get recursive props)
-    for (let p in (obj.style)) {
+    const propNames = Object.getOwnPropertyNames(obj).concat(Object.getOwnPropertyNames(Object.getPrototypeOf(obj))).concat(Object.getOwnPropertyNames(obj.style));
+    for (let p of propNames) {
         if (!p.startsWith('_') && !p.startsWith('css:') && p.indexOf('-') === -1) {
             props.set(p.toLowerCase(), p)
         }

@@ -34,6 +34,7 @@ export default class TabStripElement extends NativeViewElementNode<TabStrip> {
                 let items = (this.nativeView.items || []).filter(i => i != childNode.nativeView);
                 this.nativeView.items = [];
                 this.nativeView.items = items;
+                return;
             }
         } catch (e) {
             console.error(e);

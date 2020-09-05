@@ -1,4 +1,4 @@
-import { createElement, NativeElementNode, NativeViewElementNode, initializeDom } from 'svelte-native/dom'
+import { createElement, NativeElementNode, NativeViewElementNode } from 'svelte-native/dom'
 import NativeElementHarness from './NativeElementHarness.svelte'
 import MountParent from './MountParent.svelte'
 import MountChild from './MountChild.svelte'
@@ -8,14 +8,13 @@ import { StackLayout } from '@nativescript/core/ui/layouts/stack-layout'
 
 describe('NativeElementNode', function () {
     
-    before(() => { initializeDom(); });
 
     let test_subject: NativeViewElementNode<Label>;
     before(async function () {
         let el = createElement('fragment');
         let harness = new NativeElementHarness({ target: el  as any});
         test_subject = (harness as any).test_subject
-        assert.isNotNull(test_subject)
+        assert.isDefined(test_subject)
     })
 
     it('sets known properties onto its nativeView', function () {

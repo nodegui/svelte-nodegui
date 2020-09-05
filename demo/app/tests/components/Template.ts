@@ -1,15 +1,14 @@
 import { Template } from "svelte-native/components"
 import TemplateHarness from './TemplateHarness.svelte'
-import { createElement, initializeDom } from "svelte-native/dom";
+import { createElement } from "svelte-native/dom";
 import { Label } from "@nativescript/core/ui";
 import { NativeViewElementNode } from "svelte-native/dom";
 
-before(() => { initializeDom(); });
 describe('Template', function () {
 
 
     it('can be instantiated', function () {
-        this.enableTimeouts(false);
+        //this.enableTimeouts(false);
         let dummy = createElement('fragment');
         let c = new Template({ target: dummy });
         assert.isNotNull(c)

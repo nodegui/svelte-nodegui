@@ -1,4 +1,4 @@
-import { createElement, TabsElement, NativeViewElementNode, initializeDom } from 'svelte-native/dom'
+import { createElement, TabsElement } from 'svelte-native/dom'
 import { tick } from 'svelte';
 import TabsHarness from './TabsHarness.svelte'
 
@@ -7,9 +7,8 @@ describe('Tabs', function () {
     let test_subject: TabsElement;
     let harness: TabsHarness;
     before(async function () {
-        initializeDom()
         let el = createElement('fragment');
-        harness = new TabsHarness({ target: el  as any});
+        harness = new TabsHarness({ target: el as any });
         test_subject = (harness as any).test_subject
         assert.isDefined(test_subject);
     })
@@ -21,7 +20,6 @@ describe('Tabs', function () {
     it('it assigns child tabcontentitems to items property', function () {
         assert.isNotNull(test_subject.nativeView.items);
         assert.equal(test_subject.nativeView.items.length, 1);
-
     })
 
     it('has the right content showing', function () {

@@ -6,7 +6,6 @@
     "@nativescript/core": "7.0.0",
     "@nativescript/theme": "^2.3.3",
     "nativescript-ui-sidedrawer": "^9.0.3",
-    "nativescript-unit-test-runner": "^0.7.0",
     "svelte-native": "file:../dist",
     "svelte-native-nativescript-ui": "0.9.0",
     "@nativescript/webpack": "3.0.0"
@@ -15,8 +14,8 @@
     "@nativescript/android": "7.0.0",
     "@types/chai": "^4.2.4",
     "@types/karma-chai": "0.1.1",
-    "@types/mocha": "^5.2.7",
-    "chai": "*",
+    "@types/mocha": "^8.0.3",
+    "chai": "4.2.0",
     "karma": ">=0.10.9",
     "karma-chai": "0.1.0",
     "karma-mocha": "2.0.1",
@@ -26,7 +25,8 @@
     "svelte": "~3.24.0",
     "svelte-loader": "halfnelson/svelte-loader#fix-virtual-purge",
     "svelte-native-preprocessor": "~0.2.0",
-    "typescript": "3.9.7"
+    "typescript": "3.9.7",
+    "@nativescript/unit-test-runner": "1.0.0"
   },
   "readme": "NativeScript Application",
   "main": "app.js"

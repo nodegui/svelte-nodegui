@@ -11,7 +11,7 @@ module.exports = function (config) {
 
 
     // list of files / patterns to load in the browser
-    files: ['app/tests/**/*.js'],
+    files: ['app/tests/start.ts', 'app/tests/components/*.ts', 'app/tests/dom/*.ts'],
 
 
     // list of files to exclude
@@ -100,7 +100,7 @@ function setWebpack(config, options) {
     env[config.platform] = true;
     env.sourceMap = config.debugBrk;
     env.appPath = config.appPath;
-    options.webpack = require('./webpack.config')(env);
+    options.webpack = require('./svelte-native.webpack.config')(env);
     delete options.webpack.entry;
     delete options.webpack.output.libraryTarget;
     const invalidPluginsForUnitTesting = ["GenerateBundleStarterPlugin", "GenerateNativeScriptEntryPointsPlugin"];

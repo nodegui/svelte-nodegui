@@ -1,4 +1,4 @@
-import { createElement, NativeViewElementNode, initializeDom } from 'svelte-native/dom'
+import { createElement, NativeViewElementNode } from 'svelte-native/dom'
 import PropDirectiveHarness from './PropDirectiveHarness.svelte'
 import { Label } from '@nativescript/core/ui';
 import { StackLayout } from '@nativescript/core/ui';
@@ -6,7 +6,7 @@ import { StackLayout } from '@nativescript/core/ui';
 describe('PropDirective', function () {
     let test_subject: NativeViewElementNode<StackLayout>
     let harness;
-    before(() => { initializeDom(); });
+
     before(async function () {
         let el = createElement('fragment');
         harness = new PropDirectiveHarness({ target: el  as any});
