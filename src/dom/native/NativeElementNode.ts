@@ -14,15 +14,25 @@ export interface NativeElementPropConfig {
     [key: string]: NativeElementPropType
 }
 
-function setOnArrayProp(parent: any, value: any, propName: string, build: (value: any) => any = null) {
+function setOnArrayProp(parent: any, value: any, propName: string, index: number, build: (value: any) => any = null) {
     let current = parent[propName];
     if (!current || !current.push) {
         parent[propName] = build ? build(value) : [value];
     } else {
         if (current instanceof ObservableArray) {
-            current.push(value)
+            if (index > -1) {
+                current.splice(index, 0, value)
+            } else {
+                current.push(value);
+            }
         } else {
-            parent[propName] = [...current, value];
+            if (index > -1) {
+                const newArr = current.slice();
+                newArr.splice(index, 0, value);
+                parent[propName] = newArr
+            } else {
+                parent[propName] = [...current, value];
+            }
         }
     }
 }
@@ -30,8 +40,19 @@ function setOnArrayProp(parent: any, value: any, propName: string, build: (value
 function removeFromArrayProp(parent: any, value: any, propName: string) {
     let current = parent[propName];
     if (!current || !current.splice) {
-        let idx = current.indexOf(value);
-        if (idx >= 0) current.splice(idx, 1);
+        return;
+    }
+    
+    let idx = current.indexOf(value);
+    if (idx < 0) return;
+        
+
+    if (current instanceof ObservableArray) {
+        current.splice(idx, 1);
+    } else {
+        const newArr = current.slice()
+        newArr.splice(idx, 1);
+        parent[propName] = newArr
     }
 }
 
@@ -87,7 +108,11 @@ export default class NativeElementNode<T> extends ElementNode {
         super(tagName);
         this.propConfig = propConfig
         this.propAttribute = setsParentProp
-        this._nativeElement = new elementClass();
+        try {
+            this._nativeElement = new elementClass();
+        } catch(err) {
+            throw new Error(`[NativeElementNode] failed to created native element for tag ${tagName}`);
+        }
         this._normalizedKeys = getNormalizedKeysForObject(this._nativeElement, Object.keys(this.propConfig));
 
         (this._nativeElement as any).__SvelteNativeElement__ = this;
@@ -146,10 +171,10 @@ export default class NativeElementNode<T> extends ElementNode {
         propName = this._normalizedKeys.get(propName) || propName
         switch (this.propConfig[propName]) {
             case NativeElementPropType.Array:
-                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName)
+                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, index)
                 return;
             case NativeElementPropType.ObservableArray:
-                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, (v) => new ObservableArray(v))
+                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, index, (v) => new ObservableArray(v))
                 return;
             default:
                 this.setAttribute(propName, childNode);
@@ -166,7 +191,7 @@ export default class NativeElementNode<T> extends ElementNode {
         switch (this.propConfig[propName]) {
             case NativeElementPropType.Array:
             case NativeElementPropType.ObservableArray:
-                removeFromArrayProp(this.nativeElement, childNode, propName)
+                removeFromArrayProp(this.nativeElement, childNode.nativeElement, propName)
                 return;
             default:
                 this.setAttribute(propName, null);

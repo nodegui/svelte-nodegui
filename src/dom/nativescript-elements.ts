@@ -31,11 +31,8 @@ export function registerNativeElements() {
     () => require('@nativescript/core/ui/tab-view').TabViewItem
   )
 
-  // NS components which uses the automatic registerElement Vue wrapper
-  // as they do not need any special logic
-
   registerNativeViewElement('Label', () => require('@nativescript/core/ui/label').Label)
-
+  
   registerNativeViewElement(
     'DatePicker',
     () => require('@nativescript/core/ui/date-picker').DatePicker,
@@ -141,11 +138,12 @@ export function registerNativeElements() {
     'WrapLayout',
     () => require('@nativescript/core/ui/layouts/wrap-layout').WrapLayout
   )
-  registerNativeViewElement(
-    'FormattedString',
-    () => require('@nativescript/core/text/formatted-string').FormattedString
-  )
-  registerNativeViewElement('Span', () => require('@nativescript/core/text/span').Span)
+
+  registerNativeViewElement('FormattedString', () => require('@nativescript/core').FormattedString, "formattedText", {
+    "spans": NativeElementPropType.ObservableArray
+  })
+
+  registerNativeViewElement('Span', () => require('@nativescript/core/text/span').Span, "spans")
 
   registerElement('ActionBar', () => new ActionBarElement())
   registerElement('Frame', () => new FrameElement())

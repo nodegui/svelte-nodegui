@@ -104,7 +104,7 @@ export interface ShowModalOptions {
     ios?: { presentationStyle: any }
     animated?: boolean
     fullscreen?: boolean
-    stretched: boolean
+    stretched?: boolean
 }
 
 const modalStack: ComponentInstanceInfo[] = []
