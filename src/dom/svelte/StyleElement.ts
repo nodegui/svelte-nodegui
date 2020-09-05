@@ -1,6 +1,6 @@
 import { ElementNode, logger as log } from '../basicdom'
 import { StyleScope } from '@nativescript/core/ui/styling/style-scope'
-import { Frame } from '@nativescript/core/ui/frame'
+import { Frame } from '@nativescript/core'
 
 class StyleSheet {
 

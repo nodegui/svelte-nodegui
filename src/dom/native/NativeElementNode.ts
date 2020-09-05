@@ -1,8 +1,6 @@
-
 import { logger as log, ViewNode, registerElement } from '../basicdom'
-import { isAndroid, isIOS } from '@nativescript/core';
+import { isAndroid, isIOS, ObservableArray } from '@nativescript/core';
 import ElementNode from '../basicdom/ElementNode';
-import { ObservableArray } from '@nativescript/core/data/observable-array';
 
 export enum NativeElementPropType {
     Value,

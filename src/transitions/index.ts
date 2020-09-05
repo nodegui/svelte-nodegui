@@ -1,7 +1,8 @@
-import { Animation, AnimationDefinition, CubicBezierAnimationCurve, Pair } from "@nativescript/core/ui/animation";
+import { CubicBezierAnimationCurve, Pair } from "@nativescript/core/ui/animation";
 import { AnimationCurve } from "@nativescript/core/ui/enums";
+import { Animation, AnimationDefinition, Color, View } from "@nativescript/core";
+
 import { ease_in, ease_out, ease, linear, ease_in_out, animation_curve, normalizeCurve, partialCurveFrom, reverseCurve, CubicBezier } from "./bezier"
-import { Color, View } from "@nativescript/core";
 import * as easings from './easing'
 import { NativeViewElementNode } from "../dom";
 
