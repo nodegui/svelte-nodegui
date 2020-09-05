@@ -1,26 +1,18 @@
 {
-  "nativescript": {
-    "id": "org.nativescript.demo",
-    "tns-ios": {
-      "version": "6.4.2"
-    },
-    "tns-android": {
-      "version": "6.5.3"
-    }
-  },
   "description": "NativeScript Application",
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "<fill-your-repository-here>",
   "dependencies": {
-    "@nativescript/core": "rc-esm",
+    "@nativescript/core": "7.0.0",
     "@nativescript/theme": "^2.3.3",
-    "nativescript-ui-sidedrawer": "^8.0.1",
+    "nativescript-ui-sidedrawer": "^9.0.3",
     "nativescript-unit-test-runner": "^0.7.0",
     "svelte-native": "file:../dist",
-    "svelte-native-nativescript-ui": "0.8.1"
+    "svelte-native-nativescript-ui": "file:../../svelte-native-nativescript-ui/dist",
+    "@nativescript/webpack": "3.0.0"
   },
   "devDependencies": {
-    "@nativescript/webpack": "~2.0.1",
+    "@nativescript/android": "7.0.0",
     "@types/chai": "^4.2.4",
     "@types/karma-chai": "0.1.1",
     "@types/mocha": "^5.2.7",
@@ -36,5 +28,6 @@
     "svelte-native-preprocessor": "~0.2.0",
     "typescript": "3.9.7"
   },
-  "readme": "NativeScript Application"
+  "readme": "NativeScript Application",
+  "main": "app.js"
 }
