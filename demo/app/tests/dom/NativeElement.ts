@@ -19,6 +19,7 @@ describe('NativeElementNode', function () {
 
     it('sets known properties onto its nativeView', function () {
         assert.equal(test_subject.nativeElement.textWrap, true);
+        assert.equal(test_subject.nativeElement.horizontalAlignment, "center");
     })
 
     it('sets text node children as text property of nativeView', function () {
