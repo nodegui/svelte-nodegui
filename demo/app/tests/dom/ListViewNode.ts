@@ -19,4 +19,10 @@ describe('ListViewNode', function () {
         assert.equal(listview.itemTemplates.length, 2, `expected 2 keyed item templates`)
     })
 
+    it('sets the item template selector', async function () {
+        let listview = test_subject.nativeView;
+        assert.isDefined(listview.itemTemplateSelector)
+        assert.isNotNull(listview.itemTemplateSelector)
+    })
+
 });

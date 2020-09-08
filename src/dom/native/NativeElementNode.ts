@@ -69,17 +69,13 @@ function getNormalizedKeysForObject(obj: any, knownPropNames: string[]): Map<str
     //include known props
     knownPropNames.forEach(p => props.set(p.toLowerCase(), p));
 
-    // some are defined with get/set which for whatever reason, in nativescript wont show up in either getOwnPropertyNames, getOwnObjectDescriptors
-    // etc, on both the object itself or its prototype. Looks like they have the same problem themselves and use the 'knownFunctions' key
-    // as a work around.
-    obj?.constructor?.knownFunctions?.forEach?.((p: string) => props.set(p.toLowerCase(), p));
-    
     //infer the rest from the passed object (including updating any incorrect known prop names if found)
-    const propNames = Object.getOwnPropertyNames(obj).concat(Object.getOwnPropertyNames(Object.getPrototypeOf(obj))).concat(Object.getOwnPropertyNames(obj.style));
-    for (let p of propNames) {
-        if (!p.startsWith('_') && !p.startsWith('css:') && p.indexOf('-') === -1) {
-            props.set(p.toLowerCase(), p)
-        }
+    let item = obj;
+    while (item) {
+        Object.getOwnPropertyNames(item)
+            .filter(p => !p.startsWith('_') && !p.startsWith('css:') && p.indexOf('-') === -1)
+            .map(p => props.set(p.toLowerCase(), p));
+        item = Object.getPrototypeOf(item);
     }
 
     return props;
