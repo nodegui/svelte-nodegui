@@ -1,4 +1,4 @@
-import * as rollup from 'rollup/dist/rollup.browser.es.js';
+import * as rollup from 'rollup/dist/es/rollup.browser.js';
 import commonjs from './commonjs.js';
 import svelteNativePreprocessor from 'svelte-native-preprocessor'
 
@@ -141,11 +141,11 @@ async function get_bundle(uid, mode, cache, lookup) {
 			if (importee.startsWith('http:') || importee.startsWith('https:')) return importee;
 
 			if (importee == "svelte-native") {
-				return await follow_redirects(`${packagesUrl}/svelte-native/index.mjs`);
+				return await follow_redirects(`${packagesUrl}/svelte-native/index.js`);
 			}
 
 			if (importer && importer.startsWith(`${packagesUrl}/svelte-native`) && importee.startsWith('.')) {
-				const url = new URL(importee, importer).href + "/index.mjs"
+				const url = new URL(importee, importer).href + "/index.js"
 				return await follow_redirects(url);
 			}
 
@@ -301,7 +301,7 @@ export function reload() {
 			format: 'cjs',
 			name: 'App',
 		//	exports: 'named',
-			sourcemap: true
+			sourcemap: true,
 		})).output[0];
 
 		const ssr = false // TODO how can we do SSR?

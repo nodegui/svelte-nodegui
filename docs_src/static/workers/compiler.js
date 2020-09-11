@@ -12,7 +12,7 @@ self.addEventListener('message', async event => {
 				event.data.version === 'local' ?
 					'/repl/local?file=compiler.js' :
 					`https://unpkg.com/svelte@${event.data.version}/compiler.js`,
-				    `https://unpkg.com/svelte-native-preprocessor@0.1.8/dist/index.js`
+				    `https://unpkg.com/svelte-native-preprocessor@0.2.0/dist/index.js`
 			);
 			fulfil_ready();
 			break;

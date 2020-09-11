@@ -10,11 +10,13 @@ export default {
 	name: 'commonjs',
 
 	transform: (code, id) => {
+		
 		if (!/\b(require|module|exports)\b/.test(code)) return;
-
+		console.log('transforming commonjs ', id)
 		try {
 			const ast = acorn.parse(code, {
-				ecmaVersion: 9
+				ecmaVersion: 2015,
+				sourceType: 'module'
 			});
 
 			const requires = [];
