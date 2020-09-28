@@ -1,4 +1,4 @@
-import { logger as log, ViewNode, registerElement } from '../basicdom'
+import { logger as log, ViewNode, registerElement, logger } from '../basicdom'
 import { isAndroid, isIOS, ObservableArray } from '@nativescript/core';
 import ElementNode from '../basicdom/ElementNode';
 
@@ -13,6 +13,7 @@ export interface NativeElementPropConfig {
 }
 
 function setOnArrayProp(parent: any, value: any, propName: string, index: number, build: (value: any) => any = null) {
+    logger.debug(()=> `setOnArrayProp ${propName} index: ${index}`)
     let current = parent[propName];
     if (!current || !current.push) {
         parent[propName] = build ? build(value) : [value];
@@ -164,15 +165,23 @@ export default class NativeElementNode<T> extends ElementNode {
 
         //Special case Array and Observable Array keys
         propName = this._normalizedKeys.get(propName) || propName
+
+        if (!this.propConfig[propName] || this.propConfig[propName] == NativeElementPropType.Value) {
+            this.setAttribute(propName, childNode);
+            return;
+        }
+        
+        //our array index is based on how many items with the same prop attribute come before us
+        const allPropSetters = this.childNodes.filter(n => n instanceof NativeElementNode && n.propAttribute && n.propAttribute.toLowerCase() == propName.toLowerCase());
+        const myIndex = allPropSetters.indexOf(childNode)
+
         switch (this.propConfig[propName]) {
             case NativeElementPropType.Array:
-                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, index)
+                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, myIndex)
                 return;
             case NativeElementPropType.ObservableArray:
-                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, index, (v) => new ObservableArray(v))
+                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, myIndex, (v) => new ObservableArray(v))
                 return;
-            default:
-                this.setAttribute(propName, childNode);
         }
     }
 
