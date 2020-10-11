@@ -77,4 +77,4 @@ export function svelteNative(startPage: typeof SvelteComponent, data: any): Prom
 (global as any).window = { env: "Svelte Native" }
 
 
-export { navigate, goBack, showModal, closeModal, initializeDom, DomTraceCategory } from "./dom"
+export { initializeDom, DomTraceCategory } from "./dom"

@@ -1,12 +1,12 @@
-# Svelte Native
+# Svelte Desktop
 
-Create Mobile applications using native widgets via [Svelte](https://github.com/sveltejs/svelte) and [NativeScript](https://github.com/nativescript/nativescript).
+Create Desktop applications using native widgets via [Svelte](https://github.com/sveltejs/svelte) and [NodeGUI](https://github.com/nodegui/nodegui).
 
-See https://svelte-native.technology for docs and tutorials
+See http://docs.nodegui.org/ for docs and tutorials
 
-![todo in svelte-native](https://raw.githubusercontent.com/halfnelson/svelte-native/master/nativescript-svelte-todo.gif)
+<!-- ![todo in svelte-native](https://raw.githubusercontent.com/halfnelson/svelte-native/master/nativescript-svelte-todo.gif) -->
 
-## Features
+<!-- ## Features
 
 Svelte-Native includes Svelte specific integrations such as
 
@@ -91,7 +91,7 @@ Realworld implementation app in Svelte Native.
 
 See https://github.com/halfnelson/svelte-native-realworld for the repo.
 
-![Realworld Example Image](https://raw.githubusercontent.com/halfnelson/svelte-native-realworld/master/nativescript-svelte-realworld.gif)
+![Realworld Example Image](https://raw.githubusercontent.com/halfnelson/svelte-native-realworld/master/nativescript-svelte-realworld.gif) -->
 
 
 ## Credits

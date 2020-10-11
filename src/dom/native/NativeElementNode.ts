@@ -1,11 +1,11 @@
 import { logger as log, ViewNode, registerElement, logger } from '../basicdom'
-import { isAndroid, isIOS, ObservableArray } from '@nativescript/core';
+// import { isAndroid, isIOS } from '@nativescript/core';
 import ElementNode from '../basicdom/ElementNode';
 
 export enum NativeElementPropType {
     Value,
     Array,
-    ObservableArray
+    // ObservableArray
 }
 
 export interface NativeElementPropConfig {
@@ -18,13 +18,14 @@ function setOnArrayProp(parent: any, value: any, propName: string, index: number
     if (!current || !current.push) {
         parent[propName] = build ? build(value) : [value];
     } else {
-        if (current instanceof ObservableArray) {
-            if (index > -1) {
-                current.splice(index, 0, value)
-            } else {
-                current.push(value);
-            }
-        } else {
+        // if (current instanceof ObservableArray) {
+        //     if (index > -1) {
+        //         current.splice(index, 0, value)
+        //     } else {
+        //         current.push(value);
+        //     }
+        // }
+        // else {
             if (index > -1) {
                 const newArr = current.slice();
                 newArr.splice(index, 0, value);
@@ -32,7 +33,7 @@ function setOnArrayProp(parent: any, value: any, propName: string, index: number
             } else {
                 parent[propName] = [...current, value];
             }
-        }
+        // }
     }
 }
 
@@ -46,13 +47,14 @@ function removeFromArrayProp(parent: any, value: any, propName: string) {
     if (idx < 0) return;
         
 
-    if (current instanceof ObservableArray) {
-        current.splice(idx, 1);
-    } else {
+    // if (current instanceof ObservableArray) {
+    //     current.splice(idx, 1);
+    // }
+    // else {
         const newArr = current.slice()
         newArr.splice(idx, 1);
         parent[propName] = newArr
-    }
+    // }
 }
 
 const _normalizedKeys: Map<any, Map<string, string>> = new Map();
@@ -179,9 +181,9 @@ export default class NativeElementNode<T> extends ElementNode {
             case NativeElementPropType.Array:
                 setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, myIndex)
                 return;
-            case NativeElementPropType.ObservableArray:
-                setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, myIndex, (v) => new ObservableArray(v))
-                return;
+            // case NativeElementPropType.ObservableArray:
+            //     setOnArrayProp(this.nativeElement, childNode.nativeElement, propName, myIndex, (v) => new ObservableArray(v))
+            //     return;
         }
     }
 
@@ -194,7 +196,7 @@ export default class NativeElementNode<T> extends ElementNode {
 
         switch (this.propConfig[propName]) {
             case NativeElementPropType.Array:
-            case NativeElementPropType.ObservableArray:
+            // case NativeElementPropType.ObservableArray:
                 removeFromArrayProp(this.nativeElement, childNode.nativeElement, propName)
                 return;
             default:
@@ -209,12 +211,12 @@ export default class NativeElementNode<T> extends ElementNode {
         let setTarget = nv;
 
         // normalize key
-        if (isAndroid && fullkey.startsWith('android:')) {
-            fullkey = fullkey.substr(8);
-        }
-        if (isIOS && fullkey.startsWith('ios:')) {
-            fullkey = fullkey.substr(4);
-        }
+        // if (isAndroid && fullkey.startsWith('android:')) {
+        //     fullkey = fullkey.substr(8);
+        // }
+        // if (isIOS && fullkey.startsWith('ios:')) {
+        //     fullkey = fullkey.substr(4);
+        // }
 
         if (fullkey.startsWith("prop:")) {
             this.propAttribute = fullkey.substr(5);

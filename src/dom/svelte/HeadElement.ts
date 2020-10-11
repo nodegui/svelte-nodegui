@@ -1,6 +1,6 @@
 import { ElementNode, ViewNode } from "../basicdom";
 import StyleElement from "./StyleElement";
-import { addCss } from "@nativescript/core/application"
+// import { addCss } from "@nativescript/core/application"
 
 export default class HeadElement extends ElementNode {
 
@@ -16,7 +16,8 @@ export default class HeadElement extends ElementNode {
             //style rules are one per line as long as each selector in the rule has the style hash we are all scoped styles and can pass true to addCss
             let all_scoped = css.split("\n").every(r => r.split(",").every(i => i.indexOf(style_hash) >= 0))
             if (css) {
-                addCss(css, all_scoped);
+                // addCss(css, all_scoped);
+                // TODO: implement styles in head elements!
             }
         }
     }

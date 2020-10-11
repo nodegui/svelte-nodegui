@@ -1,14 +1,15 @@
 import ViewNode from '../basicdom/ViewNode'
 import { logger as log, registerElement, RegisterElementOptions } from '../basicdom'
-import { KeyframeAnimation, LayoutBase, EventData, Page, View, ContentView } from '@nativescript/core';
-import { CssAnimationParser } from '@nativescript/core/ui/styling/css-animation-parser';
+import { NodeWidget, QWidgetSignals } from '@nodegui/nodegui'
+// import { KeyframeAnimation, LayoutBase, EventData, Page, View, ContentView } from '@nativescript/core';
+// import { CssAnimationParser } from '@nativescript/core/ui/styling/css-animation-parser';
 
 import NativeElementNode, { NativeElementPropConfig } from './NativeElementNode';
 
 interface IStyleProxy {
     setProperty(propertyName: string, value: string, priority?: string): void;
     removeProperty(property: string): void;
-    animation: string;
+    // animation: string;
     cssText: string;
 }
 
@@ -16,15 +17,15 @@ function camelize(kebab: string): string {
     return kebab.replace(/[\-]+(\w)/g, (m, l) => l.toUpperCase());
 }
 
-export function registerNativeViewElement<T extends View>(elementName: string, resolver: () => new () => T, parentProp: string = null, propConfig: NativeElementPropConfig = {}, options?: RegisterElementOptions) {
+export function registerNativeViewElement<T extends NodeWidget<Signals>, Signals extends QWidgetSignals>(elementName: string, resolver: () => new () => T, parentProp: string = null, propConfig: NativeElementPropConfig = {}, options?: RegisterElementOptions) {
     registerElement(elementName, () => new NativeViewElementNode(elementName, resolver(), parentProp, propConfig), options);
 }
 
 
-export type EventListener = (args: EventData) => void;
+export type EventListener = (args: unknown) => void;
 
 // A NativeViewElementNode, wraps a native View and handles style, event dispatch, and native view hierarchy management.
-export default class NativeViewElementNode<T extends View> extends NativeElementNode<T> {
+export default class NativeViewElementNode<T extends NodeWidget<Signals>, Signals extends QWidgetSignals> extends NativeElementNode<T> {
     style: IStyleProxy;
 
     constructor(tagName: string, viewClass: new () => T, setsParentProp: string = null, propConfig: NativeElementPropConfig = {}) {
@@ -38,6 +39,7 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
             return this.getAttribute('style');
         }
 
+        /*
         let getParentPage = (): NativeViewElementNode<Page> => {
             if (this.nativeView && this.nativeView.page) {
                 return (this.nativeView.page as any).__SvelteNativeElement__;
@@ -107,6 +109,8 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
             }
         }
 
+        */
+
         this.style = {
             setProperty: (propertyName: string, value: string, priority?: string) => {
                 this.setStyle(camelize(propertyName), value);
@@ -116,6 +120,7 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
                 this.setStyle(camelize(propertyName), null);
             },
 
+            /*
             get animation(): string {
                 return [...animations.keys()].join(", ")
             },
@@ -136,6 +141,7 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
                     }
                 }
             },
+            */
 
             get cssText(): string {
                 log.debug(() => "got css text");
@@ -157,11 +163,17 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
             return
         }
 
-        if (property.endsWith('Align')) {
-            // NativeScript uses Alignment instead of Align, this ensures that text-align works
-            property += 'ment'
-        }
-        (this.nativeView.style as any)[property] = value
+        /* NodeGUI doesn't seem to give property-by-property access into the styles, so for now, we'll just inefficiently rewrite the whole inline style upon any update. */
+        const rawInlineStyle: string = this.nativeView._rawInlineStyle;
+        const styleDeclarations: string[] = rawInlineStyle.trim().split(";").map(styleDeclaration => styleDeclaration.trim());
+        const styleMaps: [property: string, value: string][] = styleDeclarations.map((styleDeclaration) => styleDeclaration.split(":", 2) as [string, string]);
+        const stylesMap: Map<string, string> = new Map();
+        styleMaps.forEach(([property, value]) => {
+            stylesMap.set(property, value);
+        });
+        stylesMap.set(property, value);
+        const updatedRawInlineStyle: string = styleMaps.reduce((acc: string, [property, value]) => `${acc}\n${property}:${value};`, "").slice("\n".length);
+        this.nativeView.setInlineStyle(updatedRawInlineStyle);
     }
 
 
@@ -174,22 +186,23 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
     }
 
     /* istanbul ignore next */
-    addEventListener(event: string, handler: EventListener) {
+    addEventListener<SignalType extends keyof Signals>(event: SignalType, handler: EventListener) {
         log.debug(() => `add event listener ${this} ${event}`);
 
         //svelte compatibility wrapper
-        (handler as any).__wrapper = (handler as any).__wrapper || ((args: EventData) => {
-            (args as any).type = args.eventName; 
+        (handler as any).__wrapper = (handler as any).__wrapper || ((args: unknown) => {
+            /* I don't see any evidence that Qt events include the event name, so not sure what to do here. */
+            (args as any).type = event;
             handler(args)
         })
          
-        this.nativeView.on(event, (handler as any).__wrapper)
+        this.nativeView.addEventListener(event, (handler as any).__wrapper);
     }
 
     /* istanbul ignore next */
-    removeEventListener(event: string, handler?: EventListener) {
+    removeEventListener<SignalType extends keyof Signals>(event: SignalType, handler?: EventListener) {
         log.debug(() => `remove event listener ${this} ${event}`)
-        this.nativeView.off(event, (handler as any).__wrapper || handler )
+        this.nativeView.removeEventListener(event, (handler as any).__wrapper || handler );
     }
 
 
@@ -210,40 +223,52 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
             return
         }
 
-        //use the builder logic if we aren't being dynamic, to catch config items like <actionbar> that are not likely to be toggled
-        if (index < 0 && (parentView as any)._addChildFromBuilder) {
-            (parentView as any)._addChildFromBuilder(
-                childView.constructor.name,
-                childView
-            )
-            return
-        }
+        /* Example approach. Would be better to separate into files (as in react-nodegui/src/components). */
+        // if(parentView instanceof QMainWindow){
+        //     if(childView instanceof QMenuBar){
+        //         parentView.setMenuBar(childView);
+        //         return;
+        //     }
+        //     // QMainWindow can set MenuWidget, too.
 
-        if (parentView instanceof LayoutBase) {
-            if (index >= 0) {
-                //our dom includes "textNode" and "commentNode" which does not appear in the nativeview's children. 
-                //we recalculate the index required for the insert operation by only including native view element nodes in the count
-                //that aren't property setter nodes
-                let nativeIndex = this.childNodes.filter(e => e instanceof NativeViewElementNode && !e.propAttribute).indexOf(childNode)
-                parentView.insertChild(childView, nativeIndex);
-            } else {
-                parentView.addChild(childView)
-            }
-            return;
-        }
+        //     parentView.setCentralWidget(childView);
+        //     return;
+        // }
 
-        // we aren't a layout view, but we were given an index, try the _addChildFromBuilder first
-        if ((parentView as any)._addChildFromBuilder) {
-            return (parentView as any)._addChildFromBuilder(
-                childView.constructor.name,
-                childView
-            )
-        }
+        // //use the builder logic if we aren't being dynamic, to catch config items like <actionbar> that are not likely to be toggled
+        // if (index < 0 && (parentView as any)._addChildFromBuilder) {
+        //     (parentView as any)._addChildFromBuilder(
+        //         childView.constructor.name,
+        //         childView
+        //     )
+        //     return
+        // }
 
-        if (parentView instanceof ContentView) {
-            parentView.content = childView;
-            return;
-        }
+        // if (parentView instanceof LayoutBase) {
+        //     if (index >= 0) {
+        //         //our dom includes "textNode" and "commentNode" which does not appear in the nativeview's children. 
+        //         //we recalculate the index required for the insert operation by only including native view element nodes in the count
+        //         //that aren't property setter nodes
+        //         let nativeIndex = this.childNodes.filter(e => e instanceof NativeViewElementNode && !e.propAttribute).indexOf(childNode)
+        //         parentView.insertChild(childView, nativeIndex);
+        //     } else {
+        //         parentView.addChild(childView)
+        //     }
+        //     return;
+        // }
+
+        // // we aren't a layout view, but we were given an index, try the _addChildFromBuilder first
+        // if ((parentView as any)._addChildFromBuilder) {
+        //     return (parentView as any)._addChildFromBuilder(
+        //         childView.constructor.name,
+        //         childView
+        //     )
+        // }
+
+        // if (parentView instanceof ContentView) {
+        //     parentView.content = childView;
+        //     return;
+        // }
 
         throw new Error("Parent can't contain children: " + this + ", " + childNode);
     }
@@ -265,27 +290,36 @@ export default class NativeViewElementNode<T extends View> extends NativeElement
         const parentView = this.nativeView
         const childView = childNode.nativeView
 
-        if (parentView instanceof LayoutBase) {
-            parentView.removeChild(childView)
-        } else if (parentView instanceof ContentView) {
-            if (parentView.content === childView) {
-                parentView.content = null
-            }
-            if (childNode.nodeType === 8) {
-                parentView._removeView(childView)
-            }
-        } else if (parentView instanceof View) {
-            parentView._removeView(childView)
-        } else {
-                log.warn(() => "Unknown parent view type: " + parentView)
-            }
-        }
+        // if (parentView instanceof LayoutBase) {
+        //     parentView.removeChild(childView)
+        // } else if (parentView instanceof ContentView) {
+        //     if (parentView.content === childView) {
+        //         parentView.content = null
+        //     }
+        //     if (childNode.nodeType === 8) {
+        //         parentView._removeView(childView)
+        //     }
+        // } else if (parentView instanceof View) {
+        //     parentView._removeView(childView)
+        // } else {
+        //     log.warn(() => "Unknown parent view type: " + parentView)
+        // }
 
-    dispatchEvent(event: EventData) {
+        throw new Error("Parent can't remove child: " + this + ", " + childNode);
+    }
+
+    dispatchEvent<SignalType extends keyof Signals>(event: unknown) {
         if (this.nativeView) {
+            /* I don't see any evidence that Qt events include the event name, so not sure what to do here. */
             //nativescript uses the EventName while dom uses Type
-            event.eventName = (event as any).type;
-            this.nativeView.notify(event);
+            // event.eventName = (event as any).type;
+
+            /**
+             * I don't see that NodeGUI has implemented QCoreApplication::sendEvent, so I think we can only no-op here.
+             * @see https://doc.qt.io/qt-5/eventsandfilters.html#sending-events
+             * @see https://doc.qt.io/qt-5/qcoreapplication.html#sendEvent
+             */
+            // this.nativeView.notify(event);
         }
     }
 }
