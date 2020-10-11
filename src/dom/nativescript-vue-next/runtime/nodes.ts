@@ -9,14 +9,6 @@ import { debug } from '../shared';
 import { ViewBase, View, TextBase, LayoutBase, ContentView, Style, ObservableArray, EventData } from '@nativescript/core'
 import { AddChildFromBuilder } from '@nativescript/core/ui/core/view';
 import { unsetValue } from '@nativescript/core/ui/core/properties'
-/* 
- * I had some difficulty importing this as:
- *   import set from 'set-value';
- * I believe that turning on `"esModuleInterop": true` in tsconfig.json would allow us to use the default import.
- * But maybe this is just a problem in the Webpack domain.
- * ... And later as:
- * import set = require('set-value');
- */
 import { default as set } from "set-value";
 import { warn } from '../../shared/Logger';
 

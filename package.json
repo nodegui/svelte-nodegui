@@ -35,5 +35,8 @@
     "rollup-plugin-typescript2": "^0.25.2",
     "svelte": "~3.24.1",
     "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "set-value": "^3.0.2"
   }
 }
