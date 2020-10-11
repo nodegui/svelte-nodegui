@@ -24,11 +24,9 @@
         "types": ["node", "svelte", "mocha", "karma-chai"],  
         "paths": {
             "~/*": ["app/*"],
-            "tns-core-modules": ["./node_modules/@nativescript/core"],
-            "tns-core-modules/*": ["./node_modules/@nativescript/core/*"],
             "*": ["./node_modules/*"]
         }
     },
-    "include": ["app/**/*", "references.d.ts"],
-    "exclude": ["node_modules", "platforms", "**/angular"]
+    "include": ["app/**/*"],
+    "exclude": ["node_modules", "**/angular"]
 }

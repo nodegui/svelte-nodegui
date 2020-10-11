@@ -1,33 +1,16 @@
 {
-  "description": "NativeScript Application",
+  "description": "NodeGUI Application",
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "<fill-your-repository-here>",
   "dependencies": {
-    "@nativescript/core": "7.0.0",
-    "@nativescript/theme": "^2.3.3",
-    "nativescript-ui-sidedrawer": "^9.0.3",
-    "svelte-native": "file:../dist",
-    "svelte-native-nativescript-ui": "0.9.0",
-    "@nativescript/webpack": "3.0.0"
+    "svelte-desktop": "file:../dist"
   },
   "devDependencies": {
-    "@nativescript/android": "7.0.0",
-    "@types/chai": "^4.2.4",
-    "@types/karma-chai": "0.1.1",
-    "@types/mocha": "^8.0.3",
-    "chai": "4.2.0",
-    "karma": ">=0.10.9",
-    "karma-chai": "0.1.0",
-    "karma-mocha": "2.0.1",
-    "karma-nativescript-launcher": "0.4.0",
-    "karma-webpack": "3.0.5",
-    "mocha": "^8.1.3",
     "svelte": "~3.24.0",
     "svelte-loader": "halfnelson/svelte-loader#fix-virtual-purge",
     "svelte-native-preprocessor": "~0.2.0",
-    "typescript": "3.9.7",
-    "@nativescript/unit-test-runner": "1.0.0"
+    "typescript": "^4.0.2"
   },
-  "readme": "NativeScript Application",
+  "readme": "NodeGUI Application",
   "main": "app.js"
 }

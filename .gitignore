@@ -3,4 +3,3 @@ node_modules
 dist
 .vscode
 docs_src/.sessions/
-/demo/webpack.config.js

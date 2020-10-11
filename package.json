@@ -1,15 +1,15 @@
 {
-  "name": "svelte-native",
-  "version": "0.9.4",
-  "description": "Svelte integration for NativeScript",
+  "name": "svelte-desktop",
+  "version": "0.1.0",
+  "description": "Svelte integration for NodeGUI",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/halfnelson/svelte-native.git"
+    "url": "https://github.com/shirakaba/svelte-nodegui.git"
   },
-  "homepage": "https://github.com/halfnelson/svelte-native",
+  "homepage": "https://github.com/shirakaba/svelte-nodegui",
   "keywords": [
-    "nativescript",
+    "nodegui",
     "svelte"
   ],
   "scripts": {
@@ -18,7 +18,7 @@
     "watch": "rollup -cw",
     "deploy": "npm run build && cd dist && npm publish"
   },
-  "author": "David Pershouse",
+  "author": "Jamie Birch",
   "license": "MIT",
   "peerDependencies": {
     "@nodegui/nodegui": "^0.25.0",
