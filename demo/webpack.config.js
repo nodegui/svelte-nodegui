@@ -16,14 +16,6 @@ module.exports = (env, argv) => {
         module: {
             rules: [
                 {
-                    test: /\.(j|t)sx?$/,
-                    exclude: /node_modules/,
-                    use: {
-                        loader: "babel-loader",
-                        options: { cacheDirectory: true, cacheCompression: false }
-                    }
-                },
-                {
                     test: /\.(png|jpe?g|gif|svg|bmp|otf)$/i,
                     use: [
                         {
@@ -76,7 +68,12 @@ module.exports = (env, argv) => {
                 },
             ]
         },
-        plugins: [new CleanWebpackPlugin()],
+        plugins: [
+            new CleanWebpackPlugin(),
+            new webpack.DefinePlugin({
+                "__DEV__": argv.mode === "development" ? "true" : "false",
+            })
+        ],
         resolve: {
             extensions: [".ts", ".mjs", ".js", ".svelte", ".scss", ".css", ".json"]
         }

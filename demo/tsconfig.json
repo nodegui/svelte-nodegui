@@ -21,12 +21,12 @@
         "allowSyntheticDefaultImports": true,
         "lib": ["es6", "dom", "es2015.iterable", "es2017.string", "es2018.promise"],
         "baseUrl": ".",
-        "types": ["node", "svelte", "mocha", "karma-chai"],  
+        "types": ["node", "svelte"],
         "paths": {
-            "~/*": ["app/*"],
+            "~/*": ["src/*"],
             "*": ["./node_modules/*"]
         }
     },
-    "include": ["app/**/*"],
-    "exclude": ["node_modules", "**/angular"]
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
 }

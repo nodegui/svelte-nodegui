@@ -7,7 +7,7 @@ import { createElement } from "../nativescript-vue-next/runtime/registry";
 export default class SvelteDesktopDocument extends NSVDocument {
     head: NSVElement;
     constructor() {
-        super(NSVNodeTypes.DOCUMENT)
+        super();
 
         this.head = createElement('head')
         

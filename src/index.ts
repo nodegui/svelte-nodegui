@@ -1,6 +1,5 @@
 // import { run, on, launchEvent } from '@nativescript/core/application'
-import { initializeDom, NSVElement } from './dom';
-import { createElement } from "./dom/nativescript-vue-next/runtime/registry";
+import { initializeDom, NSVElement, createElement } from './dom';
 // import { View } from '@nativescript/core';
 
 

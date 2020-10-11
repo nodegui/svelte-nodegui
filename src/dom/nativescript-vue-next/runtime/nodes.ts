@@ -15,6 +15,9 @@ import { warn, error, log } from '../../shared/Logger';
 
 // import {isContentView, isLayout} from "./index";
 
+declare var __DEV__: boolean
+declare var __TEST__: boolean
+
 export const enum NSVNodeTypes {
     DOCUMENT = 'document',
     TEXT = 'text',
@@ -55,7 +58,7 @@ export interface INSVNode {
     nextSibling: INSVNode | null
 }
 
-export type EventListener = (args: unknown) => void;
+type EventListener = (args: unknown) => void;
 
 export interface INSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any> extends INSVNode {
     tagName: string
@@ -407,7 +410,7 @@ export class NSVText extends NSVNode {
 }
 
 export class NSVDocument extends NSVElement {
-    constructor(text: string) {
+    constructor() {
         super(NSVNodeTypes.DOCUMENT)
     }
 

@@ -1,9 +1,9 @@
 import { registerSvelteElements } from './svelte-elements'
-import { registerNativeElements } from './nativescript-vue-next/runtime/registry';
+import { registerNativeElements } from './nativescript-vue-next/runtime';
 import SvelteNativeDocument from './svelte/SvelteNativeDocument'
 import { NodeWidget, QWidgetSignals } from '@nodegui/nodegui'
 // import { logger, LogLevel } from './basicdom'
-export { log, warn, error } from "./shared/Logger";
+export { log, warn, error } from "./shared";
 
 export { default as HeadElement } from './svelte/HeadElement'
 export { default as TemplateElement } from './svelte/TemplateElement'
@@ -11,7 +11,6 @@ export { default as SvelteNativeDocument } from './svelte/SvelteNativeDocument'
 export { default as StyleElement } from './svelte/StyleElement'
 
 // export { registerElement, createElement, ViewNode, ElementNode, logger, LogLevel } from './basicdom'
-export { registerElement, createElement } from './nativescript-vue-next/runtime/registry';
 import {
     NSVRoot,
     NSVElement,
@@ -21,17 +20,42 @@ import {
     NSVNodeTypes,
     NSVViewFlags,
 } from "./nativescript-vue-next/runtime/nodes";
-export { NSVRoot, NSVElement, NSVNode, NSVComment, NSVText, NSVNodeTypes, NSVViewFlags } from "./nativescript-vue-next/runtime/nodes";
+import SvelteDesktopDocument from './svelte/SvelteNativeDocument';
+
+
+export { nodeOps, NSVNodeOps } from "./nativescript-vue-next/runtime";
+export { NSVNodeTypes, NSVViewFlags, INSVNode, INSVElement, NSVNode, NSVElement, NSVComment, NSVText, NSVDocument, NSVRoot } from "./nativescript-vue-next/runtime";
+export {
+    NSVElementResolver,
+    NSVModelDescriptor,
+    NSVViewMeta,
+    NSVElementDescriptor,
+    defaultViewMeta,
+    getViewMeta,
+    getViewClass,
+    normalizeElementName,
+    createElement,
+    registerElement,
+    isKnownView,
+    registerNativeElements
+} from "./nativescript-vue-next/runtime";
+
+export {
+    ELEMENT_REF,
+    isBoolean,
+} from "./nativescript-vue-next/runtime";
+
+
 // export { navigate, goBack, showModal, closeModal, ShowModalOptions, NavigationOptions, BackNavigationOptions } from './navigation'
 
 
-function installGlobalShims(): SvelteNativeDocument {
+function installGlobalShims(): SvelteDesktopDocument {
 
     //expose our fake dom as global document for svelte components
     let window = global as any;
 
     window.window = global;
-    window.document = new SvelteNativeDocument();
+    window.document = new SvelteDesktopDocument();
 
     // As of NS 6.3, the NS provided requestAnimationFrame breaks svelte by invoking the callback immediately 
     // instead of next event loop, We force ours instead.
