@@ -1,13 +1,13 @@
 import { registerSvelteElements } from './svelte-elements'
 import { registerNativeElements } from './nativescript-vue-next/runtime';
-import SvelteNativeDocument from './svelte/SvelteNativeDocument'
 import { NodeWidget, QWidgetSignals } from '@nodegui/nodegui'
 // import { logger, LogLevel } from './basicdom'
 export { log, warn, error } from "./shared";
 
 export { default as HeadElement } from './svelte/HeadElement'
 export { default as TemplateElement } from './svelte/TemplateElement'
-export { default as SvelteNativeDocument } from './svelte/SvelteNativeDocument'
+import { default as SvelteDesktopDocument } from './svelte/SvelteNativeDocument';
+export { SvelteDesktopDocument };
 export { default as StyleElement } from './svelte/StyleElement'
 
 // export { registerElement, createElement, ViewNode, ElementNode, logger, LogLevel } from './basicdom'
@@ -20,7 +20,6 @@ import {
     NSVNodeTypes,
     NSVViewFlags,
 } from "./nativescript-vue-next/runtime/nodes";
-import SvelteDesktopDocument from './svelte/SvelteNativeDocument';
 
 
 export { nodeOps, NSVNodeOps } from "./nativescript-vue-next/runtime";
