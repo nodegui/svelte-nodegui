@@ -1,19 +1,27 @@
 import { registerSvelteElements } from './svelte-elements'
 import { registerNativeElements } from './nodegui-elements'
 import SvelteNativeDocument from './svelte/SvelteNativeDocument'
-import NativeViewElementNode from './native/NativeViewElementNode'
 import { NodeWidget, QWidgetSignals } from '@nodegui/nodegui'
-import { logger, LogLevel } from './basicdom'
+// import { logger, LogLevel } from './basicdom'
+export { log, warn, error } from "./shared/Logger";
 
 export { default as HeadElement } from './svelte/HeadElement'
 export { default as TemplateElement } from './svelte/TemplateElement'
 export { default as SvelteNativeDocument } from './svelte/SvelteNativeDocument'
 export { default as StyleElement } from './svelte/StyleElement'
 
-export { default as NativeElementNode, NativeElementPropConfig, NativeElementPropType, registerNativeConfigElement } from './native/NativeElementNode'
-export { default as NativeViewElementNode, registerNativeViewElement } from './native/NativeViewElementNode'
-
-export { registerElement, createElement, ViewNode, ElementNode, logger, LogLevel } from './basicdom'
+// export { registerElement, createElement, ViewNode, ElementNode, logger, LogLevel } from './basicdom'
+export { registerElement } from './nativescript-vue-next/runtime/registry';
+import {
+    NSVRoot,
+    NSVElement,
+    NSVNode,
+    NSVComment,
+    NSVText,
+    NSVNodeTypes,
+    NSVViewFlags,
+} from "./nativescript-vue-next/runtime/nodes";
+export { NSVRoot, NSVElement, NSVNode, NSVComment, NSVText, NSVNodeTypes, NSVViewFlags } from "./nativescript-vue-next/runtime/nodes";
 // export { navigate, goBack, showModal, closeModal, ShowModalOptions, NavigationOptions, BackNavigationOptions } from './navigation'
 
 
@@ -35,8 +43,8 @@ function installGlobalShims(): SvelteNativeDocument {
         writable: true,
     })
     
-    window.getComputedStyle = <Signals extends QWidgetSignals = QWidgetSignals>(node: NativeViewElementNode<NodeWidget<Signals>, Signals>) => {
-        return node.nativeView._rawInlineStyle;
+    window.getComputedStyle = <Signals extends QWidgetSignals = QWidgetSignals>(element: NSVElement<NodeWidget<Signals>, Signals>) => {
+        return element.nativeView._rawInlineStyle;
     }
 
     window.performance = {
@@ -61,26 +69,26 @@ function installGlobalShims(): SvelteNativeDocument {
 
 export const DomTraceCategory = 'SvelteNativeDom'
 
-function initializeLogger() {
-    logger.setHandler((message, level) => {
-        switch (level) {
-            case LogLevel.Debug:
-            case LogLevel.Info:
-                console.log(message());
-                break;
-            case LogLevel.Warn:
-                console.warn(message());
-                break;
-            case LogLevel.Error:
-                console.error(message());
-                break;
-        }
-    })
-}
+// function initializeLogger() {
+//     logger.setHandler((message, level) => {
+//         switch (level) {
+//             case LogLevel.Debug:
+//             case LogLevel.Info:
+//                 console.log(message());
+//                 break;
+//             case LogLevel.Warn:
+//                 console.warn(message());
+//                 break;
+//             case LogLevel.Error:
+//                 console.error(message());
+//                 break;
+//         }
+//     })
+// }
 
 
 export function initializeDom() {
-    initializeLogger();
+    // initializeLogger();
     registerSvelteElements();
     registerNativeElements();
     return installGlobalShims();
