@@ -1,4 +1,6 @@
-import { registerElement, ElementNode } from "./basicdom";
+// import { registerElement, ElementNode } from "./basicdom";
+import { NSVElement } from "./nativescript-vue-next/runtime/nodes";
+import { registerElement } from "./nativescript-vue-next/runtime/registry";
 import HeadElement from "./svelte/HeadElement";
 import StyleElement from "./svelte/StyleElement";
 import TemplateElement from "./svelte/TemplateElement";
@@ -9,6 +11,6 @@ import TemplateElement from "./svelte/TemplateElement";
 export function registerSvelteElements() {
     registerElement('head', () => new HeadElement());
     registerElement('style', () => new StyleElement());
-    registerElement('fragment', () => new ElementNode('fragment'));
+    registerElement('fragment', () => new NSVElement('fragment'));
     registerElement('template', () => new TemplateElement());
 }

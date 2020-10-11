@@ -1,17 +1,18 @@
-import { run, on, launchEvent } from '@nativescript/core/application'
-import { initializeDom } from './dom';
+// import { run, on, launchEvent } from '@nativescript/core/application'
+import { initializeDom, NSVElement } from './dom';
+import { createElement } from "./dom/nativescript-vue-next/runtime/registry";
 // import { View } from '@nativescript/core';
 
 
 declare global {
     export class SvelteComponent {
         $destroy(): void;
-        constructor(options: { target?: ViewNode | Element , props?: any, anchor?: ViewNode | Element, intro?: boolean });
+        constructor(options: { target?: NSVElement | Element, props?: any, anchor?: NSVElement | Element, intro?: boolean });
         $set(props: any): void;
     }
 }
 
-export function svelteNativeNoFrame(rootElement: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
+export function svelteDesktop(rootElement: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
     initializeDom();
     return new Promise((resolve, reject) => {
 
@@ -23,58 +24,17 @@ export function svelteNativeNoFrame(rootElement: typeof SvelteComponent, data: a
                 target: frag,
                 props: data || {}
             })
-            return (frag.firstChild as NativeElementNode<View>).nativeElement;
+            return (frag.firstChild as NSVElement).nativeView;
         }
 
-        //wait for launch before returning
-        on(launchEvent, () => {
-            console.log("Application Launched");
-            resolve(elementInstance);
-        })
-
-        try {
-            run({ create: buildElement });
-        } catch (e) {
-            reject(e);
-        }
-    });
-}
-
-export function svelteNative(startPage: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
-    initializeDom();
-
-    let rootFrame: FrameElement; 
-    let pageInstance: SvelteComponent;
-
-    return new Promise((resolve, reject) => {
-        //wait for launch
-        on(launchEvent, () => {
-            console.log("Application Launched");
-            resolve(pageInstance);
-        })
-
-        try {
-            run({ create: () => {
-                rootFrame = createElement('frame') as FrameElement;
-                rootFrame.setAttribute("id", "app-root-frame");
-
-                pageInstance = navigate({
-                    page: startPage,
-                    props: data || {},
-                    frame: rootFrame
-                })
-
-                return rootFrame.nativeView;
-            }});
-        } catch (e) {
-            reject(e);
-        }
+        buildElement();
+        resolve(elementInstance);
     });
 }
 
 // Svelte looks to see if window is undefined in order to determine if it is running on the client or in SSR.
 // window is undefined until initializeDom is called. We will set it to a temporary value here and overwrite it in intializedom.
-(global as any).window = { env: "Svelte Native" }
+(global as any).window = { env: "Svelte Desktop" }
 
 
 export { initializeDom, DomTraceCategory } from "./dom"

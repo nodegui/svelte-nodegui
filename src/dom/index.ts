@@ -11,7 +11,7 @@ export { default as SvelteNativeDocument } from './svelte/SvelteNativeDocument'
 export { default as StyleElement } from './svelte/StyleElement'
 
 // export { registerElement, createElement, ViewNode, ElementNode, logger, LogLevel } from './basicdom'
-export { registerElement } from './nativescript-vue-next/runtime/registry';
+export { registerElement, createElement } from './nativescript-vue-next/runtime/registry';
 import {
     NSVRoot,
     NSVElement,
