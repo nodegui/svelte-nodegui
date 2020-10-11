@@ -6,11 +6,9 @@ import {
 } from './registry'
 import { ELEMENT_REF } from './runtimeHelpers';
 import { debug } from '../shared';
-import { ViewBase, View, TextBase, LayoutBase, ContentView, Style, ObservableArray, EventData } from '@nativescript/core'
-import { AddChildFromBuilder } from '@nativescript/core/ui/core/view';
-import { unsetValue } from '@nativescript/core/ui/core/properties'
+import { NodeWidget, QWidgetSignals } from '@nodegui/nodegui'
 import { default as set } from "set-value";
-import { warn } from '../../shared/Logger';
+import { warn, error, log } from '../../shared/Logger';
 
 // import unset from 'unset-value'
 
@@ -30,8 +28,9 @@ export const enum NSVNodeTypes {
 export const enum NSVViewFlags {
     NONE = 0,
     SKIP_ADD_TO_DOM = 1 << 0,
-    CONTENT_VIEW = 1 << 1,
-    LAYOUT_VIEW = 1 << 2,
+    /* NativeScript-specific. TODO: determine NodeGUI-specific ones. */
+    // CONTENT_VIEW = 1 << 1,
+    // LAYOUT_VIEW = 1 << 2,
     NO_CHILDREN = 1 << 3,
 }
 
@@ -54,24 +53,26 @@ export interface INSVNode {
     nextSibling: INSVNode | null
 }
 
-export interface INSVElement<T extends ViewBase = any> extends INSVNode {
+export type EventListener = (args: unknown) => void;
+
+export interface INSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any> extends INSVNode {
     tagName: string
     meta: NSVViewMeta
-    style: Style | string
+    style: string
 
-    eventListeners: Map<string, (args: EventData) => void>;
+    eventListeners: Map<string, (args: unknown) => void>;
 
-    addEventListener(
-        event: string,
-        handler: any,
+    addEventListener<SignalType extends keyof Signals>(
+        event: SignalType,
+        handler: Signals[SignalType],
         options?: AddEventListenerOptions
     ): void
 
-    removeEventListener(event: string, handler?: any): void
+    removeEventListener<SignalType extends keyof Signals>(event: SignalType, handler?: Signals[SignalType]): void
 
     dispatchEvent(event: string): void
 
-    nativeView: (T) & { [ELEMENT_REF]: INSVElement<T> }
+    nativeView: (T) & { [ELEMENT_REF]: INSVElement<T, Signals> } & { [key: string]: unknown }
 
     getAttribute(name: string): unknown
 
@@ -97,7 +98,7 @@ export abstract class NSVNode implements INSVNode {
     nodeRole?: string
     nodeId: number
     nodeType: NSVNodeTypes
-    text: string | undefined
+    abstract text: string | undefined
 
     parentNode: INSVElement | null = null
     childNodes: INSVNode[] = []
@@ -120,9 +121,9 @@ export abstract class NSVNode implements INSVNode {
     }
 }
 
-export class NSVElement<T extends ViewBase = ViewBase> extends NSVNode implements INSVElement {
+export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any> extends NSVNode implements INSVElement<T, Signals> {
     private readonly _tagName: string
-    private readonly _nativeView: T
+    private readonly _nativeView: T & { [ELEMENT_REF]: INSVElement<T, Signals> } & { [key: string]: unknown }
     private _meta: NSVViewMeta | undefined
 
     constructor(tagName: string) {
@@ -142,20 +143,26 @@ export class NSVElement<T extends ViewBase = ViewBase> extends NSVNode implement
         return this._nativeView
     }
 
-    get style(): Style | string {
-        return this.nativeView.style
+    get style(): string {
+        return this.nativeView._rawInlineStyle
     }
 
-    set style(inlineStyle: Style | string) {
-        (this.nativeView as any).style = inlineStyle
+    set style(inlineStyle: string) {
+        this.nativeView._rawInlineStyle = inlineStyle
     }
 
     get text(): string | undefined {
-        return (this.nativeView as ViewBase as TextBase).text
+        if (typeof (this.nativeView as any).text === "function"){
+            return (this.nativeView as any).text() as string;
+        }
+        error(`text() getter called on element that does not implement it.`, this);
     }
 
     set text(t: string | undefined) {
-        (this.nativeView as ViewBase as TextBase).text = t
+        if (typeof (this.nativeView as any).text === "function") {
+            (this.nativeView as any).text(t);
+        }
+        error(`text() setter called on element that does not implement it.`, this);
     }
 
     get meta() {
@@ -167,9 +174,9 @@ export class NSVElement<T extends ViewBase = ViewBase> extends NSVNode implement
     }
 
     /**
-     * We keep references to the event listeners so that the RNS HostConfig can remove any attached event listener if it needs to replace it.
+     * We keep references to the event listeners so that the Svelte Desktop HostConfig can remove any attached event listener if it needs to replace it.
      */
-    private _eventListeners?: Map<string, (args: EventData) => void>;
+    private _eventListeners?: Map<string, any>;
 
     get eventListeners() {
         if(!this._eventListeners){
@@ -178,11 +185,13 @@ export class NSVElement<T extends ViewBase = ViewBase> extends NSVNode implement
         return this._eventListeners!;
     }
 
-    addEventListener(
-        event: string,
-        handler: any,
+    addEventListener<SignalType extends keyof Signals>(
+        event: SignalType,
+        handler: Signals[SignalType],
         options: AddEventListenerOptions = {}
     ) {
+        // log(`add event listener ${this} ${event}`);
+
         const { capture, once } = options
         if (capture) {
             debug('Bubble propagation is not supported')
@@ -191,24 +200,42 @@ export class NSVElement<T extends ViewBase = ViewBase> extends NSVNode implement
         if (once) {
             const oldHandler = handler
             const self = this
-            handler = (...args: any) => {
-                const res = oldHandler.call(null, ...args)
+            handler = ((...args: any) => {
+                const res = (oldHandler as unknown as EventListener).call(null, ...args)
                 if (res !== null) {
                     self.removeEventListener(event, handler)
                 }
-            }
+            }) as unknown as Signals[SignalType]
         }
-        this.nativeView.addEventListener(event, handler)
-        this.eventListeners.set(event, handler);
+
+        //svelte compatibility wrapper
+        (handler as any).__wrapper = (handler as any).__wrapper || ((args: unknown) => {
+            /* I don't see any evidence that Qt events include the event name, so not sure what to do here. */
+            (args as any).type = event;
+            (handler as unknown as EventListener)(args)
+        })
+
+        this.nativeView.addEventListener<SignalType>(event, handler)
+        this.eventListeners.set(event as string, handler);
     }
 
-    removeEventListener(event: string, handler?: any) {
-        this.eventListeners.delete(event);
+    removeEventListener<SignalType extends keyof Signals>(event: SignalType, handler?: Signals[SignalType]) {
+        this.eventListeners.delete(event as string);
         this.nativeView.removeEventListener(event, handler)
     }
 
     dispatchEvent(event: string) {
-        this.nativeView.notify({ eventName: event, object: this.nativeView })
+        if (this.nativeView) {
+            /**
+             * I don't see that NodeGUI has implemented QCoreApplication::sendEvent, so I think we can only no-op here.
+             * @see https://doc.qt.io/qt-5/eventsandfilters.html#sending-events
+             * @see https://doc.qt.io/qt-5/qcoreapplication.html#sendEvent
+             * 
+             * I don't see any evidence that Qt events include the event name, so not sure whether to pass
+             * on an event name (which was for NativeScript purposes anyway) at all here.
+             */
+            // this.nativeView.notify({ eventName: event, object: this.nativeView })
+        }
     }
 
     getAttribute(name: string): unknown {
@@ -250,7 +277,8 @@ export class NSVElement<T extends ViewBase = ViewBase> extends NSVNode implement
 
         // potential issue: unsetValue is an empty object
         // not all properties/attributes may know/check for this
-        set(this.nativeView, name, unsetValue)
+        // set(this.nativeView, name, unsetValue)
+
         // originally we deleted the property, but in case of built-in properties
         // this would break them. For example, deleting the padding property
         // will prevent us from changing the padding once we deleted it
@@ -276,7 +304,7 @@ export class NSVElement<T extends ViewBase = ViewBase> extends NSVNode implement
         }
 
         this.childNodes.splice(refIndex, 0, el)
-        el.parentNode = this
+        el.parentNode = this as INSVElement<NodeWidget<any>, any>
 
         // find index to use for the native view, since non-visual nodes
         // (comment/text don't exist in the native view hierarchy)
@@ -291,7 +319,7 @@ export class NSVElement<T extends ViewBase = ViewBase> extends NSVNode implement
 
     appendChild(el: INSVNode) {
         this.childNodes.push(el)
-        el.parentNode = this
+        el.parentNode = this as INSVElement<NodeWidget<any>, any>
 
         this.addChild(el)
     }
@@ -342,6 +370,14 @@ export class NSVComment extends NSVNode {
         this.text = text
     }
 
+    get text(): string | undefined {
+        return this.text;
+    }
+
+    set text(t: string | undefined) {
+        this.text = t;
+    }
+
     toString(): string {
         return "NSVComment:" + `"` + this.text + `"`;
     }
@@ -354,16 +390,33 @@ export class NSVText extends NSVNode {
         this.text = text
     }
 
+    get text(): string | undefined {
+        return this.text;
+    }
+
+    set text(t: string | undefined) {
+        this.text = t;
+    }
+
     toString(): string {
         return "NSVText:" + `"` + this.text + `"`;
     }
 }
 
-export class NSVRoot<T extends ViewBase = ViewBase> extends NSVNode {
+export class NSVRoot<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any> extends NSVNode {
     baseRef?: NSVElement<T>
 
     constructor() {
         super(NSVNodeTypes.ROOT)
+    }
+
+    get text(): string | undefined {
+        error(`text() getter called on element that does not implement it.`, this);
+        return void 0;
+    }
+
+    set text(t: string | undefined) {
+        error(`text() setter called on element that does not implement it.`, this);
     }
 
     setBaseRef(el: INSVNode|null): void {
@@ -411,17 +464,19 @@ function addChild(child: NSVElement, parent: NSVElement, atIndex?: number) {
         return addChildByNodeRole(nodeRole, childView, parentView, atIndex);
     }
 
-    if (parent.meta.viewFlags & NSVViewFlags.LAYOUT_VIEW) {
-        if (atIndex) {
-            (parentView as LayoutBase).insertChild(childView as View, atIndex)
-        } else {
-            (parentView as LayoutBase).addChild(childView as View)
-        }
-    } else if (parent.meta.viewFlags & NSVViewFlags.CONTENT_VIEW) {
-        (parentView as ContentView).content = childView as View;
-    } else {
-        (parentView as unknown as AddChildFromBuilder)._addChildFromBuilder(childView.constructor.name, childView)
-    }
+    // if (parent.meta.viewFlags & NSVViewFlags.LAYOUT_VIEW) {
+    //     if (atIndex) {
+    //         (parentView as LayoutBase).insertChild(childView as View, atIndex)
+    //     } else {
+    //         (parentView as LayoutBase).addChild(childView as View)
+    //     }
+    // } else if (parent.meta.viewFlags & NSVViewFlags.CONTENT_VIEW) {
+    //     (parentView as ContentView).content = childView as View;
+    // } else {
+    //     (parentView as unknown as AddChildFromBuilder)._addChildFromBuilder(childView.constructor.name, childView)
+    // }
+
+    error(`addChild() called on an element that doesn't implement nodeOps.insert()`, this);
 }
 
 function removeChild(child: NSVElement, parent: NSVElement) {
@@ -452,14 +507,16 @@ function removeChild(child: NSVElement, parent: NSVElement) {
         return removeChildByNodeRole(nodeRole, childView, parentView);
     }
 
-    if (parent.meta.viewFlags & NSVViewFlags.LAYOUT_VIEW) {
-        (parentView as LayoutBase).removeChild(childView as View)
-    } else if (parent.meta.viewFlags & NSVViewFlags.CONTENT_VIEW) {
-        (parentView as ContentView).content = null
-    } else {
-        // Removing a child span takes us down here
-        parentView._removeView(childView)
-    }
+    // if (parent.meta.viewFlags & NSVViewFlags.LAYOUT_VIEW) {
+    //     (parentView as LayoutBase).removeChild(childView as View)
+    // } else if (parent.meta.viewFlags & NSVViewFlags.CONTENT_VIEW) {
+    //     (parentView as ContentView).content = null
+    // } else {
+    //     // Removing a child span takes us down here
+    //     parentView._removeView(childView)
+    // }
+
+    error(`addChild() called on an element that doesn't implement nodeOps.remove()`, this);
 }
 
 
@@ -470,9 +527,7 @@ function addChildByNodeRole(nodeRole: string, childView: any, parentView: any, a
         const childrenSetterLength: number = parentView[nodeRole].length;
         const atSafeIndex: number = typeof atIndex === "undefined" ? childrenSetterLength : atIndex;
 
-        if(childrenSetter instanceof ObservableArray){
-            parentView[nodeRole].splice(atSafeIndex, 0, childView);
-        } else if(Array.isArray(childrenSetter)){
+        if(Array.isArray(childrenSetter)){
             parentView[nodeRole] = [...parentView[nodeRole]].splice(atSafeIndex, 0, childView);
         } else {
             if (__DEV__) {
@@ -499,9 +554,7 @@ function removeChildByNodeRole(nodeRole: string, childView: any, parentView: any
         // Treat as if it's an array.
         const childIndex: number = parentView[nodeRole].indexOf(childView);
 
-        if(childrenSetter instanceof ObservableArray){
-            parentView[nodeRole].splice(childIndex, 1);
-        } else if(Array.isArray(childrenSetter)){
+        if(Array.isArray(childrenSetter)){
             parentView[nodeRole] = [...parentView[nodeRole]].splice(childIndex, 1);
         } else {
             if (__DEV__) {
