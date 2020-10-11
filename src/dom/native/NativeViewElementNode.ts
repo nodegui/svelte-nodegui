@@ -17,15 +17,16 @@ function camelize(kebab: string): string {
     return kebab.replace(/[\-]+(\w)/g, (m, l) => l.toUpperCase());
 }
 
-export interface NSVViewMeta {
-    viewFlags: NSVViewFlags
-    nodeOps?: {
-        insert(child: NSVElement, parent: NSVElement, atIndex?: number): void
-        remove(child: NSVElement, parent: NSVElement): void
-    }
-    model?: NSVModelDescriptor
-    overwriteExisting?: boolean
-}
+export type NSVViewMeta = any;
+// export interface NSVViewMeta {
+//     viewFlags: NSVViewFlags
+//     nodeOps?: {
+//         insert(child: NSVElement, parent: NSVElement, atIndex?: number): void
+//         remove(child: NSVElement, parent: NSVElement): void
+//     }
+//     model?: NSVModelDescriptor
+//     overwriteExisting?: boolean
+// }
 
 export function registerNativeViewElement<T extends NodeWidget<Signals>, Signals extends QWidgetSignals>(
     elementName: string,
