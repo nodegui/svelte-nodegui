@@ -1,4 +1,5 @@
 import {
+    createElement,
     getViewClass,
     getViewMeta,
     normalizeElementName,
@@ -15,6 +16,7 @@ import { warn, error, log } from '../../shared/Logger';
 // import {isContentView, isLayout} from "./index";
 
 export const enum NSVNodeTypes {
+    DOCUMENT = 'document',
     TEXT = 'text',
     ELEMENT = 'element',
     COMMENT = 'comment',
@@ -400,6 +402,57 @@ export class NSVText extends NSVNode {
 
     toString(): string {
         return "NSVText:" + `"` + this.text + `"`;
+    }
+}
+
+export class NSVDocument extends NSVElement {
+    constructor(text: string) {
+        super(NSVNodeTypes.DOCUMENT)
+    }
+
+    get text(): string | undefined {
+        error(`text() getter called on element that does not implement it.`, this);
+        return void 0;
+    }
+
+    set text(t: string | undefined) {
+        error(`text() setter called on element that does not implement it.`, this);
+    }
+
+    createComment(text: string): NSVComment {
+        return new NSVComment(text)
+    }
+
+    // createPropertyNode(tagName: string, propertyName: string): PropertyNode {
+    //     return new PropertyNode(tagName, propertyName)
+    // }
+
+    createElement(tagName: string): NSVElement {
+        // if (tagName.indexOf(".") >= 0) {
+        //     let bits = tagName.split(".", 2);
+        //     return this.createPropertyNode(bits[0], bits[1]);
+        // }
+        return createElement(tagName);
+    }
+
+    createElementNS(namespace: string, tagName: string): NSVElement {
+        return this.createElement(tagName)
+    }
+
+    createTextNode(text: string): NSVText {
+        return new NSVText(text)
+    }
+
+
+    // getElementById(id: string) {
+    //     for (let el of elementIterator(this)) {
+    //         if (el.nodeType === 1 && (el as ElementNode).id === id)
+    //             return el;
+    //     }
+    // }
+
+    dispatchEvent(event: any) {
+        //Svelte dev fires these for tool support
     }
 }
 

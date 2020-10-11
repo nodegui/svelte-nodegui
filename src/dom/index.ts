@@ -1,5 +1,5 @@
 import { registerSvelteElements } from './svelte-elements'
-import { registerNativeElements } from './nodegui-elements'
+import { registerNativeElements } from './nativescript-vue-next/runtime/registry';
 import SvelteNativeDocument from './svelte/SvelteNativeDocument'
 import { NodeWidget, QWidgetSignals } from '@nodegui/nodegui'
 // import { logger, LogLevel } from './basicdom'

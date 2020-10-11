@@ -1,14 +1,13 @@
-import { ElementNode, ViewNode } from "../basicdom";
+import { NSVElement } from "../nativescript-vue-next/runtime/nodes";
 import StyleElement from "./StyleElement";
 // import { addCss } from "@nativescript/core/application"
 
-export default class HeadElement extends ElementNode {
-
+export default class HeadElement extends NSVElement {
     constructor() {
         super('head')
     }
 
-    onInsertedChild(childNode: ViewNode, atIndex: number) {
+    onInsertedChild(childNode: NSVElement, atIndex: number) {
         if (childNode instanceof StyleElement) {
             let css: string = (childNode as any).textContent;
             let id = (childNode as any).id;

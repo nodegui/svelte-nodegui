@@ -1,4 +1,6 @@
-import { ElementNode, logger as log } from '../basicdom'
+// import { ElementNode, logger as log } from '../basicdom'
+import { NSVElement } from "../nativescript-vue-next/runtime/nodes";
+import { log } from "../shared/Logger";
 // import { StyleScope } from '@nativescript/core/ui/styling/style-scope'
 // import { Frame } from '@nativescript/core'
 
@@ -31,7 +33,8 @@ class StyleSheet {
     }
 
     insertRule(rule: string, index: number = 0) {
-        log.debug(() => `Adding transition rule ${rule}`);
+        // log.debug(() => `Adding transition rule ${rule}`);
+        // log(`Adding transition rule ${rule}`);
 
         /* TODO: implement for NodeGUI */
         // let frame = Frame.topmost();
@@ -44,7 +47,7 @@ class StyleSheet {
     }
 }
 
-export default class StyleElement extends ElementNode {
+export default class StyleElement extends NSVElement {
     _sheet: StyleSheet;
 
     constructor() {

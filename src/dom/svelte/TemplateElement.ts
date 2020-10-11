@@ -1,6 +1,6 @@
-import { ElementNode } from '../basicdom';
+import { NSVElement } from '../nativescript-vue-next/runtime/nodes';
 
-export default class TemplateElement extends ElementNode {
+export default class TemplateElement extends NSVElement {
     constructor() {
         super('template');
     }
@@ -10,6 +10,6 @@ export default class TemplateElement extends ElementNode {
     }
 
     get component(): typeof SvelteComponent {
-        return this.getAttribute('component')
+        return this.getAttribute('component') as typeof SvelteComponent
     }
 }
