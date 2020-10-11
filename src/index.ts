@@ -1,6 +1,6 @@
 import { run, on, launchEvent } from '@nativescript/core/application'
-import { navigate, ViewNode, createElement, initializeDom, FrameElement, NativeElementNode } from './dom';
-import { View } from '@nativescript/core';
+import { initializeDom } from './dom';
+// import { View } from '@nativescript/core';
 
 
 declare global {
