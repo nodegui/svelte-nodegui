@@ -6,10 +6,10 @@ import {
     NSVViewMeta,
 } from './registry'
 import { ELEMENT_REF } from './runtimeHelpers';
-import { debug } from '../shared';
+// import { debug } from '../shared';
 import { NodeWidget, QWidgetSignals } from '@nodegui/nodegui'
-import { default as set } from "set-value";
 import { warn, error, log } from '../../shared/Logger';
+// import { default as set } from "set-value";
 
 // import unset from 'unset-value'
 
@@ -196,7 +196,7 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
 
         const { capture, once } = options
         if (capture) {
-            debug('Bubble propagation is not supported')
+            warn('Bubble propagation is not supported')
             return
         }
         if (once) {
@@ -250,25 +250,26 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
             return;
         }
 
-        /**
-         * The 'ios' and 'android' properties (e.g. on ActionItem)
-         * are readonly, so we need to assign one level lower.
-         */
-        if(name === "ios" && value){
-            Object.keys(value).forEach((key: string) => {
-                set(this.nativeView.ios, key, value);
-            });
-            return;
-        }
+        // /**
+        //  * The 'ios' and 'android' properties (e.g. on ActionItem)
+        //  * are readonly, so we need to assign one level lower.
+        //  */
+        // if(name === "ios" && value){
+        //     Object.keys(value).forEach((key: string) => {
+        //         set(this.nativeView.ios, key, value);
+        //     });
+        //     return;
+        // }
 
-        if(name === "android" && value){
-            Object.keys(value).forEach((key: string) => {
-                set(this.nativeView.android, key, value);
-            });
-            return;
-        }
+        // if(name === "android" && value){
+        //     Object.keys(value).forEach((key: string) => {
+        //         set(this.nativeView.android, key, value);
+        //     });
+        //     return;
+        // }
 
-        set(this.nativeView, name, value)
+        // set(this.nativeView, name, value)
+        (this.nativeView as any)[name] = value;
     }
 
     removeAttribute(name: string) {

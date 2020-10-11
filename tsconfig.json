@@ -9,7 +9,7 @@
       "outDir": "./dist",
       "target": "es6",
       "moduleResolution": "node",
-      "allowSyntheticDefaultImports": true,
+      "allowSyntheticDefaultImports": false,
       "esModuleInterop": false,   
     },
     "include": [
