@@ -1,5 +1,11 @@
 .rpt2_cache
 node_modules
 dist
-.vscode
 docs_src/.sessions/
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
