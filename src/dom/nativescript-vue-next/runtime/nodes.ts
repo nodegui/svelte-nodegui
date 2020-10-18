@@ -19,6 +19,10 @@ declare var __DEV__: boolean
 declare var __TEST__: boolean
 
 export const enum NSVNodeTypes {
+    HEAD = 'head',
+    STYLE = 'style',
+    FRAGMENT = 'fragment',
+    TEMPLATE = 'template',
     DOCUMENT = 'document',
     TEXT = 'text',
     ELEMENT = 'element',
@@ -131,13 +135,25 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
     private readonly _nativeView: T & { [ELEMENT_REF]: INSVElement<T, Signals> } & { [key: string]: unknown }
     private _meta: NSVViewMeta | undefined
 
-    constructor(tagName: string) {
-        super(NSVNodeTypes.ELEMENT)
+    constructor(tagName: string){
+        super(NSVNodeTypes.ELEMENT);
 
-        this._tagName = normalizeElementName(tagName)
-        const viewClass = getViewClass(tagName)
-        this._nativeView = new viewClass()
-        this._nativeView[ELEMENT_REF] = this
+        this._tagName = normalizeElementName(tagName);
+
+        switch (tagName) {
+            case NSVNodeTypes.TEMPLATE:
+            case NSVNodeTypes.FRAGMENT:
+            case NSVNodeTypes.STYLE:
+            case NSVNodeTypes.HEAD:
+            case NSVNodeTypes.DOCUMENT:
+                // All of these nodes lack a nativeView. Bail out to prevent infinite recursion.
+                return;
+            default: {
+                const viewClass = getViewClass(tagName);
+                this._nativeView = new viewClass();
+                this._nativeView[ELEMENT_REF] = this;
+            }
+        }
     }
 
     get tagName(): string {
@@ -406,57 +422,6 @@ export class NSVText extends NSVNode {
 
     toString(): string {
         return "NSVText:" + `"` + this.text + `"`;
-    }
-}
-
-export class NSVDocument extends NSVElement {
-    constructor() {
-        super(NSVNodeTypes.DOCUMENT)
-    }
-
-    get text(): string | undefined {
-        error(`text() getter called on element that does not implement it.`, this);
-        return void 0;
-    }
-
-    set text(t: string | undefined) {
-        error(`text() setter called on element that does not implement it.`, this);
-    }
-
-    createComment(text: string): NSVComment {
-        return new NSVComment(text)
-    }
-
-    // createPropertyNode(tagName: string, propertyName: string): PropertyNode {
-    //     return new PropertyNode(tagName, propertyName)
-    // }
-
-    createElement(tagName: string): NSVElement {
-        // if (tagName.indexOf(".") >= 0) {
-        //     let bits = tagName.split(".", 2);
-        //     return this.createPropertyNode(bits[0], bits[1]);
-        // }
-        return createElement(tagName);
-    }
-
-    createElementNS(namespace: string, tagName: string): NSVElement {
-        return this.createElement(tagName)
-    }
-
-    createTextNode(text: string): NSVText {
-        return new NSVText(text)
-    }
-
-
-    // getElementById(id: string) {
-    //     for (let el of elementIterator(this)) {
-    //         if (el.nodeType === 1 && (el as ElementNode).id === id)
-    //             return el;
-    //     }
-    // }
-
-    dispatchEvent(event: any) {
-        //Svelte dev fires these for tool support
     }
 }
 

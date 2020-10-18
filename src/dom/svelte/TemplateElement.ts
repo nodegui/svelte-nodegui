@@ -1,8 +1,8 @@
-import { NSVElement } from '../nativescript-vue-next/runtime/nodes';
+import { NSVElement, NSVNodeTypes } from '../nativescript-vue-next/runtime/nodes';
 
 export default class TemplateElement extends NSVElement {
     constructor() {
-        super('template');
+        super(NSVNodeTypes.TEMPLATE);
     }
 
     set component(value: typeof SvelteComponent) {

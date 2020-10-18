@@ -6,7 +6,7 @@ export { log, warn, error } from "./shared";
 
 export { default as HeadElement } from './svelte/HeadElement'
 export { default as TemplateElement } from './svelte/TemplateElement'
-import { default as SvelteDesktopDocument } from './svelte/SvelteNativeDocument';
+import { default as SvelteDesktopDocument } from './svelte/SvelteDesktopDocument';
 export { SvelteDesktopDocument };
 export { default as StyleElement } from './svelte/StyleElement'
 
@@ -23,7 +23,7 @@ import {
 
 
 export { nodeOps, NSVNodeOps } from "./nativescript-vue-next/runtime";
-export { NSVNodeTypes, NSVViewFlags, INSVNode, INSVElement, NSVNode, NSVElement, NSVComment, NSVText, NSVDocument, NSVRoot } from "./nativescript-vue-next/runtime";
+export { NSVNodeTypes, NSVViewFlags, INSVNode, INSVElement, NSVNode, NSVElement, NSVComment, NSVText, NSVRoot } from "./nativescript-vue-next/runtime";
 export {
     NSVElementResolver,
     NSVModelDescriptor,

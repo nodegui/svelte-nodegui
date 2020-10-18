@@ -1,10 +1,10 @@
-import { NSVElement } from "../nativescript-vue-next/runtime/nodes";
+import { NSVElement, NSVNodeTypes } from "../nativescript-vue-next/runtime/nodes";
 import StyleElement from "./StyleElement";
 // import { addCss } from "@nativescript/core/application"
 
 export default class HeadElement extends NSVElement {
     constructor() {
-        super('head')
+        super(NSVNodeTypes.HEAD)
     }
 
     onInsertedChild(childNode: NSVElement, atIndex: number) {

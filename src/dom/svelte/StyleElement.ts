@@ -1,5 +1,5 @@
 // import { ElementNode, logger as log } from '../basicdom'
-import { NSVElement } from "../nativescript-vue-next/runtime/nodes";
+import { NSVElement, NSVNodeTypes } from "../nativescript-vue-next/runtime/nodes";
 import { log } from "../shared/Logger";
 // import { StyleScope } from '@nativescript/core/ui/styling/style-scope'
 // import { Frame } from '@nativescript/core'
@@ -51,7 +51,7 @@ export default class StyleElement extends NSVElement {
     _sheet: StyleSheet;
 
     constructor() {
-        super('style')
+        super(NSVNodeTypes.STYLE)
         this._sheet = new StyleSheet();
     }
 
