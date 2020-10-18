@@ -486,6 +486,11 @@ function addChild(child: NSVElement, parent: NSVElement, atIndex?: number) {
         return addChildByNodeRole(nodeRole, childView, parentView, atIndex);
     }
 
+    if(child.tagName === NSVNodeTypes.HEAD || child.tagName === NSVNodeTypes.STYLE){
+        // These elements will be handled as virtual elements (one with no native view).
+        return;
+    }
+
     // if (parent.meta.viewFlags & NSVViewFlags.LAYOUT_VIEW) {
     //     if (atIndex) {
     //         (parentView as LayoutBase).insertChild(childView as View, atIndex)
