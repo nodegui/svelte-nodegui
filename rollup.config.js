@@ -16,6 +16,7 @@ let plugins = [
     include: 'src/components/**/*.svelte',
   }),
   typescript({
+    sourcemap: true,
     typescript: require('typescript'),
     useTsconfigDeclarationDir: true
   })
@@ -26,6 +27,7 @@ function module_defs() {
     return {
       input: `src/${mod}/index.ts`,
       output: [{
+        sourcemap: true,
         file: `dist/${mod}/index.js`,
         format: 'esm',
       }],
@@ -41,6 +43,7 @@ export default [
   {
     input: 'src/index.ts',
     output: [{
+      sourcemap: true,
       file: "dist/index.js",
       format: 'esm',
     }
