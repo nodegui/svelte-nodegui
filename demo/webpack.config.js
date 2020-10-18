@@ -72,6 +72,7 @@ module.exports = (env, argv) => {
             new CleanWebpackPlugin(),
             new webpack.DefinePlugin({
                 "__DEV__": argv.mode === "development" ? "true" : "false",
+                "__TEST__": "false",
             })
         ],
         resolve: {
