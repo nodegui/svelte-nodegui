@@ -4,8 +4,10 @@
   "repository": "<fill-your-repository-here>",
   "scripts": {
     "build": "webpack -p",
-    "start": "webpack && qode ./dist/index.js",
-    "debug": "webpack && qode --inspect ./dist/index.js"
+    "watch": "webpack -p --watch",
+    "start": "qode ./dist/index.js",
+    "run": "qode ./dist/index.js",
+    "debug": "qode --inspect ./dist/index.js"
   },
   "dependencies": {
     "@nodegui/nodegui": "^0.25.0",
