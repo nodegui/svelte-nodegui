@@ -7,7 +7,7 @@
 </script>
 
 <window>
-    <text>Examples</text>
+    <!-- <text>Examples</text> -->
 </window>
 
 <style>
