@@ -1,6 +1,4 @@
-// import { run, on, launchEvent } from '@nativescript/core/application'
-import { initializeDom, NSVElement, createElement } from './dom';
-// import { View } from '@nativescript/core';
+import { initializeDom, NSVElement } from './dom';
 
 
 declare global {
@@ -12,20 +10,21 @@ declare global {
 }
 
 export function svelteDesktop(rootElement: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
-    initializeDom();
+    const doc = initializeDom();
+
     return new Promise((resolve, reject) => {
 
         let elementInstance: SvelteComponent;
 
         const buildElement = () => {
-            let frag = createElement('fragment');
+            let frag = doc.createElement('fragment');
             elementInstance = new rootElement({
                 target: frag,
                 props: data || {}
             })
             return (frag.firstChild as NSVElement).nativeView;
         }
-
+        
         buildElement();
         resolve(elementInstance);
     });

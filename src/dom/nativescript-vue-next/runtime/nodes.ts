@@ -1,5 +1,4 @@
 import {
-    createElement,
     getViewClass,
     getViewMeta,
     normalizeElementName,
@@ -140,19 +139,10 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
 
         this._tagName = normalizeElementName(tagName);
 
-        switch (tagName) {
-            case NSVNodeTypes.TEMPLATE:
-            case NSVNodeTypes.FRAGMENT:
-            case NSVNodeTypes.STYLE:
-            case NSVNodeTypes.HEAD:
-            case NSVNodeTypes.DOCUMENT:
-                // All of these nodes lack a nativeView. Bail out to prevent infinite recursion.
-                return;
-            default: {
-                const viewClass = getViewClass(tagName);
-                this._nativeView = new viewClass();
-                this._nativeView[ELEMENT_REF] = this;
-            }
+        const viewClass = getViewClass(tagName);
+        if(viewClass){
+            this._nativeView = new viewClass();
+            this._nativeView[ELEMENT_REF] = this;
         }
     }
 

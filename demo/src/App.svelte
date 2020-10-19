@@ -10,6 +10,9 @@
     onMount(() => {
         console.log(`Mounted! win:`, win);
         console.log(`Mounted! win.nativeView:`, win.nativeView);
+        /**
+         * @see https://github.com/nodegui/nodegui-starter/blob/master/src/index.ts#L44
+         */
         win.nativeView.setWindowTitle("Hello World");
         win.nativeView.show();
     })

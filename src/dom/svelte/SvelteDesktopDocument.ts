@@ -1,18 +1,16 @@
 
 // import { DocumentNode, ElementNode, createElement, TextNode, logger as log } from '../basicdom';
+import { nodeOps } from "../nativescript-vue-next/runtime/nodeOps";
 import { NSVComment, NSVElement, NSVNodeTypes, NSVText } from "../nativescript-vue-next/runtime/nodes";
 import { warn, error, log } from '../shared/Logger';
-import { createElement } from "../nativescript-vue-next/runtime/registry";
 import HeadElement from "./HeadElement";
 
 export default class SvelteDesktopDocument extends NSVElement {
     head: HeadElement;
     constructor() {
-        console.log(`!! Constructing SvelteDesktopDocument.super('document')`);
         super(NSVNodeTypes.DOCUMENT);
 
-        // this.head = createElement('head')
-        this.head = new HeadElement();
+        this.head = nodeOps.createElement('head') as HeadElement;
         
         this.appendChild(this.head);
 
@@ -52,7 +50,7 @@ export default class SvelteDesktopDocument extends NSVElement {
         //     let bits = tagName.split(".", 2);
         //     return this.createPropertyNode(bits[0], bits[1]);
         // }
-        return createElement(tagName);
+        return nodeOps.createElement(tagName) as NSVElement;
     }
 
     createElementNS(namespace: string, tagName: string): NSVElement {

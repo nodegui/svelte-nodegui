@@ -45,8 +45,12 @@ export function getViewMeta(elementName: string): NSVViewMeta {
     return entry.meta
 }
 
-export function getViewClass(elementName: string): any {
-    // console.log(`->getViewClass(${elementName})`)
+/**
+ * @param elementName The name of the element registered into the elementMap.
+ * @returns The nativeView associated with this element name. May be undefined
+ *          (e.g. for virtual elements like head and style).
+ */
+export function getViewClass(elementName: string): any|undefined {
     const normalizedName = normalizeElementName(elementName)
     const entry = elementMap[normalizedName]
 
@@ -63,15 +67,6 @@ export function getViewClass(elementName: string): any {
 
 export function normalizeElementName(elementName: string): string {
     return elementName.replace(/-/g, '').toLowerCase()
-}
-
-export function createElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any>(elementName: string): NSVElement<T, Signals> {
-    const normalizedName = normalizeElementName(elementName);
-    const elementDefinition = elementMap[normalizedName];
-    if (!elementDefinition) {
-        throw new TypeError(`No known component for element ${elementName}.`)
-    }
-    return elementDefinition.resolver() as NSVElement<T, Signals>;
 }
 
 export function registerElement(

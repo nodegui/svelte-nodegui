@@ -3,9 +3,14 @@ import {
     INSVNode,
     NSVComment,
     NSVElement,
+    NSVNodeTypes,
     NSVRoot,
     NSVText
 } from './nodes';
+import HeadElement from "../../svelte/HeadElement";
+import StyleElement from "../../svelte/StyleElement";
+import SvelteDesktopDocument from "../../svelte/SvelteDesktopDocument";
+import TemplateElement from "../../svelte/TemplateElement";
 
 /**
  * An implementation of RendererOptions from '@vue/runtime-core'.
@@ -19,7 +24,22 @@ export const nodeOps = {
         return new NSVComment(text);
     },
     createElement(type: string, isSVG: boolean = false): INSVElement {
-        return new NSVElement(type);
+        console.log(`nodeOps.createElement("${type}") -> new NSVElement("${type}")`);
+
+        switch (type) {
+            case NSVNodeTypes.TEMPLATE:
+                return new TemplateElement();
+            case NSVNodeTypes.STYLE:
+                return new StyleElement();
+            case NSVNodeTypes.HEAD:
+                return new HeadElement();
+            case NSVNodeTypes.DOCUMENT:
+                return new SvelteDesktopDocument();
+            case NSVNodeTypes.FRAGMENT:
+            default: {
+                return new NSVElement(type);
+            }
+        }
     },
     createText(text: string): INSVNode {
         return new NSVText(text);

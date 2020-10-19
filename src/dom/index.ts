@@ -33,7 +33,6 @@ export {
     getViewMeta,
     getViewClass,
     normalizeElementName,
-    createElement,
     registerElement,
     isKnownView,
     registerNativeElements
