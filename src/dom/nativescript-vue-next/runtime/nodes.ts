@@ -323,15 +323,6 @@ export class NSVElement<T extends Component = Component> extends NSVNode impleme
             return;
         }
 
-        const setterName = "set" + name[0].toUpperCase() + name.slice(1, name.length);
-        if(typeof (this.nativeView as any)[setterName] === "function"){
-            console.log(`${this._tagName}.setAttribute(${name}) found setter for ${setterName}`);
-            (this.nativeView as any)[setterName](value);
-            return;
-        } else {
-            console.log(`${this._tagName}.setAttribute(${name}) didn't find setter for ${setterName}`);
-        }
-
         // /**
         //  * The 'ios' and 'android' properties (e.g. on ActionItem)
         //  * are readonly, so we need to assign one level lower.
