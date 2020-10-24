@@ -238,8 +238,17 @@ export function registerNativeElements() {
         {
             nodeOps: {
                 insert(child, parent): void {
+                    if(child instanceof QMenuBar){
+                        if(!parent.nativeView.menuBar()){
+                            parent.nativeView.setMenuBar(child);
+                            return;
+                        } else {
+                            console.warn("MainWindow can't have more than one menubar.");
+                            return;
+                        }
+                    }
                     if(child.nodeRole === "centralWidget"){
-                        (parent.nativeView as unknown as import('@nodegui/nodegui').QMainWindow).setCentralWidget(child.nativeView as NodeWidget<any>);
+                        (parent.nativeView as unknown as QMainWindow).setCentralWidget(child.nativeView as NodeWidget<any>);
                         return;
                     }
                     // if(child.nodeRole === "styleSheet"){
