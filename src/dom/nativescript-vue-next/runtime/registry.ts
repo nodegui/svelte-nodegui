@@ -1,28 +1,28 @@
 import { NSVElement, NSVViewFlags } from './nodes'
 import { warn } from "../../shared/Logger";
-import { NodeWidget, QWidgetSignals } from '@nodegui/nodegui';
+import { NodeWidget, QWidgetSignals, Component } from '@nodegui/nodegui';
 
 
-export type NSVElementResolver<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any> = () => NSVElement<T, Signals>
+export type NSVElementResolver<T extends Component> = () => NSVElement<T>
 
 export type NSVModelDescriptor = {
     prop: string
     event: string
 }
 
-export interface NSVViewMeta<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any> {
+export interface NSVViewMeta<T extends Component = Component> {
     viewFlags: NSVViewFlags
     nodeOps?: {
-        insert(child: NSVElement, parent: NSVElement<T, Signals>, atIndex?: number): void
-        remove(child: NSVElement, parent: NSVElement<T, Signals>): void
+        insert(child: NSVElement, parent: NSVElement<T>, atIndex?: number): void
+        remove(child: NSVElement, parent: NSVElement<T>): void
     }
     model?: NSVModelDescriptor
     overwriteExisting?: boolean
 }
 
-export interface NSVElementDescriptor {
+export interface NSVElementDescriptor<T extends Component = Component> {
     meta: NSVViewMeta
-    resolver?: NSVElementResolver
+    resolver?: NSVElementResolver<T>
 }
 
 export let defaultViewMeta: NSVViewMeta = {
@@ -51,6 +51,7 @@ export function getViewMeta(elementName: string): NSVViewMeta {
  *          (e.g. for virtual elements like head and style).
  */
 export function getViewClass(elementName: string): any|undefined {
+    // console.log(`->getViewClass(${elementName})`)
     const normalizedName = normalizeElementName(elementName)
     const entry = elementMap[normalizedName]
 
@@ -69,10 +70,11 @@ export function normalizeElementName(elementName: string): string {
     return elementName.replace(/-/g, '').toLowerCase()
 }
 
-export function registerElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any>(
+// interface registerElement<Component>;
+export function registerElement<T extends Component = Component>(
     elementName: string,
-    resolver?: NSVElementResolver<T, Signals>,
-    meta?: Partial<NSVViewMeta>
+    resolver?: NSVElementResolver<T>,
+    meta?: Partial<NSVViewMeta<T>>
 ) {
     const normalizedName = normalizeElementName(elementName)
     const mergedMeta = Object.assign({}, defaultViewMeta, meta)
@@ -103,7 +105,7 @@ export function isKnownView(elementName: string): boolean {
  * I'll improve the typings later.
  */
 export function registerNativeElements() {
-    registerElement(
+    registerElement<import('@nodegui/nodegui').QPixmap>(
         'image',
         () => require('@nodegui/nodegui').QPixmap,
         {
@@ -117,7 +119,7 @@ export function registerNativeElements() {
             }
         },
     )
-    registerElement(
+    registerElement<import('@nodegui/nodegui').QMovie>(
         'animatedImage',
         () => require('@nodegui/nodegui').QMovie,
         {
@@ -137,7 +139,36 @@ export function registerNativeElements() {
         {
             nodeOps: {
                 insert(child, parent): void {
+                    // if(!parent.nativeView.layout && child instanceof require('@nodegui/nodegui').FlexLayout){
 
+                    // }
+                    if (child.nodeRole === "layout"){
+                        if(!parent.nativeView.layout){
+                            console.log(`[LAYOUT] ${parent} > ${child}`);
+                            (child.nativeView as unknown as import('@nodegui/nodegui').FlexLayout).setFlexNode(parent.nativeView.getFlexNode());
+                            (parent.nativeView as unknown as import('@nodegui/nodegui').QWidget).setLayout(child.nativeView as unknown as import('@nodegui/nodegui').FlexLayout);
+                            parent.nativeView.layout = child.nativeView as unknown as import('@nodegui/nodegui').FlexLayout;
+                        } else {
+                            console.log(`View unexpectedly began with a layout!`);
+                        }
+                        return;
+                    }
+                },
+                remove(): void {
+
+                },
+            }
+        },
+    )
+    registerElement<import('@nodegui/nodegui').FlexLayout>(
+        'flexLayout',
+        () => require('@nodegui/nodegui').FlexLayout,
+        {
+            nodeOps: {
+                insert(child, parent): void {
+                    console.log(`FlexLayout about to add child ${child}`);
+                    (parent.nativeView as unknown as import('@nodegui/nodegui').FlexLayout).addWidget(child.nativeView as any);
+                    return;
                 },
                 remove(): void {
 
@@ -165,12 +196,12 @@ export function registerNativeElements() {
         {
             nodeOps: {
                 insert(child, parent): void {
-
+                    console.log(`[text] ${parent.nativeView} > ${child.nativeView}`);
                 },
                 remove(): void {
 
                 },
-            }
+            },
         },
     )
     registerElement<import('@nodegui/nodegui').QDial>(
@@ -207,7 +238,13 @@ export function registerNativeElements() {
         {
             nodeOps: {
                 insert(child, parent): void {
-
+                    if(child.nodeRole === "centralWidget"){
+                        (parent.nativeView as unknown as import('@nodegui/nodegui').QMainWindow).setCentralWidget(child.nativeView as NodeWidget<any>);
+                        return;
+                    }
+                    // if(child.nodeRole === "styleSheet"){
+                    //     (parent.nativeView as unknown as import('@nodegui/nodegui').QMainWindow).setStyleSheet(child.nativeView.text());
+                    // }
                 },
                 remove(): void {
 
@@ -355,7 +392,7 @@ export function registerNativeElements() {
             }
         },
     )
-    registerElement(
+    registerElement<import('@nodegui/nodegui').QSystemTrayIcon>(
         'systemTrayIcon',
         () => require('@nodegui/nodegui').QSystemTrayIcon,
         {
@@ -369,7 +406,7 @@ export function registerNativeElements() {
             }
         },
     )
-    registerElement(
+    registerElement<import('@nodegui/nodegui').QAction>(
         'action',
         () => require('@nodegui/nodegui').QAction,
         {
@@ -383,7 +420,7 @@ export function registerNativeElements() {
             }
         },
     )
-    registerElement(
+    registerElement<import('@nodegui/nodegui').QBoxLayout>(
         'boxView',
         () => require('@nodegui/nodegui').QBoxLayout,
         {
@@ -397,7 +434,7 @@ export function registerNativeElements() {
             }
         },
     )
-    registerElement(
+    registerElement<import('@nodegui/nodegui').QGridLayout>(
         'gridView',
         () => require('@nodegui/nodegui').QGridLayout,
         {
@@ -411,18 +448,19 @@ export function registerNativeElements() {
             }
         },
     )
-    registerElement(
-        'tabItem',
-        () => require('@nodegui/nodegui').Component,
-        {
-            nodeOps: {
-                insert(child, parent): void {
+    /* Component is an abstract class, so this is surely wrong. */
+    // registerElement<import('@nodegui/nodegui').Component>(
+    //     'tabItem',
+    //     () => require('@nodegui/nodegui').Component,
+    //     {
+    //         nodeOps: {
+    //             insert(child, parent): void {
 
-                },
-                remove(): void {
+    //             },
+    //             remove(): void {
 
-                },
-            }
-        },
-    )
+    //             },
+    //         }
+    //     },
+    // )
 }

@@ -6,8 +6,10 @@ import {
 } from './registry'
 import { ELEMENT_REF } from './runtimeHelpers';
 // import { debug } from '../shared';
-import { NodeWidget, QWidgetSignals } from '@nodegui/nodegui'
+import { Component, NodeObject, NodeWidget, QObjectSignals, QWidgetSignals } from '@nodegui/nodegui'
 import { warn, error, log } from '../../shared/Logger';
+import { EventWidget } from '@nodegui/nodegui/dist/lib/core/EventWidget';
+import { QVariantType } from '@nodegui/nodegui/dist/lib/QtCore/QVariant';
 // import { default as set } from "set-value";
 
 // import unset from 'unset-value'
@@ -63,24 +65,60 @@ export interface INSVNode {
 
 type EventListener = (args: unknown) => void;
 
-export interface INSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any> extends INSVNode {
+export function componentIsEventWidget<Signals extends {} = {}>(component: Component): component is EventWidget<Signals> {
+    if(!component){
+        return false;
+    }
+    if(typeof (component as EventWidget<Signals>).addEventListener === "function"){
+        return true;
+    }
+    return false;
+}
+
+export function componentIsStyleable<Signals extends QWidgetSignals = QWidgetSignals>(component: Component): component is NodeWidget<Signals> {
+    if(!component){
+        return false;
+    }
+    if(typeof (component as NodeWidget<Signals>)._rawInlineStyle === "string"){
+        return true;
+    }
+    return false;
+}
+
+export function componentHasPropertyAccessor<Signals extends QObjectSignals = QObjectSignals>(component: Component): component is NodeObject<Signals> {
+    if(!component){
+        return false;
+    }
+    if(typeof (component as NodeObject<Signals>).property === "function"){
+        return true;
+    }
+    return false;
+}
+
+// export function componentIsNodeWidget<Signals extends QWidgetSignals = QWidgetSignals>(component: Component): component is NodeWidget<Signals> {
+//     if(typeof (component as NodeWidget<Signals>).actions === "object"){
+//         return true;
+//     }
+// }
+
+export interface INSVElement<T extends Component = Component> extends INSVNode {
     tagName: string
-    meta: NSVViewMeta
+    meta: NSVViewMeta<T>
     style: string
 
     eventListeners: Map<string, (args: unknown) => void>;
 
-    addEventListener<SignalType extends keyof Signals>(
+    addEventListener<Signals extends {}, SignalType extends keyof Signals>(
         event: SignalType,
         handler: Signals[SignalType],
         options?: AddEventListenerOptions
     ): void
 
-    removeEventListener<SignalType extends keyof Signals>(event: SignalType, handler?: Signals[SignalType]): void
+    removeEventListener<Signals extends {}, SignalType extends keyof Signals>(event: SignalType, handler?: Signals[SignalType]): void
 
     dispatchEvent(event: string): void
 
-    nativeView: (T) & { [ELEMENT_REF]: INSVElement<T, Signals> } & { [key: string]: unknown }
+    nativeView: T;
 
     getAttribute(name: string): unknown
 
@@ -108,7 +146,7 @@ export abstract class NSVNode implements INSVNode {
     nodeType: NSVNodeTypes
     abstract text: string | undefined
 
-    parentNode: INSVElement | null = null
+    parentNode: INSVElement<any> | null = null
     childNodes: INSVNode[] = []
 
     nextSibling: INSVNode | null = null
@@ -129,10 +167,10 @@ export abstract class NSVNode implements INSVNode {
     }
 }
 
-export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any> extends NSVNode implements INSVElement<T, Signals> {
+export class NSVElement<T extends Component = Component> extends NSVNode implements INSVElement<T> {
     private readonly _tagName: string
-    private readonly _nativeView: T & { [ELEMENT_REF]: INSVElement<T, Signals> } & { [key: string]: unknown }
-    private _meta: NSVViewMeta | undefined
+    private readonly _nativeView: T;
+    private _meta: NSVViewMeta<T> | undefined
 
     constructor(tagName: string){
         super(NSVNodeTypes.ELEMENT);
@@ -142,7 +180,8 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
         const viewClass = getViewClass(tagName);
         if(viewClass){
             this._nativeView = new viewClass();
-            this._nativeView[ELEMENT_REF] = this;
+            // console.log(`!! [${tagName}] nativeView was instantiated!`, this._nativeView);
+            (this._nativeView as any)[ELEMENT_REF] = this;
         }
     }
 
@@ -155,11 +194,16 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
     }
 
     get style(): string {
-        return this.nativeView._rawInlineStyle
+        if(componentIsStyleable(this.nativeView)){
+            return this.nativeView._rawInlineStyle;
+        }
+        return "";
     }
 
     set style(inlineStyle: string) {
-        this.nativeView._rawInlineStyle = inlineStyle
+        if (componentIsStyleable(this.nativeView)){
+            this.nativeView._rawInlineStyle = inlineStyle;
+        }
     }
 
     get text(): string | undefined {
@@ -170,6 +214,7 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
     }
 
     set text(t: string | undefined) {
+        console.log(`!! TEXT BEING SET: ${t}`);
         if (typeof (this.nativeView as any).text === "function") {
             (this.nativeView as any).text(t);
         }
@@ -196,11 +241,15 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
         return this._eventListeners!;
     }
 
-    addEventListener<SignalType extends keyof Signals>(
+    addEventListener<Signals extends {}, SignalType extends keyof Signals>(
         event: SignalType,
         handler: Signals[SignalType],
         options: AddEventListenerOptions = {}
     ) {
+        if(!componentIsEventWidget<Signals>(this.nativeView)){
+            return;
+        }
+
         // log(`add event listener ${this} ${event}`);
 
         const { capture, once } = options
@@ -224,13 +273,17 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
             /* I don't see any evidence that Qt events include the event name, so not sure what to do here. */
             (args as any).type = event;
             (handler as unknown as EventListener)(args)
-        })
+        });
 
         this.nativeView.addEventListener<SignalType>(event, handler)
         this.eventListeners.set(event as string, handler);
     }
 
-    removeEventListener<SignalType extends keyof Signals>(event: SignalType, handler?: Signals[SignalType]) {
+    removeEventListener<Signals extends {}, SignalType extends keyof Signals>(event: SignalType, handler?: Signals[SignalType]) {
+        if(!componentIsEventWidget<Signals>(this.nativeView)){
+            return;
+        }
+
         this.eventListeners.delete(event as string);
         this.nativeView.removeEventListener(event, handler)
     }
@@ -250,13 +303,30 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
     }
 
     getAttribute(name: string): unknown {
-        return this.nativeView[name]
+        if(!this.nativeView){
+            return void 0;
+        }
+
+        if(componentHasPropertyAccessor(this.nativeView)){
+            return this.nativeView.property(name);
+        }
+
+        return (this.nativeView as any)[name];
     }
 
     setAttribute(name: string, value: unknown) {
         if(name === "nodeRole" && typeof value === "string"){
             this.nodeRole = value;
             return;
+        }
+
+        const setterName = "set" + name[0].toUpperCase() + name.slice(1, name.length);
+        if(typeof (this.nativeView as any)[setterName] === "function"){
+            console.log(`${this._tagName}.setAttribute(${name}) found setter for ${setterName}`);
+            (this.nativeView as any)[setterName](value);
+            return;
+        } else {
+            console.log(`${this._tagName}.setAttribute(${name}) didn't find setter for ${setterName}`);
         }
 
         // /**
@@ -278,6 +348,16 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
         // }
 
         // set(this.nativeView, name, value)
+
+        if(!this.nativeView){
+            return;
+        }
+
+        if(componentHasPropertyAccessor(this.nativeView)){
+            this.nativeView.setProperty(name, value as QVariantType);
+            return;
+        }
+
         (this.nativeView as any)[name] = value;
     }
 
@@ -316,7 +396,7 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
         }
 
         this.childNodes.splice(refIndex, 0, el)
-        el.parentNode = this as INSVElement<NodeWidget<any>, any>
+        el.parentNode = this as INSVElement<any>
 
         // find index to use for the native view, since non-visual nodes
         // (comment/text don't exist in the native view hierarchy)
@@ -331,7 +411,7 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
 
     appendChild(el: INSVNode) {
         this.childNodes.push(el)
-        el.parentNode = this as INSVElement<NodeWidget<any>, any>
+        el.parentNode = this as INSVElement<any>
 
         this.addChild(el)
     }
@@ -352,6 +432,7 @@ export class NSVElement<T extends NodeWidget<Signals> = NodeWidget<any>, Signals
 
     // abstracted from appendChild, and insertBefore to avoid code duplication
     private addChild(el: INSVNode, atIndex?: number): void {
+        console.log(`[addChild] ${this._tagName} > ${(el as any)._tagName}`);
         if (el.nodeType === NSVNodeTypes.ELEMENT) {
             addChild(el as NSVElement, this, atIndex)
         } else if (el.nodeType === NSVNodeTypes.TEXT) {
@@ -397,6 +478,7 @@ export class NSVComment extends NSVNode {
 
 export class NSVText extends NSVNode {
     constructor(text: string) {
+        console.log(`[NSVText] constructor "${text}"`);
         super(NSVNodeTypes.TEXT)
 
         this.text = text
@@ -450,11 +532,11 @@ export class NSVRoot<T extends NodeWidget<Signals> = NodeWidget<any>, Signals ex
 
 function addChild(child: NSVElement, parent: NSVElement, atIndex?: number) {
     if (__TEST__) return
-    // debug(
-    //     `...addChild(    ${child.tagName}(${child.nodeId}), ${parent.tagName}(${
-    //         parent.nodeId
-    //     }), ${atIndex}    )`
-    // )
+    console.log(
+        `...addChild(    ${parent.tagName}(${parent.nodeId
+        }) > ${child.tagName}(${child.nodeId}), ${atIndex}    )`
+    )
+    console.log(1);
     if (child.meta.viewFlags & NSVViewFlags.SKIP_ADD_TO_DOM) {
         // debug('SKIP_ADD_TO_DOM')
         return
@@ -464,20 +546,26 @@ function addChild(child: NSVElement, parent: NSVElement, atIndex?: number) {
     const childView = child.nativeView
 
     if (parent.meta.viewFlags & NSVViewFlags.NO_CHILDREN) {
+        console.log(2);
         // debug('NO_CHILDREN')
         return
     }
     if (parent.meta.nodeOps) {
+        console.log(3);
         return parent.meta.nodeOps.insert(child, parent, atIndex)
     }
+    console.log(4);
 
     const nodeRole: string|undefined = child.nodeRole;
     if(nodeRole){
+        console.log(5);
         return addChildByNodeRole(nodeRole, childView, parentView, atIndex);
     }
+    console.log(6);
 
-    if(child.tagName === NSVNodeTypes.HEAD || child.tagName === NSVNodeTypes.STYLE){
-        // These elements will be handled as virtual elements (one with no native view).
+    if(!child.nativeView){
+        console.log(7);
+        // Virtual element, like head.
         return;
     }
 
@@ -493,7 +581,7 @@ function addChild(child: NSVElement, parent: NSVElement, atIndex?: number) {
     //     (parentView as unknown as AddChildFromBuilder)._addChildFromBuilder(childView.constructor.name, childView)
     // }
 
-    error(`addChild() called on an element that doesn't implement nodeOps.insert()`, this);
+    error(`addChild() called on an element that doesn't implement nodeOps.insert()`, (parent as any)._tagName);
 }
 
 function removeChild(child: NSVElement, parent: NSVElement) {
