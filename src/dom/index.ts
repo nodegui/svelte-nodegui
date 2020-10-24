@@ -19,6 +19,7 @@ import {
     NSVText,
     NSVNodeTypes,
     NSVViewFlags,
+    NativeView,
 } from "./nativescript-vue-next/runtime/nodes";
 
 
@@ -65,7 +66,7 @@ function installGlobalShims(): SvelteDesktopDocument {
         writable: true,
     })
     
-    window.getComputedStyle = <Signals extends QWidgetSignals = QWidgetSignals>(element: NSVElement<NodeWidget<Signals>, Signals>) => {
+    window.getComputedStyle = (element: NSVElement<NativeView<NodeWidget<QWidgetSignals>>>) => {
         return element.nativeView._rawInlineStyle;
     }
 
