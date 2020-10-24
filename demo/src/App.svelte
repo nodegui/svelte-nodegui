@@ -16,10 +16,8 @@
     `}
 >
     <view nodeRole="centralWidget" id="myroot">
-        <flexLayout nodeRole="layout">
-            <text id="mylabel" text="Hello"></text>
-            <!-- <text style="color: red;">World</text> -->
-        </flexLayout>
+        <text id="mylabel" text="Hello"></text>
+        <!-- <text style="color: red;">World</text> -->
     </view>
     <!-- <text>Examples</text> -->
 </window>
