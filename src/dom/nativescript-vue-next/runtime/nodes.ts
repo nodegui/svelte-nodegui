@@ -174,6 +174,8 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
     private readonly _tagName: string
     private readonly _nativeView: T;
     private _meta: NSVViewMeta<T> | undefined
+    private readonly recycledOldProps: Record<string, any> = {};
+    private readonly propsSetter: Record<string, (value: any) => void> = {};
 
     constructor(tagName: string){
         super(NSVNodeTypes.ELEMENT);
@@ -185,6 +187,9 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
             this._nativeView = new viewClass();
             // console.log(`!! [${tagName}] nativeView was instantiated!`, this._nativeView);
             (this._nativeView as any)[ELEMENT_REF] = this;
+
+            // This is a hack to extract the props setter from React NodeGUI (as it's not an exposed API).
+            this._nativeView.setProps(this.propsSetter, this.recycledOldProps);
         }
     }
 
@@ -224,7 +229,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         error(`text() setter called on element that does not implement it.`, this);
     }
 
-    get meta() {
+    get meta(): NSVViewMeta<T> {
         if (this._meta) {
             return this._meta
         }
@@ -320,6 +325,8 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         return (this.nativeView as any)[name];
     }
 
+    private static readonly recycledOldProps: Record<string, any> = Object.freeze({});
+
     setAttribute(name: string, value: unknown) {
         if(name === "nodeRole" && typeof value === "string"){
             this.nodeRole = value;
@@ -350,6 +357,19 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
             return;
         }
 
+        /**
+         * React NodeGUI's API for setting props expects an object of props.
+         * We only set props one-at-a-time, so we'll avoid reallocations by re-using and cleaning up the same static object.
+         */
+        const descriptor = Object.getOwnPropertyDescriptor(this.propsSetter, name);
+        if(descriptor && typeof descriptor.set === "function"){
+            // This prop is supported by setProps.
+            this.recycledOldProps[name] = value;
+            this.nativeView.setProps(this.propsSetter, this.recycledOldProps);
+            delete this.recycledOldProps[name];
+            return;
+        }
+
         if(componentHasPropertyAccessor(this.nativeView)){
             /**
              * @see https://doc.qt.io/archives/qt-5.8/qobject.html#property
@@ -376,6 +396,11 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         // will prevent us from changing the padding once we deleted it
         // that's not the expected behaviour.
         // unset(this.nativeView, name)
+
+        console.warn(
+            `[NSVElement.removeAttribute] React NodeGUI hasn't implemented removeAttribute, so it's unclear how to implement ` +
+            `removeAttribute(). You may want to try passing null or undefined instead of removing the attribute.`
+        );
     }
 
     insertBefore(el: INSVNode, anchor?: INSVNode | null) {
@@ -406,7 +431,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
             .filter((node) => node.nodeType === NSVNodeTypes.ELEMENT)
             .findIndex((node) => node.nodeId === el.nodeId)
 
-        this.addChild(el, trueIndex)
+        this.addChild(el, anchor, trueIndex);
     }
 
     appendChild(el: INSVNode) {
@@ -431,10 +456,10 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
     }
 
     // abstracted from appendChild, and insertBefore to avoid code duplication
-    private addChild(el: INSVNode, atIndex?: number): void {
+    private addChild(el: INSVNode, anchor?: INSVNode | null, atIndex?: number): void {
         console.log(`[addChild] ${this._tagName} > ${(el as any)._tagName}`);
         if (el.nodeType === NSVNodeTypes.ELEMENT) {
-            addChild(el as NSVElement, this, atIndex)
+            addChild(el as NSVElement, this, anchor, atIndex)
         } else if (el.nodeType === NSVNodeTypes.TEXT) {
             this.updateText()
         }
@@ -530,13 +555,13 @@ export class NSVRoot<T extends NativeView = NativeView> extends NSVNode {
     }
 }
 
-function addChild(child: NSVElement, parent: NSVElement, atIndex?: number) {
+function addChild(child: NSVElement, parent: NSVElement, anchor?: INSVNode | null, atIndex?: number) {
     if (__TEST__) return
     console.log(
         `...addChild(    ${parent.tagName}(${parent.nodeId
         }) > ${child.tagName}(${child.nodeId}), ${atIndex}    )`
     )
-    console.log(1);
+    
     if (child.meta.viewFlags & NSVViewFlags.SKIP_ADD_TO_DOM) {
         // debug('SKIP_ADD_TO_DOM')
         return
@@ -546,26 +571,31 @@ function addChild(child: NSVElement, parent: NSVElement, atIndex?: number) {
     const childView = child.nativeView
 
     if (parent.meta.viewFlags & NSVViewFlags.NO_CHILDREN) {
-        console.log(2);
         // debug('NO_CHILDREN')
         return
     }
-    if (parent.meta.nodeOps) {
-        console.log(3);
-        return parent.meta.nodeOps.insert(child, parent, atIndex)
-    }
-    console.log(4);
 
-    const nodeRole: string|undefined = child.nodeRole;
-    if(nodeRole){
-        console.log(5);
-        return addChildByNodeRole(nodeRole, childView, parentView, atIndex);
-    }
-    console.log(6);
+    // if (parent.meta.nodeOps?.insert) {
+    //     return parent.meta.nodeOps.insert(child, parent, atIndex)
+    // }
 
-    if(!child.nativeView){
-        console.log(7);
+    // const nodeRole: string|undefined = child.nodeRole;
+    // if(nodeRole){
+    //     return addChildByNodeRole(nodeRole, childView, parentView, atIndex);
+    // }
+
+    if(!parentView || !childView){
         // Virtual element, like head.
+        return;
+    }
+
+    if(!anchor){
+        parentView.appendChild(childView);
+        return;
+    }
+
+    if((anchor as NSVElement<NativeView>).nativeView){
+        parentView.insertBefore(childView, (anchor as NSVElement<NativeView>).nativeView);
         return;
     }
 
@@ -600,17 +630,25 @@ function removeChild(child: NSVElement, parent: NSVElement) {
         // debug('NO_CHILDREN')
         return
     }
-    if (parent.meta.nodeOps) {
-        return parent.meta.nodeOps.remove(child, parent)
-    }
+    
+    // if (parent.meta.nodeOps) {
+    //     return parent.meta.nodeOps.remove(child, parent)
+    // }
 
     const parentView = parent.nativeView
     const childView = child.nativeView
 
-    const nodeRole: string|undefined = child.nodeRole;
-    if(nodeRole){
-        return removeChildByNodeRole(nodeRole, childView, parentView);
+    // const nodeRole: string|undefined = child.nodeRole;
+    // if(nodeRole){
+    //     return removeChildByNodeRole(nodeRole, childView, parentView);
+    // }
+
+    if(!parentView || !childView){
+        // Virtual element, like head.
+        return;
     }
+
+    parentView.removeChild(childView);
 
     // if (parent.meta.viewFlags & NSVViewFlags.LAYOUT_VIEW) {
     //     (parentView as LayoutBase).removeChild(childView as View)
