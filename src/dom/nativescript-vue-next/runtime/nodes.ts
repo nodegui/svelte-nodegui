@@ -308,6 +308,9 @@ export class NSVElement<T extends Component = Component> extends NSVNode impleme
         }
 
         if(componentHasPropertyAccessor(this.nativeView)){
+            /**
+             * @see https://doc.qt.io/archives/qt-5.8/qobject.html#property
+             */
             return this.nativeView.property(name);
         }
 
@@ -354,6 +357,9 @@ export class NSVElement<T extends Component = Component> extends NSVNode impleme
         }
 
         if(componentHasPropertyAccessor(this.nativeView)){
+            /**
+             * @see https://doc.qt.io/archives/qt-5.8/qobject.html#property
+             */
             this.nativeView.setProperty(name, value as QVariantType);
             return;
         }
