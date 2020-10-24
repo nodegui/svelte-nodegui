@@ -7,6 +7,7 @@ import { ease_in, ease_out, ease, linear, ease_in_out, animation_curve, normaliz
 import { NSVElement } from "../dom";
 import { warn } from "../dom/shared/Logger";
 import { NodeWidget, QWidgetSignals } from "@nodegui/nodegui";
+import type { NativeView } from "../dom/nativescript-vue-next/runtime/nodes";
 
 
 enum AnimationDirection { Unknown, In, Out }
@@ -21,7 +22,7 @@ export interface NativeAnimationDefinition {
 }
 
 
-export function asSvelteTransition<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any>(node: NSVElement<T>, delay: number = 0, duration: number = 300, curve: string, nativeAnimationProps: (t: number) => NativeAnimationDefinition) {
+export function asSvelteTransition<T extends NativeView = NativeView>(node: NSVElement<T>, delay: number = 0, duration: number = 300, curve: string, nativeAnimationProps: (t: number) => NativeAnimationDefinition) {
 
     let svelteAnim: any = {
         delay: delay,
@@ -162,11 +163,11 @@ export function asSvelteTransition<T extends NodeWidget<Signals> = NodeWidget<an
 
 /* ported from svelte transitions */
 
-export function fade<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any>(node: NSVElement<T>, {
+export function fade<T extends NativeView = NativeView>(node: NSVElement<T>, {
     delay = 0,
     duration = 400
 }) {
-    const o = node.nativeView.opacity;
+    const o = (node.nativeView as any).opacity;
     return asSvelteTransition(node, delay, duration, "linear",
         (t) => ({
             opacity: 1
@@ -174,7 +175,7 @@ export function fade<T extends NodeWidget<Signals> = NodeWidget<any>, Signals ex
     );
 }
 
-export function fly<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any>(node: NSVElement<T>, {
+export function fly<T extends NativeView = NativeView>(node: NSVElement<T>, {
     delay = 0,
     duration = 400,
     easing = "linear",
@@ -196,7 +197,7 @@ export function fly<T extends NodeWidget<Signals> = NodeWidget<any>, Signals ext
     );
 }
 
-export function slide<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any>(node: NSVElement<T>, {
+export function slide<T extends NativeView = NativeView>(node: NSVElement<T>, {
     delay = 0,
     duration = 400,
     easing = "linear"
