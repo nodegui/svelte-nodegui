@@ -7,6 +7,7 @@ import {
 import { ELEMENT_REF } from './runtimeHelpers';
 // import { debug } from '../shared';
 import { Component, NodeObject, NodeWidget, QObjectSignals, QWidgetSignals } from '@nodegui/nodegui'
+import type { RNComponent } from "@nodegui/react-nodegui/dist/components/config";
 import { warn, error, log } from '../../shared/Logger';
 import { EventWidget } from '@nodegui/nodegui/dist/lib/core/EventWidget';
 import { QVariantType } from '@nodegui/nodegui/dist/lib/QtCore/QVariant';
@@ -101,7 +102,9 @@ export function componentHasPropertyAccessor<Signals extends QObjectSignals = QO
 //     }
 // }
 
-export interface INSVElement<T extends Component = Component> extends INSVNode {
+export type NativeView<T extends Component = Component> = T & RNComponent;
+
+export interface INSVElement<T extends NativeView = NativeView> extends INSVNode {
     tagName: string
     meta: NSVViewMeta<T>
     style: string
@@ -167,7 +170,7 @@ export abstract class NSVNode implements INSVNode {
     }
 }
 
-export class NSVElement<T extends Component = Component> extends NSVNode implements INSVElement<T> {
+export class NSVElement<T extends NativeView = NativeView> extends NSVNode implements INSVElement<T> {
     private readonly _tagName: string
     private readonly _nativeView: T;
     private _meta: NSVViewMeta<T> | undefined
@@ -494,7 +497,7 @@ export class NSVText extends NSVNode {
     }
 }
 
-export class NSVRoot<T extends NodeWidget<Signals> = NodeWidget<any>, Signals extends QWidgetSignals = any> extends NSVNode {
+export class NSVRoot<T extends NativeView = NativeView> extends NSVNode {
     baseRef?: NSVElement<T>
 
     constructor() {

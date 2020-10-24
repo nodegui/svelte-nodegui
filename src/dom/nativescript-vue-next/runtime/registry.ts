@@ -1,4 +1,4 @@
-import { NSVElement, NSVViewFlags } from './nodes'
+import { NSVElement, NSVViewFlags, NativeView } from './nodes'
 import { warn } from "../../shared/Logger";
 import { NodeWidget, QWidgetSignals, Component, QMenuBar, QMainWindow } from '@nodegui/nodegui';
 import { throwUnsupported } from "@nodegui/react-nodegui/dist/utils/helpers";
@@ -26,16 +26,17 @@ import { RNComboBox, ComboBoxProps } from "@nodegui/react-nodegui/dist/component
 import { RNSystemTrayIcon, SystemTrayIconProps } from "@nodegui/react-nodegui/dist/components/SystemTrayIcon/RNSystemTrayIcon";
 import { RNTab, TabProps } from "@nodegui/react-nodegui/dist/components/Tab/RNTab";
 import { RNTabItem, TabItemProps } from "@nodegui/react-nodegui/dist/components/TabItem/RNTabItem";
+import type { RNComponent } from "@nodegui/react-nodegui/dist/components/config";
 
 
-export type NSVElementResolver<T extends Component> = () => T
+export type NSVElementResolver<T extends NativeView = NativeView> = () => T
 
 export type NSVModelDescriptor = {
     prop: string
     event: string
 }
 
-export interface NSVViewMeta<T extends Component = Component, Props extends {} = {}> {
+export interface NSVViewMeta<T extends NativeView = NativeView, Props extends {} = {}> {
     viewFlags: NSVViewFlags
     nodeOps?: {
         setProps?(newProps: Props, oldProps: Props): void;
@@ -48,7 +49,7 @@ export interface NSVViewMeta<T extends Component = Component, Props extends {} =
     overwriteExisting?: boolean
 }
 
-export interface NSVElementDescriptor<T extends Component = Component> {
+export interface NSVElementDescriptor<T extends NativeView = NativeView> {
     meta: NSVViewMeta
     resolver?: NSVElementResolver<T>
 }
@@ -99,7 +100,7 @@ export function normalizeElementName(elementName: string): string {
 }
 
 // interface registerElement<Component>;
-export function registerElement<T extends Component = Component, Props extends {} = {}>(
+export function registerElement<T extends NativeView = NativeView, Props extends {} = {}>(
     elementName: string,
     resolver?: NSVElementResolver<T>,
     meta?: Partial<NSVViewMeta<T>>
@@ -276,7 +277,7 @@ export function registerNativeElements() {
                         }
                     }
                     if(child.nodeRole === "centralWidget"){
-                        (parent.nativeView as unknown as QMainWindow).setCentralWidget(child.nativeView as NodeWidget<any>);
+                        (parent.nativeView as unknown as QMainWindow).setCentralWidget(child.nativeView as NodeWidget<any> & RNComponent);
                         return;
                     }
                     // if(child.nodeRole === "styleSheet"){
@@ -443,7 +444,7 @@ export function registerNativeElements() {
             }
         },
     )
-    registerElement<RNAction>(
+    registerElement<RNAction, ActionProps>(
         'action',
         () => new RNAction(),
         {
