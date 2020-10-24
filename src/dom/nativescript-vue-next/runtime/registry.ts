@@ -1,6 +1,6 @@
 import { NSVElement, NSVViewFlags } from './nodes'
 import { warn } from "../../shared/Logger";
-import { NodeWidget, QWidgetSignals, Component } from '@nodegui/nodegui';
+import { NodeWidget, QWidgetSignals, Component, QMenuBar, QMainWindow } from '@nodegui/nodegui';
 
 
 export type NSVElementResolver<T extends Component> = () => NSVElement<T>
@@ -13,8 +13,22 @@ export type NSVModelDescriptor = {
 export interface NSVViewMeta<T extends Component = Component> {
     viewFlags: NSVViewFlags
     nodeOps?: {
-        insert(child: NSVElement, parent: NSVElement<T>, atIndex?: number): void
-        remove(child: NSVElement, parent: NSVElement<T>): void
+        accessors?: {
+            [name: string]: {
+                /**
+                 * If missing, default to component.getProperty(name);
+                 */
+                get?(): any;
+                /**
+                 * If missing, default to component.setProperty(name, value);
+                 */
+                set?(value: any): void;
+            };
+        };
+        // setAttribute?(name: string, value: any): void;
+        // getAttribute?(name: string): any;
+        insert?(child: NSVElement, parent: NSVElement<T>, atIndex?: number): void
+        remove?(child: NSVElement, parent: NSVElement<T>): void
     }
     model?: NSVModelDescriptor
     overwriteExisting?: boolean
