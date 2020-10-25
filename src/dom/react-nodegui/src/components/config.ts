@@ -1,6 +1,8 @@
 import { NodeWidget, Component } from "@nodegui/nodegui";
-import { Fiber } from "react-reconciler";
+// import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
+
+type Fiber = any;
 
 type UpdatePayload = any;
 
