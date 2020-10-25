@@ -47,9 +47,9 @@
     <view nodeRole="centralWidget" id="myroot" style={`background-color: #00FF00; align-items: center; justify-content: center; height: 100%; width: 100%;`}>
     <!-- <view nodeRole="centralWidget" id="myroot" style="background-color: #00FF00; align-items: center; justify-content: center; height: 100%;"> -->
         <text id="mylabel" style="text-align: center;" text={`The time is: ${currentDate.toLocaleTimeString()}`}></text>
-        <button text="Press me"></button>
+        <button style="margin: 8px; height: 30px;" text="Press me"></button>
         <!-- Style property not supported yet. -->
-        <text style="color: red;" text="World"></text>
+        <text style="color: red;" text="Some red text"></text>
         
         <!-- Native text nodes not supported yet. -->
         <!-- <text>World</text> -->
