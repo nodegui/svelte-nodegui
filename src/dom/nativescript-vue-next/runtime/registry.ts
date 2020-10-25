@@ -1,6 +1,6 @@
 import { NSVElement, NSVViewFlags, NativeView } from './nodes'
 import { warn } from "../../shared/Logger";
-import { NodeWidget, QWidgetSignals, Component, QMenuBar, QMainWindow } from '@nodegui/nodegui';
+import { NodeWidget, QWidgetSignals, Component, QMenuBar, QMainWindow, WidgetEventTypes } from '@nodegui/nodegui';
 import { throwUnsupported } from "../../react-nodegui/src/utils/helpers";
 import { RNAction, ActionProps } from "../../react-nodegui/src/components/Action/RNAction";
 import { RNBoxView, BoxViewProps } from "../../react-nodegui/src/components/BoxView/RNBoxView";
@@ -136,7 +136,14 @@ export function isKnownView(elementName: string): boolean {
 export function registerNativeElements() {
     registerElement<RNImage, ImageProps>(
         'image',
-        () => new RNImage(),
+        () => {
+            const widget = new RNImage();
+            widget.setProperty("scaledContents", true);
+            widget.addEventListener(WidgetEventTypes.Resize, () => {
+                widget.scalePixmap(widget.size());
+            });
+            return widget;
+        },
         {
             nodeOps: {
                 insert(child, parent, atIndex?: number): void {
@@ -150,7 +157,11 @@ export function registerNativeElements() {
     )
     registerElement<RNAnimatedImage, AnimatedImageProps>(
         'animatedImage',
-        () => new RNAnimatedImage(),
+        () => {
+            const widget = new RNAnimatedImage();
+            widget.setProperty("scaledContents", true);
+            return widget;
+        },
         {
             nodeOps: {
                 insert(child, parent, atIndex?: number): void {
@@ -478,7 +489,14 @@ export function registerNativeElements() {
     )
     registerElement<RNGridView, GridViewProps>(
         'gridView',
-        () => new RNGridView(),
+        () => {
+            const widget = new RNGridView();
+            const initialProps: GridViewProps = {
+                children: []
+            };
+            widget.setProps(initialProps, initialProps);
+            return widget;
+        },
         {
             nodeOps: {
                 insert(child, parent, atIndex?: number): void {
