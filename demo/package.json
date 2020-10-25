@@ -4,7 +4,7 @@
   "repository": "<fill-your-repository-here>",
   "scripts": {
     "build": "webpack -p",
-    "watch": "webpack -p --watch",
+    "watch": "webpack -p --watch --mode=development",
     "start": "qode ./dist/index.js",
     "run": "qode ./dist/index.js",
     "debug": "qode --inspect ./dist/index.js"

@@ -6,7 +6,7 @@ const svelteNativePreprocessor = require("svelte-native-preprocessor");
 
 module.exports = (env, argv) => {
     const config = {
-        mode: "production",
+        mode: "development",
         entry: ["./src/app.ts"],
         target: "node",
         output: {
@@ -80,7 +80,7 @@ module.exports = (env, argv) => {
         }
     };
 
-    if (argv.mode === "development") {
+    if (argv.mode === "development" || config.mode === "development") {
         config.mode = "development";
         config.plugins.push(new webpack.HotModuleReplacementPlugin());
         config.plugins.push(new ForkTsCheckerWebpackPlugin());
