@@ -9,7 +9,7 @@
         window.win = win;
         win.nativeView.setWindowTitle("Hello World");
         win.nativeView.show();
-        
+
         let timer = setInterval(() => {
             currentDate = new Date();
         }, 1000);
@@ -25,8 +25,8 @@
     bind:this={win}
     windowTitle="Hello World"
 >
-    <view nodeRole="centralWidget" id="myroot" style={`background-color: #00FF00; align-items: center; justify-content: center; height: 100%; width: 100%;`}>
-        <text id="mylabel" style="text-align: center;" text={`The time is: ${currentDate.toLocaleTimeString()}`}></text>
+    <view nodeRole="centralWidget" id="myroot" style={`background-color: #00FF00;`}>
+        <text id="mylabel" text={`The time is: ${currentDate.toLocaleTimeString()}`}></text>
         <button style="margin: 8px; height: 30px;" text="Press me"></button>
         <text style="color: red;" text="Some red text"></text>
     </view>
