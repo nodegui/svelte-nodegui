@@ -37,6 +37,7 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "@nodegui/react-nodegui": "^0.9.0"
+    "@nodegui/react-nodegui": "^0.9.0",
+    "phin": "^3.5.0"
   }
 }

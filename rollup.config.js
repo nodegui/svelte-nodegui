@@ -4,7 +4,10 @@ import svelte from 'rollup-plugin-svelte';
 import pkg from './package.json'
 
 
-let externalModules = pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : []
+let externalModules = [
+  ...(pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : []),
+  "phin",
+]
 
 let localModules = ["dom", "components", "transitions"]
 

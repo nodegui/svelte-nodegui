@@ -1,32 +1,32 @@
 import { NSVElement, NSVViewFlags, NativeView } from './nodes'
 import { warn } from "../../shared/Logger";
 import { NodeWidget, QWidgetSignals, Component, QMenuBar, QMainWindow } from '@nodegui/nodegui';
-import { throwUnsupported } from "@nodegui/react-nodegui/dist/utils/helpers";
-import { RNAction, ActionProps } from "@nodegui/react-nodegui/dist/components/Action/RNAction";
-import { RNBoxView, BoxViewProps } from "@nodegui/react-nodegui/dist/components/BoxView/RNBoxView";
-import { RNGridView, GridViewProps } from "@nodegui/react-nodegui/dist/components/GridView/RNGridView";
-import { RNSlider, SliderProps } from "@nodegui/react-nodegui/dist/components/Slider/RNSlider";
-import { RNView, ViewProps } from "@nodegui/react-nodegui/dist/components/View/RNView";
-import { RNWindow, WindowProps } from "@nodegui/react-nodegui/dist/components/Window/RNWindow";
-import { RNText, TextProps } from "@nodegui/react-nodegui/dist/components/Text/RNText";
-import { RNImage, ImageProps } from "@nodegui/react-nodegui/dist/components/Image/RNImage";
-import { RNAnimatedImage, AnimatedImageProps } from "@nodegui/react-nodegui/dist/components/AnimatedImage/RNAnimatedImage";
-import { RNButton, ButtonProps } from "@nodegui/react-nodegui/dist/components/Button/RNButton";
-import { RNCheckBox, CheckBoxProps } from "@nodegui/react-nodegui/dist/components/CheckBox/RNCheckBox";
-import { RNLineEdit, LineEditProps } from "@nodegui/react-nodegui/dist/components/LineEdit/RNLineEdit";
-import { RNMenu, MenuProps } from "@nodegui/react-nodegui/dist/components/Menu/RNMenu";
-import { RNMenuBar, MenuBarProps } from "@nodegui/react-nodegui/dist/components/MenuBar/RNMenuBar";
-import { RNPlainTextEdit, PlainTextEditProps } from "@nodegui/react-nodegui/dist/components/PlainTextEdit/RNPlainTextEdit";
-import { RNProgressBar, ProgressBarProps } from "@nodegui/react-nodegui/dist/components/ProgressBar/RNProgressBar";
-import { RNRadioButton, RadioButtonProps } from "@nodegui/react-nodegui/dist/components/RadioButton/RNRadioButton";
-import { RNDial, DialProps } from "@nodegui/react-nodegui/dist/components/Dial/RNDial";
-import { RNSpinBox, SpinBoxProps } from "@nodegui/react-nodegui/dist/components/SpinBox/RNSpinBox";
-import { RNScrollArea, ScrollAreaProps } from "@nodegui/react-nodegui/dist/components/ScrollArea/RNScrollArea";
-import { RNComboBox, ComboBoxProps } from "@nodegui/react-nodegui/dist/components/ComboBox/RNComboBox";
-import { RNSystemTrayIcon, SystemTrayIconProps } from "@nodegui/react-nodegui/dist/components/SystemTrayIcon/RNSystemTrayIcon";
-import { RNTab, TabProps } from "@nodegui/react-nodegui/dist/components/Tab/RNTab";
-import { RNTabItem, TabItemProps } from "@nodegui/react-nodegui/dist/components/TabItem/RNTabItem";
-import type { RNComponent } from "@nodegui/react-nodegui/dist/components/config";
+import { throwUnsupported } from "../../react-nodegui/src/utils/helpers";
+import { RNAction, ActionProps } from "../../react-nodegui/src/components/Action/RNAction";
+import { RNBoxView, BoxViewProps } from "../../react-nodegui/src/components/BoxView/RNBoxView";
+import { RNGridView, GridViewProps } from "../../react-nodegui/src/components/GridView/RNGridView";
+import { RNSlider, SliderProps } from "../../react-nodegui/src/components/Slider/RNSlider";
+import { RNView, ViewProps } from "../../react-nodegui/src/components/View/RNView";
+import { RNWindow, WindowProps } from "../../react-nodegui/src/components/Window/RNWindow";
+import { RNText, TextProps } from "../../react-nodegui/src/components/Text/RNText";
+import { RNImage, ImageProps } from "../../react-nodegui/src/components/Image/RNImage";
+import { RNAnimatedImage, AnimatedImageProps } from "../../react-nodegui/src/components/AnimatedImage/RNAnimatedImage";
+import { RNButton, ButtonProps } from "../../react-nodegui/src/components/Button/RNButton";
+import { RNCheckBox, CheckBoxProps } from "../../react-nodegui/src/components/CheckBox/RNCheckBox";
+import { RNLineEdit, LineEditProps } from "../../react-nodegui/src/components/LineEdit/RNLineEdit";
+import { RNMenu, MenuProps } from "../../react-nodegui/src/components/Menu/RNMenu";
+import { RNMenuBar, MenuBarProps } from "../../react-nodegui/src/components/MenuBar/RNMenuBar";
+import { RNPlainTextEdit, PlainTextEditProps } from "../../react-nodegui/src/components/PlainTextEdit/RNPlainTextEdit";
+import { RNProgressBar, ProgressBarProps } from "../../react-nodegui/src/components/ProgressBar/RNProgressBar";
+import { RNRadioButton, RadioButtonProps } from "../../react-nodegui/src/components/RadioButton/RNRadioButton";
+import { RNDial, DialProps } from "../../react-nodegui/src/components/Dial/RNDial";
+import { RNSpinBox, SpinBoxProps } from "../../react-nodegui/src/components/SpinBox/RNSpinBox";
+import { RNScrollArea, ScrollAreaProps } from "../../react-nodegui/src/components/ScrollArea/RNScrollArea";
+import { RNComboBox, ComboBoxProps } from "../../react-nodegui/src/components/ComboBox/RNComboBox";
+import { RNSystemTrayIcon, SystemTrayIconProps } from "../../react-nodegui/src/components/SystemTrayIcon/RNSystemTrayIcon";
+import { RNTab, TabProps } from "../../react-nodegui/src/components/Tab/RNTab";
+import { RNTabItem, TabItemProps } from "../../react-nodegui/src/components/TabItem/RNTabItem";
+import type { RNComponent } from "../../react-nodegui/src/components/config";
 
 
 export type NSVElementResolver<T extends NativeView = NativeView> = () => T
