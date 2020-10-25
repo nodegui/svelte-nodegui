@@ -44,7 +44,8 @@
         }
     `}
 >
-    <view nodeRole="centralWidget" id="myroot" style="align-items: center; justify-content: center; height: 100%;">
+    <view nodeRole="centralWidget" id="myroot" style={`background-color: #00FF00; align-items: center; justify-content: center; height: 100%; width: 100%;`}>
+    <!-- <view nodeRole="centralWidget" id="myroot" style="background-color: #00FF00; align-items: center; justify-content: center; height: 100%;"> -->
         <text id="mylabel" style="text-align: center;" text={`The time is: ${currentDate.toLocaleTimeString()}`}></text>
         <button text="Press me"></button>
         <!-- Style property not supported yet. -->

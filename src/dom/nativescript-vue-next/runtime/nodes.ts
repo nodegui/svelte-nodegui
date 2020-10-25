@@ -436,8 +436,23 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         })
 
         if(name === "style"){
-            // e.g. <view style={`align-items: center; justify-content: center; height: 100%;`}>
-            console.warn(`[NSVElement.setAttribute("${name}", value)] – TODO: implement setting style from template string`);
+            /*
+             * e.g. <view style={`align-items: center; justify-content: center; height: 100%;`}>
+             * c.f. <view style="align-items: center; justify-content: center; height: 100%;">
+             * 
+             * We have three options here. We can either:
+             * 1) Parse the AST and set the styles one-by-one (neat, but inefficient), or;
+             * 2) Serialise this.stylesMap and merge it with this incoming value.
+             * 3) Clear this.stylesMap and replace _rawInlineStyle with this incoming value.
+             * 
+             * The easiest to do is number 3..!
+             */
+            this.stylesMap.clear();
+            if(componentIsStyleable(this._nativeView)){
+                console.log(`[NSVElement.setAttribute("${name}", value)] – Setting _rawInlineStyle!`);
+                this._nativeView.setInlineStyle(value as string);
+            }
+              
             return;            
         }
 
