@@ -104,10 +104,17 @@ export function componentHasPropertyAccessor<Signals extends QObjectSignals = QO
 
 export type NativeView<T extends Component = Component> = T & RNComponent;
 
+interface IStyleProxy {
+    setProperty(propertyName: string, value: string, priority?: string): void;
+    removeProperty(property: string): void;
+    // animation: string;
+    cssText: string;
+}
+
 export interface INSVElement<T extends NativeView = NativeView> extends INSVNode {
     tagName: string
     meta: NSVViewMeta<T>
-    style: string
+    style: IStyleProxy
 
     eventListeners: Map<string, (args: unknown) => void>;
 
@@ -203,16 +210,105 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         return this._nativeView
     }
 
-    get style(): string {
-        if(componentIsStyleable(this.nativeView)){
-            return this.nativeView._rawInlineStyle;
-        }
-        return "";
-    }
+    private readonly stylesMap = new Map<string, string|number>();
 
-    set style(inlineStyle: string) {
-        if (componentIsStyleable(this.nativeView)){
-            this.nativeView._rawInlineStyle = inlineStyle;
+    /* istanbul ignore next */
+    setStyle(property: string, value: string | number | null, priority: "important"|""): void {
+        console.log(`[NSVElement] this.setStyle("${property}", "${value}")`);
+        // log.debug(() => `setStyle ${this} ${property} ${value}`)
+
+        if(!(value = value.toString().trim()).length){
+            return;
+        }
+
+        if(!componentIsStyleable(this.nativeView)){
+            return;
+        }
+
+        const currentValue = this.stylesMap.get(property);
+        if(currentValue === value || typeof value === "undefined"){
+            return;
+        }
+
+        if(value === null){
+            this.stylesMap.delete(property);
+        }
+
+        this.stylesMap.set(property, `${value}${priority ? " !important" : ""}`);
+
+        /* NodeGUI doesn't seem to give property-by-property access into the styles, so for now, we'll just inefficiently rewrite the whole inline style upon any update. */
+        let updatedRawInlineStyle: string = "";
+        let i = 0;
+        for (const [property, value] of this.stylesMap) {
+            updatedRawInlineStyle += `${i > 0 ? "\n" : ""}${property}:${value};`;
+            i++;
+        }
+        console.log(`[NSVElement.setStyle] this.nativeView.setInlineStyle("${updatedRawInlineStyle}");`);
+        this.nativeView.setInlineStyle(updatedRawInlineStyle);
+
+        // const rawInlineStyle: string = this.nativeView._rawInlineStyle;
+        // const styleDeclarations: string[] = rawInlineStyle.trim().split(";").map(styleDeclaration => styleDeclaration.trim());
+        // const styleMaps: [property: string, value: string][] = styleDeclarations.map((styleDeclaration) => styleDeclaration.split(":", 2) as [string, string]);
+        // const stylesMap: Map<string, string> = new Map();
+        // styleMaps.forEach(([property, value]) => {
+        //     stylesMap.set(property, value);
+        // });
+        // stylesMap.set(property, value);
+        // const updatedRawInlineStyle: string = styleMaps.reduce((acc: string, [property, value]) => `${acc}\n${property}:${value};`, "").slice("\n".length);
+        // this.nativeView.setInlineStyle(updatedRawInlineStyle);
+    }
+    
+    /**
+     * Accessed by Svelte's set_style() function.
+     * Expected to return an object that provides setters for each style.
+     * @example node.style.setProperty(key, value, important ? 'important' : '');
+     */
+    public readonly style = {
+        setProperty: (propertyName: string, value: string, priority: "important"|"") => {
+            console.log(`[NSVElement] style.setProperty("${propertyName}", "${value}${priority ? " important" : ""}")`);
+            this.setStyle(propertyName, value, priority);
+        },
+
+        removeProperty: (propertyName: string) => {
+            console.log(`[NSVElement] style.removeProperty("${propertyName}")`);
+            this.setStyle(propertyName, null, "");
+        },
+
+        get animation(): string {
+            console.warn(`[NSVElement] Animation support not yet implemented.`);
+            // return [...animations.keys()].join(", ")
+            return "";
+        },
+
+        set animation(value: string) {
+            console.warn(`[NSVElement] Animation support not yet implemented.`);
+            // log.debug(() => `setting animation ${value}`)
+            // let new_animations = value.trim() == "" ? [] : value.split(',').map(a => a.trim());
+            // //add new ones
+            // for (let anim of new_animations) {
+            //     if (!animations.has(anim)) {
+            //         addAnimation(anim);
+            //     }
+            // }
+            // //remove old ones
+            // for (let anim of animations.keys()) {
+            //     if (new_animations.indexOf(anim) < 0) {
+            //         removeAnimation(anim);
+            //     }
+            // }
+        },
+
+        get cssText(): string {
+            console.log(`[NSVElement.getCssText] (not yet implemented)`);
+            return "";
+            // log.debug(() => "got css text");
+            // return getStyleAttribute();
+        },
+
+        set cssText(value: string) {
+            console.log(`[NSVElement.setCssText] (not yet implemented)`);
+            // log.debug(() => "set css text");
+            // setStyleAttribute(value);
         }
     }
 
@@ -330,6 +426,26 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
     private static readonly recycledOldProps: Record<string, any> = Object.freeze({});
 
     setAttribute(name: string, value: unknown) {
+        ["style",
+        "styleSheet", // TODO: implement
+        "class",
+        "className"].forEach(n => {
+            if(name.startsWith(n)){
+                console.log(`[NSVElement.setAttribute("${name}", "${value}")]`);
+            }
+        })
+
+        if(name === "style"){
+            // e.g. <view style={`align-items: center; justify-content: center; height: 100%;`}>
+            console.warn(`[NSVElement.setAttribute("${name}", value)] – TODO: implement setting style from template string`);
+            return;            
+        }
+
+        if(name === "stylesheet"){
+            console.warn(`[NSVElement.setAttribute("${name}", value)] – TODO: implement stylesheet.`);
+            return;
+        }
+
         if(name === "nodeRole" && typeof value === "string"){
             this.nodeRole = value;
             return;
