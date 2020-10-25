@@ -1,3 +1,32 @@
+<script>
+    import { onMount } from 'svelte'
+
+    let win;
+    let currentDate = new Date();
+
+    onMount(() => {
+        let timer = setInterval(() => {
+            currentDate = new Date();
+        }, 1000);
+
+        // console.log(`Mounted! win:`, win);
+        // console.log(`Mounted! win.nativeView:`, win.nativeView);
+        win.nativeView.setWindowTitle("Hello World");
+        /**
+         * @see https://github.com/nodegui/nodegui-starter/blob/master/src/index.ts#L44
+         */
+        win.nativeView.show();
+
+        // `window` is an alias for `global`. We assign this to prevent garbage-collection of the main window.
+        window.win = win;
+
+        return () => {
+            clearInterval(timer);
+            delete window.win;
+        };
+    })
+</script>
+
 <window
     bind:this={win}
     windowTitle="Hello World"
@@ -15,27 +44,16 @@
         }
     `}
 >
-    <view nodeRole="centralWidget" id="myroot">
-        <text id="mylabel" text="Hello"></text>
-        <!-- <text style="color: red;">World</text> -->
+    <view nodeRole="centralWidget" id="myroot" style="align-items: center; justify-content: center; height: 100%;">
+        <text id="mylabel" style="text-align: center;" text={`The time is: ${currentDate.toLocaleTimeString()}`}></text>
+        <button text="Press me"></button>
+        <!-- Style property not supported yet. -->
+        <text style="color: red;" text="World"></text>
+        
+        <!-- Native text nodes not supported yet. -->
+        <!-- <text>World</text> -->
     </view>
-    <!-- <text>Examples</text> -->
 </window>
-
-<script>
-    import { onMount } from 'svelte'
-
-    let win;
-
-    onMount(() => {
-        // console.log(`Mounted! win:`, win);
-        // console.log(`Mounted! win.nativeView:`, win.nativeView);
-        /**
-         * @see https://github.com/nodegui/nodegui-starter/blob/master/src/index.ts#L44
-         */
-        win.nativeView.show();
-    })
-</script>
 
 <style>
     .current {
