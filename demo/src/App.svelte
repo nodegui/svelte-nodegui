@@ -7,16 +7,12 @@
     onMount(() => {
         /* `window` is an alias for `global`. We assign this to prevent garbage-collection of the main window. */
         window.win = win;
-
+        win.nativeView.setWindowTitle("Hello World");
+        win.nativeView.show();
+        
         let timer = setInterval(() => {
             currentDate = new Date();
         }, 1000);
-
-        win.nativeView.setWindowTitle("Hello World");
-        /**
-         * @see https://github.com/nodegui/nodegui-starter/blob/master/src/index.ts#L44
-         */
-        win.nativeView.show();
 
         return () => {
             clearInterval(timer);
