@@ -182,14 +182,10 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
 
         this._tagName = normalizeElementName(tagName);
 
-        console.log(`Constructing tagName ${tagName}`);
         const viewClass = getViewClass(tagName);
         if(viewClass){
-            console.log(`Got viewClass`, viewClass);
             // this._nativeView = new viewClass();
             this._nativeView = viewClass; // We're now calling new in the resolver itself
-
-            console.log(`Got this._nativeView`, this._nativeView);
 
             // console.log(`!! [${tagName}] nativeView was instantiated!`, this._nativeView);
             (this._nativeView as any)[ELEMENT_REF] = this;
