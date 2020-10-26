@@ -337,17 +337,23 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
     }
 
     get text(): string | undefined {
-        if (typeof (this.nativeView as any).text === "function"){
-            return (this.nativeView as any).text() as string;
+        if(componentHasPropertyAccessor(this.nativeView)){
+            return this.nativeView.property("text").toString();
         }
+        // if (typeof (this.nativeView as any).text === "function"){
+        //     return (this.nativeView as any).text() as string;
+        // }
         error(`text() getter called on element that does not implement it.`, this);
     }
 
     set text(t: string | undefined) {
         console.log(`!! TEXT BEING SET: ${t}`);
-        if (typeof (this.nativeView as any).text === "function") {
-            (this.nativeView as any).text(t);
+        if(componentHasPropertyAccessor(this.nativeView)){
+            this.nativeView.setProperty("text", t);
         }
+        // if (typeof (this.nativeView as any).text === "function") {
+        //     (this.nativeView as any).text(t);
+        // }
         error(`text() setter called on element that does not implement it.`, this);
     }
 
@@ -732,9 +738,10 @@ function addChild(child: NSVElement, parent: NSVElement, anchor?: INSVNode | nul
         return
     }
 
-    // if (parent.meta.nodeOps?.insert) {
-    //     return parent.meta.nodeOps.insert(child, parent, atIndex)
-    // }
+    if(parent.meta.nodeOps?.insert){
+        parent.meta.nodeOps.insert(child, parent, atIndex);
+        return;
+    }
 
     // const nodeRole: string|undefined = child.nodeRole;
     // if(nodeRole){
@@ -788,9 +795,10 @@ function removeChild(child: NSVElement, parent: NSVElement) {
         return
     }
     
-    // if (parent.meta.nodeOps) {
-    //     return parent.meta.nodeOps.remove(child, parent)
-    // }
+    if(parent.meta.nodeOps){
+        parent.meta.nodeOps.remove(child, parent);
+        return;
+    }
 
     const parentView = parent.nativeView
     const childView = child.nativeView

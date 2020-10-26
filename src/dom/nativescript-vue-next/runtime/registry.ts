@@ -144,16 +144,6 @@ export function registerNativeElements() {
             });
             return widget;
         },
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNAnimatedImage, AnimatedImageProps>(
         'animatedImage',
@@ -162,330 +152,86 @@ export function registerNativeElements() {
             widget.setProperty("scaledContents", true);
             return widget;
         },
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNView, ViewProps<any>>(
         'view',
         () => new RNView(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-                    // if(!parent.nativeView.layout && child instanceof require('@nodegui/nodegui').FlexLayout){
-
-                    // }
-                    if (child.nodeRole === "layout"){
-                        if(!parent.nativeView.layout){
-                            console.log(`[LAYOUT] ${parent} > ${child}`);
-                            (child.nativeView as unknown as import('@nodegui/nodegui').FlexLayout).setFlexNode(parent.nativeView.getFlexNode());
-                            (parent.nativeView as unknown as import('@nodegui/nodegui').QWidget).setLayout(child.nativeView as unknown as import('@nodegui/nodegui').FlexLayout);
-                            parent.nativeView.layout = child.nativeView as unknown as import('@nodegui/nodegui').FlexLayout;
-                        } else {
-                            console.log(`View unexpectedly began with a layout!`);
-                        }
-                        return;
-                    }
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     // registerElement<RNFlexLayout, FlexLayoutProps>(
     //     'flexLayout',
     //     () => require('@nodegui/nodegui').FlexLayout,
-    //     {
-    //         nodeOps: {
-    //             insert(child, parent, atIndex?: number): void {
-    //                 console.log(`FlexLayout about to add child ${child}`);
-    //                 (parent.nativeView as unknown as import('@nodegui/nodegui').FlexLayout).addWidget(child.nativeView as any);
-    //                 return;
-    //             },
-    //             remove(child, parent): void {
-
-    //             },
-    //         }
-    //     },
     // )
     registerElement<RNCheckBox, CheckBoxProps>(
         'checkBox',
         () => new RNCheckBox(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNText, TextProps>(
         'text',
         () => new RNText(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-                    console.log(`[text] ${parent.nativeView} > ${child.nativeView}`);
-                },
-                remove(child, parent): void {
-
-                },
-            },
-        },
     )
     registerElement<RNDial, DialProps>(
         'dial',
         () => new RNDial(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNLineEdit, LineEditProps>(
         'lineEdit',
         () => new RNLineEdit(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNWindow, WindowProps>(
         'window',
         () => new RNWindow(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-                    if(child instanceof QMenuBar){
-                        if(!parent.nativeView.menuBar()){
-                            parent.nativeView.setMenuBar(child);
-                            return;
-                        } else {
-                            console.warn("MainWindow can't have more than one menubar.");
-                            return;
-                        }
-                    }
-                    if(child.nodeRole === "centralWidget"){
-                        (parent.nativeView as unknown as QMainWindow).setCentralWidget(child.nativeView as NodeWidget<any> & RNComponent);
-                        return;
-                    }
-                    // if(child.nodeRole === "styleSheet"){
-                    //     (parent.nativeView as unknown as import('@nodegui/nodegui').QMainWindow).setStyleSheet(child.nativeView.text());
-                    // }
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNProgressBar, ProgressBarProps>(
         'progressBar',
         () => new RNProgressBar(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNComboBox, ComboBoxProps>(
         'comboBox',
         () => new RNComboBox(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNButton, ButtonProps>(
         'button',
         () => new RNButton(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNSpinBox, SpinBoxProps>(
         'spinBox',
         () => new RNSpinBox(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNRadioButton, RadioButtonProps>(
         'radioButton',
         () => new RNRadioButton(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNTab, TabProps>(
         'tab',
         () => new RNTab(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNMenu, MenuProps>(
         'menu',
         () => new RNMenu(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNMenuBar, MenuBarProps>(
         'menuBar',
         () => new RNMenuBar(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNPlainTextEdit, PlainTextEditProps>(
         'plainTextEdit',
         () => new RNPlainTextEdit(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNSlider, SliderProps>(
         'slider',
         () => new RNSlider(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNSystemTrayIcon, SystemTrayIconProps>(
         'systemTrayIcon',
         () => new RNSystemTrayIcon(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNAction, ActionProps>(
         'action',
         () => new RNAction(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-                    if(typeof atIndex === "undefined"){
-                        parent.nativeView.appendChild(child.nativeView);
-                        return;
-                    }
-                    throwUnsupported(parent.nativeView);
-                },
-                remove(child, parent): void {
-                    parent.nativeView.removeChild(child.nativeView);
-                },
-            }
-        },
     )
     registerElement<RNBoxView, BoxViewProps>(
         'boxView',
         () => new RNBoxView(),
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     registerElement<RNGridView, GridViewProps>(
         'gridView',
@@ -497,30 +243,10 @@ export function registerNativeElements() {
             widget.setProps(initialProps, initialProps);
             return widget;
         },
-        {
-            nodeOps: {
-                insert(child, parent, atIndex?: number): void {
-
-                },
-                remove(child, parent): void {
-
-                },
-            }
-        },
     )
     /* Component is an abstract class, so this is surely wrong. */
-    // registerElement<RNomponent, omponentProps>(
+    // registerElement<RNComponent, ComponentProps>(
     //     'tabItem',
     //     () => require('@nodegui/nodegui').Component,
-    //     {
-    //         nodeOps: {
-    //             insert(child, parent, atIndex?: number): void {
-
-    //             },
-    //             remove(child, parent): void {
-
-    //             },
-    //         }
-    //     },
     // )
 }

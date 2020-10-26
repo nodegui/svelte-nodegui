@@ -16,6 +16,8 @@ import {
      * Prop to set the event listener map. See [Handlong Events](/docs/guides/handle-events)
      */
     on?: Partial<QObjectSignals>;
+
+    textContent?: string;
   }
   
   const setObjectProps = (
@@ -45,6 +47,9 @@ import {
           }
         );
       },
+      set textContent(t: string) {
+        widget.textContent = t;
+      },
     };
     Object.assign(setter, newProps);
   };
@@ -53,6 +58,14 @@ import {
    * @see https://docs.nodegui.org/docs/api/generated/classes/qobject/
    */
   export class RNObject extends QObject implements RNComponent {
+    private _textContent: string = "";
+
+    get textContent(): string{
+      return this._textContent;
+    }
+    set textContent(t: string) {
+      this._textContent = t;
+    };
     setProps(newProps: ObjectProps, oldProps: ObjectProps): void {
       setObjectProps(this, newProps, oldProps);
     }
@@ -61,6 +74,7 @@ import {
       // throwUnsupported(this);
     }
     appendChild(child: Component): void {
+      console.log(`[RNObject] appendChild(${child})`);
       /* Just no-op. Use-cases include e.g. document > head */
       // throwUnsupported(this);
     }
@@ -73,4 +87,8 @@ import {
       // throwUnsupported(this);
     }
     static tagName = "object";
+
+    toString(): string {
+      return `RNObject()`;
+    }
   }

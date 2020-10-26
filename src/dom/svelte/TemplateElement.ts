@@ -1,6 +1,7 @@
 import { NSVElement, NSVNodeTypes } from '../nativescript-vue-next/runtime/nodes';
+import { RNObject } from './Object';
 
-export default class TemplateElement extends NSVElement {
+export default class TemplateElement extends NSVElement<RNObject> {
     constructor() {
         super("template");
     }

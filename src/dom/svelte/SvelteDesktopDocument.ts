@@ -4,8 +4,9 @@ import { nodeOps } from "../nativescript-vue-next/runtime/nodeOps";
 import { elementIterator, NSVComment, NSVElement, NSVNodeTypes, NSVText } from "../nativescript-vue-next/runtime/nodes";
 import { warn, error, log } from '../shared/Logger';
 import HeadElement from "./HeadElement";
+import { RNObject } from "./Object";
 
-export default class SvelteDesktopDocument extends NSVElement {
+export default class SvelteDesktopDocument extends NSVElement<RNObject> {
     head: HeadElement;
     constructor() {
         super("document");
@@ -42,6 +43,7 @@ export default class SvelteDesktopDocument extends NSVElement {
     }
 
     // createPropertyNode(tagName: string, propertyName: string): PropertyNode {
+    //     console.log(`[SvelteDesktopDocument] createPropertyNode("${tagName}", "${propertyName}")`);
     //     return new PropertyNode(tagName, propertyName)
     // }
 
@@ -58,6 +60,7 @@ export default class SvelteDesktopDocument extends NSVElement {
     }
 
     createTextNode(text: string): NSVText {
+        console.log(`[SvelteDesktopDocument] createTextNode("${text}")`);
         return new NSVText(text)
     }
 
