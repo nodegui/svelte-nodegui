@@ -23,21 +23,21 @@ export const nodeOps = {
     createComment(text: string): INSVNode {
         return new NSVComment(text);
     },
-    createElement(type: string, isSVG: boolean = false): INSVElement {
-        console.log(`nodeOps.createElement("${type}") -> new NSVElement("${type}")`);
+    createElement(tagName: string, isSVG: boolean = false): INSVElement {
+        console.log(`nodeOps.createElement("${tagName}") -> new NSVElement("${tagName}")`);
 
-        switch (type) {
-            case NSVNodeTypes.TEMPLATE:
+        switch (tagName) {
+            case "template":
                 return new TemplateElement();
-            case NSVNodeTypes.STYLE:
+            case "style":
                 return new StyleElement();
-            case NSVNodeTypes.HEAD:
+            case "head":
                 return new HeadElement();
-            case NSVNodeTypes.DOCUMENT:
+            case "document":
                 return new SvelteDesktopDocument();
-            case NSVNodeTypes.FRAGMENT:
+            case "fragment":
             default: {
-                return new NSVElement(type);
+                return new NSVElement(tagName);
             }
         }
     },

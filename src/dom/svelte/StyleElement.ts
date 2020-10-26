@@ -12,6 +12,7 @@ class StyleSheet {
     // which would delegate to the more direct nativescript way of working.
 
     deleteRule(index: number) {
+        console.log(`[StyleSheet] deleteRule ${index}`);
         /* TODO: implement for NodeGUI */
         // let removed = this._rules.splice(index, 1);
         // for (let r in removed) {
@@ -33,6 +34,7 @@ class StyleSheet {
     }
 
     insertRule(rule: string, index: number = 0) {
+        console.log(`[StyleSheet] insertRule(\`${rule}\`, ${index})`);
         // log.debug(() => `Adding transition rule ${rule}`);
         // log(`Adding transition rule ${rule}`);
 
@@ -51,8 +53,9 @@ export default class StyleElement extends NSVElement {
     _sheet: StyleSheet;
 
     constructor() {
-        super(NSVNodeTypes.STYLE)
+        super("style")
         this._sheet = new StyleSheet();
+        console.log(`[StyleElement] constructor!`);
     }
 
     get sheet(): StyleSheet {

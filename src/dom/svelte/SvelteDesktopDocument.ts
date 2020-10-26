@@ -1,14 +1,14 @@
 
 // import { DocumentNode, ElementNode, createElement, TextNode, logger as log } from '../basicdom';
 import { nodeOps } from "../nativescript-vue-next/runtime/nodeOps";
-import { NSVComment, NSVElement, NSVNodeTypes, NSVText } from "../nativescript-vue-next/runtime/nodes";
+import { elementIterator, NSVComment, NSVElement, NSVNodeTypes, NSVText } from "../nativescript-vue-next/runtime/nodes";
 import { warn, error, log } from '../shared/Logger';
 import HeadElement from "./HeadElement";
 
 export default class SvelteDesktopDocument extends NSVElement {
     head: HeadElement;
     constructor() {
-        super(NSVNodeTypes.DOCUMENT);
+        super("document");
 
         this.head = nodeOps.createElement('head') as HeadElement;
         
@@ -61,12 +61,14 @@ export default class SvelteDesktopDocument extends NSVElement {
         return new NSVText(text)
     }
 
-    // getElementById(id: string) {
-    //     for (let el of elementIterator(this)) {
-    //         if (el.nodeType === 1 && (el as ElementNode).id === id)
-    //             return el;
-    //     }
-    // }
+    getElementById(id: string): NSVElement|null {
+        for(let el of elementIterator(this)){
+            if(el.nodeType === NSVNodeTypes.ELEMENT && (el as NSVElement).id === id){
+                return el as NSVElement;
+            }
+        }
+        return null;
+    }
 
     dispatchEvent(event: any) {
         //Svelte dev fires these for tool support

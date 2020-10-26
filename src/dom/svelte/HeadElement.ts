@@ -4,7 +4,7 @@ import StyleElement from "./StyleElement";
 
 export default class HeadElement extends NSVElement {
     constructor() {
-        super(NSVNodeTypes.HEAD)
+        super("head")
     }
 
     onInsertedChild(childNode: NSVElement, atIndex: number) {

@@ -21,11 +21,6 @@ declare var __DEV__: boolean
 declare var __TEST__: boolean
 
 export const enum NSVNodeTypes {
-    HEAD = 'head',
-    STYLE = 'style',
-    FRAGMENT = 'fragment',
-    TEMPLATE = 'template',
-    DOCUMENT = 'document',
     TEXT = 'text',
     ELEMENT = 'element',
     COMMENT = 'comment',
@@ -96,11 +91,19 @@ export function componentHasPropertyAccessor<Signals extends QObjectSignals = QO
     return false;
 }
 
-// export function componentIsNodeWidget<Signals extends QWidgetSignals = QWidgetSignals>(component: Component): component is NodeWidget<Signals> {
-//     if(typeof (component as NodeWidget<Signals>).actions === "object"){
-//         return true;
-//     }
-// }
+export function componentSupportsId<Signals extends QWidgetSignals = QWidgetSignals>(component: Component): component is NodeWidget<Signals> {
+    if(typeof (component as NodeWidget<Signals>).setObjectName === "function"){
+        return true;
+    }
+    return false;
+}
+
+export function* elementIterator(el: INSVNode): Iterable<INSVNode> {
+    yield el;
+    for (let child of el.childNodes) {
+        yield* elementIterator(child)
+    }
+}
 
 export type NativeView<T extends Component = Component> = T & RNComponent;
 
@@ -112,6 +115,10 @@ interface IStyleProxy {
 }
 
 export interface INSVElement<T extends NativeView = NativeView> extends INSVNode {
+    /**
+     * @default ""
+     */
+    id: string;
     tagName: string
     meta: NSVViewMeta<T>
     style: IStyleProxy
@@ -211,6 +218,23 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
     }
 
     private readonly stylesMap = new Map<string, string|number>();
+
+    get id(): string {
+        if(componentSupportsId(this.nativeView)){
+            return this.nativeView.objectName();
+        } else {
+            console.warn(`<${this._tagName}> is a virtual element (i.e. has no corresponding Qt Widget) and so the attribute "id" cannot be accessed.`);
+            return "";
+        }
+    }
+
+    set id(value: string){
+        if(componentSupportsId(this.nativeView)){
+            this.nativeView.setObjectName(value);
+        } else {
+            console.warn(`<${this._tagName}> is a virtual element (i.e. has no corresponding Qt Widget) and so the attribute "id" cannot be set on it.`);
+        }
+    }
 
     /* istanbul ignore next */
     setStyle(property: string, value: string | number | null, priority: "important"|""): void {
