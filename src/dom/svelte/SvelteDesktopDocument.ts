@@ -4,7 +4,7 @@ import { nodeOps } from "../nativescript-vue-next/runtime/nodeOps";
 import { elementIterator, NSVComment, NSVElement, NSVNodeTypes, NSVText } from "../nativescript-vue-next/runtime/nodes";
 import { warn, error, log } from '../shared/Logger';
 import HeadElement from "./HeadElement";
-import { RNObject } from "./Object";
+import { RNObject } from "./RNObject";
 
 export default class SvelteDesktopDocument extends NSVElement<RNObject> {
     head: HeadElement;

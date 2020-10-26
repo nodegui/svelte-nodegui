@@ -1,5 +1,5 @@
 import { NSVElement, NSVNodeTypes } from "../nativescript-vue-next/runtime/nodes";
-import { RNObject } from "./Object";
+import { RNObject } from "./RNObject";
 import StyleElement from "./StyleElement";
 // import { addCss } from "@nativescript/core/application"
 

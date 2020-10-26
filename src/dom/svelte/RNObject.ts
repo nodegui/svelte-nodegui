@@ -48,7 +48,7 @@ import {
         );
       },
       set textContent(t: string) {
-        widget.textContent = t;
+        widget.setProperty("textContent", t);
       },
     };
     Object.assign(setter, newProps);
@@ -58,13 +58,11 @@ import {
    * @see https://docs.nodegui.org/docs/api/generated/classes/qobject/
    */
   export class RNObject extends QObject implements RNComponent {
-    private _textContent: string = "";
-
     get textContent(): string{
-      return this._textContent;
+      return this.property("textContent").toString();
     }
     set textContent(t: string) {
-      this._textContent = t;
+      this.setProperty("textContent", t);
     };
     setProps(newProps: ObjectProps, oldProps: ObjectProps): void {
       setObjectProps(this, newProps, oldProps);

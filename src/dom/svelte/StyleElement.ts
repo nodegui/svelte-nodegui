@@ -1,6 +1,6 @@
 // import { ElementNode, logger as log } from '../basicdom'
 import { NSVElement, NSVNodeTypes } from "../nativescript-vue-next/runtime/nodes";
-import { RNObject } from "./Object";
+import { RNObject } from "./RNObject";
 import { log } from "../shared/Logger";
 // import { StyleScope } from '@nativescript/core/ui/styling/style-scope'
 // import { Frame } from '@nativescript/core'
