@@ -11,6 +11,8 @@ import type { RNComponent } from "../../react-nodegui/src/components/config";
 import { warn, error, log } from '../../shared/Logger';
 import { EventWidget } from '@nodegui/nodegui/dist/lib/core/EventWidget';
 import { QVariantType } from '@nodegui/nodegui/dist/lib/QtCore/QVariant';
+import { RNWindow } from '../../react-nodegui/src/components/Window/RNWindow';
+import SvelteDesktopDocument from '../../svelte/SvelteDesktopDocument';
 // import { default as set } from "set-value";
 
 // import unset from 'unset-value'
@@ -190,6 +192,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
     private _meta: NSVViewMeta<T> | undefined
     private readonly recycledOldProps: Record<string, any> = {};
     private readonly propsSetter: Record<string, (value: any) => void> = {};
+    public ownerDocument: SvelteDesktopDocument|null = null;
 
     constructor(tagName: string){
         super(NSVNodeTypes.ELEMENT);
@@ -739,8 +742,10 @@ function addChild(child: NSVElement, parent: NSVElement, anchor?: INSVNode | nul
     }
 
     if(parent.meta.nodeOps?.insert){
-        parent.meta.nodeOps.insert(child, parent, atIndex);
-        return;
+        const defer: boolean = parent.meta.nodeOps.insert(child, parent, atIndex) === "defer";
+        if(!defer){
+            return;
+        }
     }
 
     // const nodeRole: string|undefined = child.nodeRole;
@@ -795,9 +800,11 @@ function removeChild(child: NSVElement, parent: NSVElement) {
         return
     }
     
-    if(parent.meta.nodeOps){
-        parent.meta.nodeOps.remove(child, parent);
-        return;
+    if(parent.meta.nodeOps?.remove){
+        const defer: boolean = parent.meta.nodeOps.remove(child, parent) === "defer";
+        if(!defer){
+            return;
+        }
     }
 
     const parentView = parent.nativeView

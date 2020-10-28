@@ -42,8 +42,8 @@ export interface NSVViewMeta<T extends NativeView = NativeView, Props extends {}
         setProps?(newProps: Props, oldProps: Props): void;
         // setAttribute?(name: string, value: any): void;
         // getAttribute?(name: string): any;
-        insert?(child: NSVElement, parent: NSVElement<T>, atIndex?: number): void
-        remove?(child: NSVElement, parent: NSVElement<T>): void
+        insert?(child: NSVElement, parent: NSVElement<T>, atIndex?: number): void | "defer";
+        remove?(child: NSVElement, parent: NSVElement<T>): void | "defer";
     }
     model?: NSVModelDescriptor
     overwriteExisting?: boolean

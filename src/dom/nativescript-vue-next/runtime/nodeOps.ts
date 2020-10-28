@@ -13,6 +13,7 @@ import SvelteDesktopDocument from "../../svelte/SvelteDesktopDocument";
 import TemplateElement from "../../svelte/TemplateElement";
 
 /**
+ * TODO: Remove this file; we're doing all operations via SvelteDesktopDocument instead.
  * An implementation of RendererOptions from '@vue/runtime-core'.
  * @see https://github.com/vuejs/vue-next/blob/e56d33edb1d42b4957a28538cd8d6302685072ac/packages/runtime-core/src/renderer.ts#L83
  */
@@ -26,20 +27,7 @@ export const nodeOps = {
     createElement(tagName: string, isSVG: boolean = false): INSVElement {
         console.log(`nodeOps.createElement("${tagName}") -> new NSVElement("${tagName}")`);
 
-        switch (tagName) {
-            case "template":
-                return new TemplateElement();
-            case "style":
-                return new StyleElement();
-            case "head":
-                return new HeadElement();
-            case "document":
-                return new SvelteDesktopDocument();
-            case "fragment":
-            default: {
-                return new NSVElement(tagName);
-            }
-        }
+        return new NSVElement(tagName);
     },
     createText(text: string): INSVNode {
         return new NSVText(text);
