@@ -17,12 +17,11 @@ export function svelteDesktop(rootElement: typeof SvelteComponent, data: any): P
         let elementInstance: SvelteComponent;
 
         const buildElement = () => {
-            let frag = doc.createElement('fragment');
             elementInstance = new rootElement({
-                target: frag,
+                target: doc.body,
                 props: data || {}
             })
-            return (frag.firstChild as NSVElement).nativeView;
+            return (doc.body.firstChild as NSVElement).nativeView;
         }
         
         buildElement();

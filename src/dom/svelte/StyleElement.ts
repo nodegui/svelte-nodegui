@@ -75,7 +75,6 @@ export default class StyleElement extends NSVElement<RNObject> {
     constructor() {
         super("style")
         this._sheet = new StyleSheet(this);
-        console.log(`[StyleElement] constructor!`);
     }
 
     get sheet(): StyleSheet {

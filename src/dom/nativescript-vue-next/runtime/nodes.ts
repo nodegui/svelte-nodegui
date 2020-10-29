@@ -499,6 +499,12 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
             return;
         }
 
+        if(name === "id"){
+            console.log(`[NSVElement.setAttribute("${name}", "${value}")]`);
+            this.id = value as string;
+            return;
+        }
+
         // /**
         //  * The 'ios' and 'android' properties (e.g. on ActionItem)
         //  * are readonly, so we need to assign one level lower.

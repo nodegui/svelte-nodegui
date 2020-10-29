@@ -14,7 +14,8 @@ import { RNWindow } from "./react-nodegui/src/components/Window/RNWindow";
 export function registerSvelteElements(): void {
     registerElement<RNObject, ObjectProps>(
         'document',
-        () => new RNObject(), {
+        () => new RNObject(),
+        {
             nodeOps: {
                 insert(child, parent: SvelteDesktopDocument, atIndex?: number) {
                     if(child instanceof HeadElement){
@@ -22,10 +23,20 @@ export function registerSvelteElements(): void {
                             if(parent.head !== child){
                                 console.warn(`document can only have one head!`);
                             }
-                            return "defer";
                         } else {
                             parent.head = child;
                             child.updateStyles();
+                        }
+                        return "defer";
+                    }
+
+                    if(child.tagName === "body"){
+                        if(parent.body){
+                            if(parent.body !== child){
+                                console.warn(`document can only have one head!`);
+                            }
+                        } else {
+                            parent.body = child as NSVElement<RNObject>;
                         }
                         return "defer";
                     }
@@ -36,6 +47,12 @@ export function registerSvelteElements(): void {
                     if(child instanceof HeadElement){
                         parent.setStyleSheets("");
                         parent.head = null;
+                        return "defer";
+                    }
+
+                    if(child.tagName === "body"){
+                        parent.body = null;
+                        return "defer";
                     }
 
                     // child.ownerDocument = null;
@@ -50,46 +67,27 @@ export function registerSvelteElements(): void {
         () => new RNObject(),
         {
             nodeOps: {
-                insert(child, parent: HeadElement, atIndex?: number): void {
+                insert(child, parent: HeadElement, atIndex?: number) {
                     if(child instanceof StyleElement){
-                        console.log(`[HeadElement] ${parent} > ${child} @${atIndex}`);
                         let css: string = child.textContent;
                         let id = child.id;
-                        console.log(`[HeadElement] ${child} #${id} had text: ${css}`);
-                        console.log(`[HeadElement] ${child} #${id} nativeView had textContent property: ${child.nativeView.property("textContent")}`);
-                        console.log(`[HeadElement] ${child} #${id} nativeView had textContent instance: ${child.nativeView.textContent}`);
-                        let style_hash = id.replace('-style', '');
+                        const style_hash = id.replace('-style', '');
                         //style rules are one per line as long as each selector in the rule has the style hash we are all scoped styles and can pass true to addCss
-                        let all_scoped = css.split("\n").every(r => r.split(",").every(i => i.indexOf(style_hash) >= 0))
+                        const all_scoped: boolean = css.split("\n").every(r => r.split(",").every(i => i.indexOf(style_hash) >= 0));
+
+                        console.log(`[HeadElement] ${child} #${id}; style hash: ${style_hash}; all_scoped: ${all_scoped}; had text: ${css}`);
 
                         parent.addStyleElement(child);
-                        // const styleSheet: string = parent.getStyleSheet();
-
-                        if (css) {
-                            // FIXME: Need to do something more elaborate than this. Otherwise only the StyleElement that was most
-                            //        recently added to the Head, or most recently had a CSS update, will have its CSS represented.
-                            // allWindows.forEach(window => {
-                            //     window.nativeView.setStyleSheet(styleSheet);
-                            // });
-
-                            // addCss(css, all_scoped);
-                            // TODO: Somehow give StyleElement a reference to the Window that its in, so that it can apply
-                            //       the stylesheet to the scope.
-                            //       The <style> element may well be added to the page before the window, is one problem.
-                            //       It's not yet clear how multiple windows will work out, either.
-                            //       The UI hierarchy goes:
-                            //         fragment > document > head > style
-                            //         fragment > window
-
-                        }
                     }
+                    return "defer";
                 },
-                remove(child, parent: HeadElement): void {
+                remove(child, parent: HeadElement) {
                     console.log(`[HeadElement] remove(${child}) removing child...`);
 
                     if(child instanceof StyleElement){
                         parent.removeStyleElement(child);
                     }
+                    return "defer";
                 },
             }
         }
@@ -99,8 +97,12 @@ export function registerSvelteElements(): void {
         () => new RNObject()
     );
     registerElement<RNObject, ObjectProps>(
+        'body',
+        () => new RNObject(),
+    );
+    registerElement<RNObject, ObjectProps>(
         'fragment',
-        () => new RNObject()
+        () => new RNObject(),
     );
     registerElement<RNObject, ObjectProps>(
         'template',

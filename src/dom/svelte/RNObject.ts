@@ -58,6 +58,9 @@ import {
    * @see https://docs.nodegui.org/docs/api/generated/classes/qobject/
    */
   export class RNObject extends QObject implements RNComponent {
+    get id(): string {
+      return this.objectName();
+    }
     get textContent(): string{
       return this.property("textContent").toString();
     }

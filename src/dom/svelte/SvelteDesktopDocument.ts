@@ -1,6 +1,5 @@
 
 // import { DocumentNode, ElementNode, createElement, TextNode, logger as log } from '../basicdom';
-import { nodeOps } from "../nativescript-vue-next/runtime/nodeOps";
 import { elementIterator, NSVComment, NSVElement, NSVNodeTypes, NSVText } from "../nativescript-vue-next/runtime/nodes";
 import { RNWindow } from "../react-nodegui/src/components/Window/RNWindow";
 import { warn, error, log } from '../shared/Logger';
@@ -11,12 +10,14 @@ import TemplateElement from "./TemplateElement";
 
 export default class SvelteDesktopDocument extends NSVElement<RNObject> {
     public head: HeadElement = this.createElement('head') as HeadElement;
+    public body: NSVElement<RNObject> = this.createElement('body') as NSVElement<RNObject>;
     private _windows: Set<NSVElement<RNWindow>> = new Set();
 
     constructor() {
         super("document");
 
         this.appendChild(this.head);
+        this.appendChild(this.body);
 
         // log(`created ${this}`)
     }
@@ -57,8 +58,6 @@ export default class SvelteDesktopDocument extends NSVElement<RNObject> {
         // }
         // return nodeOps.createElement(tagName) as NSVElement;
 
-        console.log(`document.createElement("${tagName}") -> new NSVElement("${tagName}")`);
-
         let ele: NSVElement;
         switch (tagName) {
             case "template":
@@ -76,6 +75,7 @@ export default class SvelteDesktopDocument extends NSVElement<RNObject> {
             case "window":
                 ele = new NSVElement(tagName);
                 this._windows.add(ele as NSVElement<RNWindow>);
+                // console.log(`[SvelteDesktopDocument] added window ${(ele)}. Will set stylesheet on it: \`${this.head.getStyleSheet()}\``);
                 (ele.nativeView as RNWindow).setStyleSheet(this.head.getStyleSheet());
                 break;
             case "fragment":
@@ -83,7 +83,9 @@ export default class SvelteDesktopDocument extends NSVElement<RNObject> {
                 ele = new NSVElement(tagName);
             }
         }
-        ele.ownerDocument = this;
+        if(tagName !== "document"){
+            ele.ownerDocument = this;
+        }
         return ele;
     }
 
@@ -98,6 +100,7 @@ export default class SvelteDesktopDocument extends NSVElement<RNObject> {
 
     getElementById(id: string): NSVElement|null {
         for(let el of elementIterator(this)){
+            // console.log(`getElementById iterating over element <${(el as NSVElement).tagName ?? "node"}> ${(el as NSVElement).id}`);
             if(el.nodeType === NSVNodeTypes.ELEMENT && (el as NSVElement).id === id){
                 return el as NSVElement;
             }
@@ -120,8 +123,11 @@ export default class SvelteDesktopDocument extends NSVElement<RNObject> {
     }
 
     setStyleSheets(styleSheet: string): void {
-        this._windows.forEach(window => {
-            window.nativeView.setStyleSheet(styleSheet);
+        // console.log(`[SvelteDesktopDocument] setStyleSheets(\`${styleSheet}\`)`);
+
+        this._windows.forEach(win => {
+            // console.log(`[SvelteDesktopDocument] setStyleSheets on window ${win}`);
+            win.nativeView.setStyleSheet(styleSheet);
         });
     }
 }

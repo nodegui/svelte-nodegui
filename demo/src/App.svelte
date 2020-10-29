@@ -12,7 +12,12 @@
 
         let timer = setInterval(() => {
             currentDate = new Date();
+            // window.document.setStyleSheets(`#dateText{color:'purple'}`);
         }, 1000);
+        setTimeout(() => {
+            window.document.setStyleSheets(`QPushButton{color:'purple'}`);
+            // console.log(window.document.getElementById(`dateText`));
+        }, 100);
 
         return () => {
             clearInterval(timer);
@@ -21,7 +26,7 @@
     })
 </script>
 
-<window bind:this={win} windowTitle="Hello World">
+<window id="theWindow" bind:this={win} windowTitle="Hello World">
     <view
         style="align-items: 'center'; justify-content: space-between; background-color: #00FF00; width: 100%; height: 100%;"
     >
@@ -41,12 +46,13 @@
 </window>
 
 <style>
-    /* I am a style tag */
-    text {
-        color: purple;
+    /* Problem: Svelte optimises this out because it's not found in the HTML above.
+     * Would need to preprocess it to replace QTWidget names with HTML tagnames. */
+    QPushButton {
+        color: 'purple';
     }
 
     #colouredText {
-        color: gold;
+        color: 'gold';
     }
 </style>

@@ -54,7 +54,22 @@ function installGlobalShims(): SvelteDesktopDocument {
     let window = global as any;
 
     window.window = global;
-    window.document = new SvelteDesktopDocument();
+    // window.document = new SvelteDesktopDocument();
+    const doc = new SvelteDesktopDocument();
+
+    Object.defineProperty(window, 'document', {
+        value: doc,
+        enumerable: true,
+        configurable: false,
+        writable: false,
+    });
+
+    Object.defineProperty(global, 'document', {
+        value: doc,
+        enumerable: true,
+        configurable: false,
+        writable: false,
+    });
 
     // As of NS 6.3, the NS provided requestAnimationFrame breaks svelte by invoking the callback immediately 
     // instead of next event loop, We force ours instead.
@@ -87,7 +102,7 @@ function installGlobalShims(): SvelteDesktopDocument {
         }
     }
 
-    return window.document;
+    return doc;
 }
 
 export const DomTraceCategory = 'SvelteNativeDom'
