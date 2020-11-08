@@ -16,9 +16,9 @@
     })
 </script>
 
-<window bind:this={win} title="Hello World">
+<window bind:this={win} windowTitle="Hello World">
     <view id="container" style="background-color: 'cyan';">
-        <text text="The time is: {date.toLocaleTimeString()}"></text>
+        <text children="The time is: {date.toLocaleTimeString()}"></text>
         <button id="nice_button" text="Press me"></button>
     </view>
 </window>

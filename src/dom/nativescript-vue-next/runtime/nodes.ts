@@ -190,6 +190,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
     private readonly _tagName: string
     private readonly _nativeView: T;
     private _meta: NSVViewMeta<T> | undefined
+    private readonly recycledNewProps: Record<string, any> = {};
     private readonly recycledOldProps: Record<string, any> = {};
     private readonly propsSetter: Record<string, (value: any) => void> = {};
     public ownerDocument: SvelteDesktopDocument|null = null;
@@ -206,9 +207,6 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
 
             // console.log(`!! [${tagName}] nativeView was instantiated!`, this._nativeView);
             (this._nativeView as any)[ELEMENT_REF] = this;
-
-            // This is a hack to extract the props setter from React NodeGUI (as it's not an exposed API).
-            this._nativeView.setProps(this.propsSetter, this.recycledOldProps);
         }
     }
 
@@ -537,24 +535,13 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
          * React NodeGUI's API for setting props expects an object of props.
          * We only set props one-at-a-time, so we'll avoid reallocations by re-using and cleaning up the same static object.
          */
-        const descriptor = Object.getOwnPropertyDescriptor(this.propsSetter, name);
-        if(descriptor && typeof descriptor.set === "function"){
-            // This prop is supported by setProps.
-            this.recycledOldProps[name] = value;
-            this.nativeView.setProps(this.propsSetter, this.recycledOldProps);
-            delete this.recycledOldProps[name];
-            return;
-        }
-
-        if(componentHasPropertyAccessor(this.nativeView)){
-            /**
-             * @see https://doc.qt.io/archives/qt-5.8/qobject.html#property
-             */
-            this.nativeView.setProperty(name, value as QVariantType);
-            return;
-        }
-
-        (this.nativeView as any)[name] = value;
+        this.recycledNewProps[name] = value;
+        this.nativeView.setProps(this.recycledNewProps, this.recycledOldProps);
+        delete this.recycledNewProps[name];
+        /**
+         * No way to tell whether a setter existed for the given attribute name, unfortunately.
+         * So we can't fall back to this.nativeView.setProperty() (though arguably that would be dangerous anyway).
+         */
     }
 
     removeAttribute(name: string) {
