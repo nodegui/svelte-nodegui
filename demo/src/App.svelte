@@ -15,8 +15,11 @@
         };
     })
 
-    function onClicked(e){
-        console.log("Clicked!", e);
+    /**
+     * @param {boolean} checked (only relevant for checkbox-style buttons).
+     */
+    function onClicked(checked){
+        console.log("Clicked!", checked);
     }
 </script>
 
