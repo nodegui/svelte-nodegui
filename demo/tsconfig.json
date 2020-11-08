@@ -6,6 +6,7 @@
         "declaration": true,
         "removeComments": true,
         "noLib": false,
+        "jsxFactory": "svelteDesktop.createElement",
         "emitDecoratorMetadata": false,
         "experimentalDecorators": true,
         "sourceMap": true,

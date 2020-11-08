@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
     import { onMount } from 'svelte';
     let win;
     onMount(() => {
-        window.win = win; // Prevent garbage collection.
+        (window as any).win = win; // Prevent garbage collection.
         win.nativeView.show();
         return () => {
-            delete window.win;
+            delete (window as any).win;
         };
     });
 </script>
@@ -14,6 +14,7 @@
     <view id="container" style="background-color: 'cyan';">
         <text>Some text with actual children</text>
         <button on:clicked={(checked) => console.log("Clicked!", checked)} id="nice_button" text="Press me"/>
+        <whatever></whatever>
     </view>
 </window>
 

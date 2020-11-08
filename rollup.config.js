@@ -54,5 +54,23 @@ export default [
     external: (id) => [...externalModules, ...localModules.map(m => `./${m}`)].some(prefix => id.startsWith(prefix)),
     plugins: plugins
   },
-  ...module_defs()
+  ...module_defs(),
+  {
+    input: `src/svelte-desktop.ts`,
+    output: [{
+      sourcemap: true,
+      file: `dist/svelte-desktop.js`,
+      format: 'esm',
+    }],
+    plugins: [
+      resolve({
+        extensions: ['.ts']
+      }),,
+      typescript({
+        sourcemap: true,
+        typescript: require('typescript'),
+        useTsconfigDeclarationDir: true
+      })
+    ]
+  }
 ];
