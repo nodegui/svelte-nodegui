@@ -680,19 +680,17 @@ export class NSVComment extends NSVNode {
 }
 
 export class NSVText extends NSVNode {
-    constructor(text: string) {
-        console.log(`[NSVText] constructor "${text}"`);
-        super(NSVNodeTypes.TEXT)
-
-        this.text = text
+    constructor(private _text: string){
+        super(NSVNodeTypes.TEXT);
+        console.log(`[NSVText] constructor "${this._text}"`);
     }
 
     get text(): string | undefined {
-        return this.text;
+        return this._text;
     }
 
     set text(t: string | undefined) {
-        this.text = t;
+        this._text = t;
     }
 
     toString(): string {
