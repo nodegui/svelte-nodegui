@@ -499,12 +499,27 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
 
         if(name === "id"){
             console.log(`[NSVElement.setAttribute("${name}", "${value}")]`);
+            /**
+             * setProps would also do the trick, but we want our wrapping element to set the very
+             * same id on itself, too.
+             */
             this.id = value as string;
             return;
         }
 
         if(name === "class"){
             console.log(`[NSVElement.setAttribute("${name}", "${value}")] on <${this.tagName}>`);
+            /**
+             * The "class" property isn't handled by setProps for some reason.
+             * It's probably special-cased by the React Host Config.
+             */
+            if(componentHasPropertyAccessor(this.nativeView)){
+                /**
+                 * @see https://doc.qt.io/archives/qt-5.8/qobject.html#property
+                 */
+                this.nativeView.setProperty(name, value as string);
+                return;
+            }
         }
 
         // /**
