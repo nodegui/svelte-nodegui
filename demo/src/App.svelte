@@ -1,33 +1,19 @@
 <script>
     import { onMount } from 'svelte';
-
     let win;
-    let date = new Date();
-
     onMount(() => {
-        window.win = win;
+        window.win = win; // Prevent garbage collection.
         win.nativeView.show();
-        const timer = setInterval(() => date = new Date(), 1000);
-
         return () => {
-            clearInterval(timer);
             delete window.win;
         };
-    })
-
-    /**
-     * @param {boolean} checked (only relevant for checkbox-style buttons).
-     */
-    function onClicked(checked){
-        console.log("Clicked!", checked);
-    }
+    });
 </script>
 
 <window bind:this={win} windowTitle="Hello World">
     <view id="container" style="background-color: 'cyan';">
-        <text children="The time is: {date.toLocaleTimeString()}"></text>
         <text>Some text with actual children</text>
-        <button on:clicked={onClicked} id="nice_button" text="Press me"></button>
+        <button on:clicked={(checked) => console.log("Clicked!", checked)} id="nice_button" text="Press me"/>
     </view>
 </window>
 
