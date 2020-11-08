@@ -26,6 +26,7 @@
 <window bind:this={win} windowTitle="Hello World">
     <view id="container" style="background-color: 'cyan';">
         <text children="The time is: {date.toLocaleTimeString()}"></text>
+        <text>Some text with actual children</text>
         <button on:clicked={onClicked} id="nice_button" text="Press me"></button>
     </view>
 </window>

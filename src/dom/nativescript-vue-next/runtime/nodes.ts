@@ -163,6 +163,12 @@ export abstract class NSVNode implements INSVNode {
     nodeRole?: string
     nodeId: number
     nodeType: NSVNodeTypes
+    get textContent(): string {
+        return this.text;
+    }
+    set textContent(value: string) {
+        this.text = value;
+    }
     abstract text: string | undefined
 
     parentNode: INSVElement<any> | null = null
@@ -341,20 +347,18 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         if(componentHasPropertyAccessor(this.nativeView)){
             return this.nativeView.property("text").toString();
         }
-        // if (typeof (this.nativeView as any).text === "function"){
-        //     return (this.nativeView as any).text() as string;
-        // }
         error(`text() getter called on element that does not implement it.`, this);
     }
 
+    /**
+     * I'm not sure we actually need this setter; keeping its implementation and renaming it to textContent is probably in order.
+     */
     set text(t: string | undefined) {
         console.log(`!! TEXT BEING SET: ${t}`);
         if(componentHasPropertyAccessor(this.nativeView)){
             this.nativeView.setProperty("text", t);
+            return;
         }
-        // if (typeof (this.nativeView as any).text === "function") {
-        //     (this.nativeView as any).text(t);
-        // }
         error(`text() setter called on element that does not implement it.`, this);
     }
 
@@ -628,7 +632,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
             if (el.nodeType === NSVNodeTypes.ELEMENT) {
                 removeChild(el as NSVElement, this) // Removing a child span takes us down here
             } else if (el.nodeType === NSVNodeTypes.TEXT) {
-                this.updateText()
+                this.text = this.getTextFromChildTextNodes();
             }
         }
     }
@@ -639,19 +643,16 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         if (el.nodeType === NSVNodeTypes.ELEMENT) {
             addChild(el as NSVElement, this, anchor, atIndex)
         } else if (el.nodeType === NSVNodeTypes.TEXT) {
-            this.updateText()
+            this.text = this.getTextFromChildTextNodes();
         }
     }
 
-    updateText() {
-        this.setAttribute(
-            'text',
-            this.childNodes
-                .filter((node) => node.nodeType === NSVNodeTypes.TEXT)
-                .reduce((text: string, currentNode) => {
-                    return text + currentNode.text
-                }, '')
-        )
+    private getTextFromChildTextNodes(): string {
+        return this.childNodes
+            .filter((node) => node.nodeType === NSVNodeTypes.TEXT)
+            .reduce((text: string, currentNode) => {
+                return text + currentNode.text
+            }, '');
     }
 
     toString(): string {
@@ -660,18 +661,16 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
 }
 
 export class NSVComment extends NSVNode {
-    constructor(text: string) {
-        super(NSVNodeTypes.COMMENT)
-
-        this.text = text
+    constructor(private _text: string) {
+        super(NSVNodeTypes.COMMENT);
     }
 
     get text(): string | undefined {
-        return this.text;
+        return this._text;
     }
 
     set text(t: string | undefined) {
-        this.text = t;
+        this._text = t;
     }
 
     toString(): string {
@@ -690,6 +689,7 @@ export class NSVText extends NSVNode {
     }
 
     set text(t: string | undefined) {
+        console.log(`NSVText text setter was called!`);
         this._text = t;
     }
 
