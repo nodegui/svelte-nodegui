@@ -45,7 +45,7 @@ module.exports = (env, argv) => {
                             transpileOnly: true,
                             allowTsInNodeModules: true,
                             compilerOptions: {
-                                sourceMap: true,
+                                sourceMap: argv.mode !== 'production',
                                 declaration: false
                             },
                         },
