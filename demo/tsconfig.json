@@ -1,15 +1,14 @@
 {
+    "extends": "@tsconfig/svelte/tsconfig.json",
+
     "compilerOptions": {
-        "target": "es2017",
         "module": "esnext",
-        "moduleResolution": "node",
         "declaration": true,
         "removeComments": true,
         "noLib": false,
         "jsxFactory": "svelteDesktop.createElement",
         "emitDecoratorMetadata": false,
         "experimentalDecorators": true,
-        "sourceMap": true,
         "pretty": true,
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
@@ -37,5 +36,5 @@
     */
     "files": ["./node_modules/svelte-desktop/svelte-desktop.d.ts"],
     "include": ["src/**/*"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
 }
