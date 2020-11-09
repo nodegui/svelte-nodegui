@@ -23,7 +23,8 @@ declare namespace svelteDesktop.JSX {
         T extends import("@nodegui/nodegui").Component = import("@nodegui/nodegui").Component
     > extends SvelteElement {
         nodeRole?: string;
-        children?: SvelteNode;
+        /* Unlike in React, Doesn't seem to be checked..? */
+        // children?: SvelteNode;
     }
     
     type SvelteNodeGUIProps<
