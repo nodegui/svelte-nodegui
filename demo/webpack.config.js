@@ -3,6 +3,7 @@ const webpack = require("webpack");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const svelteNativePreprocessor = require("svelte-native-preprocessor");
+const sveltePreprocess = require("svelte-preprocess");
 
 module.exports = (env, argv) => {
     const config = {
@@ -59,9 +60,16 @@ module.exports = (env, argv) => {
                     exclude: /node_modules/,
                     use: [
                         {
+                            /**
+                             * Note: Svelte Native uses a minor patch of svelte-loader. I'm not sure of the significance.
+                             * @see https://github.com/halfnelson/svelte-native/blob/0af94fac6ea18f54f93ab299d0b512f91d722569/demo/package.json#L26
+                             */
                             loader: 'svelte-loader',
                             options: {
-                                preprocess: svelteNativePreprocessor(),
+                                preprocess: {
+                                    ...sveltePreprocess(),
+                                    ...svelteNativePreprocessor(),
+                                },
                             }
                         }
                     ]
