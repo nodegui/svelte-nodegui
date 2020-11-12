@@ -79,6 +79,15 @@ module.exports = (env, argv) => {
         plugins: [
             new CleanWebpackPlugin(),
             new webpack.DefinePlugin({
+                /**
+                 * This flag defines how the app should handle a hot module update.
+                 * "live-reload": Sends an exit signal, so will be relaunched if running via nodemon.
+                 * "hmr": Applies the hot update without exiting the app (not yet implemented!).
+                 * "none": The app remains alive, but doesn't apply the update.
+                 * undefined: Same as "none".
+                 * @type {"live-reload" | "hmr" | "none"}
+                 */
+                "__HMR_MODE__": argv.mode === "production" ? "\"none\"" : "\"live-reload\"",
                 "__DEV__": argv.mode === "development" ? "true" : "false",
                 "__TEST__": "false",
             })

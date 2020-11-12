@@ -5,8 +5,7 @@
   "scripts": {
     "build": "webpack -p",
     "watch": "webpack -p --watch --mode=development",
-    "start": "qode ./dist/index.js",
-    "run": "qode ./dist/index.js",
+    "start": "nodemon --exec \"qode\" ./dist/index.js",
     "debug": "qode --inspect ./dist/index.js"
   },
   "dependencies": {
@@ -21,6 +20,7 @@
     "file-loader": "^6.1.0",
     "fork-ts-checker-webpack-plugin": "^5.2.0",
     "native-addon-loader": "^2.0.1",
+    "nodemon": "^2.0.6",
     "svelte": "~3.24.0",
     "svelte-loader": "^2.13.6",
     "svelte-native-preprocessor": "~0.2.0",
