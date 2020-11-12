@@ -27,10 +27,30 @@ declare namespace svelteDesktop.JSX {
         // children?: SvelteNode;
     }
     
+    /**
+     * Known issues:
+     * 1) None of the event handlers are filled in. Consequently, all event handlers provoke edit-time errors.
+     *    Of interest: `on:clicked` in HTMLX becomes `onclicked` in JSX.
+     *    Most likely, it follows a rule of `on${Lowercase<T>}` for a given event name.
+     * 
+     * 2) All attributes written in HTMLX are forced to lowercase (both at edit-time and runtime, by different
+     *    tooling). Thus, `windowTitle="Hi"` becomes `windowtitle="Hi"`.
+     * 
+     * In both cases, the latest stable TypeScript isn't expressive enough to express a remapping of types to lower case.
+     * However, once TypeScript 4.1 lands, it should be (provided they can sort out intrinsic types like Lowercase<T>).
+     * @see https://github.com/microsoft/TypeScript/pull/40336
+     * @see https://github.com/microsoft/TypeScript/pull/40580
+     * 
+     * In any case, a change coming to core would hopefully solve this.
+     * @see https://github.com/sveltejs/svelte/pull/5652
+     * 
+     * For now, particularly until Svelte tooling supports TypeScript 4.1, the best we can do to prevent frustration is
+     * fall back to any type (which we do with the final type intersection).
+     */
     type SvelteNodeGUIProps<
         Props extends {} = {},
         T extends import("@nodegui/nodegui").Component = import("@nodegui/nodegui").Component
-    > = SvelteNodeGUIAttributes<T> & Props;
+    > = SvelteNodeGUIAttributes<T> & Props & { [name: string]: any; };
 
     // Add empty IntrinsicAttributes to prevent fallback to the one in the JSX namespace
     // eslint-disable-next-line @typescript-eslint/no-empty-interface
