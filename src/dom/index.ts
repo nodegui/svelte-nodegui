@@ -47,9 +47,7 @@ export {
 
 // export { navigate, goBack, showModal, closeModal, ShowModalOptions, NavigationOptions, BackNavigationOptions } from './navigation'
 
-
 function installGlobalShims(): SvelteDesktopDocument {
-
     //expose our fake dom as global document for svelte components
     let window = global as any;
 
@@ -123,7 +121,6 @@ export const DomTraceCategory = 'SvelteNativeDom'
 //         }
 //     })
 // }
-
 
 export function initializeDom() {
     // initializeLogger();

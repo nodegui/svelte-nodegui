@@ -1,4 +1,4 @@
-import { initializeDom, NSVElement } from './dom';
+import { initializeDom, NSVElement, SvelteDesktopDocument } from './dom';
 
 
 declare global {
@@ -9,24 +9,21 @@ declare global {
     }
 }
 
-export function svelteDesktop(rootElement: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
-    const doc = initializeDom();
+let initialised: boolean = false;
 
-    return new Promise((resolve, reject) => {
+export function svelteDesktop(rootElement: typeof SvelteComponent, data: any): SvelteComponent {
+    /**
+     * Avoids reinitialising upon hot update.
+     */
+    const doc: SvelteDesktopDocument = initialised ? (global as any).document : initializeDom();
+    initialised = true;
 
-        let elementInstance: SvelteComponent;
-
-        const buildElement = () => {
-            elementInstance = new rootElement({
-                target: doc.body,
-                props: data || {}
-            })
-            return (doc.body.firstChild as NSVElement).nativeView;
-        }
-        
-        buildElement();
-        resolve(elementInstance);
+    const elementInstance: SvelteComponent = new rootElement({
+        target: doc.body,
+        props: data || {}
     });
+
+    return elementInstance;
 }
 
 // Svelte looks to see if window is undefined in order to determine if it is running on the client or in SSR.
