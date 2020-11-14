@@ -1,7 +1,8 @@
 import { svelteDesktop } from "svelte-desktop";
 
 import App from "./App.svelte";
-svelteDesktop(App, {});
+const props = { who: "bob" };
+svelteDesktop(App, props);
 
 
 declare global {
@@ -24,8 +25,10 @@ if(module.hot){
             process.exit(64);
         });
     } else if(__HMR_MODE__ === "hmr"){
-        module.hot.accept(["./app"], function(){
-            console.warn(`Unable to accept hot update – HMR not yet implemented!`);
+        module.hot.accept(["./app", "./App.svelte"], function(...args){
+            // console.warn(`Unable to accept hot update – HMR not yet implemented!`);
+            console.log(`Accepting!`, args);
+            svelteDesktop(App, props);
         });
     }
 }
