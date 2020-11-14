@@ -64,14 +64,25 @@ module.exports = (env, argv) => {
                              * Note: Svelte Native uses a minor patch of svelte-loader. I'm not sure of the significance.
                              * @see https://github.com/halfnelson/svelte-native/blob/0af94fac6ea18f54f93ab299d0b512f91d722569/demo/package.json#L26
                              */
-                            loader: 'svelte-loader',
+                            loader: argv.mode === "development" ? 'svelte-loader-hot' : 'svelte-loader',
                             options: {
+                                ...(argv.mode === "development" &&
+                                    {
+
+                                        dev: true,
+                                        hotReload: true,
+                                        hotOptions: {
+                                            injectCss: false,
+                                            native: true
+                                        },
+                                    }),
                                 preprocess: {
                                     ...sveltePreprocess(),
                                     ...svelteNativePreprocessor(),
                                 },
                             }
-                        }
+                        },
+
                     ]
                 },
             ]
@@ -87,7 +98,7 @@ module.exports = (env, argv) => {
                  * undefined: Same as "none".
                  * @type {"live-reload" | "hmr" | "none"}
                  */
-                "__HMR_MODE__": argv.mode === "production" ? "\"none\"" : "\"live-reload\"",
+                "__HMR_MODE__": argv.mode === "production" ? "\"none\"" : "\"hmr\"",
                 "__DEV__": argv.mode === "development" ? "true" : "false",
                 "__TEST__": "false",
             })
