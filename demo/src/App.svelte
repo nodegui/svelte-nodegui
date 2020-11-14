@@ -1,10 +1,12 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import type { RNWindow } from "svelte-desktop/dom/react-nodegui/src/components/Window/RNWindow";
     let win;
     onMount(() => {
         (window as any).win = win; // Prevent garbage collection.
-        win.nativeView.show();
+        (win.nativeView as RNWindow).show();
         return () => {
+            (win.nativeView as RNWindow).hide();
             delete (window as any).win;
         };
     });
