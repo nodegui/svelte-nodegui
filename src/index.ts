@@ -9,21 +9,44 @@ declare global {
     }
 }
 
-let initialised: boolean = false;
+interface RootComponent {
+    instance: SvelteComponent,
+    "class": typeof SvelteComponent,
+}
+let root: RootComponent|null = null;
 
-export function svelteDesktop(rootElement: typeof SvelteComponent, data: any): SvelteComponent {
+
+export function svelteDesktop(rootComponentClass: typeof SvelteComponent, data: any): SvelteComponent {
     /**
      * Avoids reinitialising upon hot update.
      */
-    const doc: SvelteDesktopDocument = initialised ? (global as any).document : initializeDom();
-    initialised = true;
+    const doc: SvelteDesktopDocument = root ? (global as any).document : initializeDom();
 
-    const elementInstance: SvelteComponent = new rootElement({
-        target: doc.body,
-        props: data || {}
-    });
+    function initialiseRoot(): RootComponent {
+        return {
+            "class": rootComponentClass,
+            instance: new rootComponentClass({
+                target: doc.body,
+                props: data || {}
+            }),
+        }
+    }
 
-    return elementInstance;
+    if(root){
+        // It's a hot update.
+        if(root["class"] === rootComponentClass){
+            console.log(`[svelteDesktop] root.instance.$set(data || {}) with data`, data);
+            root.instance.$set(data || {});
+        } else {
+            console.log(`[svelteDesktop] root.instance.$destroy()`);
+            root.instance.$destroy();
+            root = initialiseRoot();
+        }
+    } else {
+        root = initialiseRoot();
+    }
+
+    return root.instance;
 }
 
 // Svelte looks to see if window is undefined in order to determine if it is running on the client or in SSR.
