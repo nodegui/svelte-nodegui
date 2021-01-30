@@ -1,6 +1,27 @@
 <script lang="ts">
+    import { QMainWindow, QSettings } from '@nodegui/nodegui';
     import { onMount } from 'svelte';
-    let win;
+
+    let win: any;
+    const settings: QSettings = new QSettings("MyCompany", "MyApp");
+
+    /**
+     * @see https://doc.qt.io/qt-5/restoring-geometry.html
+     * @see https://github.com/nodegui/nodegui/issues/801
+     */
+    function onWindowClose(args: any): void {
+        console.log(`Window "close" event 1`, args);
+        const nativeWindow: QMainWindow = win.nativeView;
+        try {
+            const geometrySettings = (nativeWindow as any).saveGeometry();
+            const windowState = (nativeWindow as any).saveState();
+            settings.setValue("geometry", geometrySettings);
+            settings.setValue("windowState", windowState);
+        } catch(e){
+            console.error("Error persisting QMainWindow geometry", e);
+        }
+    }
+
     onMount(() => {
         (window as any).win = win; // Prevent garbage collection.
         win.nativeView.show();
@@ -10,14 +31,8 @@
     });
 </script>
 
-<!--
-    Known issue:
-    The Svelte VS Code Extension gives an "invalid-namespace-property" error here.
-    Will be solved by introducing the preprocessor, or once the VS Code Extension
-    is updated to use Svelte 3.32.1.
--->
 <svelte:options namespace="foreign" />
-<window bind:this={win} windowTitle="Hello World">
+<window bind:this={win} windowTitle="Hello World" on:Close={onWindowClose}>
     <view id="container" style="background-color: '#41444A';">
         <text style="color: white;">Some text with actual children</text>
         <button on:clicked={(checked) => console.log("Clicked!", checked)} id="nice_button" text="Press me"/>
