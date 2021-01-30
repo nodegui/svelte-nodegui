@@ -25,10 +25,14 @@ if(module.hot){
             process.exit(64);
         });
     } else if(__HMR_MODE__ === "hmr"){
-        module.hot.accept(["./app", "./App.svelte"], function(...args){
-            // console.warn(`Unable to accept hot update – HMR not yet implemented!`);
-            console.log(`Accepting!`, args);
-            svelteDesktop(App, props);
-        });
+        /* Updates to App.svelte do not enter this block */
+        // module.hot.accept(["./app"], function(...args){
+
+
+        // module.hot.accept(["./app", "./App.svelte"], function(...args){
+        //     // console.warn(`Unable to accept hot update – HMR not yet implemented!`);
+        //     console.log(`Accepting!`, args);
+        //     svelteDesktop(App, props);
+        // });
     }
 }

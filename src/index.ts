@@ -15,7 +15,6 @@ interface RootComponent {
 }
 let root: RootComponent|null = null;
 
-
 export function svelteDesktop(rootComponentClass: typeof SvelteComponent, data: any): SvelteComponent {
     /**
      * Avoids reinitialising upon hot update.
@@ -43,6 +42,7 @@ export function svelteDesktop(rootComponentClass: typeof SvelteComponent, data: 
             root = initialiseRoot();
         }
     } else {
+        console.log(`[svelteDesktop] initialising root for the first time`);
         root = initialiseRoot();
     }
 
