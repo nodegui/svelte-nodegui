@@ -10,12 +10,6 @@
     });
 </script>
 
-<!--
-    Known issue:
-    The Svelte VS Code Extension gives an "invalid-namespace-property" error here.
-    Will be solved by introducing the preprocessor, or once the VS Code Extension
-    is updated to use Svelte 3.32.1.
--->
 <svelte:options namespace="foreign" />
 <window bind:this={win} windowTitle="Hello World">
     <view id="container" style="background-color: '#41444A';">
