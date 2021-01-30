@@ -5,9 +5,9 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/shirakaba/svelte-nodegui.git"
+    "url": "https://github.com/nodegui/svelte-nodegui.git"
   },
-  "homepage": "https://github.com/shirakaba/svelte-nodegui",
+  "homepage": "https://github.com/nodegui/svelte-nodegui",
   "keywords": [
     "nodegui",
     "svelte"
