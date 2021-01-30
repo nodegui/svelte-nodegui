@@ -18,7 +18,11 @@
     "watch": "rollup -cw",
     "deploy": "npm run build && cd dist && npm publish"
   },
-  "author": "Jamie Birch",
+  "author": "Jamie Birch (https://twitter.com/LinguaBrowse)",
+  "contributors": [
+    "Jamie Birch (https://twitter.com/LinguaBrowse)",
+    "Saurav Sahu <mrsauravsahu@outlook.com> (https://mrsauravsahu.github.io)"
+  ],
   "license": "MIT",
   "peerDependencies": {
     "@nodegui/nodegui": "^0.25.0",
