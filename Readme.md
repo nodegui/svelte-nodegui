@@ -1,4 +1,4 @@
-# NodeGui
+# Svelte NodeGui
 
 [![Join the NodeGUI community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/nodegui)
 [![Join the Svelte community on Discord](https://img.shields.io/discord/457912077277855764?label=chat&logo=discord)](https://svelte.dev/chat)
@@ -140,7 +140,7 @@ See [FAQs](https://github.com/nodegui/nodegui/tree/master/website/docs/faq.md#wh
 
 ### Svelte NodeGUI
 
-File issues and get in touch, and we can guide you to something broken that needs fixing!
+File issues and get in touch (e.g. on the [Svelte Discord](https://svelte.dev/chat)'s `#nativedev` channel), and we can guide you to something broken that needs fixing!
 
 ### NodeGUI
 
