@@ -1,7 +1,7 @@
-import { svelteDesktop } from "svelte-desktop";
+import { svelteNodeGUI } from "@nodegui/svelte-nodegui";
 
 import App from "./App.svelte";
-svelteDesktop(App, {});
+svelteNodeGUI(App, {});
 
 
 declare global {

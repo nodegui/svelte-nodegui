@@ -56,10 +56,10 @@ export default [
   },
   ...module_defs(),
   {
-    input: `src/svelte-desktop.ts`,
+    input: `src/svelte-nodegui.ts`,
     output: [{
       sourcemap: true,
-      file: `dist/svelte-desktop.js`,
+      file: `dist/svelte-nodegui.js`,
       format: 'esm',
     }],
     plugins: [

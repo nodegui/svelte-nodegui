@@ -1,4 +1,4 @@
-declare namespace svelteDesktop.JSX {
+declare namespace svelteNodeGUI.JSX {
     /* svelte specific */
     interface ElementClass {
         $$prop_def: any;

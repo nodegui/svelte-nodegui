@@ -4,7 +4,7 @@ import { registerElement } from "./nativescript-vue-next/runtime/registry";
 import { RNObject, ObjectProps } from "./svelte/RNObject";
 import StyleElement from "./svelte/StyleElement";
 import HeadElement from "./svelte/HeadElement";
-import type SvelteDesktopDocument from "./svelte/SvelteDesktopDocument";
+import type SvelteNodeGUIDocument from "./svelte/SvelteNodeGUIDocument";
 import type { NSVElement } from "./nativescript-vue-next/runtime/nodes";
 import { RNWindow } from "./react-nodegui/src/components/Window/RNWindow";
 
@@ -17,7 +17,7 @@ export function registerSvelteElements(): void {
         () => new RNObject(),
         {
             nodeOps: {
-                insert(child, parent: SvelteDesktopDocument, atIndex?: number) {
+                insert(child, parent: SvelteNodeGUIDocument, atIndex?: number) {
                     if(child instanceof HeadElement){
                         if(parent.head){
                             if(parent.head !== child){
@@ -43,7 +43,7 @@ export function registerSvelteElements(): void {
 
                     return "defer";
                 },
-                remove(child, parent: SvelteDesktopDocument) {
+                remove(child, parent: SvelteNodeGUIDocument) {
                     if(child instanceof HeadElement){
                         parent.setStyleSheets("");
                         parent.head = null;

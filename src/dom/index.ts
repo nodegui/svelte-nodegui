@@ -6,8 +6,8 @@ export { log, warn, error } from "./shared";
 
 export { default as HeadElement } from './svelte/HeadElement'
 export { default as TemplateElement } from './svelte/TemplateElement'
-import { default as SvelteDesktopDocument } from './svelte/SvelteDesktopDocument';
-export { SvelteDesktopDocument };
+import { default as SvelteNodeGUIDocument } from './svelte/SvelteNodeGUIDocument';
+export { SvelteNodeGUIDocument };
 export { default as StyleElement } from './svelte/StyleElement'
 
 // export { registerElement, createElement, ViewNode, ElementNode, logger, LogLevel } from './basicdom'
@@ -48,14 +48,14 @@ export {
 // export { navigate, goBack, showModal, closeModal, ShowModalOptions, NavigationOptions, BackNavigationOptions } from './navigation'
 
 
-function installGlobalShims(): SvelteDesktopDocument {
+function installGlobalShims(): SvelteNodeGUIDocument {
 
     //expose our fake dom as global document for svelte components
     let window = global as any;
 
     window.window = global;
-    // window.document = new SvelteDesktopDocument();
-    const doc = new SvelteDesktopDocument();
+    // window.document = new SvelteNodeGUIDocument();
+    const doc = new SvelteNodeGUIDocument();
 
     Object.defineProperty(window, 'document', {
         value: doc,

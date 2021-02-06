@@ -12,7 +12,7 @@ import { warn, error, log } from '../../shared/Logger';
 import { EventWidget } from '@nodegui/nodegui/dist/lib/core/EventWidget';
 import { QVariantType } from '@nodegui/nodegui/dist/lib/QtCore/QVariant';
 import { RNWindow } from '../../react-nodegui/src/components/Window/RNWindow';
-import SvelteDesktopDocument from '../../svelte/SvelteDesktopDocument';
+import SvelteNodeGUIDocument from '../../svelte/SvelteNodeGUIDocument';
 // import { default as set } from "set-value";
 
 // import unset from 'unset-value'
@@ -199,7 +199,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
     private readonly recycledNewProps: Record<string, any> = {};
     private readonly recycledOldProps: Record<string, any> = {};
     private readonly propsSetter: Record<string, (value: any) => void> = {};
-    public ownerDocument: SvelteDesktopDocument|null = null;
+    public ownerDocument: SvelteNodeGUIDocument|null = null;
 
     constructor(tagName: string){
         super(NSVNodeTypes.ELEMENT);
@@ -371,7 +371,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
     }
 
     /**
-     * We keep references to the event listeners so that the Svelte Desktop HostConfig can remove any attached event listener if it needs to replace it.
+     * We keep references to the event listeners so that the Svelte NodeGUI HostConfig can remove any attached event listener if it needs to replace it.
      */
     private _eventListeners?: Map<string, any>;
 

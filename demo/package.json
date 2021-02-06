@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@nodegui/nodegui": "^0.25.0",
-    "svelte-desktop": "file:../dist"
+    "@nodegui/svelte-nodegui": "file:../dist"
   },
   "devDependencies": {
     "@nodegui/packer": "^1.4.1",
