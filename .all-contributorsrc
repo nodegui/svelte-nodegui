@@ -1,0 +1,33 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "shirakaba",
+      "name": "Jamie Birch",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14055146?v=4",
+      "profile": "https://twitter.com/LinguaBrowse",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mrsauravsahu",
+      "name": "Saurav Sahu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9134050?v=4",
+      "profile": "https://mrsauravsahu.github.io",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "svelte-nodegui",
+  "projectOwner": "nodegui",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
