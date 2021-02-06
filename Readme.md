@@ -1,4 +1,4 @@
-# Svelte NodeGui
+# Svelte NodeGUI
 
 [![Join the NodeGUI community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/nodegui)
 [![Join the Svelte community on Discord](https://img.shields.io/discord/457912077277855764?label=chat&logo=discord)](https://svelte.dev/chat)
