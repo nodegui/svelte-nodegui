@@ -8,7 +8,7 @@ import { RNObject } from "./RNObject";
 import StyleElement from "./StyleElement";
 import TemplateElement from "./TemplateElement";
 
-export default class SvelteDesktopDocument extends NSVElement<RNObject> {
+export default class SvelteNodeGUIDocument extends NSVElement<RNObject> {
     public head: HeadElement = this.createElement('head') as HeadElement;
     public body: NSVElement<RNObject> = this.createElement('body') as NSVElement<RNObject>;
     private _windows: Set<NSVElement<RNWindow>> = new Set();
@@ -47,7 +47,7 @@ export default class SvelteDesktopDocument extends NSVElement<RNObject> {
     }
 
     // createPropertyNode(tagName: string, propertyName: string): PropertyNode {
-    //     console.log(`[SvelteDesktopDocument] createPropertyNode("${tagName}", "${propertyName}")`);
+    //     console.log(`[SvelteNodeGUIDocument] createPropertyNode("${tagName}", "${propertyName}")`);
     //     return new PropertyNode(tagName, propertyName)
     // }
 
@@ -70,12 +70,12 @@ export default class SvelteDesktopDocument extends NSVElement<RNObject> {
                 ele = new HeadElement();
                 break;
             case "document":
-                ele = new SvelteDesktopDocument();
+                ele = new SvelteNodeGUIDocument();
                 break;
             case "window":
                 ele = new NSVElement(tagName);
                 this._windows.add(ele as NSVElement<RNWindow>);
-                // console.log(`[SvelteDesktopDocument] added window ${(ele)}. Will set stylesheet on it: \`${this.head.getStyleSheet()}\``);
+                // console.log(`[SvelteNodeGUIDocument] added window ${(ele)}. Will set stylesheet on it: \`${this.head.getStyleSheet()}\``);
                 (ele.nativeView as RNWindow).setStyleSheet(this.head.getStyleSheet());
                 break;
             case "fragment":
@@ -94,7 +94,7 @@ export default class SvelteDesktopDocument extends NSVElement<RNObject> {
     }
 
     createTextNode(text: string): NSVText {
-        console.log(`[SvelteDesktopDocument] createTextNode("${text}")`);
+        console.log(`[SvelteNodeGUIDocument] createTextNode("${text}")`);
         return new NSVText(text)
     }
 
@@ -123,10 +123,10 @@ export default class SvelteDesktopDocument extends NSVElement<RNObject> {
     }
 
     setStyleSheets(styleSheet: string): void {
-        // console.log(`[SvelteDesktopDocument] setStyleSheets(\`${styleSheet}\`)`);
+        // console.log(`[SvelteNodeGUIDocument] setStyleSheets(\`${styleSheet}\`)`);
 
         this._windows.forEach(win => {
-            // console.log(`[SvelteDesktopDocument] setStyleSheets on window ${win}`);
+            // console.log(`[SvelteNodeGUIDocument] setStyleSheets on window ${win}`);
             win.nativeView.setStyleSheet(styleSheet);
         });
     }

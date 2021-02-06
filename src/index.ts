@@ -9,7 +9,7 @@ declare global {
     }
 }
 
-export function svelteDesktop(rootElement: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
+export function svelteNodeGUI(rootElement: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
     const doc = initializeDom();
 
     return new Promise((resolve, reject) => {
@@ -31,7 +31,7 @@ export function svelteDesktop(rootElement: typeof SvelteComponent, data: any): P
 
 // Svelte looks to see if window is undefined in order to determine if it is running on the client or in SSR.
 // window is undefined until initializeDom is called. We will set it to a temporary value here and overwrite it in intializedom.
-(global as any).window = { env: "Svelte Desktop" }
+(global as any).window = { env: "Svelte NodeGUI" }
 
 
 export { initializeDom, DomTraceCategory } from "./dom"

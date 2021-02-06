@@ -7,13 +7,9 @@ import {
     NSVRoot,
     NSVText
 } from './nodes';
-import HeadElement from "../../svelte/HeadElement";
-import StyleElement from "../../svelte/StyleElement";
-import SvelteDesktopDocument from "../../svelte/SvelteDesktopDocument";
-import TemplateElement from "../../svelte/TemplateElement";
 
 /**
- * TODO: Remove this file; we're doing all operations via SvelteDesktopDocument instead.
+ * TODO: Remove this file; we're doing all operations via SvelteNodeGUIDocument instead.
  * An implementation of RendererOptions from '@vue/runtime-core'.
  * @see https://github.com/vuejs/vue-next/blob/e56d33edb1d42b4957a28538cd8d6302685072ac/packages/runtime-core/src/renderer.ts#L83
  */

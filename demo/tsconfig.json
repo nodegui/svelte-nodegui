@@ -6,7 +6,7 @@
         "declaration": true,
         "removeComments": true,
         "noLib": false,
-        "jsxFactory": "svelteDesktop.createElement",
+        "jsxFactory": "svelteNodeGUI.createElement",
         "emitDecoratorMetadata": false,
         "experimentalDecorators": true,
         "pretty": true,
@@ -28,13 +28,13 @@
         }
     },
     /**
-     * `svelte-desktop.d.ts` provides the JSX typings needed to support Svelte components using lang="ts".
+     * `svelte-nodegui.d.ts` provides the JSX typings needed to support Svelte components using lang="ts".
      * If you'd prefer not to introduce a "files" property into your tsconfig, you can add this
      * triple-slash directive to the top line of `src/app.ts` instead:
-     * /// <reference path="../node_modules/svelte-desktop/svelte-desktop.d.ts" />
+     * /// <reference path="../node_modules/@nodegui/svelte-nodegui/svelte-nodegui.d.ts" />
      * Remember to restart the Svelte Language Service after any significant changes to configuration.
     */
-    "files": ["./node_modules/svelte-desktop/svelte-desktop.d.ts"],
+    "files": ["./node_modules/@nodegui/svelte-nodegui/svelte-nodegui.d.ts"],
     "include": ["src/**/*"],
     "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
 }
