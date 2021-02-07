@@ -1,13 +1,13 @@
 <script lang="ts">
-import { onMount } from "svelte";
-import {WidgetEventTypes, QDragMoveEvent, QDropEvent} from '@nodegui/nodegui'
+  import { onMount } from "svelte";
+  import {WidgetEventTypes, QDragMoveEvent, QDropEvent} from '@nodegui/nodegui'
   import AppHeader from "../components/app-header.svelte";
-   import nodeStatic from  'node-static';
-   import * as http from 'http';
-   import * as fs from 'fs';
-import { rootFolder } from "../stores/root-folder";
-    import type {AddressInfo } from 'net'
-import ServerStatus from "../components/server-status.svelte";
+  import {getNetworkAddresses} from '../utils'
+  import * as http from 'http';
+  import * as fs from 'fs';
+  import { rootFolder } from "../stores/root-folder";
+  import type {AddressInfo } from 'net'
+  import ServerStatus from "../components/server-status.svelte";
   let ddButton;
   let nodeStaticServer;
   let httpServer: http.Server;
@@ -71,16 +71,16 @@ import ServerStatus from "../components/server-status.svelte";
     });
   });
 
-  let getHttpServerAddress= (httpServer: http.Server): string  => {
-    if(!httpServer) return '';
-    const address = httpServer.address();
-    if(typeof address === 'string')
-      {console.log('oh yah')
-        return address;
-  }
-  console.log('etf')
-    var serverAddressObj = address as AddressInfo;
-    return `http://${serverAddressObj.address}:${serverAddressObj.port}`
+  $: httpServerAddresses = getHttpServerAddress(httpServer)
+
+  let getHttpServerAddress = (httpServer: http.Server): string[]  => {
+      if(!httpServer) return null;
+      const networkAddresses = getNetworkAddresses()
+      
+      var serverAddressObj = httpServer.address() as AddressInfo;
+      const serverAddressStrings = networkAddresses.map(addr => `http://${addr}:${serverAddressObj.port}`)
+      console.log('addrstr',JSON.stringify(serverAddressStrings))
+      return serverAddressStrings
     }
 </script>
 
@@ -92,7 +92,7 @@ import ServerStatus from "../components/server-status.svelte";
      text="Drag and drop a folder"/>
   <ServerStatus
     rootFolder={$rootFolder}
-    serverAddress={getHttpServerAddress(httpServer)}
+    serverAddress={httpServerAddresses}
   />
 
 </view>
@@ -106,11 +106,11 @@ import ServerStatus from "../components/server-status.svelte";
 
   #heading {
     font-size: 16;
-    color: 'white';
     margin-bottom: 16;
   }
 
   #root_folder_area {
-    padding: 16;
+    padding: 32;
+    background-color: '#414445'
   }
 </style>
