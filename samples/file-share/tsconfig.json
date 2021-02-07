@@ -1,0 +1,40 @@
+{
+    "extends": "@tsconfig/svelte/tsconfig.json",
+
+    "compilerOptions": {
+        "module": "esnext",
+        "declaration": true,
+        "removeComments": true,
+        "noLib": false,
+        "jsxFactory": "svelteNodeGUI.createElement",
+        "emitDecoratorMetadata": false,
+        "experimentalDecorators": true,
+        "pretty": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noEmitHelpers": true,
+        "noEmitOnError": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": ["es6", "dom", "es2015.iterable", "es2017.string", "es2018.promise"],
+        "baseUrl": ".",
+        "types": ["node", "svelte"],
+        "paths": {
+            "~/*": ["src/*"],
+            "*": ["./node_modules/*"]
+        }
+    },
+    /**
+     * `svelte-nodegui.d.ts` provides the JSX typings needed to support Svelte components using lang="ts".
+     * If you'd prefer not to introduce a "files" property into your tsconfig, you can add this
+     * triple-slash directive to the top line of `src/app.ts` instead:
+     * /// <reference path="../node_modules/@nodegui/svelte-nodegui/svelte-nodegui.d.ts" />
+     * Remember to restart the Svelte Language Service after any significant changes to configuration.
+    */
+    "files": ["./node_modules/@nodegui/svelte-nodegui/svelte-nodegui.d.ts"],
+    "include": ["src/**/*"],
+    "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
+}
