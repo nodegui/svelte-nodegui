@@ -11,8 +11,7 @@
   "dependencies": {
     "@nodegui/nodegui": "^0.25.0",
     "@nodegui/svelte-nodegui": "file:../../dist",
-    "local-web-server": "^4.2.1",
-    "node-static": "^0.7.11"
+    "open": "^7.4.0"
   },
   "devDependencies": {
     "@nodegui/packer": "^1.4.1",
