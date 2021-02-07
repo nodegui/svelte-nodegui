@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@nodegui/react-nodegui": "^0.9.0",
+    "open": "^7.4.0",
     "phin": "^3.5.1"
   }
 }
