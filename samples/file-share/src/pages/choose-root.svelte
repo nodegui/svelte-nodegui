@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import {
     WidgetEventTypes,
     QDragMoveEvent,
@@ -9,84 +9,61 @@
   import { getNetworkAddresses } from "../utils";
   import * as http from "http";
   import * as fs from "fs";
-  import { rootFolder } from "../stores/root-folder";
+  import { root } from "../stores/root";
   import type { AddressInfo } from "net";
   import ServerStatus from "../components/server-status.svelte";
   let ddButton;
-  let nodeStaticServer;
   let httpServer: http.Server;
+  let port = 9000;
 
   onMount(() => {
     ddButton.nativeView.setAcceptDrops(true);
 
     ddButton.nativeView.addEventListener(WidgetEventTypes.DragEnter, (e) => {
       let ev = new QDragMoveEvent(e);
-      console.log("dragEnter", ev.proposedAction());
-      let mimeData = ev.mimeData();
-      mimeData.text(); //Inspection of text works
-      console.log("mimeData", {
-        hasColor: mimeData.hasColor(),
-        hasHtml: mimeData.hasHtml(),
-        hasImage: mimeData.hasImage(),
-        hasText: mimeData.hasText(),
-        hasUrls: mimeData.hasUrls(),
-        html: mimeData.html(),
-        text: mimeData.text(),
-      }); //Inspection of MIME data works
-      let urls = mimeData.urls(); //Get QUrls
-      for (let url of urls) {
-        let str = url.toString();
-        console.log("url", str); //Log out Urls in the event
-      }
-      ev.accept(); //Accept the drop event, which is crucial for accepting further events
+      ev.accept();
     });
+
     ddButton.nativeView.addEventListener(WidgetEventTypes.Drop, (e) => {
       let dropEvent = new QDropEvent(e);
       let mimeData = dropEvent.mimeData();
-      console.log("dropped", dropEvent.type());
       let urls = mimeData.urls();
-      for (let url of urls) {
-        let str = url.toString();
-        console.log("url", str); //Example of inspection of dropped data.
-      }
+      const rootFile = urls[0].toLocalFile();
 
-      console.log("starting server for", urls[0].toLocalFile());
       try {
-        // ws = new nodeStaticServer.Server(   urls[0].toLocalFile());
+        console.log("Starting server for", rootFile);
+        // Check if server was already running
+        if (httpServer) {
+          httpServer.close();
+        }
 
         httpServer = http.createServer(function (request, response) {
           request
             .addListener("end", function () {
-              //
-              // Serve files!
-              //
-              // ws.serve(request, response);
-              var data = fs.readFileSync(urls[0].toLocalFile());
+              var data = fs.readFileSync($root.fileLocation);
               response.end(data);
             })
             .resume();
         });
-        httpServer.listen(9000);
-        rootFolder.set(urls[0].toLocalFile());
-        console.log("server", httpServer.address().toString());
+        const host = getHostName();
+        $root = {
+           fileLocation: rootFile,
+           serverAddress: `http://${host}:${port}/`
+        };
+        httpServer.listen(9000, host);
+        
       } catch (error) {
+        console.error('Unable to start HTTP Server')
         console.error(error);
       }
     });
   });
 
-  $: httpServerAddresses = getHttpServerAddress(httpServer);
-
-  let getHttpServerAddress = (httpServer: http.Server): string[] => {
+  let getHostName = (): string => {
     if (!httpServer) return null;
     const networkAddresses = getNetworkAddresses();
-
-    var serverAddressObj = httpServer.address() as AddressInfo;
-    const serverAddressStrings = networkAddresses.map(
-      (addr) => `http://${addr}:${serverAddressObj.port}`
-    );
-    console.log("addrstr", JSON.stringify(serverAddressStrings));
-    return serverAddressStrings;
+    const host = networkAddresses.filter(p => p != '127.0.0.1')[0]
+    return host
   };
 </script>
 
@@ -94,10 +71,13 @@
   <AppHeader />
 
   <view id="root_folder_area" bind:this={ddButton}>
-    <text>Drop a file here to start sharing</text>
+    <text id="drop_zone_text">Drop a file here to start sharing</text>
   </view>
 
-  <ServerStatus rootFolder={$rootFolder} serverAddress={httpServerAddresses} />
+  <ServerStatus
+    fileLocation={$root.fileLocation}
+    serverAddress={$root.serverAddress}
+  />
 </view>
 
 <style>
@@ -107,13 +87,19 @@
     height: "100%";
   }
 
+  #drop_zone_text {
+    font-size: 16px;
+    color: "#AAAAAA";
+  }
+
   #root_folder_area {
-    margin-top: 16;
-    padding-top: 64;
-    padding-bottom: 64;
+    margin-top: 8;
+    margin-bottom: 8;
+    padding-top: 72;
+    padding-bottom: 72;
     background-color: "#1B7E96";
-    justify-content: 'center';
-    align-items: 'center';
+    justify-content: "center";
+    align-items: "center";
     border-radius: 8;
   }
 </style>

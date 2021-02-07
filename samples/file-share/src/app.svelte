@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { rootFolder } from './stores/root-folder';
     import { onMount } from 'svelte';
     import ChooseRoot from './pages/choose-root.svelte';
     const windowSize = { height: 480, width: 640 };
