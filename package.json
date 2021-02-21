@@ -1,8 +1,7 @@
 {
   "name": "@nodegui/svelte-nodegui",
-  "version": "0.1.0",
+  "version": "0.0.1-alpha",
   "description": "Svelte integration for NodeGUI",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/nodegui/svelte-nodegui.git"
