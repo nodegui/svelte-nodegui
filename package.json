@@ -15,7 +15,7 @@
     "clean": "npx rimraf ./dist/*",
     "build": "npm run clean && rollup -c && node ./scripts/create-pkg.js",
     "watch": "rollup -cw",
-    "deploy": "npm run build && cd dist && npm publish"
+    "deploy": "npm run build && cd dist && npm publish --access=public"
   },
   "author": "Jamie Birch (https://twitter.com/LinguaBrowse)",
   "contributors": [
