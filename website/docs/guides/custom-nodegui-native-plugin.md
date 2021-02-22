@@ -1,6 +1,6 @@
 ---
-sidebar_label: Custom React NodeGui Plugin
-title: Custom React NodeGui Plugin
+sidebar_label: Custom Svelte NodeGui Plugin
+title: Custom Svelte NodeGui Plugin
 ---
 
 WIP

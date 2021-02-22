@@ -5,12 +5,12 @@ import classnames from "classnames";
 
 const features = [
   {
-    title: <>Powered by React</>,
-    imageUrl: "img/undraw_react.svg",
+    title: <>Powered by Svelte</>,
+    imageUrl: "img/undraw_building_websites.svg",
     description: (
       <>
-        With React NodeGui, you can build truly native apps with React. If you
-        dont want to use React, there is also a pure{" "}
+        With Svelte NodeGui, you can build truly native apps with Svelte. If you
+        dont want to use Svelte, there is also a pure{" "}
         <a href="https://nodegui.org">JavaScript based version</a>.
       </>
     )
@@ -20,7 +20,7 @@ const features = [
     imageUrl: "img/undraw_code_review.svg",
     description: (
       <>
-        React NodeGui is an open source project maintained by an active
+        Svelte NodeGui is an open source project maintained by an active
         community of contributors.
       </>
     )
@@ -30,7 +30,7 @@ const features = [
     imageUrl: "img/undraw_windows.svg",
     description: (
       <>
-        React NodeGui apps build and run on Mac, Windows, and Linux platforms.
+        Svelte NodeGui apps build and run on Mac, Windows, and Linux platforms.
       </>
     )
   }

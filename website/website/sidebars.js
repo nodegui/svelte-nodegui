@@ -4,7 +4,7 @@ module.exports = {
       "api/classes/renderer"
     ],
     "Interfaces": [
-      "api/interfaces/_react_proxy_.reactproxycomponent",
+      // "api/interfaces/_react_proxy_.reactproxycomponent",
       "api/interfaces/abstractbuttonprops",
       "api/interfaces/animatedimageprops",
       "api/interfaces/buttonprops",
@@ -25,8 +25,8 @@ module.exports = {
       "api/interfaces/viewprops",
       "api/interfaces/windowprops"
     ],
-    "Modules": [
-      "api/modules/_react_proxy_"
-    ]
+    // "Modules": [
+    //   "api/modules/_react_proxy_"
+    // ]
   }
 };

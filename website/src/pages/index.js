@@ -16,7 +16,7 @@ function Home() {
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
-      description="Build performant, native and cross-platform desktop applications with React 🚀"
+      description="Build performant, native and cross-platform desktop applications with Svelte 🚀"
     >
       <Hero />
       <main>

@@ -15,7 +15,7 @@ export const CreateNativeApps = () => {
     return (
       <div>
         <h3>
-          Create native apps for Windows, MacOs and Linux using React and CSS
+          Create native apps for Windows, MacOs and Linux using Svelte and CSS
         </h3>
 
         <p>
@@ -25,11 +25,11 @@ export const CreateNativeApps = () => {
         </p>
 
         <p>
-          React NodeGui widgets are built on top of{" "}
+          Svelte NodeGui widgets are built on top of{" "}
           <a href="https://www.qt.io/" target="_blank">
             Qt
           </a>{" "}
-          which is a mature desktop apps framework. React NodeGui components are
+          which is a mature desktop apps framework. Svelte NodeGui components are
           extremely customizable just like in the web but does{" "}
           <strong>NOT</strong> use a Web browser under the hood.
         </p>

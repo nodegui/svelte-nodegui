@@ -6,8 +6,8 @@ title: Debugging in VSCode
 - **Open a NodeGui project in VSCode.**
 
   ```sh
-  $ git clone git@github.com:nodegui/react-nodegui-starter.git
-  $ code react-nodegui-starter
+  $ git clone git@github.com:nodegui/svelte-nodegui-starter.git
+  $ code svelte-nodegui-starter
   ```
 
 - **Add a file `.vscode/launch.json` with the following configuration:**

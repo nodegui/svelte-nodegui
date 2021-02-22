@@ -52,21 +52,12 @@ export const Try = () => {
         <Center>
           <H2>Give it a try</H2>
           <Description>
-            <SubTitle>1. Use the CRA template</SubTitle>
+            <SubTitle>Run these commands</SubTitle>
             <Terminal>
               <Code>
-                create-react-app --template react-nodegui rn-starter
+                git clone https://github.com/nodegui/svelte-nodegui-starter
               </Code>
-              <Code>cd rn-starter</Code>
-              <Code>npm run dev</Code>
-              <Code>npm start</Code>
-            </Terminal>
-            <SubTitle>2. Run these commands</SubTitle>
-            <Terminal>
-              <Code>
-                git clone https://github.com/nodegui/react-nodegui-starter
-              </Code>
-              <Code>cd react-nodegui-starter</Code>
+              <Code>cd svelte-nodegui-starter</Code>
               <Code>npm install</Code>
               <Code>npm run dev</Code>
               <Code>npm start</Code>

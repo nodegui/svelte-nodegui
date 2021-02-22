@@ -1,16 +1,16 @@
 module.exports = {
-  title: "React NodeGui",
+  title: "Svelte NodeGui",
   tagline: "Build performant, native, cross platform desktop apps with React",
-  url: "https://react.nodegui.org",
+  url: "https://svelte.nodegui.org",
   baseUrl: "/",
   favicon: "img/favicon.ico",
   organizationName: "nodegui", // Usually your GitHub org/user name.
-  projectName: "react-nodegui", // Usually your repo name.
+  projectName: "svelte-nodegui", // Usually your repo name.
   onBrokenLinks: "warn",
   onDuplicateRoutes: "warn",
   themeConfig: {
     navbar: {
-      title: "React NodeGui",
+      title: "Svelte NodeGUI",
       logo: {
         alt: "NodeGui Logo",
         src: "img/logo-circle.png",
@@ -24,7 +24,7 @@ module.exports = {
         },
         { to: "blog", label: "Blog", position: "right" },
         {
-          href: "https://github.com/nodegui/react-nodegui",
+          href: "https://github.com/nodegui/svelte-nodegui",
           label: "GitHub",
           position: "right",
         },
@@ -77,14 +77,14 @@ module.exports = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} NodeGui`,
     },
-    googleAnalytics: {
-      trackingID: "UA-145065218-2",
-    },
-    algolia: {
-      apiKey: "6ab12d669678aeba3bdf10b89f0c8db3",
-      indexName: "nodegui_react",
-      algoliaOptions: {}, // Optional, if provided by Algolia
-    },
+    // googleAnalytics: {
+    //   trackingID: "TODO",
+    // },
+    // algolia: {
+    //   apiKey: "TODO",
+    //   indexName: "nodegui_svelte",
+    //   algoliaOptions: {}, // Optional, if provided by Algolia
+    // },
   },
   presets: [
     [

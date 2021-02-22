@@ -5,11 +5,11 @@ title: Debugging
 
 ## Application Debugging
 
-Whenever your React NodeGui application is not behaving the way you wanted it to,
+Whenever your Svelte NodeGui application is not behaving the way you wanted it to,
 an array of debugging tools might help you find coding errors, performance
 bottlenecks, or optimization opportunities.
 
-Since a React NodeGui application runs on Qode and Qode is essentially Node.Js. We can consider a NodeGui app as a regular NodeJs app. Hence, you can use any debugging tool that you use with Node.Js
+Since a Svelte NodeGui application runs on Qode and Qode is essentially Node.Js. We can consider a NodeGui app as a regular NodeJs app. Hence, you can use any debugging tool that you use with Node.Js
 One of the most popular way of debugging a Node.Js app is by making use of the [Chromium Developer Tools][node-inspect].
 
 Google offers [excellent documentation for their developer tools][devtools].

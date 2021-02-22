@@ -16,9 +16,9 @@ module.exports = {
       "api/interfaces/windowprops",
     ],
     Others: ["api/globals"],
-    Modules: ["api/modules/_react_proxy_"],
+    // Modules: ["api/modules/_react_proxy_"],
     Interfaces: [
-      "api/interfaces/_react_proxy_.reactproxycomponent",
+      // "api/interfaces/_react_proxy_.reactproxycomponent",
       "api/interfaces/abstractbuttonprops",
       "api/interfaces/actionprops",
       "api/interfaces/animatedimageprops",

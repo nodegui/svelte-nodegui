@@ -3,17 +3,17 @@ sidebar_label: Getting started
 title: Getting started
 ---
 
-React NodeGui enables you to create desktop applications with React. You could see it
+Svelte NodeGui enables you to create desktop applications with Svelte. You could see it
 as a lightly modified variant of the Node.js runtime that is focused on desktop applications
 instead of web servers.
 
-React NodeGui is a react renderer for [NodeGui](https://nodegui.org), which is an efficient JavaScript binding to a cross platform graphical user interface
+Svelte NodeGui is a Svelte renderer for [NodeGui](https://nodegui.org), which is an efficient JavaScript binding to a cross platform graphical user interface
 (GUI) library `Qt`. Qt is one of the most mature and efficient library for building desktop applications.
-This enabled React NodeGui to be extremely memory and CPU efficient as compared to other popular Javascript Desktop GUI solutions. A hello world app built with React NodeGui runs on less than 20Mb of memory.
+This enabled Svelte NodeGui to be extremely memory and CPU efficient as compared to other popular Javascript Desktop GUI solutions. A hello world app built with Svelte NodeGui runs on less than 20Mb of memory.
 
 ## Developer environment
 
-To turn your operating system into an environment capable of building desktop apps with React NodeGui, you would need Node.js, npm, a code editor of your choice, and a rudimentary understanding of your operating system's command line client.
+To turn your operating system into an environment capable of building desktop apps with Svelte NodeGui, you would need Node.js, npm, a code editor of your choice, and a rudimentary understanding of your operating system's command line client.
 
 Along with these, there are a few operating system dependent instructions that are listed below.
 
@@ -21,7 +21,7 @@ Along with these, there are a few operating system dependent instructions that a
 
 **Requirements:**
 
-- React NodeGui supports macOS 10.10 (Yosemite) and up. NodeGui currently only supports 64bit OS.
+- Svelte NodeGui supports macOS 10.10 (Yosemite) and up. NodeGui currently only supports 64bit OS.
 - CMake 3.1 and up (Installation instructions can be found here: https://cmake.org/install/)
 - Make, GCC v7
 - Currently supported Node.Js versions are 12.x and up.
@@ -44,7 +44,7 @@ for JavaScript development.
 
 ### Setting up on Windows
 
-> React NodeGui supports Windows 7 and later versions – attempting to develop NodeGui
+> Svelte NodeGui supports Windows 7 and later versions – attempting to develop NodeGui
 > applications on earlier versions of Windows might not work. NodeGui currently only supports 64bit OS.
 
 **Requirements:**
@@ -73,7 +73,7 @@ for JavaScript development.
 
 ### Setting up on Linux
 
-> React NodeGui currently supports Ubuntu 16.04 and Debian 10 and up. Although other Linux distributions can also be easily supported. NodeGui currently only supports 64bit OS.
+> Svelte NodeGui currently supports Ubuntu 16.04 and Debian 10 and up. Although other Linux distributions can also be easily supported. NodeGui currently only supports 64bit OS.
 
 **Requirements:**
 
@@ -113,15 +113,15 @@ virtually all code editors and IDEs these days support JavaScript.
 ### Hello World
 
 Clone and run the code in this tutorial by using the
-[`nodegui/react-nodegui-starter`][quick-start] repository.
+[`nodegui/svelte-nodegui-starter`][quick-start] repository.
 
 **Note**: Running this requires [Git](https://git-scm.com) and [npm](https://www.npmjs.com/).
 
 ```sh
 # Clone the repository
-$ git clone https://github.com/nodegui/react-nodegui-starter
+$ git clone https://github.com/nodegui/svelte-nodegui-starter
 # Go into the repository
-$ cd react-nodegui-starter
+$ cd svelte-nodegui-starter
 # Install dependencies
 $ npm install
 # Run the dev server
@@ -132,7 +132,7 @@ $ npm start
 
 That's it!
 
-Congratulations! You've successfully run and modified your first React NodeGui app.
+Congratulations! You've successfully run and modified your first Svelte NodeGui app.
 
 ### Now what?
 
