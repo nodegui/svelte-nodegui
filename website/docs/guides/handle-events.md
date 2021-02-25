@@ -3,7 +3,7 @@ sidebar_label: Handle Events
 title: Handle Events
 ---
 
-Svelte NodeGui allows you to listen to various events that might originate from the underlying Qt widgets. These events can either be a simple button click or a text change on a lineedit or even something like window being hidden and shown.
+Svelte NodeGui allows you to listen to various events that might originate from the underlying Qt widgets. These events can either be a simple button click or a text change on a LineEdit or even something like window being hidden and shown.
 
 In order to do this we need to attach an event listener to the respective widget.
 

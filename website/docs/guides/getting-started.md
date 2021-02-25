@@ -136,6 +136,6 @@ Congratulations! You've successfully run and modified your first Svelte NodeGui 
 
 ### Now what?
 
-If you're curious to learn more about NodeGui, continue on to the [tutorial](tutorial.md).
+If you're curious to learn more about Svelte NodeGui, continue on to the [tutorial](tutorial.md).
 
-[quick-start]: https://github.com/nodegui/nodegui-starter
+[quick-start]: https://github.com/nodegui/svelte-nodegui-starter

@@ -3,56 +3,63 @@ sidebar_label: Styling
 title: Styling
 ---
 
-With React NodeGui, you can style a component to your needs. If you are familiar with CSS in the web world you would feel right at home. All components accept the `style` prop for setting inline styles. The style names and values usually match how CSS works on the web.
+With Svelte NodeGui, you can style a component to your needs. If you are familiar with CSS in the web world you would feel right at home. All components accept the `style` prop for setting inline styles. The style names and values usually match how CSS works on the web.
 
 Here's an example:
 
-```js
-import React from "react";
-import { Renderer, Text, Window } from "@nodegui/react-nodegui";
+```svelte
+<script lang="ts">
+  import { onMount } from "svelte";
 
-const App = () => {
-  return (
-    <Window>
-      <Text style={textStyle}>{"Hello World"}</Text>
-    </Window>
-  );
-};
+  onMount(() => {
+    (window as any).win = win; // Prevent garbage collection.
+    win.nativeView.show();
+    return () => {
+      delete (window as any).win;
+    };
+  });
+</script>
 
-const textStyle = `
-  color: green; 
-  background-color: white;
-`;
-
-Renderer.render(<App />);
+<svelte:options namespace="foreign" />
+<window bind:this={win}>
+  <text style="color: green; background-color: white;">
+    Hello World
+  </text>
+</window>
 ```
 
 ## Overview
 
-React NodeGui makes use of [Qt's stylesheet](https://doc.qt.io/qt-5/stylesheet-syntax.html) for styling. Qt Style Sheet terminology and syntactic rules are almost identical to those of HTML CSS. Additionally, React NodeGui adds support for layout using flex properties like align-items, justify-content, etc. Flexbox layout support is added using [facebook's yoga library](https://github.com/facebook/yoga).
+Svelte NodeGui makes use of [Qt's stylesheet](https://doc.qt.io/qt-5/stylesheet-syntax.html) for styling. Qt Style Sheet terminology and syntactic rules are almost identical to those of HTML CSS. Additionally, Svelte NodeGui adds support for layout using flex properties like align-items, justify-content, etc. Flexbox layout support is added using [facebook's yoga library](https://github.com/facebook/yoga).
 
-You would write your style properties in a string and pass it to the React NodeGui components either via global styles or inline styles (similar to how it works in the web).
+You would write your style properties in a string and pass it to the Svelte NodeGui components either via global styles or inline styles (similar to how it works in the web).
 
 ## Global styles
 
 Lets take a look at an example:
 
-```js
-import React from "react";
-import { Renderer, View, Text, Window } from "@nodegui/react-nodegui";
+```svelte
+<script lang="ts">
+  import { onMount } from "svelte";
 
-const App = () => {
-  return (
-    <Window styleSheet={styleSheet}>
-      <View id="rootView">
-        <Text id="helloLabel">{"Hello"}</Text>
-        <Text id="worldsLabel">{"World"}</Text>
-      </View>
-    </Window>
-  );
-};
+  onMount(() => {
+    (window as any).win = win; // Prevent garbage collection.
+    win.nativeView.show();
+    return () => {
+      delete (window as any).win;
+    };
+  });
+</script>
 
-const styleSheet = `
+<svelte:options namespace="foreign" />
+<window bind:this={win}>
+  <view id="rootView">
+    <text id="helloLabel">Hello</text>
+    <text id="worldLabel">World</text>
+  </view>
+</window>
+
+<style>
   #helloLabel {
     color: red;
     padding: 10px;
@@ -65,10 +72,9 @@ const styleSheet = `
     background-color: black;
     height: '100%';
   }
-`;
-
-Renderer.render(<App />);
+</style>
 ```
+
 
 In the case of global stylesheet you can define all your style properties in a stylesheet string and the tell the root view or window to set it as a stylsheet for it and its child components. The only difference here from web is that you can set a stylesheet on a component at any level in the whole tree of components, the stylesheet will affect the component and its children.
 
@@ -82,28 +88,26 @@ Global stylesheet really becomes powerful when you use things like pseudo-select
 
 Lets look at this example again:
 
-```js
-import React from "react";
-import { Renderer, Text, Window } from "@nodegui/react-nodegui";
+```svelte
+<script lang="ts">
+  import { onMount } from "svelte";
 
-const App = () => {
-  return (
-    <Window>
-      <Text style={textStyle}>{"Hello world"}</Text>
-    </Window>
-  );
-};
+  onMount(() => {
+    (window as any).win = win; // Prevent garbage collection.
+    win.nativeView.show();
+    return () => {
+      delete (window as any).win;
+    };
+  });
+</script>
 
-const textStyle = `
-  color: green; 
-  background-color: white;
-  height: '100%';
-`;
-
-Renderer.render(<App />);
+<svelte:options namespace="foreign" />
+<window bind:this={win}>
+  <text style="color: green; background-color: white; height: '100%';">Hello World</text>
+</window>
 ```
 
-In most cases it would be easier to style the components inline. React NodeGui supports inline styling using `style` prop. Inline styles will only affect the component to which the style is applied to and is often easier to understand and manage. All properties you use in the global stylesheet are available in inline styles as well.
+In most cases it would be easier to style the components inline. Svelte NodeGui supports inline styling using `style` prop. Inline styles will only affect the component to which the style is applied to and is often easier to understand and manage. All properties you use in the global stylesheet are available in inline styles as well.
 
 ## Selectors
 
@@ -160,8 +164,8 @@ NodeGui style sheet is a css string.
 
 For example:
 
-```javascript
-const textStyle = `
+```typescript
+const textStyle: string = `
   color: 'green';
   padding: 12;
   height: '100%';
@@ -204,4 +208,4 @@ You can discover these properties by following Qt's documentation or by running 
 
 ---
 
-In this section, we mostly covered the paint properties in the React NodeGui stylesheet. The next section would cover on how you can use flex to layout your components with stylesheet.
+In this section, we mostly covered the paint properties in the Svelte NodeGui stylesheet. The next section would cover on how you can use flex to layout your components with stylesheet.

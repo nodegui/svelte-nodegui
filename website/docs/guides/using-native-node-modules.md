@@ -3,9 +3,9 @@ sidebar_label: Native Node Modules
 title: Using native Node Modules
 ---
 
-Native Node modules are supported by React NodeGui, but since React NodeGui is very
+Native Node modules are supported by Svelte NodeGui, but since Svelte NodeGui is very
 likely to use a different V8 version from the Node binary installed on your
-system, the modules you use will need to be recompiled for React NodeGui's node/v8 version. Otherwise,
+system, the modules you use will need to be recompiled for Svelte NodeGui's node/v8 version. Otherwise,
 you will get the following class of error when you try to run your app:
 
 ```sh

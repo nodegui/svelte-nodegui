@@ -36,4 +36,4 @@ title: Debugging in VSCode
 
 - **Debugging**
 
-  Set some breakpoints in `index.js`, and start debugging in the [Debug View](https://code.visualstudio.com/docs/editor/debugging). You should be able to hit the breakpoints.
+Set some breakpoints in `index.js`, and start debugging in the [Debug View](https://code.visualstudio.com/docs/editor/debugging). You should be able to hit the breakpoints.

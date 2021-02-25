@@ -3,38 +3,53 @@ sidebar_label: Layout
 title: Layout
 ---
 
-React NodeGui uses a layout system to automatically arrange child components within a component to ensure that they make good use of the available space.
+Svelte NodeGui uses a layout system to automatically arrange child components within a component to ensure that they make good use of the available space.
 
 ## Fixed Dimensions
 
 A component's height and width determine its size on the screen. The simplest way to set the dimensions of a component is by adding a fixed width and height to style. Setting dimensions this way is common for components that should always render at exactly the same size, regardless of screen dimensions.
 
-```javascript
-import React from "react";
-import { Renderer, View, Window } from "@nodegui/react-nodegui";
+```svelte
+<script lang="ts">
+  import { onMount } from "svelte";
 
-const App = () => {
-  return (
-    <Window>
-      <View style={viewStyle} />
-    </Window>
-  );
-};
+  onMount(() => {
+    (window as any).win = win; // Prevent garbage collection.
+    win.nativeView.show();
+    return () => {
+      delete (window as any).win;
+    };
+  });
+</script>
 
-const viewStyle = `
-  width:50px;
-  height:30px; 
-  background-color: yellow;
-`;
+<svelte:options namespace="foreign" />
+<window bind:this={win}>
+  <view style="width: 50px; height: 30px; background-color: yellow;"/>
+</window>
 
-Renderer.render(<App />);
+<style>
+  #rootView{
+    height: '100%';
+    background-color: blue;
+  }
+  #label {
+    flex: 1;
+    color: white;
+    background-color: green;
+  }
+  #view {
+    flex: 3;
+    background-color: white;
+  }
+</style>
 ```
+
 
 ## Dynamic Layouts
 
 Dynamic layouts automatically position and resize components when the amount of space available for them changes, ensuring that they are consistently arranged and that the user interface as a whole remains usable.
 
-React NodeGui currently supports layouting using FlexLayout.
+Svelte NodeGui currently supports layouting using FlexLayout.
 
 ## FlexLayout
 
@@ -52,22 +67,28 @@ Lets say you want to build a UI that has a parent view which has two child compo
 
 The code for that would look something like this:
 
-```javascript
-import React from "react";
-import { Renderer, View, Text, Window } from "@nodegui/react-nodegui";
+```svelte
+<script lang="ts">
+  import { onMount } from "svelte";
 
-const App = () => {
-  return (
-    <Window styleSheet={styleSheet}>
-      <View id="rootView">
-        <Text id="label">Hello</Text>
-        <View id="view" />
-      </View>
-    </Window>
-  );
-};
+  onMount(() => {
+    (window as any).win = win; // Prevent garbage collection.
+    win.nativeView.show();
+    return () => {
+      delete (window as any).win;
+    };
+  });
+</script>
 
-const styleSheet = `
+<svelte:options namespace="foreign" />
+<window bind:this={win}>
+  <view id="rootView">
+    <text id="label">Hello</text>
+    <view id="view"/>
+  </view>
+</window>
+
+<style>
   #rootView{
     height: '100%';
     background-color: blue;
@@ -81,9 +102,7 @@ const styleSheet = `
     flex: 3;
     background-color: white;
   }
-`;
-
-Renderer.render(<App />);
+</style>
 ```
 
 > To know more on how FlexBox layout works in depth you can visit: https://facebook.github.io/react-native/docs/0.60/flexbox.
@@ -97,60 +116,45 @@ Renderer.render(<App />);
 
 BoxView Layout is an implementation of QBoxLayout of NodeGui.
 
-```jsx
-import React, { useState } from "react";
-import { Renderer, Window, BoxView, Button } from "@nodegui/react-nodegui";
-import { useEventHandler } from "./hooks";
-import { QPushButtonSignals, Direction } from "@nodegui/nodegui";
+```svelte
+<script lang="ts">
+  import { onMount } from "svelte";
+  import { Direction } from "@nodegui/nodegui";
+  import type { QPushButtonSignals } from "@nodegui/nodegui";
 
-const App = () => {
-  const [additionalButtons, setAdditionalButtons] = useState<string[]>([]);
-  const [direction, setDirection] = useState<Direction>(Direction.LeftToRight);
+  let additionalButtons: string[] = [];
+  let direction: Direction = Direction.LeftToRight;
 
-  const addHandler = useEventHandler<QPushButtonSignals>(
-    {
-      clicked: () =>
-        setAdditionalButtons((buttons) => [
-          ...buttons,
-          `Button ${buttons.length}`,
-        ]),
-    },
-    []
-  );
+  function addHandler(): void {
+    additionalButtons = [...additionalButtons, `Button ${additionalButtons.length}`];
+  }
+  function removeHandler(): void {
+    additionalButtons = [...additionalButtons.slice(0, additionalButtons.length - 1)];
+  }
+  function toggleDirection(): void {
+    direction = ((direction + 1) % 4) as Direction;
+  }
 
-  const removeHandler = useEventHandler<QPushButtonSignals>(
-    {
-      clicked: () =>
-        setAdditionalButtons((buttons) => buttons.slice(0, buttons.length - 1)),
-    },
-    []
-  );
+  onMount(() => {
+    (window as any).win = win; // Prevent garbage collection.
+    win.nativeView.show();
+    return () => {
+      delete (window as any).win;
+    };
+  });
+</script>
 
-  const toggleDirection = useEventHandler<QPushButtonSignals>(
-    {
-      clicked: () =>
-        setDirection((prevDirection) => ((prevDirection + 1) % 4) as Direction),
-    },
-    []
-  );
-
-  return (
-    <Window>
-      <BoxView direction={direction}>
-        <Button text="Add" on={addHandler} />
-        <Button text="Remove" on={removeHandler} />
-        <Button text="Toggle direction" on={toggleDirection} />
-        {additionalButtons.map((button) => (
-          <Button key={button} text={button} />
-        ))}
-      </BoxView>
-    </Window>
-  );
-};
-
-Renderer.render(<App />);
-
-
+<svelte:options namespace="foreign" />
+<window bind:this={win}>
+  <boxView direction={direction}>
+    <button text="Add" on={addHandler} />
+    <button text="Remove" on={removeHandler} />
+    <button text="Toggle direction" on={toggleDirection} />
+    {#each additionalButtons as additionalButton (additionalButton)}
+      <button text={additionalButton}/>
+    {/each}
+  </boxView>
+</window>
 ```
 
 The above code produces
@@ -163,162 +167,128 @@ The above code produces
 
 GridView Layout is an implementation of QGridLayout of NodeGui.
 
+```svelte
+<script lang="ts">
+  import { onMount } from "svelte";
+  let win;
 
-```jsx
-import React, { useState } from "react";
-import { Renderer, GridView, GridRow, GridColumn, Text, Window, View, Button, useEventHandler } from "@nodegui/react-nodegui";
-import { QPushButtonSignals } from "@nodegui/nodegui";
+  let additionalRows: string[] = [];
+  let additionalColumns: string[] = [];
+  let rowStretch: boolean = false;
 
-const App = () => {
-  const [additionalRows, setAdditionalRows] = useState<string[]>([]);
-  const [rowStretch, setRowStretch] = useState(false);
+  function insertRowHandler(): void {
+    additionalRows = [...additionalRows, `Row ${additionalRows.length}`];
+  }
+  function removeRowHandler(): void {
+    additionalRows = [...additionalRows.slice(0, additionalRows.length - 1)];
+  }
+  function insertColumnHandler(): void {
+    additionalColumns = [...additionalColumns, `Column ${additionalColumns.length}`];
+  }
+  function removeColumnsHandler(): void {
+    additionalColumns = [...additionalColumns.slice(0, additionalColumns.length - 1)];
+  }
+  function toggleRowStretch(): void {
+    rowStretch = !rowStretch;
+  }
 
-  const [additionalColumns, setAdditionalColumns] = useState<string[]>([]);
+  onMount(() => {
+    (window as any).win = win; // Prevent garbage collection.
+    win.nativeView.show();
+    return () => {
+      delete (window as any).win;
+    };
+  });
+</script>
 
-  const insertRowHandler = useEventHandler<QPushButtonSignals>(
-    {
-      clicked: () =>
-        setAdditionalRows((rows) => [...rows, `Row ${rows.length}`]),
-    },
-    []
-  );
-
-  const removeRowHandler = useEventHandler<QPushButtonSignals>(
-    {
-      clicked: () =>
-        setAdditionalRows((rows) => [...rows.slice(0, rows.length - 1)]),
-    },
-    []
-  );
-
-  const insertColumnHandler = useEventHandler<QPushButtonSignals>(
-    {
-      clicked: () =>
-        setAdditionalColumns((columns) => [
-          ...columns,
-          `Column ${columns.length}`,
-        ]),
-    },
-    []
-  );
-
-  const removeColumnsHandler = useEventHandler<QPushButtonSignals>(
-    {
-      clicked: () =>
-        setAdditionalColumns((columns) => [
-          ...columns.slice(0, columns.length - 1),
-        ]),
-    },
-    []
-  );
-
-  const toggleRowStretch = useEventHandler<QPushButtonSignals>(
-    {
-      clicked: () => setRowStretch((value) => !value),
-    },
-    []
-  );
-
-  return (
-    <Window>
-      <GridView
-        style="flex: 1"
-        columnProps={{
-          0: {
-            minWidth: 200,
-          },
-          1: {
-            minWidth: 300,
-          },
-        }}
-        rowProps={{
-          0: {
-            stretch: rowStretch ? 2 : undefined,
-            minHeight: 400,
-          },
-          1: {
-            stretch: !rowStretch ? 2 : undefined,
-          },
-        }}
-      >
-        <GridRow>
-          <GridColumn width={2}>
-            <View style="background-color: red">
-              <Text>Hello</Text>
-              <Button text="Insert row" on={insertRowHandler} />
-              <Button text="Remove row" on={removeRowHandler} />
-              <Button text="Toggle row stretch" on={toggleRowStretch} />
-              <Button text="Insert column" on={insertColumnHandler} />
-              <Button text="Remove column" on={removeColumnsHandler} />
-            </View>
-          </GridColumn>
-          <GridColumn width={2}>
-            <View style="background-color: blue">
-              <Text>Second Column</Text>
-            </View>
-          </GridColumn>
-          <>
-            {additionalColumns.map((column) => (
-              <GridColumn key={column}>
-                <Text>{column}</Text>
-              </GridColumn>
-            ))}
-          </>
-        </GridRow>
-        <GridRow height={2}>
-          <GridColumn>
-            <View style="background-color: green">
-              <Text>Second row</Text>
-            </View>
-          </GridColumn>
-          <GridColumn>
-            <View style="background-color: purple">
-              <Text>Second Column</Text>
-            </View>
-          </GridColumn>
-          <GridColumn>
-            <View style="background-color: purple">
-              <Text>Third Column</Text>
-            </View>
-          </GridColumn>
-          <GridColumn>
-            <View style="background-color: purple">
-              <Text>Fourth Column</Text>
-            </View>
-          </GridColumn>
-          <>
-            {additionalColumns.map((column) => (
-              <GridColumn key={column}>
-                <Text>Second {column}</Text>
-              </GridColumn>
-            ))}
-          </>
-        </GridRow>
-        <GridRow>
-          <GridColumn>
-            <Text>Third row</Text>
-          </GridColumn>
-        </GridRow>
-        <>
-          {additionalRows.map((row) => (
-            <GridRow key={row}>
-              <GridColumn width={2}>
-                <Text>{row}</Text>
-              </GridColumn>
-              <GridColumn>
-                <Text>Second {row}</Text>
-              </GridColumn>
-            </GridRow>
-          ))}
-        </>
-      </GridView>
-    </Window>
-  );
-};
-
-Renderer.render(<App />);
-
-
+<svelte:options namespace="foreign" />
+<window bind:this={win}>
+  <gridView
+    style="flex: 1"
+    columnProps={{
+      0: {
+        minWidth: 200,
+      },
+      1: {
+        minWidth: 300,
+      },
+    }}
+    rowProps={{
+      0: {
+        stretch: rowStretch ? 2 : undefined,
+        minHeight: 400,
+      },
+      1: {
+        stretch: !rowStretch ? 2 : undefined,
+      },
+    }}
+  >
+    <gridRow>
+      <gridColumn width={2}>
+        <view style="background-color: red">
+          <text>Hello</text>
+          <button text="Insert row" on:clicked={insertRowHandler} />
+          <button text="Remove row" on:clicked={removeRowHandler} />
+          <button text="Toggle row stretch" on:clicked={toggleRowStretch} />
+          <button text="Insert column" on:clicked={insertColumnHandler} />
+          <button text="Remove column" on:clicked={removeColumnsHandler} />
+        </view>
+      </gridColumn>
+      <gridColumn width={2}>
+        <view style="background-color: blue">
+          <text>Second Column</text>
+        </view>
+      </gridColumn>
+      {#each additionalColumns as column (column)}
+        <gridColumn>
+          <text>{column}</text>
+        </gridColumn>
+      {/each}
+    </gridRow>
+    <gridRow height={2}>
+      <gridColumn>
+        <view style="background-color: green">
+          <text>Second row</text>
+        </view>
+      </gridColumn>
+      <gridColumn>
+        <view style="background-color: purple">
+          <text>Second Column</text>
+        </view>
+      </gridColumn>
+      <gridColumn>
+        <view style="background-color: purple">
+          <text>Third Column</text>
+        </view>
+      </gridColumn>
+      <gridColumn>
+        <view style="background-color: purple">
+          <text>Fourth Column</text>
+        </view>
+      </gridColumn>
+      {#each additionalColumns as column (column)}
+        <gridColumn>
+          <text>Second {column}</text>
+        </gridColumn>
+      {/each}
+    </gridRow>
+    <gridRow>
+      <gridColumn>
+        <text>Third row</text>
+      </gridColumn>
+    </gridRow>
+    {#each additionalRows as row (row)}
+      <gridColumn>
+        <gridColumn width={2}>
+          <text>{row}</text>
+        </gridColumn>
+        <gridColumn>
+          <text>Second {row}</text>
+        </gridColumn>
+      </gridColumn>
+    {/each}
+  </gridView>
+</window>
 ```
 
 The above code produces
@@ -326,7 +296,6 @@ The above code produces
 <img src="https://github.com/nodegui/react-nodegui/raw/gh-pages/img/grid-layout-1.png" alt="grid layout example 1" style={{maxWidth: 700, width:'100%'}}/>
 
 
-
 ## Conclusion
 
-The primary layout in React NodeGui is the Flexbox layout. Flexbox layout can be controlled via stylesheet just as in web. So both paint and layout properties are available at the same place.
+The primary layout in Svelte NodeGui is the Flexbox layout. Flexbox layout can be controlled via stylesheet just as in web. So both paint and layout properties are available at the same place.
