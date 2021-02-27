@@ -15,7 +15,7 @@ Svelte NodeGUI is powered by **Svelte** and **Qt5** 💚 which makes it CPU and 
 
 <img src="https://vuejs.org/images/logo.png" alt="" width="25" /> If you are looking for the **Vue**-based version, check out: **[Vue NodeGUI](https://github.com/nodegui/vue-nodegui)**.
 
-There is no dedicated documentation for Svelte NodeGUI yet, so please refer to the [React NodeGui](https://react.nodegui.org/) documentation website instead. Svelte NodeGUI implements exactly the same APIs as React NodeGUI – literally a copy-paste, as you'll see in [src/dom/react-nodegui](src/dom/react-nodegui) – so those docs are equally applicable.
+Visit: https://svelte.nodegui.org for docs.
 
 <img alt="logo" src="https://github.com/nodegui/nodegui/raw/master/extras/logo/nodegui.png" height="200" />
 
@@ -40,10 +40,10 @@ https://github.com/nodegui/examples
 
 ## Features
 
--   🧬 Cross platform. Should work on major Linux flavours, Windows and MacOS.
+-   🧬 Cross platform. Should work on major Linux flavours, Windows and macOS.
 -   📉 Low CPU and memory footprint. Current CPU stays at 0% on idle and memory usage is under 20mb for a hello world program.
 -   💅 Styling with CSS (includes actual cascading). Also has full support for Flexbox layout (thanks to Yoga).
--   ✅ Complete Nodejs api support (Currently runs on Node v12.x - and is easily upgradable). Hence has access to all nodejs compatible npm modules.
+-   ✅ Complete Node.js api support (Currently runs on Node v12.x - and is easily upgradable). Hence has access to all Node.js-compatible npm modules.
 -   🎪 Native widget event listener support. Supports all events available from Qt / NodeJs.
 -   💸 Can be used for Commercial applications.
 -   🕵️‍♂️ Good Devtools support.
@@ -55,7 +55,7 @@ https://github.com/nodegui/examples
 ## Getting Started
 
 -   For now, download a zip of this repo and copying the `demo` folder is the best way to scaffold a new project.
--   Read through the [React NodeGUI docs](https://react.nodegui.org/) (there are no Svelte NodeGui docs yet, but there should be little difference).
+-   Read through the [Svelte NodeGUI docs](https://svelte.nodegui.org/) (there are no Svelte NodeGUI docs yet, but there should be little difference).
 -   Checkout the examples: https://github.com/nodegui/examples .
 -   [Tutorial: Build a native Meme Search Desktop app with Javascript (NodeGUI) and Giphy API](https://www.sitepoint.com/build-native-desktop-gif-searcher-app-using-nodegui/)
 
