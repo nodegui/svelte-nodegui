@@ -19,9 +19,163 @@ declare namespace svelteNodeGUI.JSX {
 
     type SvelteNode = SvelteChild | SvelteFragment | boolean | null | undefined; 
 
+    /**
+     * Until I'm sure that Svelte and the language tools supports TypeScript template strings,
+     * this copy-paste of import("@nodegui/nodegui").WidgetEventTypes, adding on the "on" text,
+     * is the simplest way to fill in these typings.
+     * @link {"@nodegui/nodegui/dist/lib/core/EventWidget.d.ts"}
+     */
+    type WidgetEventHandlersMap<T = import("@nodegui/nodegui/dist/lib/core/Component").NativeRawPointer<'QEvent'>> = {
+        'onNone'?: T;
+        'onActionAdded'?: T;
+        'onActionChanged'?: T;
+        'onActionRemoved'?: T;
+        'onActivationChange'?: T;
+        'onApplicationActivate'?: T;
+        'onApplicationActivated'?: T;
+        'onApplicationDeactivate'?: T;
+        'onApplicationFontChange'?: T;
+        'onApplicationLayoutDirectionChange'?: T;
+        'onApplicationPaletteChange'?: T;
+        'onApplicationStateChange'?: T;
+        'onApplicationWindowIconChange'?: T;
+        'onChildAdded'?: T;
+        'onChildPolished'?: T;
+        'onChildRemoved'?: T;
+        'onClipboard'?: T;
+        'onClose'?: T;
+        'onCloseSoftwareInputPanel'?: T;
+        'onContentsRectChange'?: T;
+        'onContextMenu'?: T;
+        'onCursorChange'?: T;
+        'onDeferredDelete'?: T;
+        'onDragEnter'?: T;
+        'onDragLeave'?: T;
+        'onDragMove'?: T;
+        'onDrop'?: T;
+        'onDynamicPropertyChange'?: T;
+        'onEnabledChange'?: T;
+        'onEnter'?: T;
+        'onEnterWhatsThisMode'?: T;
+        'onExpose'?: T;
+        'onFileOpen'?: T;
+        'onFocusIn'?: T;
+        'onFocusOut'?: T;
+        'onFocusAboutToChange'?: T;
+        'onFontChange'?: T;
+        'onGesture'?: T;
+        'onGestureOverride'?: T;
+        'onGrabKeyboard'?: T;
+        'onGrabMouse'?: T;
+        'onGraphicsSceneContextMenu'?: T;
+        'onGraphicsSceneDragEnter'?: T;
+        'onGraphicsSceneDragLeave'?: T;
+        'onGraphicsSceneDragMove'?: T;
+        'onGraphicsSceneDrop'?: T;
+        'onGraphicsSceneHelp'?: T;
+        'onGraphicsSceneHoverEnter'?: T;
+        'onGraphicsSceneHoverLeave'?: T;
+        'onGraphicsSceneHoverMove'?: T;
+        'onGraphicsSceneMouseDoubleClick'?: T;
+        'onGraphicsSceneMouseMove'?: T;
+        'onGraphicsSceneMousePress'?: T;
+        'onGraphicsSceneMouseRelease'?: T;
+        'onGraphicsSceneMove'?: T;
+        'onGraphicsSceneResize'?: T;
+        'onGraphicsSceneWheel'?: T;
+        'onHide'?: T;
+        'onHideToParent'?: T;
+        'onHoverEnter'?: T;
+        'onHoverLeave'?: T;
+        'onHoverMove'?: T;
+        'onIconDrag'?: T;
+        'onIconTextChange'?: T;
+        'onInputMethod'?: T;
+        'onInputMethodQuery'?: T;
+        'onKeyboardLayoutChange'?: T;
+        'onKeyPress'?: T;
+        'onKeyRelease'?: T;
+        'onLanguageChange'?: T;
+        'onLayoutDirectionChange'?: T;
+        'onLayoutRequest'?: T;
+        'onLeave'?: T;
+        'onLeaveWhatsThisMode'?: T;
+        'onLocaleChange'?: T;
+        'onNonClientAreaMouseButtonDblClick'?: T;
+        'onNonClientAreaMouseButtonPress'?: T;
+        'onNonClientAreaMouseButtonRelease'?: T;
+        'onNonClientAreaMouseMove'?: T;
+        'onMacSizeChange'?: T;
+        'onMetaCall'?: T;
+        'onModifiedChange'?: T;
+        'onMouseButtonDblClick'?: T;
+        'onMouseButtonPress'?: T;
+        'onMouseButtonRelease'?: T;
+        'onMouseMove'?: T;
+        'onMouseTrackingChange'?: T;
+        'onMove'?: T;
+        'onNativeGesture'?: T;
+        'onOrientationChange'?: T;
+        'onPaint'?: T;
+        'onPaletteChange'?: T;
+        'onParentAboutToChange'?: T;
+        'onParentChange'?: T;
+        'onPlatformPanel'?: T;
+        'onPlatformSurface'?: T;
+        'onPolish'?: T;
+        'onPolishRequest'?: T;
+        'onQueryWhatsThis'?: T;
+        'onReadOnlyChange'?: T;
+        'onRequestSoftwareInputPanel'?: T;
+        'onResize'?: T;
+        'onScrollPrepare'?: T;
+        'onScroll'?: T;
+        'onShortcut'?: T;
+        'onShortcutOverride'?: T;
+        'onShow'?: T;
+        'onShowToParent'?: T;
+        'onSockAct'?: T;
+        'onStateMachineSignal'?: T;
+        'onStateMachineWrapped'?: T;
+        'onStatusTip'?: T;
+        'onStyleChange'?: T;
+        'onTabletMove'?: T;
+        'onTabletPress'?: T;
+        'onTabletRelease'?: T;
+        'onTabletEnterProximity'?: T;
+        'onTabletLeaveProximity'?: T;
+        'onTabletTrackingChange'?: T;
+        'onThreadChange'?: T;
+        'onTimer'?: T;
+        'onToolBarChange'?: T;
+        'onToolTip'?: T;
+        'onToolTipChange'?: T;
+        'onTouchBegin'?: T;
+        'onTouchCancel'?: T;
+        'onTouchEnd'?: T;
+        'onTouchUpdate'?: T;
+        'onUngrabKeyboard'?: T;
+        'onUngrabMouse'?: T;
+        'onUpdateLater'?: T;
+        'onUpdateRequest'?: T;
+        'onWhatsThis'?: T;
+        'onWhatsThisClicked'?: T;
+        'onWheel'?: T;
+        'onWinEventAct'?: T;
+        'onWindowActivate'?: T;
+        'onWindowBlocked'?: T;
+        'onWindowDeactivate'?: T;
+        'onWindowIconChange'?: T;
+        'onWindowStateChange'?: T;
+        'onWindowTitleChange'?: T;
+        'onWindowUnblocked'?: T;
+        'onWinIdChange'?: T;
+        'onZOrderChange'?: T;
+    };
+
     interface SvelteNodeGUIAttributes<
         T extends import("@nodegui/nodegui").Component = import("@nodegui/nodegui").Component
-    > extends SvelteElement {
+    > extends SvelteElement, WidgetEventHandlersMap {
         nodeRole?: string;
         /* Unlike in React, Doesn't seem to be checked..? */
         // children?: SvelteNode;
