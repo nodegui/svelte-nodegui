@@ -245,7 +245,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
 
     /* istanbul ignore next */
     setStyle(property: string, value: string | number | null, priority: "important"|""): void {
-        console.log(`[NSVElement] this.setStyle("${property}", "${value}")`);
+        // console.log(`[NSVElement] this.setStyle("${property}", "${value}")`);
         // log.debug(() => `setStyle ${this} ${property} ${value}`)
 
         if(!(value = value.toString().trim()).length){
@@ -274,7 +274,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
             updatedRawInlineStyle += `${i > 0 ? "\n" : ""}${property}:${value};`;
             i++;
         }
-        console.log(`[NSVElement.setStyle] this.nativeView.setInlineStyle("${updatedRawInlineStyle}");`);
+        // console.log(`[NSVElement.setStyle] this.nativeView.setInlineStyle("${updatedRawInlineStyle}");`);
         this.nativeView.setInlineStyle(updatedRawInlineStyle);
 
         // const rawInlineStyle: string = this.nativeView._rawInlineStyle;
@@ -296,12 +296,12 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
      */
     public readonly style = {
         setProperty: (propertyName: string, value: string, priority: "important"|"") => {
-            console.log(`[NSVElement] style.setProperty("${propertyName}", "${value}${priority ? " important" : ""}")`);
+            // console.log(`[NSVElement] style.setProperty("${propertyName}", "${value}${priority ? " important" : ""}")`);
             this.setStyle(propertyName, value, priority);
         },
 
         removeProperty: (propertyName: string) => {
-            console.log(`[NSVElement] style.removeProperty("${propertyName}")`);
+            // console.log(`[NSVElement] style.removeProperty("${propertyName}")`);
             this.setStyle(propertyName, null, "");
         },
 
@@ -330,14 +330,14 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         },
 
         get cssText(): string {
-            console.log(`[NSVElement.getCssText] (not yet implemented)`);
+            console.warn(`[NSVElement.getCssText] (not yet implemented)`);
             return "";
             // log.debug(() => "got css text");
             // return getStyleAttribute();
         },
 
         set cssText(value: string) {
-            console.log(`[NSVElement.setCssText] (not yet implemented)`);
+            console.warn(`[NSVElement.setCssText] (not yet implemented)`);
             // log.debug(() => "set css text");
             // setStyleAttribute(value);
         }
@@ -354,7 +354,6 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
      * I'm not sure we actually need this setter; keeping its implementation and renaming it to textContent is probably in order.
      */
     set text(t: string | undefined) {
-        console.log(`!! TEXT BEING SET: ${t}`);
         if(componentHasPropertyAccessor(this.nativeView)){
             this.nativeView.setProperty("text", t);
             return;
@@ -466,7 +465,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         "class",
         "className"].forEach(n => {
             if(name.startsWith(n)){
-                console.log(`[NSVElement.setAttribute("${name}", "${value}")]`);
+                // console.log(`[NSVElement.setAttribute("${name}", "${value}")]`);
             }
         })
 
@@ -484,7 +483,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
              */
             this.stylesMap.clear();
             if(componentIsStyleable(this._nativeView)){
-                console.log(`[NSVElement.setAttribute("${name}", value)] – Setting _rawInlineStyle!`);
+                // console.log(`[NSVElement.setAttribute("${name}", value)] – Setting _rawInlineStyle!`);
                 this._nativeView.setInlineStyle(value as string);
             }
               
@@ -502,7 +501,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         }
 
         if(name === "id"){
-            console.log(`[NSVElement.setAttribute("${name}", "${value}")]`);
+            // console.log(`[NSVElement.setAttribute("${name}", "${value}")]`);
             /**
              * setProps would also do the trick, but we want our wrapping element to set the very
              * same id on itself, too.
@@ -512,7 +511,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         }
 
         if(name === "class"){
-            console.log(`[NSVElement.setAttribute("${name}", "${value}")] on <${this.tagName}>`);
+            // console.log(`[NSVElement.setAttribute("${name}", "${value}")] on <${this.tagName}>`);
             /**
              * The "class" property isn't handled by setProps for some reason.
              * It's probably special-cased by the React Host Config.
@@ -581,7 +580,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
 
         console.warn(
             `[NSVElement.removeAttribute] React NodeGUI hasn't implemented removeAttribute, so it's unclear how to implement ` +
-            `removeAttribute(). You may want to try passing null or undefined instead of removing the attribute.`
+            `removeAttribute() in Svelte NodeGUI. You may want to try passing null or undefined instead of removing the attribute.`
         );
     }
 
@@ -681,7 +680,7 @@ export class NSVComment extends NSVNode {
 export class NSVText extends NSVNode {
     constructor(private _text: string){
         super(NSVNodeTypes.TEXT);
-        console.log(`[NSVText] constructor "${this._text}"`);
+        // console.log(`[NSVText] constructor "${this._text}"`);
     }
 
     get text(): string | undefined {
@@ -689,7 +688,7 @@ export class NSVText extends NSVNode {
     }
 
     set text(t: string | undefined) {
-        console.log(`NSVText text setter was called!`);
+        // console.log(`NSVText text setter was called!`);
         this._text = t;
     }
 
@@ -733,10 +732,10 @@ export class NSVRoot<T extends NativeView = NativeView> extends NSVNode {
 
 function addChild(child: NSVElement, parent: NSVElement, anchor?: INSVNode | null, atIndex?: number) {
     if (__TEST__) return
-    console.log(
-        `...addChild(    ${parent.tagName}(${parent.nodeId
-        }) > ${child.tagName}(${child.nodeId}), ${atIndex}    )`
-    )
+    // console.log(
+    //     `...addChild(    ${parent.tagName}(${parent.nodeId
+    //     }) > ${child.tagName}(${child.nodeId}), ${atIndex}    )`
+    // )
     
     if (child.meta.viewFlags & NSVViewFlags.SKIP_ADD_TO_DOM) {
         // debug('SKIP_ADD_TO_DOM')
