@@ -1,8 +1,6 @@
 import { NodeWidget, Component } from "@nodegui/nodegui";
-// import { Fiber } from "react-reconciler";
+import type { Fiber } from "../utils/decoupleFromReact";
 import { AppContainer } from "../reconciler";
-
-type Fiber = any;
 
 type UpdatePayload = any;
 
@@ -73,7 +71,8 @@ export abstract class ComponentConfig {
   ): void;
 }
 
-type ReactNodeGuiTag<P> = string | React.ComponentType<P>;
+// type ReactNodeGuiTag<P> = string | React.ComponentType<P>;
+type ReactNodeGuiTag<P> = string;
 
 const components = new Map<string, ComponentConfig>();
 

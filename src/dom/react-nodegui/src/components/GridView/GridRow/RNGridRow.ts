@@ -1,4 +1,4 @@
-import { FunctionComponentElement } from "react";
+import type { FunctionComponentElement } from "../../../utils/decoupleFromReact";
 import { GridColumnProps, RNGridColumn } from "../GridColumn/RNGridColumn";
 import { Component } from "@nodegui/nodegui";
 import { RNComponent } from "../../config";

@@ -1,5 +1,5 @@
 import { registerComponent, ComponentConfig } from "../config";
-import { Fiber } from "react-reconciler";
+import type { Fiber } from "../utils/decoupleFromReact";
 import { RNComboBox, ComboBoxProps } from "./RNComboBox";
 import { AppContainer } from "../../reconciler";
 

@@ -1,4 +1,4 @@
-import { Fiber } from "react-reconciler";
+import type { Fiber } from "../utils/decoupleFromReact";
 import { GridColumnProps, RNGridColumn } from "./RNGridColumn";
 import { AppContainer } from "../../../reconciler";
 import { registerComponent, ComponentConfig } from "../../config";

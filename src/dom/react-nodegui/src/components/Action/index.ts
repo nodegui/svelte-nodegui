@@ -1,4 +1,4 @@
-import { Fiber } from "react-reconciler";
+import type { Fiber } from "../utils/decoupleFromReact";
 import { registerComponent, ComponentConfig } from "../config";
 import { RNAction, ActionProps } from "./RNAction";
 import { AppContainer } from "../../reconciler";

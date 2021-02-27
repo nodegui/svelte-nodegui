@@ -1,4 +1,4 @@
-import { FunctionComponentElement } from "react";
+import type { FunctionComponentElement } from "../../utils/decoupleFromReact";
 import { QGridLayoutSignals, QGridLayout, QWidget } from "@nodegui/nodegui";
 import { ViewProps, setViewProps } from "../View/RNView";
 import { RNComponent } from "../config";

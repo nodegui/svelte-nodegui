@@ -40,7 +40,6 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "@nodegui/react-nodegui": "^0.9.0",
     "phin": "^3.5.1"
   }
 }

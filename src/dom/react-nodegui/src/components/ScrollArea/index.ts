@@ -1,5 +1,5 @@
 import { registerComponent, ComponentConfig } from "../config";
-import { Fiber } from "react-reconciler";
+import type { Fiber } from "../utils/decoupleFromReact";
 import { RNScrollArea, ScrollAreaProps } from "./RNScrollArea";
 import { AppContainer } from "../../reconciler";
 
