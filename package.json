@@ -25,8 +25,7 @@
   "license": "MIT",
   "peerDependencies": {
     "@nodegui/nodegui": "^0.25.0",
-    "@nativescript/core": "~7.0.0",
-    "svelte": "~3.24.1"
+    "svelte": "^3.24.1"
   },
   "devDependencies": {
     "@nodegui/nodegui": "^0.25.0",
