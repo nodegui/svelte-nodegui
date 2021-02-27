@@ -8,23 +8,28 @@ The View component can be used to encapsulate other components and provide struc
 It functions similar to a div in the web world. It is based on
 [NodeGui's QWidget](https://docs.nodegui.org/docs/api/QWidget).
 ## Example
-```javascript
-import React from "react";
-import { Renderer, Button, Window, View } from "./index";
-const App = () => {
- return (
-   <Window>
-     <View>
-       <Button style={buttonStyle} text={"Hello"} />
-       <Button style={buttonStyle} text={"World"} />
-     </View>
-   </Window>
- );
-};
-const buttonStyle = `
- color: white;
-`;
-Renderer.render(<App />);
+
+```svelte
+<script lang="ts">
+  import { onMount } from "svelte";
+  const buttonStyle = "color: white;";
+
+  onMount(() => {
+    (window as any).win = win; // Prevent garbage collection.
+    win.nativeView.show();
+    return () => {
+      delete (window as any).win;
+    };
+  });
+</script>
+
+<svelte:options namespace="foreign" />
+<window bind:this={win}>
+  <view>
+    <button style="{buttonStyle}">Hello</button>
+    <button style="{buttonStyle}">World</button>
+  </view>
+</window>
 ```
 
 ## Type parameters

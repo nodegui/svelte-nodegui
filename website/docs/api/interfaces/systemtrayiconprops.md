@@ -7,31 +7,38 @@ sidebar_label: "SystemTrayIconProps"
 The SystemTrayIcon component provides the ability to add and manipulate a native system tray icon.
 [NodeGui's QSystemTrayIcon](https://docs.nodegui.org/docs/api/generated/classes/qsystemtrayicon).
 ## Example
-```javascript
-import React from "react";
-import { QIcon, QAction } from "@nodegui/nodegui";
-import { Menu, Renderer, SystemTrayIcon, Window } from "@nodegui/react-nodegui";
-import path from "path";
 
-const icon = new QIcon(path.join(__dirname, "../extras/assets/nodegui.png"));
-const action = new QAction();
-action.setText("Hello");
-action.addEventListener("triggered", () => {
-  console.log("hello");
-});
+```svelte
+<script lang="ts">
+  import { onMount } from "svelte";
+  import { QIcon, QAction } from "@nodegui/nodegui";
+  import path from "path";
 
-const App = () => {
-  return (
-    <Window>
-      <SystemTrayIcon icon={icon} tooltip="Hello World" visible>
-        <Menu actions={[action]} />
-      </SystemTrayIcon>
-    </Window>
-  );
-};
+  onMount(() => {
+    (window as any).win = win; // Prevent garbage collection.
+    win.nativeView.show();
 
-Renderer.render(<App />);
+    const icon = new QIcon(path.join(__dirname, "../extras/assets/nodegui.png"));
+    const action = new QAction();
+    action.setText("Hello");
+    function onTriggered(){
+      console.log("hello");
+    }
+    action.addEventListener("triggered", onTriggered);
 
+    return () => {
+      action.removeEventListener("triggered", onTriggered);
+      delete (window as any).win;
+    };
+  });
+</script>
+
+<svelte:options namespace="foreign" />
+<window bind:this={win}>
+  <systemTrayIcon {icon} tooltip="Hello World" visible>
+    <menu actions={[action]}/>
+  </systemTrayIcon>
+</window>
 ```
 
 ## Hierarchy

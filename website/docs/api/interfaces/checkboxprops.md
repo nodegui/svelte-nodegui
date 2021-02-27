@@ -7,21 +7,24 @@ sidebar_label: "CheckBoxProps"
 The CheckBox component provides ability to add and manipulate native button widgets. It is based on
 [NodeGui's QCheckBox](https://docs.nodegui.org/docs/api/QCheckBox).
 ## Example
-```javascript
-import React from "react";
-import { Renderer, CheckBox, Window } from "@nodegui/react-nodegui";
-const App = () => {
-  return (
-    <Window>
-      <CheckBox style={checkboxStyle} text={"Hello World"} checked={true} />
-    </Window>
-  );
-};
-const checkboxStyle = `
-  color: white;
-`;
-Renderer.render(<App />);
 
+```svelte
+<script lang="ts">
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    (window as any).win = win; // Prevent garbage collection.
+    win.nativeView.show();
+    return () => {
+      delete (window as any).win;
+    };
+  });
+</script>
+
+<svelte:options namespace="foreign" />
+<window bind:this={win}>
+  <checkBox style="color: white;" checked={true}>Hello World</checkBox>
+</window>
 ```
 
 ## Hierarchy

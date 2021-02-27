@@ -7,21 +7,24 @@ sidebar_label: "AbstractButtonProps"
 The Button component provides ability to add and manipulate native button widgets. It is based on
 [NodeGui's QPushButton](https://docs.nodegui.org/docs/api/QPushButton).
 ## Example
-```javascript
-import React from "react";
-import { Renderer, Button, Window } from "@nodegui/react-nodegui";
-const App = () => {
-  return (
-    <Window>
-      <Button style={buttonStyle} text={"Hello World"} />
-    </Window>
-  );
-};
-const buttonStyle = `
-  color: white;
-`;
-Renderer.render(<App />);
 
+```svelte
+<script lang="ts">
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    (window as any).win = win; // Prevent garbage collection.
+    win.nativeView.show();
+    return () => {
+      delete (window as any).win;
+    };
+  });
+</script>
+
+<svelte:options namespace="foreign" />
+<window bind:this={win}>
+  <button style="color: white;">Hello World</button>
+</window>
 ```
 
 ## Type parameters
