@@ -1,5 +1,5 @@
 module.exports = {
-  title: "Svelte NodeGui",
+  title: "Svelte NodeGUI",
   tagline: "Build performant, native, cross-platform desktop apps with Svelte",
   url: "https://svelte.nodegui.org",
   baseUrl: "/",

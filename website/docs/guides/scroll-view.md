@@ -23,7 +23,6 @@ ScrollArea allows you to display a large content (image, list or even plain text
 <svelte:options namespace="foreign" />
 <window bind:this={win}>
   <scrollArea>
-    <!-- Note: As in HTML, additional styling may be needed to handle line breaks as expected. -->
     <text>
       Contrary to popular belief, 
       Lorem Ipsum is not simply random text. 

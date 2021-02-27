@@ -15,7 +15,7 @@ export const CreateNativeApps = () => {
     return (
       <div>
         <h3>
-          Create native apps for Windows, MacOS and Linux using Svelte and CSS
+          Create native apps for Windows, macOS and Linux using Svelte and CSS
         </h3>
 
         <p>
