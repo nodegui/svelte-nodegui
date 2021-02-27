@@ -9,7 +9,7 @@ Svelte NodeGui uses a layout system to automatically arrange child components wi
 
 A component's height and width determine its size on the screen. The simplest way to set the dimensions of a component is by adding a fixed width and height to style. Setting dimensions this way is common for components that should always render at exactly the same size, regardless of screen dimensions.
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
 
@@ -51,7 +51,7 @@ Lets say you want to build a UI that has a parent view which has two child compo
 
 The code for that would look something like this:
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
 
@@ -100,7 +100,7 @@ The code for that would look something like this:
 
 BoxView Layout is an implementation of QBoxLayout of NodeGui.
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
   import { Direction } from "@nodegui/nodegui";
@@ -151,7 +151,7 @@ The above code produces
 
 GridView Layout is an implementation of QGridLayout of NodeGui.
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
   let win;

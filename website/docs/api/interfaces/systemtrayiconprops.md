@@ -8,7 +8,7 @@ The SystemTrayIcon component provides the ability to add and manipulate a native
 [NodeGui's QSystemTrayIcon](https://docs.nodegui.org/docs/api/generated/classes/qsystemtrayicon).
 ## Example
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
   import { QIcon, QAction } from "@nodegui/nodegui";

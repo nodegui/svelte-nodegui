@@ -8,7 +8,7 @@ The CheckBox component provides ability to add and manipulate native button widg
 [NodeGui's QCheckBox](https://docs.nodegui.org/docs/api/QCheckBox).
 ## Example
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
 

@@ -17,7 +17,7 @@ The following example demonstrates how to add a clicked event listener to a butt
 
 <img src="https://github.com/nodegui/react-nodegui/releases/download/assets/events-react.gif" alt="event example" style={{width: '100%', maxWidth: 400}}/>
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
   let win;
@@ -182,7 +182,7 @@ const App = () => {
 Renderer.render(<App />);
 ```
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
   import { QLabelSignals, QMouseEvent, WidgetEventTypes } from "@nodegui/nodegui";

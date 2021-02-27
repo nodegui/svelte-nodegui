@@ -12,7 +12,7 @@ What this means is that you can pass all the props you pass to a `<text>` to `<i
 
 A very minimal example would look like this:
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
   import { QLabelSignals, QMouseEvent, WidgetEventTypes } from "@nodegui/nodegui";

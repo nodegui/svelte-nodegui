@@ -9,7 +9,7 @@ It functions similar to a div in the web world. It is based on
 [NodeGui's QWidget](https://docs.nodegui.org/docs/api/QWidget).
 ## Example
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
   const buttonStyle = "color: white;";

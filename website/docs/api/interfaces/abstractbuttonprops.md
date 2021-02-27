@@ -8,7 +8,7 @@ The Button component provides ability to add and manipulate native button widget
 [NodeGui's QPushButton](https://docs.nodegui.org/docs/api/QPushButton).
 ## Example
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
 

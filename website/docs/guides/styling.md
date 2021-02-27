@@ -7,7 +7,7 @@ With Svelte NodeGui, you can style a component to your needs. If you are familia
 
 Here's an example:
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
 
@@ -38,7 +38,7 @@ You would write your style properties in a string and pass it to the Svelte Node
 
 Lets take a look at an example:
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
 
@@ -88,7 +88,7 @@ Global stylesheet really becomes powerful when you use things like pseudo-select
 
 Lets look at this example again:
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
 

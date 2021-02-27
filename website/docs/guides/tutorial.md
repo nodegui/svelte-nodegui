@@ -25,7 +25,7 @@ require("@nodegui/svelte-nodegui");
 
 The `@nodegui/svelte-nodegui` module exports widgets and features in namespaces. As an example, a window can be created using the `Window` component. A simple `main.js` file might open a window:
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
 

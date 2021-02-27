@@ -7,7 +7,7 @@ ScrollArea allows you to display a large content (image, list or even plain text
 
 ## Example
 
-```svelte
+```html
 <script lang="ts">
   import { onMount } from "svelte";
 
