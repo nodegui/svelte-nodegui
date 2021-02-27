@@ -1,6 +1,6 @@
 module.exports = {
   title: "Svelte NodeGui",
-  tagline: "Build performant, native, cross platform desktop apps with React",
+  tagline: "Build performant, native, cross-platform desktop apps with Svelte",
   url: "https://svelte.nodegui.org",
   baseUrl: "/",
   favicon: "img/favicon.ico",
@@ -29,6 +29,17 @@ module.exports = {
           position: "right",
         },
       ],
+      /**
+       * Prism doesn't yet support Svelte, so Docusaurus can't highlight it.
+       * @see https://github.com/PrismJS/prism/issues/2090
+       * There is a community-made support layer, but I don't see how I'd integrate it with Docusaurus.
+       * The may technically be a convoluted way by importing "prism-svelte" in .docusaurus/client-modules.js,
+       * but life is too short.
+       * @see https://github.com/pngwn/prism-svelte
+       */
+      // prism: {
+      //   additionalLanguages: ['svelte'],
+      // },
     },
     footer: {
       style: "dark",
@@ -68,10 +79,10 @@ module.exports = {
               label: "NodeGui",
               to: "https://nodegui.org",
             },
-            {
-              label: "FAQ",
-              to: "https://nodegui.org/faq",
-            },
+            // {
+            //   label: "FAQ",
+            //   to: "https://nodegui.org/faq",
+            // },
           ],
         },
       ],

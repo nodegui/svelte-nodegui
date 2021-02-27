@@ -26,22 +26,6 @@ A component's height and width determine its size on the screen. The simplest wa
 <window bind:this={win}>
   <view style="width: 50px; height: 30px; background-color: yellow;"/>
 </window>
-
-<style>
-  #rootView{
-    height: '100%';
-    background-color: blue;
-  }
-  #label {
-    flex: 1;
-    color: white;
-    background-color: green;
-  }
-  #view {
-    flex: 3;
-    background-color: white;
-  }
-</style>
 ```
 
 
