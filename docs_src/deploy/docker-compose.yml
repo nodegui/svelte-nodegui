@@ -1,6 +1,0 @@
-version: '3'
-
-services:
-  webapp:
-    image: halfnelson/sveltenative:latest
- 
