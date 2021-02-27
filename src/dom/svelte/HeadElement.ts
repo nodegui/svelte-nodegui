@@ -35,7 +35,7 @@ export default class HeadElement extends NSVElement<RNObject> {
 
     updateStyles(): void {
         const ss: string = this.getStyleSheet();
-        console.log(`[HeadElement] updateStyles got stylesheet: \`${ss}\``);
+        // console.log(`[HeadElement] updateStyles got stylesheet: \`${ss}\``);
         this.ownerDocument.setStyleSheets(ss);
     }
 }

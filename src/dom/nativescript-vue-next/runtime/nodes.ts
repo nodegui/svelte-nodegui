@@ -638,7 +638,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
 
     // abstracted from appendChild, and insertBefore to avoid code duplication
     private addChild(el: INSVNode, anchor?: INSVNode | null, atIndex?: number): void {
-        console.log(`[addChild] ${this._tagName} > ${(el as any)._tagName}`);
+        // console.log(`[addChild] ${this._tagName} > ${(el as any)._tagName}`);
         if (el.nodeType === NSVNodeTypes.ELEMENT) {
             addChild(el as NSVElement, this, anchor, atIndex)
         } else if (el.nodeType === NSVNodeTypes.TEXT) {

@@ -75,7 +75,7 @@ import {
       // throwUnsupported(this);
     }
     appendChild(child: Component): void {
-      console.log(`[RNObject] appendChild(${child})`);
+      // console.log(`[RNObject] appendChild(${child})`);
       /* Just no-op. Use-cases include e.g. document > head */
       // throwUnsupported(this);
     }
