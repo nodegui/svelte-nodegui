@@ -75,14 +75,14 @@ export function registerSvelteElements(): void {
                         //style rules are one per line as long as each selector in the rule has the style hash we are all scoped styles and can pass true to addCss
                         const all_scoped: boolean = css.split("\n").every(r => r.split(",").every(i => i.indexOf(style_hash) >= 0));
 
-                        console.log(`[HeadElement] ${child} #${id}; style hash: ${style_hash}; all_scoped: ${all_scoped}; had text: ${css}`);
+                        // console.log(`[HeadElement] ${child} #${id}; style hash: ${style_hash}; all_scoped: ${all_scoped}; had text: ${css}`);
 
                         parent.addStyleElement(child);
                     }
                     return "defer";
                 },
                 remove(child, parent: HeadElement) {
-                    console.log(`[HeadElement] remove(${child}) removing child...`);
+                    // console.log(`[HeadElement] remove(${child}) removing child...`);
 
                     if(child instanceof StyleElement){
                         parent.removeStyleElement(child);
