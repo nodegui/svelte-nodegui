@@ -34,4 +34,28 @@ export function svelteNodeGUI(rootElement: typeof SvelteComponent, data: any): P
 (global as any).window = { env: "Svelte NodeGUI" }
 
 
-export { initializeDom, DomTraceCategory } from "./dom"
+export { initializeDom, DomTraceCategory, NSVElement } from "./dom";
+export {
+    ImageProps, RNImage,
+    AnimatedImageProps, RNAnimatedImage,
+    ViewProps, RNView,
+    CheckBoxProps, RNCheckBox,
+    TextProps, RNText,
+    DialProps, RNDial,
+    LineEditProps, RNLineEdit,
+    WindowProps, RNWindow,
+    ProgressBarProps, RNProgressBar,
+    ComboBoxProps, RNComboBox,
+    ButtonProps, RNButton,
+    SpinBoxProps, RNSpinBox,
+    RadioButtonProps, RNRadioButton,
+    TabProps, RNTab,
+    MenuProps, RNMenu,
+    MenuBarProps, RNMenuBar,
+    PlainTextEditProps, RNPlainTextEdit,
+    SliderProps, RNSlider,
+    SystemTrayIconProps, RNSystemTrayIcon,
+    ActionProps, RNAction,
+    BoxViewProps, RNBoxView,
+    GridViewProps, RNGridView,
+} from "./dom/react-nodegui/src";
