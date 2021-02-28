@@ -1,9 +1,10 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import type { NSVElement, RNWindow } from "@nodegui/svelte-nodegui";
     let win;
     onMount(() => {
         (window as any).win = win; // Prevent garbage collection.
-        win.nativeView.show();
+        (win as NSVElement<RNWindow>).nativeView.show();
         return () => {
             delete (window as any).win;
         };
