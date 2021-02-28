@@ -199,6 +199,18 @@ People maintaining this project.
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://twitter.com/LinguaBrowse"><img src="https://avatars.githubusercontent.com/u/14055146?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jamie Birch</b></sub></a><br /><a href="https://github.com/nodegui/svelte-nodegui/commits?author=shirakaba" title="Code">💻</a></td>
+    <td align="center"><a href="https://mrsauravsahu.github.io"><img src="https://avatars.githubusercontent.com/u/9134050?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Saurav Sahu</b></sub></a><br /><a href="https://github.com/nodegui/svelte-nodegui/commits?author=mrsauravsahu" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
