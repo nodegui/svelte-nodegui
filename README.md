@@ -9,7 +9,7 @@
 
 Build **performant**, **native** and **cross-platform** desktop applications with **Node.js** and **Svelte**.🚀
 
-Svelte NodeGUI is powered by **Svelte** and **Qt5** 💚 which makes it CPU and memory efficient as compared to other chromium based solutions like electron. Svelte NodeGUI is essentially a Svelte renderer for [NodeGUI](https://github.com/nodegui/nodegui).
+Svelte NodeGUI is powered by **Svelte** and **Qt5** 💚 which makes it CPU- and memory-efficient when compared to other Chromium-based solutions like Electron. Svelte NodeGUI is essentially a [Svelte](https://svelte.dev) renderer for [NodeGUI](https://github.com/nodegui/nodegui).
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1024px-React-icon.svg.png" alt="" width="25"> If you are looking for the **React**-based version, check out: **[React NodeGUI](https://github.com/nodegui/react-nodegui)**.
 
@@ -41,7 +41,7 @@ https://github.com/nodegui/examples
 ## Features
 
 -   🧬 Cross platform. Should work on major Linux flavours, Windows and macOS.
--   📉 Low CPU and memory footprint. Current CPU stays at 0% on idle and memory usage is under 20mb for a hello world program.
+-   📉 Low CPU and memory footprint. Current CPU stays at 0% on idle and memory usage is under 20 MB for a Hello World program.
 -   💅 Styling with CSS (includes actual cascading). Also has full support for Flexbox layout (thanks to Yoga).
 -   ✅ Complete Node.js api support (Currently runs on Node v12.x - and is easily upgradable). Hence has access to all Node.js-compatible npm modules.
 -   🎪 Native widget event listener support. Supports all events available from Qt / NodeJs.
@@ -50,91 +50,14 @@ https://github.com/nodegui/examples
 -   📚 Good documentation and website.
 -   🧙‍♂️ Good documentation for contributors.
 -   🦹🏻‍♀️ Good support for dark mode (Thanks to Qt).
--   🏅First class Typescript support. (Works on regular JS projects too 😉).
+-   🏅 First class TypeScript support. (Works on regular JS projects too 😉).
 
 ## Getting Started
 
--   For now, download a zip of this repo and copying the `demo` folder is the best way to scaffold a new project.
--   Read through the [Svelte NodeGUI docs](https://svelte.nodegui.org/) (there are no Svelte NodeGUI docs yet, but there should be little difference).
--   Checkout the examples: https://github.com/nodegui/examples .
+-   Check out [svelte-nodegui-starter](https://github.com/nodegui/svelte-nodegui-starter) to get up and running with your own Svelte NodeGUI app!
+-   Read through the [Svelte NodeGUI docs](https://svelte.nodegui.org/)
+-   Check out the examples: https://github.com/nodegui/examples.
 -   [Tutorial: Build a native Meme Search Desktop app with Javascript (NodeGUI) and Giphy API](https://www.sitepoint.com/build-native-desktop-gif-searcher-app-using-nodegui/)
-
-## Installation
-
-NodeGui requires CMake and Compilation Tools as it is a wrapper for a native C++ widget toolkit QT.
-Detailed instructions here: https://www.sitepoint.com/build-native-desktop-gif-searcher-app-using-nodegui/
-
-TL;DR:
-
-### MacOS
-
-```sh
-brew install cmake
-brew install make
-```
-
-### Windows
-
-https://cmake.org/download/
-
-### Linux (Debian/Ubuntu)
-
-```sh
-sudo apt-get install pkg-config build-essential
-sudo apt-get install cmake make
-sudo apt-get install mesa-common-dev libglu1-mesa-dev
-```
-
-### Linux (Fedora/RHEL/CentOS)
-
-```sh
-sudo dnf groupinstall "Development Tools" "Development Libraries"
-sudo dnf groupinstall "C Development Tools and Libraries"
-sudo dnf install mesa-libGL mesa-libGL-devel
-```
-
-Then install NodeGUI from your command line:
-
-#### To install latest stable release:
-
-```sh
-# WARNING: Not yet published to npm. On the to-do list..!
-npm install @nodegui/svelte-nodegui
-```
-
-#### To install the latest version available on master branch:
-
-```sh
-npm install https://github.com/nodegui/nodegui/releases/download/v0.0.0-latest-master/nodegui-master.tgz
-```
-
-or a shorter version:
-
-```sh
-npm i http://master-release.nodegui.org
-```
-
-If the installation fails to download the Qt binaries, a mirror can be used by setting the following environment variable and running the install command again:
-
-```sh
-QT_LINK_MIRROR=<alternative domain> # eg. QT_LINK_MIRROR=https://qt-mirror.dannhauer.de
-
-npm install @nodegui/svelte-nodegui
-```
-
-See [FAQs](https://github.com/nodegui/nodegui/tree/master/website/docs/faq.md#why-does-installation-fail-at-minimal-qt-setup) for more details.
-
-**Community guides**
-
--   [Tutorial: Build a native Meme Search Desktop app with Javascript (NodeGUI) and Giphy API](https://www.sitepoint.com/build-native-desktop-gif-searcher-app-using-nodegui/)
--   https://blog.logrocket.com/electron-alternatives-exploring-nodegui-and-react-nodegui/ - Electron alternatives: Exploring NodeGUI and React NodeGUI by [Siegfried Grimbeek](https://blog.logrocket.com/author/siegfriedgrimbeek/).
--   https://hibbard.eu/node-gui/ - Excellent guide from [James Hibbard](https://github.com/jameshibbard).
-
-**Talks/Podcasts**
-
--   [NodeGUI and React NodeGUI at KarmaJS Nov 2019 meetup: https://www.youtube.com/watch?v=8jH5gaEEDv4](https://www.youtube.com/watch?v=8jH5gaEEDv4)
-
--   <audio data-theme="night" data-src="https://changelog.com/jsparty/96/embed" src="https://cdn.changelog.com/uploads/jsparty/96/js-party-96.mp3" preload="none" class="changelog-episode" controls></audio><p><a href="https://changelog.com/jsparty/96">JS Party 96: Performant Node desktop apps with NodeGUI</a> – Listen on <a href="https://changelog.com/">Changelog.com</a></p>
 
 ## Docs for contributing
 
@@ -150,17 +73,23 @@ Please read https://github.com/nodegui/.github/blob/master/CONTRIBUTING.md
 
 ## Building
 
-`npm run build`
+```sh
+npm run build
+```
 
 Optionally set `QT_INSTALL_DIR='/path/to/qt'` environment variable to build using your own version of Qt.
 
 ## Updating docs
 
-`npm run docs`
+### Generating docs from source code
 
-then followed by:
+The docs generation process is currently a manual operation (text edit everything yourself). The docs are a copy-paste of the React NodeGUI docs, with some text replacement. We're also carrying around a slight fork of the React NodeGUI source in the codebase. In future we hope to clean up this workflow and make it more automatable using `typedoc` just like the original React NodeGUI workflow.
 
-`cd website && GIT_USER=<your_git_username> yarn deploy`
+### Deploying docs to GitHub Pages
+
+```sh
+cd website && GIT_USER=<your_git_username> npm run deploy
+```
 
 ## Funding
 
@@ -168,10 +97,10 @@ As no funding infrastructure is in place for Svelte NodeGUI specifically, please
 
 ## Special Thanks
 
--   [NodeGUI logo: Thanks to Vishwas Shetty from the Noun Project.](https://github.com/nodegui/nodegui/blob/master/extras/legal/logo/thanks.md)
--   [halfnelson](https://github.com/halfnelson) for [Svelte Native](https://github.com/halfnelson/svelte-native), which Svelte NodeGUI forks (as it is an excellent example of building a custom Svelte renderer).
--   [rigor789](https://github.com/rigor789) for [NativeScript Vue Next](https://github.com/rigor789/nativescript-vue-next), from which Svelte NodeGUI takes (and adapts) its DOM implementation.
--   [a7ul](https://github.com/a7ul) for creating [NodeGUI](https://github.com/nodegui/nodegui) and unwittingly teaching me [how to build renderers](https://blog.atulr.com/react-custom-renderer-1/) in the first place.
+- [NodeGUI logo: Thanks to Vishwas Shetty from the Noun Project.](https://github.com/nodegui/nodegui/blob/master/extras/legal/logo/thanks.md)
+- [halfnelson](https://github.com/halfnelson) for [Svelte Native](https://github.com/halfnelson/svelte-native), which Svelte NodeGUI forks (as it is an excellent example of building a custom Svelte renderer).
+- [rigor789](https://github.com/rigor789) for [NativeScript Vue Next](https://github.com/rigor789/nativescript-vue-next), from which Svelte NodeGUI takes (and adapts) its DOM implementation.
+- [a7ul](https://github.com/a7ul) for creating [NodeGUI](https://github.com/nodegui/nodegui) and unwittingly teaching me [how to build renderers](https://blog.atulr.com/react-custom-renderer-1/) in the first place.
 
 
 ## Code of Conduct
