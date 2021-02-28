@@ -1,4 +1,4 @@
-import type { Fiber } from "../utils/decoupleFromReact";
+import type { Fiber } from "../../utils/decoupleFromReact";
 import { registerComponent, ComponentConfig } from "../config";
 import { LineEditProps, RNLineEdit } from "./RNLineEdit";
 import { AppContainer } from "../../reconciler";

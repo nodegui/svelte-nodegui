@@ -1,5 +1,5 @@
 import { registerComponent, ComponentConfig } from "../config";
-import type { Fiber } from "../utils/decoupleFromReact";
+import type { Fiber } from "../../utils/decoupleFromReact";
 import { RNSpinBox, SpinBoxProps } from "./RNSpinBox";
 import { AppContainer } from "../../reconciler";
 class SpinBoxConfig extends ComponentConfig {

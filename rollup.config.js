@@ -9,7 +9,12 @@ let externalModules = [
   "phin",
 ]
 
-let localModules = ["dom", "components", "transitions"]
+let localModules = [
+  "dom",
+  "components",
+  "transitions",
+  "dom/react-nodegui/src",
+]
 
 let plugins = [
   resolve({

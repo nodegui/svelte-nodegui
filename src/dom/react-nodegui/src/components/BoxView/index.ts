@@ -1,7 +1,7 @@
 import { ComponentConfig, registerComponent } from "../config";
 import { RNBoxView, BoxViewProps } from "./RNBoxView";
 import { AppContainer } from "../../reconciler";
-import type { Fiber } from "../utils/decoupleFromReact";
+import type { Fiber } from "../../utils/decoupleFromReact";
 
 class BoxViewConfig extends ComponentConfig {
   tagName = RNBoxView.tagName;

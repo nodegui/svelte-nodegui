@@ -1,4 +1,4 @@
-import type { Fiber } from "../utils/decoupleFromReact";
+import type { Fiber } from "../../utils/decoupleFromReact";
 import { registerComponent, ComponentConfig } from "../config";
 import { RNMenu, MenuProps } from "./RNMenu";
 import { AppContainer } from "../../reconciler";

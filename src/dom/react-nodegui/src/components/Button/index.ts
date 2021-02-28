@@ -1,5 +1,5 @@
 import { ComponentConfig, registerComponent } from "../config";
-import type { Fiber } from "../utils/decoupleFromReact";
+import type { Fiber } from "../../utils/decoupleFromReact";
 import { RNButton, ButtonProps } from "./RNButton";
 import { AppContainer } from "../../reconciler";
 class ButtonConfig extends ComponentConfig {

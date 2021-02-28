@@ -1,4 +1,4 @@
-import type { Fiber } from "../utils/decoupleFromReact";
+import type { Fiber } from "../../../utils/decoupleFromReact";
 import { AppContainer } from "../../../reconciler";
 import { registerComponent, ComponentConfig } from "../../config";
 import { RNGridRow, GridRowProps } from "./RNGridRow";

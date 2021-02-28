@@ -1,5 +1,5 @@
 import { registerComponent, ComponentConfig } from "../config";
-import type { Fiber } from "../utils/decoupleFromReact";
+import type { Fiber } from "../../utils/decoupleFromReact";
 import { RNView, ViewProps } from "./RNView";
 import { AppContainer } from "../../reconciler";
 import { QWidgetSignals } from "@nodegui/nodegui";

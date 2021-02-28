@@ -1,4 +1,4 @@
-import { Fiber } from 'react-reconciler';
+import { Fiber } from '../../utils/decoupleFromReact';
 import { RNSlider, SliderProps } from './RNSlider';
 import { ComponentConfig, registerComponent } from '../config';
 import { AppContainer } from '../../reconciler';

@@ -1,5 +1,5 @@
 import { registerComponent, ComponentConfig } from "../config";
-import type { Fiber } from "../utils/decoupleFromReact";
+import type { Fiber } from "../../utils/decoupleFromReact";
 import { RNPlainTextEdit, PlainTextEditProps } from "./RNPlainTextEdit";
 import { AppContainer } from "../../reconciler";
 

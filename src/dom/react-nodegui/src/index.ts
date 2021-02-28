@@ -44,4 +44,4 @@ export { SliderProps, RNSlider } from "./components/Slider/RNSlider";
 export { SystemTrayIconProps, RNSystemTrayIcon } from "./components/SystemTrayIcon/RNSystemTrayIcon";
 export { ActionProps, RNAction } from "./components/Action/RNAction";
 export { BoxViewProps, RNBoxView } from "./components/BoxView/RNBoxView";
-export { GridViewProps, RNGridView } from "./components/GridView/RNGridView"
+export { GridViewProps, RNGridView } from "./components/GridView/RNGridView";

@@ -1,5 +1,5 @@
 import { registerComponent, ComponentConfig } from "../config";
-import type { Fiber } from "../utils/decoupleFromReact";
+import type { Fiber } from "../../utils/decoupleFromReact";
 import { WindowProps, RNWindow } from "./RNWindow";
 import { AppContainer } from "../../reconciler";
 
