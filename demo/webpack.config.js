@@ -2,8 +2,8 @@ const path = require("path");
 const webpack = require("webpack");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const svelteNativePreprocessor = require("svelte-native-preprocessor");
-const sveltePreprocess = require("svelte-preprocess");
+const SvelteNodeGUIPreprocessor = require("@nodegui/svelte-nodegui-preprocessor");
+const SveltePreprocess = require("svelte-preprocess");
 
 module.exports = (env, argv) => {
     const config = {
@@ -67,8 +67,8 @@ module.exports = (env, argv) => {
                             loader: 'svelte-loader',
                             options: {
                                 preprocess: {
-                                    ...sveltePreprocess(),
-                                    ...svelteNativePreprocessor(),
+                                    ...SveltePreprocess(),
+                                    ...SvelteNodeGUIPreprocessor(),
                                 },
                             }
                         }

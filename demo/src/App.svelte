@@ -11,7 +11,6 @@
     });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win} windowTitle="Hello World">
     <view id="container" style="background-color: '#41444A';">
         <text style="color: white;">Some text with actual children</text>
