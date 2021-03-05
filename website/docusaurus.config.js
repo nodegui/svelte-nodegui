@@ -91,11 +91,29 @@ module.exports = {
     // googleAnalytics: {
     //   trackingID: "TODO",
     // },
-    // algolia: {
-    //   apiKey: "TODO",
-    //   indexName: "nodegui_svelte",
-    //   algoliaOptions: {}, // Optional, if provided by Algolia
-    // },
+    algolia: {
+      apiKey: "2d5f0b46c971ffb4947697ce645520b0",
+      indexName: "svelte-nodegui",
+      /**
+       * Optional. I've filled in some values in a comment for future reference.
+       */
+      algoliaOptions: {
+        // facetFilters: [
+        //   /**
+        //    * I'm not really sure what these do.
+        //    * There is also: lvl1, lvl2, lvl3, lvl4, lvl5
+        //    */
+        //   "type:content",
+        //
+        //   /**
+        //    * To my understanding, this is irrelevant for now, because we're not supporting multiple versions
+        //    * of the docs simultanteously.
+        //    * There is also: version:current
+        //    */
+        //   "version:latest",
+        // ],
+      },
+    },
   },
   presets: [
     [
