@@ -21,7 +21,6 @@ The CheckBox component provides ability to add and manipulate native button widg
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <checkBox style="color: white;" checked={true}>Hello World</checkBox>
 </window>

@@ -38,7 +38,6 @@ The `@nodegui/svelte-nodegui` module exports widgets and features in namespaces.
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}/>
 ```
 

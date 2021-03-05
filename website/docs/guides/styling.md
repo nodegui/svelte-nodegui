@@ -20,7 +20,6 @@ Here's an example:
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <text style="color: green; background-color: white;">
     Hello World
@@ -51,7 +50,6 @@ Lets take a look at an example:
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <view id="rootView">
     <text id="helloLabel">Hello</text>
@@ -101,7 +99,6 @@ Lets look at this example again:
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <text style="color: green; background-color: white; height: '100%';">Hello World</text>
 </window>

@@ -33,7 +33,6 @@ The SystemTrayIcon component provides the ability to add and manipulate a native
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <systemTrayIcon {icon} tooltip="Hello World" visible>
     <menu actions={[action]}/>

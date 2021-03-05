@@ -21,7 +21,6 @@ The Button component provides ability to add and manipulate native button widget
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <button style="color: white;">Hello World</button>
 </window>

@@ -27,7 +27,6 @@ A very minimal example would look like this:
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
     <image src="https://docs.nodegui.org/img/logo-circle.png" />
 </window>

@@ -35,7 +35,6 @@ The following example demonstrates how to add a clicked event listener to a butt
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
     <button on:clicked={onClicked} text="Click me"/>
 </window>
@@ -205,7 +204,6 @@ Renderer.render(<App />);
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
     <!-- See the WidgetEventTypes interface for the names of all supported events. -->
     <text

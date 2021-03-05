@@ -23,7 +23,6 @@ It functions similar to a div in the web world. It is based on
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <view>
     <button style="{buttonStyle}">Hello</button>

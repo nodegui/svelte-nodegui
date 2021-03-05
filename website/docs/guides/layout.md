@@ -22,7 +22,6 @@ A component's height and width determine its size on the screen. The simplest wa
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <view style="width: 50px; height: 30px; background-color: yellow;"/>
 </window>
@@ -64,7 +63,6 @@ The code for that would look something like this:
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <view id="rootView">
     <text id="label">Hello</text>
@@ -128,7 +126,6 @@ BoxView Layout is an implementation of QBoxLayout of NodeGui.
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <boxView direction={direction}>
     <button text="Add" on={addHandler} />
@@ -185,7 +182,6 @@ GridView Layout is an implementation of QGridLayout of NodeGui.
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <gridView
     style="flex: 1"

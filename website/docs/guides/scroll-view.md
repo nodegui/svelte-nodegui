@@ -20,7 +20,6 @@ ScrollArea allows you to display a large content (image, list or even plain text
   });
 </script>
 
-<svelte:options namespace="foreign" />
 <window bind:this={win}>
   <scrollArea>
     <text>
