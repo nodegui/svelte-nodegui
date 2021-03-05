@@ -9,7 +9,7 @@
 
 Build **performant**, **native** and **cross-platform** desktop applications with **Node.js** and **Svelte**.🚀
 
-Svelte NodeGUI is powered by **Svelte** and **Qt5** 💚 which makes it CPU- and memory-efficient when compared to other Chromium-based solutions like Electron. Svelte NodeGUI is essentially a [Svelte](https://svelte.dev) renderer for [NodeGUI](https://github.com/nodegui/nodegui).
+Svelte NodeGUI is powered by **Svelte** and **Qt5** 💚 which makes it CPU- and memory-efficient when compared to Chromium-based solutions like Electron. Svelte NodeGUI is essentially a [Svelte](https://svelte.dev) renderer for [NodeGUI](https://github.com/nodegui/nodegui).
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1024px-React-icon.svg.png" alt="" width="25"> If you are looking for the **React**-based version, check out: **[React NodeGUI](https://github.com/nodegui/react-nodegui)**.
 
