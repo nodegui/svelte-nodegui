@@ -646,7 +646,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         }
     }
 
-    private getTextFromChildTextNodes(): string {
+    public getTextFromChildTextNodes(): string {
         return this.childNodes
             .filter((node) => node.nodeType === NSVNodeTypes.TEXT)
             .reduce((text: string, currentNode) => {
@@ -677,10 +677,38 @@ export class NSVComment extends NSVNode {
     }
 }
 
+/**
+ * This is a text node. It's a virtual element (is non-visual), and serves only as a data structure.
+ * Whenever its data changes, we tell its parentNode to update its "text" property.
+ */
 export class NSVText extends NSVNode {
     constructor(private _text: string){
         super(NSVNodeTypes.TEXT);
         // console.log(`[NSVText] constructor "${this._text}"`);
+    }
+
+    /**
+     * The Svelte runtime calls this upon the text node.
+     * @see set_data()
+     */
+    get wholeText(): string|undefined {
+        return this.text;
+    }
+
+    set wholeText(val) {
+        this.text = val;
+    }
+
+    /**
+     * The Svelte runtime calls this upon the text node.
+     * @see set_data()
+     */
+    get data(): string|undefined {
+        return this.text;
+    }
+    set data(val) {
+        // console.log(`[NSVText] Was asked to set "data" to`, val);
+        this.text = val;
     }
 
     get text(): string | undefined {
@@ -688,8 +716,13 @@ export class NSVText extends NSVNode {
     }
 
     set text(t: string | undefined) {
-        // console.log(`NSVText text setter was called!`);
+        console.log(`NSVText text setter was called!`);
         this._text = t;
+        // Tell any parent node to update its "text" property because this text node has just updated
+        // its contents.
+        if(this.parentNode && (this.parentNode as NSVElement).getTextFromChildTextNodes){
+            this.parentNode.text = (this.parentNode as NSVElement).getTextFromChildTextNodes();
+        }
     }
 
     toString(): string {
