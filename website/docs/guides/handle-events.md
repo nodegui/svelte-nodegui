@@ -145,42 +145,6 @@ In nodegui all these common QEvents are represented under an enum type: [WidgetE
 
 You can subscribe to a QEvent like so:
 
-```typescript
-import React from "react";
-import {
-  Renderer,
-  Text,
-  Window,
-  useEventHandler
-} from "@nodegui/react-nodegui";
-import { QLabelSignals, QMouseEvent, WidgetEventTypes } from "@nodegui/nodegui";
-
-const App = () => {
-  const textHandler = useEventHandler<QLabelSignals>(
-    {
-      MouseMove: (nativeEvt: any) => {
-        const mouseEvt = new QMouseEvent(nativeEvt);
-        console.log("mouseMoved at: ", { x: mouseEvt.x(), y: mouseEvt.y() });
-      },
-      [WidgetEventTypes.MouseButtonPress]: () => {
-        console.log("mouse button was pressed");
-      }
-    },
-    []
-  );
-
-  return (
-    <Window>
-      <Text mouseTracking={true} on={textHandler}>
-        Move your mouse here
-      </Text>
-    </Window>
-  );
-};
-
-Renderer.render(<App />);
-```
-
 ```html
 <script lang="ts">
   import { onMount } from "svelte";
