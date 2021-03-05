@@ -460,6 +460,20 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
     private static readonly recycledOldProps: Record<string, any> = Object.freeze({});
 
     setAttribute(name: string, value: unknown) {
+        /*
+         * A note to myself after following this rabbit hole several times before:
+         * Users may intuitively try to set the "text" property on an element such as <text>, simply because
+         * it's a likely property name to expect, and because it appears to be corroborated by Intellisense,
+         * due to our default of typing any unrecognised JSX key as a string value.
+         * 
+         * In fact, RNText doesn't implement a text property in its setProps() method, so it (correctly) no-ops.
+         * To set text, we expect users to write it as:
+         * 
+         * <text>hello</text>
+         * 
+         * ... This creates an NSVText node with the text "hello", which Svelte reads using the .data accessor.
+         */
+
         ["style",
         "styleSheet", // TODO: implement
         "class",
