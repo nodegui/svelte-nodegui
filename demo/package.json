@@ -11,7 +11,7 @@
     "debug": "qode --inspect ./dist/index.js"
   },
   "dependencies": {
-    "@nodegui/nodegui": "^0.25.0",
+    "@nodegui/nodegui": "file:../node_modules/@nodegui/nodegui",
     "@nodegui/svelte-nodegui": "file:../dist",
     "phin": "^3.5.1"
   },
