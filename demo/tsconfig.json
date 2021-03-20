@@ -12,7 +12,7 @@
         "pretty": true,
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
-        "noEmitHelpers": true,
+        "noEmitHelpers": false,
         "noEmitOnError": false,
         "noImplicitAny": false,
         "noImplicitReturns": false,
