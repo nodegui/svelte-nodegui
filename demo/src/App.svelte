@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import type { NSVElement, RNWindow } from "@nodegui/svelte-nodegui";
     let win;
+    let count: number = 0;
     onMount(() => {
         (window as any).win = win; // Prevent garbage collection.
         (win as NSVElement<RNWindow>).nativeView.show();
@@ -13,8 +14,8 @@
 
 <window bind:this={win} windowTitle="Hello World">
     <view id="container" style="background-color: '#41444A';">
-        <text style="color: white;">Some text with actual children</text>
-        <button on:clicked={(checked) => console.log("Clicked!", checked)} id="nice_button" text="Press me"/>
+        <text style="color: white;">Count: {count}</text>
+        <button on:clicked={(checked) => count++} id="nice_button" text="Increment"/>
     </view>
 </window>
 
