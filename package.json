@@ -24,7 +24,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@nodegui/nodegui": "^0.25.0",
+    "@nodegui/nodegui": "^0.30.2",
     "phin": "^3.5.1",
     "svelte": "^3.24.1"
   },
