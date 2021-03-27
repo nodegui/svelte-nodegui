@@ -244,6 +244,10 @@ export function registerNativeElements() {
             return widget;
         },
     )
+    registerElement<RNScrollArea, ScrollAreaProps>(
+        'scrollArea',
+        () => new RNScrollArea(),
+    )
     /* Component is an abstract class, so this is surely wrong. */
     // registerElement<RNComponent, ComponentProps>(
     //     'tabItem',

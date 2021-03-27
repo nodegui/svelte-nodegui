@@ -147,5 +147,9 @@ declare namespace svelteNodeGUI.JSX {
             import("./dom/react-nodegui/src").GridViewProps,
             import("./dom/react-nodegui/src").RNGridView
         >;
+        scrollArea: SvelteNodeGUIProps<
+            import("./dom/react-nodegui/src").ScrollAreaProps,
+            import("./dom/react-nodegui/src").RNScrollArea
+        >;
     }
 }
