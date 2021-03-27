@@ -58,4 +58,5 @@ export {
     ActionProps, RNAction,
     BoxViewProps, RNBoxView,
     GridViewProps, RNGridView,
+    ScrollAreaProps, RNScrollArea,
 } from "./dom/react-nodegui/src";

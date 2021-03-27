@@ -47,3 +47,4 @@ export { SystemTrayIconProps, RNSystemTrayIcon } from "./components/SystemTrayIc
 export { ActionProps, RNAction } from "./components/Action/RNAction";
 export { BoxViewProps, RNBoxView } from "./components/BoxView/RNBoxView";
 export { GridViewProps, RNGridView } from "./components/GridView/RNGridView";
+export { ScrollAreaProps, RNScrollArea } from "./components/ScrollArea/RNScrollArea";

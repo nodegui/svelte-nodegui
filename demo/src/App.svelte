@@ -13,17 +13,24 @@
 
 <window bind:this={win} windowTitle="Hello World">
     <view id="container" style="background-color: '#41444A';">
-        <text style="color: white;">Some text with actual children</text>
+        <scrollArea id="scroll">
+            <text style="background-color: lime;">Some text with actual children. 
+                This text is a bit long so that we can test if scrollArea works correctly :-).
+            </text>
+        </scrollArea>
         <button on:clicked={(checked) => console.log("Clicked!", checked)} id="nice_button" text="Press me"/>
     </view>
 </window>
 
 <style>
     #container {
-        align-items: 'center';
-        justify-content: 'space-around';
+        flex-direction: column;
     }
     #nice_button {
         font-weight: 900;
+    }
+    #scroll{
+        width: "100%";
+        flex: 1;
     }
 </style>
