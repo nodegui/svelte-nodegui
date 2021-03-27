@@ -134,6 +134,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://twitter.com/LinguaBrowse"><img src="https://avatars.githubusercontent.com/u/14055146?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jamie Birch</b></sub></a><br /><a href="https://github.com/nodegui/svelte-nodegui/commits?author=shirakaba" title="Code">💻</a></td>
     <td align="center"><a href="https://mrsauravsahu.github.io"><img src="https://avatars.githubusercontent.com/u/9134050?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Saurav Sahu</b></sub></a><br /><a href="https://github.com/nodegui/svelte-nodegui/commits?author=mrsauravsahu" title="Code">💻</a></td>
+    <td align="center"><a href="http://matthieu.perreira.net"><img src="https://avatars.githubusercontent.com/u/4592373?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matthieu PERREIRA DA SILVA</b></sub></a><br /><a href="https://github.com/nodegui/svelte-nodegui/commits?author=mperreir" title="Code">💻</a></td>
   </tr>
 </table>
 
