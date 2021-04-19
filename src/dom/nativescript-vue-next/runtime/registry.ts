@@ -27,6 +27,8 @@ import { RNSystemTrayIcon, SystemTrayIconProps } from "../../react-nodegui/src/c
 import { RNTab, TabProps } from "../../react-nodegui/src/components/Tab/RNTab";
 import { RNTabItem, TabItemProps } from "../../react-nodegui/src/components/TabItem/RNTabItem";
 import type { RNComponent } from "../../react-nodegui/src/components/config";
+import { RNSvg } from '../../react-nodegui/src/components/Svg/RNSvg';
+import { SvgProps } from '../../react-nodegui/src/components/Svg/RNSvg';
 
 
 export type NSVElementResolver<T extends NativeView = NativeView> = () => T
@@ -196,6 +198,10 @@ export function registerNativeElements() {
     registerElement<RNSpinBox, SpinBoxProps>(
         'spinBox',
         () => new RNSpinBox(),
+    )
+    registerElement<RNSvg, SvgProps>(
+        'svg',
+        () => new RNSvg(),
     )
     registerElement<RNRadioButton, RadioButtonProps>(
         'radioButton',

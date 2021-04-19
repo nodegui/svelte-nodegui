@@ -135,6 +135,10 @@ declare namespace svelteNodeGUI.JSX {
             import("./dom/react-nodegui/src").SystemTrayIconProps,
             import("./dom/react-nodegui/src").RNSystemTrayIcon
         >;
+        svg: SvelteNodeGUIProps<
+        import("./dom/react-nodegui/src").SvgProps,
+        import("./dom/react-nodegui/src").RNSvg
+        >;
         action: SvelteNodeGUIProps<
             import("./dom/react-nodegui/src").ActionProps,
             import("./dom/react-nodegui/src").RNAction
