@@ -49,6 +49,7 @@ const setPlainTextEditProps = (
       text ? widget.setPlainText(text) : widget.clear();
     },
     set readOnly(isReadOnly: boolean) {
+      console.log(`[!RNPlainTextEdit] Setting isReadOnly to: ${isReadOnly}`);
       widget.setReadOnly(isReadOnly);
     },
     set placeholderText(text: string) {

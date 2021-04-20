@@ -568,6 +568,7 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
          * We only set props one-at-a-time, so we'll avoid reallocations by re-using and cleaning up the same static object.
          */
         this.recycledNewProps[name] = value;
+        console.log(`[NSVElement.setAttribute("${name}", "${value}")] this.recycledNewProps:`, this.recycledNewProps);
         this.nativeView.setProps(this.recycledNewProps, this.recycledOldProps);
         delete this.recycledNewProps[name];
         /**

@@ -19,6 +19,7 @@ export const setTextProps = (
   newProps: TextProps,
   oldProps: TextProps
 ) => {
+  console.log(`[!RNText] setTextProps 1 - wordWrap now: ${widget.wordWrap()}`, newProps, oldProps);
   const setter: TextProps = {
     set children(text: string | number | Array<string | number>) {
       text = Array.isArray(text) ? text.join('') : text;
@@ -26,6 +27,7 @@ export const setTextProps = (
       widget.setText(text);
     },
     set wordWrap(shouldWrap: boolean) {
+      console.log(`[!RNText] Setting shouldWrap to: ${shouldWrap}`);
       widget.setWordWrap(shouldWrap);
     },
     set scaledContents(scaled: boolean) {
@@ -39,7 +41,10 @@ export const setTextProps = (
     }
   };
   Object.assign(setter, newProps);
+  console.log(`[!RNText] setTextProps 2 - assigned setter`, setter);
+  console.log(`[!RNText] setTextProps 3 - wordWrap now: ${widget.wordWrap()}`, newProps, oldProps);
   setViewProps(widget, newProps, oldProps);
+  console.log(`[!RNText] setTextProps 4 - wordWrap now: ${widget.wordWrap()}`, newProps, oldProps);
 };
 
 /**
@@ -47,6 +52,7 @@ export const setTextProps = (
  */
 export class RNText extends QLabel implements RNWidget {
   setProps(newProps: TextProps, oldProps: TextProps): void {
+    console.log(`[RNText.setProps()]`, newProps, oldProps);
     setTextProps(this, newProps, oldProps);
   }
   appendInitialChild(child: NodeWidget<any>): void {

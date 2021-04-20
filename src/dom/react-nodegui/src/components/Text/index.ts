@@ -42,7 +42,9 @@ class TextConfig extends ComponentConfig {
     newProps: TextProps,
     finishedWork: Fiber
   ): void {
+    console.log(`[!RNText] commmitUpdate 1 - wordWrap now:`, instance.wordWrap());
     instance.setProps(newProps, oldProps);
+    console.log(`[!RNText] commmitUpdate 2 - wordWrap now:`, instance.wordWrap());
   }
 }
 
