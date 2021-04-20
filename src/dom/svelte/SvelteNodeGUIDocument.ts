@@ -85,7 +85,7 @@ export default class SvelteNodeGUIDocument extends NSVElement<RNObject> {
     }
 
     createTextNode(data: string): NSVText {
-        console.log(`[SvelteNodeGUIDocument] createTextNode("${data}")`);
+        // console.log(`[SvelteNodeGUIDocument] createTextNode("${data}")`);
         return new NSVText(data);
     }
 

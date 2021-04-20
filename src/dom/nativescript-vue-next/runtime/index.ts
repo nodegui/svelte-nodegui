@@ -1,5 +1,4 @@
-export { nodeOps, NSVNodeOps }  from "./nodeOps";
-export { NSVNodeTypes, NSVViewFlags, INSVNode, INSVElement, NSVNode, NSVElement, NSVComment, NSVText, NSVRoot }  from "./nodes";
+export { NSVNodeTypes, NSVViewFlags, NSVNode, NSVElement, NSVComment, NSVText, NSVRoot }  from "./nodes";
 export {
     NSVElementResolver,
     NSVModelDescriptor,

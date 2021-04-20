@@ -23,8 +23,7 @@ import {
 } from "./nativescript-vue-next/runtime/nodes";
 
 
-export { nodeOps, NSVNodeOps } from "./nativescript-vue-next/runtime";
-export { NSVNodeTypes, NSVViewFlags, INSVNode, INSVElement, NSVNode, NSVElement, NSVComment, NSVText, NSVRoot } from "./nativescript-vue-next/runtime";
+export { NSVNodeTypes, NSVViewFlags, NSVNode, NSVElement, NSVComment, NSVText, NSVRoot } from "./nativescript-vue-next/runtime";
 export {
     NSVElementResolver,
     NSVModelDescriptor,
