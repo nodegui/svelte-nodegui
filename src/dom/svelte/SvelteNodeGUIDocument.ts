@@ -32,18 +32,9 @@ export default class SvelteNodeGUIDocument extends NSVElement<RNObject> {
         return e;
     }
 
-
-    get text(): string | undefined {
-        error(`text() getter called on element that does not implement it.`, this);
-        return void 0;
-    }
-
-    set text(t: string | undefined) {
-        error(`text() setter called on element that does not implement it.`, this);
-    }
-
-    createComment(text: string): NSVComment {
-        return new NSVComment(text)
+    createComment(data: string): NSVComment {
+        console.log(`Creating comment with data: "${data}"`);
+        return new NSVComment(data)
     }
 
     // createPropertyNode(tagName: string, propertyName: string): PropertyNode {
@@ -93,9 +84,9 @@ export default class SvelteNodeGUIDocument extends NSVElement<RNObject> {
         return this.createElement(tagName)
     }
 
-    createTextNode(text: string): NSVText {
-        // console.log(`[SvelteNodeGUIDocument] createTextNode("${text}")`);
-        return new NSVText(text)
+    createTextNode(data: string): NSVText {
+        console.log(`[SvelteNodeGUIDocument] createTextNode("${data}")`);
+        return new NSVText(data);
     }
 
     getElementById(id: string): NSVElement|null {

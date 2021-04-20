@@ -47,10 +47,10 @@ export const nodeOps = {
         }
     },
     setElementText(node: INSVElement, text: string): void {
-        node.text = text;
+        node.textContent = text;
     },
     setText(node: INSVNode, text: string): void {
-        node.text = text;
+        node.textContent = text;
     },
     setScopeId(el: INSVElement, id: string): void {
         el.setAttribute(id, '');

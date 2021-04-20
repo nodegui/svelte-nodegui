@@ -50,14 +50,14 @@ export interface INSVNode {
     nodeRole?: string
     nodeId: number
     nodeType: NSVNodeTypes
-    text: string | undefined
+    textContent: string | null
 
     parentNode: INSVElement | null
 
     childNodes: INSVNode[]
     firstChild: INSVNode | null
     lastChild: INSVNode | null
-    prevSibling: INSVNode | null
+    previousSibling: INSVNode | null
     nextSibling: INSVNode | null
 }
 
@@ -163,19 +163,32 @@ export abstract class NSVNode implements INSVNode {
     nodeRole?: string
     nodeId: number
     nodeType: NSVNodeTypes
-    get textContent(): string {
-        return this.text;
-    }
-    set textContent(value: string) {
-        this.text = value;
-    }
-    abstract text: string | undefined
+	get textContent(): string|null {
+		if(this.nodeType === NSVNodeTypes.TEXT){
+			return (this as NSVNode as NSVText).data;
+		}
+		if(this.nodeType === NSVNodeTypes.ELEMENT){
+			return this.childNodes.map(childNode => childNode.textContent).join("");
+		}
+		return null;
+	}
+	set textContent(value: string){
+		if(this.nodeType === NSVNodeTypes.TEXT){
+			(this as NSVNode as NSVText).data = (value ?? "");
+			return;
+		}
+		if(this.nodeType === NSVNodeTypes.ELEMENT){
+			this.childNodes.forEach(c => (this as NSVNode as NSVElement).removeChild(c));
+			(this as NSVNode as NSVElement).appendChild(new NSVText(value));
+			return;
+		}
+	}
 
     parentNode: INSVElement<any> | null = null
     childNodes: INSVNode[] = []
 
     nextSibling: INSVNode | null = null
-    prevSibling: INSVNode | null = null
+    previousSibling: INSVNode | null = null
 
     get firstChild() {
         return this.childNodes.length ? this.childNodes[0] : null
@@ -343,22 +356,12 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         }
     }
 
-    get text(): string | undefined {
+    updateNativeText(): void {
         if(componentHasPropertyAccessor(this.nativeView)){
-            return this.nativeView.property("text").toString();
-        }
-        error(`text() getter called on element that does not implement it.`, this);
-    }
-
-    /**
-     * I'm not sure we actually need this setter; keeping its implementation and renaming it to textContent is probably in order.
-     */
-    set text(t: string | undefined) {
-        if(componentHasPropertyAccessor(this.nativeView)){
-            this.nativeView.setProperty("text", t);
+            this.nativeView.setProperty("text", this.textContent);
             return;
         }
-        error(`text() setter called on element that does not implement it.`, this);
+        error(`updateNativeText() called on element that does not implement it.`, this);
     }
 
     get meta(): NSVViewMeta<T> {
@@ -642,10 +645,9 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         if (index > -1) {
             this.childNodes.splice(index, 1)
             el.parentNode = null
-            if (el.nodeType === NSVNodeTypes.ELEMENT) {
-                removeChild(el as NSVElement, this) // Removing a child span takes us down here
-            } else if (el.nodeType === NSVNodeTypes.TEXT) {
-                this.text = this.getTextFromChildTextNodes();
+            removeChild(el as NSVElement, this)
+            if (el.nodeType === NSVNodeTypes.TEXT) {
+                this.updateNativeText();
             }
         }
     }
@@ -653,19 +655,10 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
     // abstracted from appendChild, and insertBefore to avoid code duplication
     private addChild(el: INSVNode, anchor?: INSVNode | null, atIndex?: number): void {
         // console.log(`[addChild] ${this._tagName} > ${(el as any)._tagName}`);
-        if (el.nodeType === NSVNodeTypes.ELEMENT) {
-            addChild(el as NSVElement, this, anchor, atIndex)
-        } else if (el.nodeType === NSVNodeTypes.TEXT) {
-            this.text = this.getTextFromChildTextNodes();
+        addChild(el as NSVElement, this, anchor, atIndex)
+        if (el.nodeType === NSVNodeTypes.TEXT) {
+            this.updateNativeText();
         }
-    }
-
-    public getTextFromChildTextNodes(): string {
-        return this.childNodes
-            .filter((node) => node.nodeType === NSVNodeTypes.TEXT)
-            .reduce((text: string, currentNode) => {
-                return text + currentNode.text
-            }, '');
     }
 
     toString(): string {
@@ -674,20 +667,12 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
 }
 
 export class NSVComment extends NSVNode {
-    constructor(private _text: string) {
+    constructor(public data: string = "") {
         super(NSVNodeTypes.COMMENT);
     }
 
-    get text(): string | undefined {
-        return this._text;
-    }
-
-    set text(t: string | undefined) {
-        this._text = t;
-    }
-
     toString(): string {
-        return "NSVComment:" + `"` + this.text + `"`;
+        return "NSVComment:" + `"` + this.data + `"`;
     }
 }
 
@@ -696,51 +681,65 @@ export class NSVComment extends NSVNode {
  * Whenever its data changes, we tell its parentNode to update its "text" property.
  */
 export class NSVText extends NSVNode {
-    constructor(private _text: string){
+    private _data: string;
+
+    constructor(data: string = ""){
         super(NSVNodeTypes.TEXT);
         // console.log(`[NSVText] constructor "${this._text}"`);
+        this.data = data;
     }
 
-    /**
-     * The Svelte runtime calls this upon the text node.
-     * @see set_data()
-     */
-    get wholeText(): string|undefined {
-        return this.text;
+    get data(): string | undefined {
+        return this._data;
     }
 
-    set wholeText(val) {
-        this.text = val;
-    }
-
-    /**
-     * The Svelte runtime calls this upon the text node.
-     * @see set_data()
-     */
-    get data(): string|undefined {
-        return this.text;
-    }
-    set data(val) {
-        // console.log(`[NSVText] Was asked to set "data" to`, val);
-        this.text = val;
-    }
-
-    get text(): string | undefined {
-        return this._text;
-    }
-
-    set text(t: string | undefined) {
+    set data(t: string | undefined) {
         console.log(`NSVText text setter was called!`);
-        this._text = t;
-        // Tell any parent node to update its "text" property because this text node has just updated
-        // its contents.
-        if(this.parentNode && (this.parentNode as NSVElement).getTextFromChildTextNodes){
-            this.parentNode.text = (this.parentNode as NSVElement).getTextFromChildTextNodes();
+        this._data = t;
+        // Tell any parent node to update its "text" property because this text node has just updated its contents.
+        if(this.parentNode?.nodeType === NSVNodeTypes.ELEMENT){
+            (this.parentNode as NSVElement).updateNativeText();
         }
     }
 
+    /**
+     * The Svelte runtime calls this upon the text node.
+     * @see set_data()
+     */
+	get wholeText(): string|undefined {
+        console.log(`NSVText get wholeText was called!`);
+		let _wholeText = "";
+		if(this.previousSibling?.nodeType === NSVNodeTypes.TEXT){
+			_wholeText += (this.previousSibling as NSVText).data;
+		}
+		if(this.nextSibling?.nodeType === NSVNodeTypes.TEXT){
+			_wholeText += (this.nextSibling as NSVText).wholeText; // recurses
+		} else {
+			_wholeText += this.data;
+		}
+		console.log(`get wholeText: ${_wholeText}`);
+		return _wholeText;
+	}
+	replaceWholeText(wholeText: string): null | NSVText {
+        console.log(`NSVText replaceWholeText was called!`);
+		let recipient: NSVText = this;
+		if(this.previousSibling?.nodeType === NSVNodeTypes.TEXT){
+			recipient = this.previousSibling as NSVText;
+		}
+		
+		let nextSibling: NSVNode = recipient;
+		while(nextSibling = recipient.nextSibling){
+			if(nextSibling.nodeType !== NSVNodeTypes.TEXT){
+                break;
+            }
+			nextSibling.parentNode.removeChild(nextSibling);
+		}
+		recipient.data = wholeText;
+		return wholeText === "" ? null : recipient;
+	}
+
     toString(): string {
-        return "NSVText:" + `"` + this.text + `"`;
+        return "NSVText:" + `"` + this.data + `"`;
     }
 }
 
@@ -784,7 +783,7 @@ function addChild(child: NSVElement, parent: NSVElement, anchor?: INSVNode | nul
     //     }) > ${child.tagName}(${child.nodeId}), ${atIndex}    )`
     // )
     
-    if (child.meta.viewFlags & NSVViewFlags.SKIP_ADD_TO_DOM) {
+    if (child.meta?.viewFlags & NSVViewFlags.SKIP_ADD_TO_DOM) {
         // debug('SKIP_ADD_TO_DOM')
         return
     }
@@ -792,12 +791,12 @@ function addChild(child: NSVElement, parent: NSVElement, anchor?: INSVNode | nul
     const parentView = parent.nativeView
     const childView = child.nativeView
 
-    if (parent.meta.viewFlags & NSVViewFlags.NO_CHILDREN) {
+    if (parent.meta?.viewFlags & NSVViewFlags.NO_CHILDREN) {
         // debug('NO_CHILDREN')
         return
     }
 
-    if(parent.meta.nodeOps?.insert){
+    if(parent.meta?.nodeOps?.insert){
         const defer: boolean = parent.meta.nodeOps.insert(child, parent, atIndex) === "defer";
         if(!defer){
             return;
@@ -847,16 +846,16 @@ function removeChild(child: NSVElement, parent: NSVElement) {
     //     })    )`
     // )
 
-    if (child.meta.viewFlags & NSVViewFlags.SKIP_ADD_TO_DOM) {
+    if (child.meta?.viewFlags & NSVViewFlags.SKIP_ADD_TO_DOM) {
         // debug('SKIP_ADD_TO_DOM')
         return
     }
-    if (parent.meta.viewFlags & NSVViewFlags.NO_CHILDREN) {
+    if (parent.meta?.viewFlags & NSVViewFlags.NO_CHILDREN) {
         // debug('NO_CHILDREN')
         return
     }
     
-    if(parent.meta.nodeOps?.remove){
+    if(parent.meta?.nodeOps?.remove){
         const defer: boolean = parent.meta.nodeOps.remove(child, parent) === "defer";
         if(!defer){
             return;
