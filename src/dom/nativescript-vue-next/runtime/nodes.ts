@@ -42,25 +42,6 @@ export const enum NSVViewFlags {
     NO_CHILDREN = 1 << 3,
 }
 
-export interface INSVNode {
-    /**
-     * Used to give a hint to nodeOps about how this node should be appended into its parent.
-     * Relevant for cases such as RadSideDrawer, which have 'mainContent' and 'drawerContent'.
-     */
-    nodeRole?: string
-    nodeId: number
-    nodeType: NSVNodeTypes
-    text: string | undefined
-
-    parentNode: INSVElement | null
-
-    childNodes: INSVNode[]
-    firstChild: INSVNode | null
-    lastChild: INSVNode | null
-    prevSibling: INSVNode | null
-    nextSibling: INSVNode | null
-}
-
 type EventListener = (args: unknown) => void;
 
 export function componentIsEventWidget<Signals extends {} = {}>(component: Component): component is EventWidget<Signals> {
@@ -100,7 +81,7 @@ export function componentSupportsId<Signals extends QWidgetSignals = QWidgetSign
     return false;
 }
 
-export function* elementIterator(el: INSVNode): Iterable<INSVNode> {
+export function* elementIterator(el: NSVNode): Iterable<NSVNode> {
     yield el;
     for (let child of el.childNodes) {
         yield* elementIterator(child)
@@ -116,45 +97,9 @@ interface IStyleProxy {
     cssText: string;
 }
 
-export interface INSVElement<T extends NativeView = NativeView> extends INSVNode {
-    /**
-     * @default ""
-     */
-    id: string;
-    tagName: string
-    meta: NSVViewMeta<T>
-    style: IStyleProxy
+let nodeId: number = 0
 
-    eventListeners: Map<string, (args: unknown) => void>;
-
-    addEventListener<Signals extends {}, SignalType extends keyof Signals>(
-        event: SignalType,
-        handler: Signals[SignalType],
-        options?: AddEventListenerOptions
-    ): void
-
-    removeEventListener<Signals extends {}, SignalType extends keyof Signals>(event: SignalType, handler?: Signals[SignalType]): void
-
-    dispatchEvent(event: string): void
-
-    nativeView: T;
-
-    getAttribute(name: string): unknown
-
-    setAttribute(name: string, value: unknown): void
-
-    removeAttribute(name: string): void
-
-    insertBefore(el: INSVNode, anchor?: INSVNode | null): void
-
-    appendChild(el: INSVNode): void
-
-    removeChild(el: INSVNode): void
-}
-
-let nodeId = 0
-
-export abstract class NSVNode implements INSVNode {
+export abstract class NSVNode {
     protected constructor(nodeType: NSVNodeTypes) {
         this.nodeType = nodeType
         this.nodeId = nodeId++
@@ -163,19 +108,33 @@ export abstract class NSVNode implements INSVNode {
     nodeRole?: string
     nodeId: number
     nodeType: NSVNodeTypes
-    get textContent(): string {
-        return this.text;
-    }
-    set textContent(value: string) {
-        this.text = value;
-    }
-    abstract text: string | undefined
+	get textContent(): string|null {
+		if(this.nodeType === NSVNodeTypes.TEXT){
+			return (this as NSVNode as NSVText).data;
+		}
+		if(this.nodeType === NSVNodeTypes.ELEMENT){
+			return this.childNodes.map(childNode => childNode.textContent).join("");
+		}
+		return null;
+	}
+	set textContent(value: string){
+		if(this.nodeType === NSVNodeTypes.TEXT){
+			(this as NSVNode as NSVText).data = (value ?? "");
+			return;
+		}
+		if(this.nodeType === NSVNodeTypes.ELEMENT){
+			this.childNodes.forEach(c => (this as NSVNode as NSVElement).removeChild(c as NSVNode));
+			(this as NSVNode as NSVElement).appendChild(new NSVText(value));
+			return;
+		}
+	}
 
-    parentNode: INSVElement<any> | null = null
-    childNodes: INSVNode[] = []
+    parentNode: NSVNode | null = null
+    parentElement: NSVElement | null = null
+    childNodes: NSVNode[] = []
 
-    nextSibling: INSVNode | null = null
-    prevSibling: INSVNode | null = null
+    nextSibling: NSVNode | null = null
+    previousSibling: NSVNode | null = null
 
     get firstChild() {
         return this.childNodes.length ? this.childNodes[0] : null
@@ -187,12 +146,111 @@ export abstract class NSVNode implements INSVNode {
             : null
     }
 
-    toString(): string {
-        return this.toString();
-    }
+	appendChild(child: NSVNode): NSVNode {
+        if(child === this || ![NSVNodeTypes.ELEMENT, NSVNodeTypes.ROOT].includes(this.nodeType)){
+            throw new Error("HierarchyRequestError: The operation would yield an incorrect node tree.");
+        }
+        if(child instanceof NSVNode === false){
+            throw new Error("TypeError: Argument 1 ('child') to Node.appendChild must be an instance of NSVNode");
+        }
+        if(child.parentNode === this){
+            return child;
+        }
+
+		child.previousSibling = this.childNodes[this.childNodes.length - 1] ?? null;
+		child.nextSibling = null;
+
+        // If the child is already a child of this, remove it from our childNodes array before adding it to the end.
+        if(child.parentNode === this){
+            const childIndex = this.childNodes.findIndex(c => c === child);
+            if(childIndex === -1){
+                throw new Error("NotFoundError: the object can not be found here.");
+            }
+            this.childNodes.splice(childIndex, 0);
+        }
+
+        this.childNodes.push(child);
+		child.parentNode = this as NSVNode;
+		if(this.nodeType === NSVNodeTypes.ELEMENT){
+			child.parentElement = this as NSVNode as NSVElement;
+
+            if(child.nodeType === NSVNodeTypes.TEXT){
+                (this as NSVNode as NSVElement).updateNativeText();
+            }
+		}
+		return child;
+	}
+	insertBefore(newNode: NSVNode, referenceNode: NSVNode): NSVNode {
+        if(newNode === this || ![NSVNodeTypes.ELEMENT, NSVNodeTypes.ROOT].includes(this.nodeType)){
+            throw new Error("HierarchyRequestError: The operation would yield an incorrect node tree.");
+        }
+        if(newNode instanceof NSVNode === false){
+            throw new Error("TypeError: Argument 1 ('newNode') to Node.insertBefore must be an instance of NSVNode");
+        }
+
+		// console.log(`[Node.insertBefore] ${newNode}, ${referenceNode}`);
+		const referenceIndex = referenceNode == null ?
+			-1 : 
+			this.childNodes.findIndex(node => node === referenceNode);
+		if(referenceIndex === -1){
+			this.appendChild(newNode);
+		} else {
+			newNode.previousSibling = this.childNodes[referenceIndex - 1] ?? null;
+			newNode.nextSibling = this.childNodes[referenceIndex];
+
+            // If the child is already a child of this, remove it from our childNodes array before adding it to the end.
+            if(newNode.parentNode === this){
+                const newNodeIndex = this.childNodes.findIndex(c => c === newNode);
+                if(newNodeIndex === -1){
+                    throw new Error("NotFoundError: the object can not be found here.");
+                }
+                this.childNodes.splice(newNodeIndex, 0);
+            }
+
+			this.childNodes.splice(referenceIndex, 0, newNode);
+			newNode.parentNode = this as NSVNode;
+			if(this.nodeType === NSVNodeTypes.ELEMENT){
+				newNode.parentElement = this as NSVNode as NSVElement;
+
+                if(newNode.nodeType === NSVNodeTypes.TEXT){
+                    (this as NSVNode as NSVElement).updateNativeText();
+                }
+			}
+		}
+
+		return newNode;
+	}
+	removeChild(child: NSVNode): NSVNode {
+        if(child === this){
+            throw new Error("HierarchyRequestError: The operation would yield an incorrect node tree.");
+        }
+        if(child instanceof NSVNode === false){
+            throw new Error("TypeError: Argument 1 ('child') to Node.removeChild must be an instance of NSVNode");
+        }
+
+		const childIndex = this.childNodes.findIndex(c => c === child);
+        if(childIndex === -1){
+            throw new Error("NotFoundError: the object can not be found here.");
+        }
+		if(childIndex !== -1){
+			child.previousSibling = null;
+			child.nextSibling = null;
+			this.childNodes.splice(childIndex, 1);
+			child.parentNode = null;
+			if(this.nodeType === NSVNodeTypes.ELEMENT){
+				child.parentElement = null;
+
+                if(child.nodeType === NSVNodeTypes.TEXT){
+                    (this as NSVNode as NSVElement).updateNativeText();
+                }
+			}
+		}
+
+		return child;
+	}
 }
 
-export class NSVElement<T extends NativeView = NativeView> extends NSVNode implements INSVElement<T> {
+export class NSVElement<T extends NativeView = NativeView> extends NSVNode {
     private readonly _tagName: string
     private readonly _nativeView: T;
     private _meta: NSVViewMeta<T> | undefined
@@ -343,22 +401,12 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         }
     }
 
-    get text(): string | undefined {
+    updateNativeText(): void {
         if(componentHasPropertyAccessor(this.nativeView)){
-            return this.nativeView.property("text").toString();
-        }
-        error(`text() getter called on element that does not implement it.`, this);
-    }
-
-    /**
-     * I'm not sure we actually need this setter; keeping its implementation and renaming it to textContent is probably in order.
-     */
-    set text(t: string | undefined) {
-        if(componentHasPropertyAccessor(this.nativeView)){
-            this.nativeView.setProperty("text", t);
+            this.nativeView.setProperty("text", this.textContent);
             return;
         }
-        error(`text() setter called on element that does not implement it.`, this);
+        error(`updateNativeText() called on element that does not implement it.`, this);
     }
 
     get meta(): NSVViewMeta<T> {
@@ -598,96 +646,145 @@ export class NSVElement<T extends NativeView = NativeView> extends NSVNode imple
         );
     }
 
-    insertBefore(el: INSVNode, anchor?: INSVNode | null) {
-        if (!anchor) {
-            return this.appendChild(el)
+    removeChild(child: NSVNode): NSVNode {
+        const node = super.removeChild(child);
+
+        if (this.meta.viewFlags & NSVViewFlags.NO_CHILDREN) {
+            // debug('NO_CHILDREN')
+            return
         }
 
-        const refIndex = this.childNodes.findIndex(
-            (node) => node.nodeId === anchor.nodeId
-        )
-
-        if (refIndex === -1) {
-            return this.appendChild(el)
+        if (this.meta?.viewFlags & NSVViewFlags.NO_CHILDREN) {
+            // debug('NO_CHILDREN')
+            return
         }
 
-        if (el.parentNode) {
-            el.parentNode.removeChild(el)
-        }
+        if(child.nodeType === NSVNodeTypes.ELEMENT){
+            const childElement = child as NSVElement;
 
-        this.childNodes.splice(refIndex, 0, el)
-        el.parentNode = this as INSVElement<any>
-
-        // find index to use for the native view, since non-visual nodes
-        // (comment/text don't exist in the native view hierarchy)
-        // todo: potentially refactor based on my benchmark:
-        // https://www.measurethat.net/Benchmarks/Show/7450/0/filter-findindex
-        const trueIndex = this.childNodes
-            .filter((node) => node.nodeType === NSVNodeTypes.ELEMENT)
-            .findIndex((node) => node.nodeId === el.nodeId)
-
-        this.addChild(el, anchor, trueIndex);
-    }
-
-    appendChild(el: INSVNode) {
-        this.childNodes.push(el)
-        el.parentNode = this as INSVElement<any>
-
-        this.addChild(el)
-    }
-
-    removeChild(el: INSVNode) {
-        const index = this.childNodes.findIndex((node) => node.nodeId === el.nodeId)
-
-        if (index > -1) {
-            this.childNodes.splice(index, 1)
-            el.parentNode = null
-            if (el.nodeType === NSVNodeTypes.ELEMENT) {
-                removeChild(el as NSVElement, this) // Removing a child span takes us down here
-            } else if (el.nodeType === NSVNodeTypes.TEXT) {
-                this.text = this.getTextFromChildTextNodes();
+            if(this.nativeView){
+                if(childElement.nativeView){
+                    // console.log(`Successful native remove: ${this.toString()} X ${childElement.toString()}`);
+                    this.nativeView.removeChild(childElement.nativeView);
+                } else {
+                    // console.warn(`No native child to remove: ${this.toString()} X ${childElement.toString()}`);
+                }
+            } else {
+                // console.warn(`Skipping native remove: ${this.toString()} X ${childElement.toString()}`);
+                // It's probably a virtual element like Head, Style, etc; there is no native view to remove from.
             }
         }
+
+        return node;
     }
 
-    // abstracted from appendChild, and insertBefore to avoid code duplication
-    private addChild(el: INSVNode, anchor?: INSVNode | null, atIndex?: number): void {
-        // console.log(`[addChild] ${this._tagName} > ${(el as any)._tagName}`);
-        if (el.nodeType === NSVNodeTypes.ELEMENT) {
-            addChild(el as NSVElement, this, anchor, atIndex)
-        } else if (el.nodeType === NSVNodeTypes.TEXT) {
-            this.text = this.getTextFromChildTextNodes();
+    appendChild(child: NSVNode): NSVNode {
+        const node = super.appendChild(child);
+
+        if(child.nodeType === NSVNodeTypes.ELEMENT){
+            const childElement = child as NSVElement;
+
+            if(this.meta?.nodeOps?.insert){
+                const defer: boolean = this.meta.nodeOps.insert(childElement, this, -1) === "defer";
+                if(!defer){
+                    return node;
+                }
+            }
+
+            if(this.nativeView){
+                if(childElement.nativeView){
+                    // console.log(`Successful native append: ${this.toString()} ＞ ${childElement.toString()}`);
+                    this.nativeView.appendChild(childElement.nativeView);
+                } else {
+                    // console.warn(`No native child to append: ${this.toString()} ＞ ${childElement.toString()}`);
+                }
+            } else {
+                // console.warn(`Skipping native append: ${this.toString()} ＞ ${childElement.toString()}`);
+                // It's probably a virtual element like Head, Style, etc; there is no native view to append into.
+            }
         }
+
+        return node;
     }
 
-    public getTextFromChildTextNodes(): string {
-        return this.childNodes
-            .filter((node) => node.nodeType === NSVNodeTypes.TEXT)
-            .reduce((text: string, currentNode) => {
-                return text + currentNode.text
-            }, '');
+    insertBefore(newNode: NSVNode, referenceNode?: NSVNode | null): NSVNode {
+        const node = super.insertBefore(newNode, referenceNode);
+
+        if(newNode.nodeType === NSVNodeTypes.ELEMENT){
+            const newElement = newNode as NSVElement;
+
+            const referenceIndex = referenceNode == null ?
+                -1 : 
+                this.childNodes.findIndex(node => node === referenceNode);
+
+            if(this.meta?.nodeOps?.insert){
+                const defer: boolean = this.meta.nodeOps.insert(newElement, this, referenceIndex) === "defer";
+                if(!defer){
+                    return node;
+                }
+            }
+
+            if(this.nativeView){
+                if(newElement.nativeView){
+                    if(referenceNode){
+                        if((referenceNode as NSVElement).nativeView){
+                            // console.log(`Successful native insertBefore: ＞ ${newElement.toString()}, ${referenceNode.toString()}`);
+                            this.nativeView.insertBefore(newElement.nativeView, (referenceNode as NSVElement).nativeView);
+                        } else {
+                            // We're at the mercy of the underlying React NodeGUI and NodeGUI implementations.
+
+                            function findClosestNonVirtualPreviousElementSibling(node: NSVNode): NSVElement|null {
+                                let haul: NSVElement|null = null;
+                                while(node = node.previousSibling){
+                                    if(node.nodeType === NSVNodeTypes.ELEMENT && (node as NSVElement).nativeView){
+                                        haul = node as NSVElement;
+                                        break;
+                                    }
+                                }
+
+                                return haul;
+                            }
+
+                            const closest: NSVElement|null = findClosestNonVirtualPreviousElementSibling(referenceNode);
+                            if(closest){
+                                // console.warn(`No native referenceNode to insertBefore (was given ${referenceNode.toString()}), so will try inserting before the closest eligible previousSibling instead: ${this.toString()} ＞ ${newElement.toString()}, ${closest.toString()}`);
+                                this.nativeView.insertBefore(newElement.nativeView, closest.nativeView);
+                            } else {
+                                // console.warn(`No native referenceNode to insertBefore (was given ${referenceNode.toString()}), and no eligible previousSiblings, so will try appendChild instead: ${this.toString()} ＞ ${newElement.toString()}`);
+                                this.nativeView.appendChild(newElement.nativeView);
+                            }
+                        }
+                    } else {
+                        // console.warn(`No referenceNode to insertBefore, so will try appendChild instead: ${this.toString()} ＞ ${newElement.toString()}, ${referenceNode?.toString() ?? "NONE"}`);
+                        this.nativeView.appendChild(newElement.nativeView);
+                    }
+                } else {
+                    console.warn(`No native newNode to insertBefore: ${this.toString()} ＞ ${newElement.toString()}, ${referenceNode?.toString() ?? "NONE"}`);
+                }
+            } else {
+                // It's probably a virtual element like Head, Style, etc; there is no native view to insert into.
+            }
+        }
+
+        return node;
     }
 
     toString(): string {
-        return "NSVElement:" + this.nativeView.toString();
+        if(this.tagName === NSVNodeTypes.TEXT){
+            const textContent = this.textContent;
+            return `<${this.tagName}(${this.nodeId}) id="${this.id}">${textContent.slice(0, 15)}${textContent.length > 15 ? "..." : ""}</text>`;
+        }
+        return `<${this.tagName}(${this.nodeId}) id="${this.id}">`;
     }
 }
 
 export class NSVComment extends NSVNode {
-    constructor(private _text: string) {
+    constructor(public data: string = "") {
         super(NSVNodeTypes.COMMENT);
     }
 
-    get text(): string | undefined {
-        return this._text;
-    }
-
-    set text(t: string | undefined) {
-        this._text = t;
-    }
-
     toString(): string {
-        return "NSVComment:" + `"` + this.text + `"`;
+        return "NSVComment:" + `"` + this.data + `"`;
     }
 }
 
@@ -696,51 +793,66 @@ export class NSVComment extends NSVNode {
  * Whenever its data changes, we tell its parentNode to update its "text" property.
  */
 export class NSVText extends NSVNode {
-    constructor(private _text: string){
+    private _data: string;
+
+    constructor(data: string = ""){
         super(NSVNodeTypes.TEXT);
         // console.log(`[NSVText] constructor "${this._text}"`);
+        this.data = data;
     }
 
-    /**
-     * The Svelte runtime calls this upon the text node.
-     * @see set_data()
-     */
-    get wholeText(): string|undefined {
-        return this.text;
+    get data(): string | undefined {
+        return this._data;
     }
 
-    set wholeText(val) {
-        this.text = val;
-    }
-
-    /**
-     * The Svelte runtime calls this upon the text node.
-     * @see set_data()
-     */
-    get data(): string|undefined {
-        return this.text;
-    }
-    set data(val) {
-        // console.log(`[NSVText] Was asked to set "data" to`, val);
-        this.text = val;
-    }
-
-    get text(): string | undefined {
-        return this._text;
-    }
-
-    set text(t: string | undefined) {
-        console.log(`NSVText text setter was called!`);
-        this._text = t;
-        // Tell any parent node to update its "text" property because this text node has just updated
-        // its contents.
-        if(this.parentNode && (this.parentNode as NSVElement).getTextFromChildTextNodes){
-            this.parentNode.text = (this.parentNode as NSVElement).getTextFromChildTextNodes();
+    set data(t: string | undefined) {
+        // console.log(`NSVText text setter was called!`);
+        this._data = t;
+        // Tell any parent node to update its "text" property because this text node has just updated its contents.
+        if(this.parentNode?.nodeType === NSVNodeTypes.ELEMENT){
+            (this.parentNode as NSVElement).updateNativeText();
         }
     }
 
+    /**
+     * The Svelte runtime calls this upon the text node.
+     * @see set_data()
+     */
+	get wholeText(): string|undefined {
+        // console.log(`NSVText get wholeText was called!`);
+		let _wholeText = "";
+		if(this.previousSibling?.nodeType === NSVNodeTypes.TEXT){
+			_wholeText += (this.previousSibling as NSVText).data;
+		}
+		if(this.nextSibling?.nodeType === NSVNodeTypes.TEXT){
+			_wholeText += (this.nextSibling as NSVText).wholeText; // recurses
+		} else {
+			_wholeText += this.data;
+		}
+		// console.log(`get wholeText: ${_wholeText}`);
+		return _wholeText;
+	}
+	replaceWholeText(wholeText: string): null | NSVText {
+        console.log(`NSVText replaceWholeText was called!`);
+		let recipient: NSVText = this;
+		if(this.previousSibling?.nodeType === NSVNodeTypes.TEXT){
+			recipient = this.previousSibling as NSVText;
+		}
+		
+		let nextSibling: NSVNode = recipient;
+		while(nextSibling = recipient.nextSibling){
+			if(nextSibling.nodeType !== NSVNodeTypes.TEXT){
+                break;
+            }
+			nextSibling.parentNode.removeChild(nextSibling);
+		}
+		recipient.data = wholeText;
+		return wholeText === "" ? null : recipient;
+	}
+
     toString(): string {
-        return "NSVText:" + `"` + this.text + `"`;
+        const textContent = this.textContent;
+        return `<#text(${this.nodeId})>${this.data.slice(0, 15)}${this.data.length > 15 ? "..." : ""}</#text>`;
     }
 }
 
@@ -760,7 +872,7 @@ export class NSVRoot<T extends NativeView = NativeView> extends NSVNode {
         error(`text() setter called on element that does not implement it.`, this);
     }
 
-    setBaseRef(el: INSVNode|null): void {
+    setBaseRef(el: NSVNode|null): void {
         // console.log(`NSVRoot->appendChild(${el.nodeType})`)
         if (el instanceof NSVElement) {
             this.baseRef = el
@@ -773,185 +885,6 @@ export class NSVRoot<T extends NativeView = NativeView> extends NSVNode {
             return "NSVRoot:" + this.baseRef.toString();
         } else {
             return "NSVRoot:" + "null";
-        }
-    }
-}
-
-function addChild(child: NSVElement, parent: NSVElement, anchor?: INSVNode | null, atIndex?: number) {
-    if (__TEST__) return
-    // console.log(
-    //     `...addChild(    ${parent.tagName}(${parent.nodeId
-    //     }) > ${child.tagName}(${child.nodeId}), ${atIndex}    )`
-    // )
-    
-    if (child.meta.viewFlags & NSVViewFlags.SKIP_ADD_TO_DOM) {
-        // debug('SKIP_ADD_TO_DOM')
-        return
-    }
-
-    const parentView = parent.nativeView
-    const childView = child.nativeView
-
-    if (parent.meta.viewFlags & NSVViewFlags.NO_CHILDREN) {
-        // debug('NO_CHILDREN')
-        return
-    }
-
-    if(parent.meta.nodeOps?.insert){
-        const defer: boolean = parent.meta.nodeOps.insert(child, parent, atIndex) === "defer";
-        if(!defer){
-            return;
-        }
-    }
-
-    // const nodeRole: string|undefined = child.nodeRole;
-    // if(nodeRole){
-    //     return addChildByNodeRole(nodeRole, childView, parentView, atIndex);
-    // }
-
-    if(!parentView || !childView){
-        // Virtual element, like head.
-        return;
-    }
-
-    if(!anchor){
-        parentView.appendChild(childView);
-        return;
-    }
-
-    if((anchor as NSVElement<NativeView>).nativeView){
-        parentView.insertBefore(childView, (anchor as NSVElement<NativeView>).nativeView);
-        return;
-    }
-
-    // if (parent.meta.viewFlags & NSVViewFlags.LAYOUT_VIEW) {
-    //     if (atIndex) {
-    //         (parentView as LayoutBase).insertChild(childView as View, atIndex)
-    //     } else {
-    //         (parentView as LayoutBase).addChild(childView as View)
-    //     }
-    // } else if (parent.meta.viewFlags & NSVViewFlags.CONTENT_VIEW) {
-    //     (parentView as ContentView).content = childView as View;
-    // } else {
-    //     (parentView as unknown as AddChildFromBuilder)._addChildFromBuilder(childView.constructor.name, childView)
-    // }
-
-    error(`addChild() called on an element that doesn't implement nodeOps.insert()`, (parent as any)._tagName);
-}
-
-function removeChild(child: NSVElement, parent: NSVElement) {
-    if (__TEST__) return
-    // debug(
-    //     `...removeChild(    ${child.tagName}(${child.nodeId}), ${parent.tagName}(${
-    //         parent.nodeId
-    //     })    )`
-    // )
-
-    if (child.meta.viewFlags & NSVViewFlags.SKIP_ADD_TO_DOM) {
-        // debug('SKIP_ADD_TO_DOM')
-        return
-    }
-    if (parent.meta.viewFlags & NSVViewFlags.NO_CHILDREN) {
-        // debug('NO_CHILDREN')
-        return
-    }
-    
-    if(parent.meta.nodeOps?.remove){
-        const defer: boolean = parent.meta.nodeOps.remove(child, parent) === "defer";
-        if(!defer){
-            return;
-        }
-    }
-
-    const parentView = parent.nativeView
-    const childView = child.nativeView
-
-    // const nodeRole: string|undefined = child.nodeRole;
-    // if(nodeRole){
-    //     return removeChildByNodeRole(nodeRole, childView, parentView);
-    // }
-
-    if(!parentView || !childView){
-        // Virtual element, like head.
-        return;
-    }
-
-    parentView.removeChild(childView);
-
-    // if (parent.meta.viewFlags & NSVViewFlags.LAYOUT_VIEW) {
-    //     (parentView as LayoutBase).removeChild(childView as View)
-    // } else if (parent.meta.viewFlags & NSVViewFlags.CONTENT_VIEW) {
-    //     (parentView as ContentView).content = null
-    // } else {
-    //     // Removing a child span takes us down here
-    //     parentView._removeView(childView)
-    // }
-
-    error(`addChild() called on an element that doesn't implement nodeOps.remove()`, this);
-}
-
-
-function addChildByNodeRole(nodeRole: string, childView: any, parentView: any, atIndex?: number): void {
-    const childrenSetter: any|undefined = parentView[nodeRole];
-    if(typeof childrenSetter !== "undefined" && typeof childrenSetter.length !== "undefined"){
-        // Treat as if it's an array.
-        const childrenSetterLength: number = parentView[nodeRole].length;
-        const atSafeIndex: number = typeof atIndex === "undefined" ? childrenSetterLength : atIndex;
-
-        if(Array.isArray(childrenSetter)){
-            parentView[nodeRole] = [...parentView[nodeRole]].splice(atSafeIndex, 0, childView);
-        } else {
-            if (__DEV__) {
-                warn(
-                    `parentView "${parentView.constructor.name}" had a value for nodeRole "${nodeRole}" ` +
-                    `that had a "length" property yet did not conform to Array or ObservableArray. Cannot add child. ` +
-                    `Please explicitly implement nodeOps.insert() for the parentView.`
-                );
-            }
-        }
-    } else {
-        /*
-         * Treat it as if it's simply a setter.
-         * This assumes (quite fairly) that the plugin author is not delegating to us the responsibility
-         * of initialising an array for childrenSetter.
-        */
-        parentView[nodeRole] = childView;
-    }
-}
-
-function removeChildByNodeRole(nodeRole: string, childView: any, parentView: any): void {
-    const childrenSetter = parentView[nodeRole];
-    if(typeof childrenSetter !== "undefined" && typeof childrenSetter.indexOf === "function"){
-        // Treat as if it's an array.
-        const childIndex: number = parentView[nodeRole].indexOf(childView);
-
-        if(Array.isArray(childrenSetter)){
-            parentView[nodeRole] = [...parentView[nodeRole]].splice(childIndex, 1);
-        } else {
-            if (__DEV__) {
-                warn(
-                    `parentView "${parentView.constructor.name}" had a value for nodeRole "${nodeRole}" ` +
-                    `that had an "indexOf" property yet did not conform to Array or ObservableArray. Cannot add childView "${childView.constructor.name}". ` +
-                    `Please explicitly implement nodeOps.remove() for the parentView.`
-                );
-            }
-        }
-    } else {
-        /*
-        * Treat it as if it's simply a setter.
-        * We can't use unsetValue here, because the childrenSetter is not necessarily a Property (which indeed is the case for FormattedString.spans).
-        * TODO: If there's a way to determine whether the childrenSetter is a Property, I'd be very happy to run that first check and use unsetValue.
-         */
-        const defaultValueForChildrenSetter: unknown = parentView.__proto__[nodeRole];
-        try {
-            parentView[nodeRole] = defaultValueForChildrenSetter;
-        } catch(e){
-            if (__DEV__) {
-                warn(
-                    `parentView "${parentView.constructor.name}" failed to remove childView "${childView.constructor.name}", given nodeRole "${nodeRole}" ` +
-                    `Please explicitly implement nodeOps.remove() for the parentView.`
-                );
-            }
         }
     }
 }
