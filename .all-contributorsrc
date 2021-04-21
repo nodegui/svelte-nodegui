@@ -31,6 +31,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jonasgrunert",
+      "name": "Jonas Grunert",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22677197?v=4",
+      "profile": "https://github.com/jonasgrunert",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
