@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode=development",
-    "start": "./livereload.sh node_modules/.bin/qode ./dist/index.js",
+    "start": "node livereload.js node_modules/.bin/qode ./dist/index.js",
     "debug": "qode --inspect ./dist/index.js"
   },
   "dependencies": {
