@@ -1,6 +1,6 @@
 {
   "name": "@nodegui/svelte-nodegui",
-  "version": "0.0.4",
+  "version": "0.1.1",
   "description": "Svelte integration for NodeGUI",
   "repository": {
     "type": "git",
@@ -14,6 +14,7 @@
   "scripts": {
     "clean": "npx rimraf ./dist/*",
     "build": "npm run clean && rollup -c && node ./scripts/create-pkg.js",
+    "prepare": "npm run build",
     "watch": "rollup -cw",
     "deploy": "npm run build && cd dist && npm publish --access=public"
   },
