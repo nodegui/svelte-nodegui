@@ -200,7 +200,7 @@ export function registerNativeElements() {
         () => new RNSpinBox(),
     )
     registerElement<RNSvg, SvgProps>(
-        'qtsvg',
+        'svg',
         () => new RNSvg(),
     )
     registerElement<RNRadioButton, RadioButtonProps>(
