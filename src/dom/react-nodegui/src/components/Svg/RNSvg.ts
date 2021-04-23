@@ -47,7 +47,7 @@ const setSvgProps = (
  * @ignore
  */
 export class RNSvg extends QSvgWidget implements RNComponent {
-  static tagName = "qtsvg";
+  static tagName = "svg";
 
   setProps(newProps: SvgProps, oldProps: SvgProps): void {
     setSvgProps(this, newProps, oldProps);
