@@ -1,13 +1,5 @@
 import { initializeDom, NSVElement } from './dom';
-
-
-declare global {
-    export class SvelteComponent {
-        $destroy(): void;
-        constructor(options: { target?: NSVElement | Element, props?: any, anchor?: NSVElement | Element, intro?: boolean });
-        $set(props: any): void;
-    }
-}
+import { SvelteComponent } from 'svelte';
 
 export function svelteNodeGUI(rootElement: typeof SvelteComponent, data: any): Promise<SvelteComponent> {
     const doc = initializeDom();
