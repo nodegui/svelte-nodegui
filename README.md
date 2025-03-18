@@ -1,5 +1,8 @@
 # Svelte NodeGUI
 
+> [!WARNING]
+> No longer being maintained. Recommended you use the main [NodeGUI](https://github.com/nodegui/nodegui) flavour instead.
+
 [![Join the NodeGUI community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/nodegui)
 [![Join the Svelte community on Discord](https://img.shields.io/discord/457912077277855764?label=chat&logo=discord)](https://svelte.dev/chat)
 [![All Contributors](https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square)](#contributors)
